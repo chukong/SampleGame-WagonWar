@@ -10,7 +10,7 @@
 #define __TankMultiplayer__GameScene__
 
 #include "cocos2d.h"
-#include "level.h"
+#include "Level.h"
 
 class GameScene : public cocos2d::ParallaxNode
 {
