@@ -26,6 +26,8 @@ public:
     void update(float dt);
     
     CC_SYNTHESIZE(Level*, _level, Level);
+    CC_SYNTHESIZE(cocos2d::Layer*, PlayerLayer, PlayerLayer);
+    
 };
 
 #endif /* defined(__TankMultiplayer__GameScene__) */

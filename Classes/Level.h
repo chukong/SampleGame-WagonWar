@@ -11,7 +11,7 @@
 
 #include "cocos2d.h"
 
-class Level :public cocos2d::RenderTexture
+class Level :public cocos2d::Node
 {
 public:
     void postUpdate();
@@ -19,6 +19,7 @@ public:
     static Level* create(const std::string &filename);
     //CC_SYNTHESIZE(cocos2d::Sprite*, _defaultSprite, DefaultSprite);
     cocos2d::Size getContentSize();
+    CC_SYNTHESIZE(cocos2d::RenderTexture*, _rt, RT);
 protected:
     void checkCollisions();
     //std::map<cocos2d::Node*, > m_map;

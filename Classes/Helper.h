@@ -18,6 +18,24 @@ public:
     
 };
 
-class DepthOn : public: 
+class DepthOn : public cocos2d::Node
+{
+public:
+    void onDraw();
+    virtual void visit(cocos2d::Renderer *renderer, const kmMat4& parentTransform, bool parentTransformUpdated);
+    CREATE_FUNC(DepthOn);
+protected:
+    cocos2d::CustomCommand _customCommand;
+};
+
+class DepthOff : public cocos2d::Node
+{
+public:
+    void onDraw();
+    virtual void visit(cocos2d::Renderer *renderer, const kmMat4& parentTransform, bool parentTransformUpdated);
+    CREATE_FUNC(DepthOff);
+protected:
+    cocos2d::CustomCommand _customCommand;
+};
 
 #endif /* defined(__TankMultiplayer__Helper__) */
