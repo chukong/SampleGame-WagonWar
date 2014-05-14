@@ -828,6 +828,8 @@
 		298B28F918CFF9EC00C1920F /* cocosui in Resources */ = {isa = PBXBuildFile; fileRef = 298B28F718CFF9EC00C1920F /* cocosui */; };
 		298B28FA18CFF9EC00C1920F /* cocosui in Resources */ = {isa = PBXBuildFile; fileRef = 298B28F718CFF9EC00C1920F /* cocosui */; };
 		298B28FB18CFF9EC00C1920F /* cocosui in Resources */ = {isa = PBXBuildFile; fileRef = 298B28F718CFF9EC00C1920F /* cocosui */; };
+		8585C362191B893A00EC0F0C /* bluryBack.png in Resources */ = {isa = PBXBuildFile; fileRef = 8585C361191B893A00EC0F0C /* bluryBack.png */; };
+		8585C363191B893A00EC0F0C /* bluryBack.png in Resources */ = {isa = PBXBuildFile; fileRef = 8585C361191B893A00EC0F0C /* bluryBack.png */; };
 		A05FCACA177C124500BE600E /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C64822165F391E007D4F18 /* Cocoa.framework */; };
 		A07A521E1783A1D20073F6A7 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C6482E165F399D007D4F18 /* libz.dylib */; };
 		A07A521F1783A1D20073F6A7 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C64832165F3AFD007D4F18 /* Foundation.framework */; };
@@ -1859,6 +1861,7 @@
 		1D6058910D05DD3D006BFB54 /* cpp-tests Mac.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "cpp-tests Mac.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		298B28F718CFF9EC00C1920F /* cocosui */ = {isa = PBXFileReference; lastKnownFileType = folder; name = cocosui; path = "../tests/cpp-tests/Resources/cocosui"; sourceTree = "<group>"; };
 		46A15F9C1807A4F8005B8026 /* cocos2d_libs.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = cocos2d_libs.xcodeproj; sourceTree = "<group>"; };
+		8585C361191B893A00EC0F0C /* bluryBack.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = bluryBack.png; path = ../../../Downloads/bluryBack.png; sourceTree = "<group>"; };
 		A035A71117822E9E00987F6C /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		A07A52291783A1D20073F6A7 /* cpp-tests iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "cpp-tests iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A07A52B71783AE6D0073F6A7 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS6.1.sdk/System/Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
@@ -2183,6 +2186,7 @@
 		1AC358FD18CEC1EF00F37B72 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				8585C361191B893A00EC0F0C /* bluryBack.png */,
 				1AC358FE18CEC1FB00F37B72 /* bang.png */,
 				1AC358FF18CEC1FB00F37B72 /* fonts */,
 				1AC3590018CEC1FB00F37B72 /* ipad */,
@@ -4103,6 +4107,7 @@
 			files = (
 				1AC3590918CEC1FB00F37B72 /* ipadhd in Resources */,
 				1AC358F518CEC1D400F37B72 /* InfoPlist.strings in Resources */,
+				8585C362191B893A00EC0F0C /* bluryBack.png in Resources */,
 				1AC3590318CEC1FB00F37B72 /* bang.png in Resources */,
 				1AC3590718CEC1FB00F37B72 /* ipad in Resources */,
 				1AC3590B18CEC1FB00F37B72 /* iphone in Resources */,
@@ -4175,6 +4180,7 @@
 				1AC358E318CEC1CB00F37B72 /* Icon-152.png in Resources */,
 				1AC358E518CEC1CB00F37B72 /* Icon-57.png in Resources */,
 				1AC358DC18CEC1CB00F37B72 /* Default.png in Resources */,
+				8585C363191B893A00EC0F0C /* bluryBack.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

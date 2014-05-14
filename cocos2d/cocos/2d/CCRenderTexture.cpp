@@ -37,7 +37,6 @@ THE SOFTWARE.
 #include "CCGL.h"
 #include "CCEventType.h"
 #include "CCGrid.h"
-#include "CCDrawingPrimitives.h"
 
 #include "renderer/CCRenderer.h"
 #include "renderer/CCGroupCommand.h"
@@ -295,7 +294,6 @@ bool RenderTexture::initWithWidthAndHeight(int w, int h, Texture2D::PixelFormat 
         addChild(_sprite);
         
         ret = true;
-        //setContentSize(Size(w, h));
     } while (0);
     
     CC_SAFE_FREE(data);
@@ -306,13 +304,6 @@ bool RenderTexture::initWithWidthAndHeight(int w, int h, Texture2D::PixelFormat 
 void RenderTexture::setKeepMatrix(bool keepMatrix)
 {
     _keepMatrix = keepMatrix;
-}
-Rect RenderTexture::getBoundingBox() const
-{
-    auto size = _sprite->getContentSize();
-    Rect rect = Rect(_position.x, _position.y, size.width, size.height);
-    return RectApplyAffineTransform(rect, _sprite->getNodeToParentAffineTransform());
-    //return _sprite->getBoundingBox();
 }
 
 void RenderTexture::setVirtualViewport(const Point& rtBegin, const Rect& fullRect, const Rect& fullViewport)
@@ -562,8 +553,7 @@ void RenderTexture::onBegin()
         viewport.origin.x = (_fullRect.origin.x - _rtTextureRect.origin.x) * viewPortRectWidthRatio;
         viewport.origin.y = (_fullRect.origin.y - _rtTextureRect.origin.y) * viewPortRectHeightRatio;
         //glViewport(_fullviewPort.origin.x, _fullviewPort.origin.y, (GLsizei)_fullviewPort.size.width, (GLsizei)_fullviewPort.size.height);
-        const Size& texSize = _texture->getContentSizeInPixels();
-        glViewport(viewport.origin.x, viewport.origin.y, (GLsizei)texSize.width, (GLsizei)texSize.height);
+        glViewport(viewport.origin.x, viewport.origin.y, (GLsizei)viewport.size.width, (GLsizei)viewport.size.height);
     }
 
     // Adjust the orthographic projection and viewport
@@ -683,10 +673,7 @@ void RenderTexture::draw(Renderer *renderer, const kmMat4 &transform, bool trans
         end();
     }
 }
-const Size& RenderTexture::getContentSize() const
-{
-    return _sprite->getContentSize();
-}
+
 void RenderTexture::begin()
 {
     kmGLMatrixMode(KM_GL_PROJECTION);

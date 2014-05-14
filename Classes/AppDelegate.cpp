@@ -16,24 +16,29 @@ bool AppDelegate::applicationDidFinishLaunching() {
     auto director = Director::getInstance();
     auto glview = director->getOpenGLView();
     if(!glview) {
-        glview = GLView::create("My Game");
+        int height, width;
+        height = 640;
+        width = height*(960.0/640.0);
+        
+        glview = GLView::createWithRect("TankMultiplayer", Rect(0, 0, width, height));
+        
         director->setOpenGLView(glview);
     }
-
+    glview->setDesignResolutionSize(960, 640, ResolutionPolicy::FIXED_HEIGHT);
+    
     // turn on display FPS
     director->setDisplayStats(true);
-
+    
     // set FPS. the default value is 1.0/60 if you don't call this
     director->setAnimationInterval(1.0 / 60);
-
+    
     // create a scene. it's an autorelease object
     auto scene = GameScene::createScene();
-
+    
     // run
     director->runWithScene(scene);
-
-    return true;
-}
+    
+    return true;}
 
 // This function will be called when the app is inactive. When comes a phone call,it's be invoked too
 void AppDelegate::applicationDidEnterBackground() {
