@@ -26,75 +26,67 @@ Scene* GameScene::createScene()
     return scene;
 }
 
-GameScene* GameScene::create()
+bool GameScene::init()
 {
-    auto ret = new GameScene;
-    Size winSize = Director::getInstance()->getVisibleSize();
-    auto offset = Point(winSize/2);
-    ret->offset = offset;
+    if( !ParallaxNode::init())
+    {
+        return false;
+    }
+    
+    auto visibleSize = Director::getInstance()->getVisibleSize();
+    auto offset = Point(visibleSize/2);
     
     //load map
     auto lvl = Level::create("map.png");
-    ret->addChild(lvl,1, Point::ANCHOR_TOP_RIGHT, offset);
-    ret->setLevel(lvl);
+    this->addChild(lvl, 1, Point(1, 1), offset);
+    this->setLevel(lvl);
     
     //check collision before background is drawn
     auto collChecker = CollisionCheckNode::create();
     collChecker->setLevel(lvl);
-    collChecker->setGameLayer(ret);
-    ret->addChild(collChecker, 2, Point::ANCHOR_TOP_RIGHT, offset);
+    collChecker->setGameLayer(this);
+    this->addChild(collChecker, 2, Point(1, 1), Point::ZERO);
 
     
-    
     //load background
-    auto back = Sprite::create("bluryBack.png");
-    ret->addChild(back, 3, Point(0.5,0.5), offset);
-    BlendFunc background={
+    auto background = Sprite::create("bluryBack.png");
+    this->addChild(background, 3, Point(0.5, 0.5), offset);
+    BlendFunc background_blendfunc={
         GL_ONE_MINUS_DST_ALPHA,
         GL_ONE
     };
-    back->setBlendFunc(background);
+    background->setBlendFunc(background_blendfunc);
 
-    
-    
     //layer for players
     
     //layer for bullets
     auto bulletLayer =Layer::create();
-    //auto bulletLayer =LayerColor::create(Color4B(100,0,0,100));
     bulletLayer->setContentSize(lvl->getRT()->getContentSize());
-    //log("contentsize %f, %f", lvl->getRT()->getContentSize().width, lvl->getRT()->getContentSize().height);
-    ret->setBulletLayer(bulletLayer);
+    this->setBulletLayer(bulletLayer);
     collChecker->setBulletLayer(bulletLayer);
     bulletLayer->setAnchorPoint(Point::ANCHOR_MIDDLE);
     bulletLayer->ignoreAnchorPointForPosition(false);
-    ret->addChild(bulletLayer, 4, Point::ANCHOR_TOP_RIGHT, offset);
-    
+    this->addChild(bulletLayer, 4, Point(1, 1), offset);
     
     //layer for effects
     
-    
-
     //register touches
     auto listener = EventListenerTouchOneByOne::create();
-    listener->onTouchBegan = CC_CALLBACK_2(GameScene::onTouchBegan, ret);
-    listener->onTouchEnded = CC_CALLBACK_2(GameScene::onTouchEnded, ret);
-    listener->onTouchMoved = CC_CALLBACK_2(GameScene::onTouchMoved, ret);
-    ret->getEventDispatcher()->addEventListenerWithSceneGraphPriority(listener, ret);
+    listener->onTouchBegan = CC_CALLBACK_2(GameScene::onTouchBegan, this);
+    listener->onTouchEnded = CC_CALLBACK_2(GameScene::onTouchEnded, this);
+    listener->onTouchMoved = CC_CALLBACK_2(GameScene::onTouchMoved, this);
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
     
-    ret->autorelease();
-
-
     //default wind
-    ret->setWind(Point::ZERO);
+    this->setWind(Point::ZERO);
     //default gravity
-    ret->setGravity(Point(0,-0.1));
-    ret->scheduleUpdate();
-    
+    this->setGravity(Point(0,-0.1));
+    this->scheduleUpdate();
     
     //init explosion masks
-    ret->initExplosionMasks();
-    return ret;
+    this->initExplosionMasks();
+    
+    return true;
 }
 void GameScene::initExplosionMasks()
 {

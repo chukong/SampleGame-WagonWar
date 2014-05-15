@@ -17,7 +17,10 @@ class GameScene : public cocos2d::ParallaxNode
 {
 public:
     static cocos2d::Scene* createScene();
-    static GameScene* create();
+//    static GameScene* create();
+    
+    CREATE_FUNC(GameScene);
+    virtual bool init();
     
     bool onTouchBegan(cocos2d::Touch *touch, cocos2d::Event *event);
     void onTouchMoved(cocos2d::Touch *touch, cocos2d::Event *event);
