@@ -32,12 +32,16 @@ public:
     CC_SYNTHESIZE(cocos2d::Layer*, _bulletLayer, BulletLayer);
     CC_SYNTHESIZE(cocos2d::Point, _wind, Wind);
     CC_SYNTHESIZE(cocos2d::Point, _gravity, Gravity);
-    
+    void initExplosionMasks();
     Bullet* addBullet(BulletTypes type, cocos2d::Point pos, cocos2d::Point vector);
+    cocos2d::Point offset;
 protected:
     GameScene():_click(false),_steps(2){};
     bool _click;
     int _steps;
+    cocos2d::Sprite* _ex;
+    cocos2d::Sprite* _burn;
+
 };
 
 #endif /* defined(__TankMultiplayer__GameScene__) */

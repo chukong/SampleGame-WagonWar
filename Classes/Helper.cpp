@@ -51,17 +51,19 @@ void CollisionCheckNode::visit(Renderer *renderer, const kmMat4& parentTransform
 }
 void CollisionCheckNode::checkCollision()
 {
-    auto offset = getGameLayer()->getPosition();
-    auto aabb2 = _level->getRT()->getBoundingBox();
+
+    auto aabb2 = getBulletLayer()->getBoundingBox();
+    Point offset(aabb2.origin+getGameLayer()->getPosition());
+    aabb2.origin = Point::ZERO;
+    //log("bullet layer aabb %f, %f", aabb2.origin.x, aabb2.origin.y);
     for(Node* bullet : _bullets->getChildren())
     {
         Bullet* b = dynamic_cast<Bullet*>(bullet);
         auto aabb1 = b->getBoundingBox();
-        if(aabb1.intersectsRect(aabb2))
+        if(aabb2.intersectsRect(aabb1))
         {
-            
-            
-            Point pos = b->getPosition()+offset;
+            //Point pos(Director::getInstance()->convertToGL(b->getPosition()));
+            Point pos(b->getPosition()+offset);
             int radius =b->getConfig()->radius;
             int bufferSize =pow(radius*2,2);
             
@@ -73,6 +75,7 @@ void CollisionCheckNode::checkCollision()
             {
                 if(buffer[i].a>0)
                 {
+                    b->explode();
                     coll = true;
                     break;
                 }
@@ -84,6 +87,9 @@ void CollisionCheckNode::checkCollision()
                 b->setColor(Color3B::YELLOW);
         }
         else{
+            //log("layer  aabb %f, %f, %f, %f", aabb2.origin.x, aabb2.origin.y, aabb2.size.width, aabb2.size.height);
+            //log("bullet aabb %f, %f, %f, %f", aabb1.origin.x, aabb1.origin.y, aabb1.size.width, aabb1.size.height);
+            
             b->setColor(Color3B::WHITE);
             b->runAction(RemoveSelf::create());
         }
