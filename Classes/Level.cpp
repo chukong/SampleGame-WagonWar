@@ -19,7 +19,7 @@ Level* Level::create(const std::string &filename)
     //ret->setDefaultSprite(sp);
     Size size = sp->getContentSize();
     Size winSize = Director::getInstance()->getVisibleSize();
-    auto ret = RenderTexture::create(winSize.width, winSize.height, Texture2D::PixelFormat::RGB5A1);
+    auto ret = RenderTexture::create(size.width, size.height, Texture2D::PixelFormat::RGBA8888);
     lvl->addChild(ret);
     lvl->setRT(ret);
     
@@ -29,14 +29,13 @@ Level* Level::create(const std::string &filename)
     
     //** need to draw the default sprite
     ret->begin();
-    sp->setPosition(Point(winSize/2));
+    //sp->setPosition(Point(size/2));
+    sp->setAnchorPoint(Point::ZERO);
     sp->visit();
     ret->end();
     Director::getInstance()->getRenderer()->render();
     
     
-    auto p = ShaderCache::getInstance()->getProgram("ShaderPositionTextureColorAlphaTest_NoMV");
-    ret->getSprite()->setShaderProgram(p);
     lvl->autorelease();
     
     return lvl;
@@ -45,9 +44,4 @@ Level* Level::create(const std::string &filename)
 void Level::postUpdate()
 {
     
-}
-
-Size Level::getContentSize()
-{
-    return _rt->getSprite()->getContentSize();
 }

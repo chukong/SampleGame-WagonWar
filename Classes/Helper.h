@@ -10,6 +10,7 @@
 #define __TankMultiplayer__Helper__
 
 #include "cocos2d.h"
+#include "Level.h"
 
 class Helper
 {
@@ -37,5 +38,20 @@ public:
 protected:
     cocos2d::CustomCommand _customCommand;
 };
+
+class CollisionCheckNode : public cocos2d::Node
+{
+public:
+    void checkCollision();
+    virtual void visit(cocos2d::Renderer *renderer, const kmMat4& parentTransform, bool parentTransformUpdated);
+    CREATE_FUNC(CollisionCheckNode);
+    CC_SYNTHESIZE(Level*, _level, Level);
+    CC_SYNTHESIZE(cocos2d::Layer*, _bullets, BulletLayer);
+    CC_SYNTHESIZE(cocos2d::ParallaxNode*, _gameLayer, GameLayer);
+protected:
+    cocos2d::CustomCommand _customCommand;
+};
+
+
 
 #endif /* defined(__TankMultiplayer__Helper__) */

@@ -18,7 +18,7 @@ public:
     void createHole(cocos2d::Point pos, float size);
     static Level* create(const std::string &filename);
     //CC_SYNTHESIZE(cocos2d::Sprite*, _defaultSprite, DefaultSprite);
-    cocos2d::Size getContentSize();
+    //cocos2d::Size getContentSize();
     CC_SYNTHESIZE(cocos2d::RenderTexture*, _rt, RT);
 protected:
     void checkCollisions();

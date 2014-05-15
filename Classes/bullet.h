@@ -12,13 +12,29 @@
 #include "cocos2d.h"
 #include "HelloWorldScene.h"
 
+enum BulletTypes{
+    defaultB
+};
+
+struct BulletConfig{
+    std::string filename;
+    int damage;
+    int radius;
+    int expRadius;
+};
+
 class Bullet : public cocos2d::Sprite
 {
 public:
     CC_SYNTHESIZE(HelloWorld*, _world, World);
     static Bullet* create(HelloWorld* world);
+    static Bullet* create(BulletTypes type, cocos2d::Point pos, cocos2d::Point vector);
+    CC_SYNTHESIZE(BulletConfig*, _config, Config);
+    CC_SYNTHESIZE(cocos2d::Point, _LastPos, LastPos);
+    
+    static BulletConfig dddefaultBullet;
 protected:
-    virtual void draw(cocos2d::Renderer *renderer, const kmMat4 &transform, bool transformUpdated);
+    //virtual void draw(cocos2d::Renderer *renderer, const kmMat4 &transform, bool transformUpdated);
     virtual void drawFinished();
     cocos2d::CustomCommand _customCommand;
 };
