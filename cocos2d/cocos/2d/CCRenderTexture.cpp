@@ -306,6 +306,18 @@ void RenderTexture::setKeepMatrix(bool keepMatrix)
     _keepMatrix = keepMatrix;
 }
 
+Rect RenderTexture::getBoundingBox() const
+{
+    auto size = _sprite->getContentSize();
+    Rect rect = Rect(_position.x, _position.y, size.width, size.height);
+    return RectApplyAffineTransform(rect, _sprite->getNodeToParentAffineTransform());
+    //return _sprite->getBoundingBox();
+}
+const Size& RenderTexture::getContentSize() const
+{
+    return _sprite->getContentSize();
+}
+
 void RenderTexture::setVirtualViewport(const Point& rtBegin, const Rect& fullRect, const Rect& fullViewport)
 {
     _rtTextureRect.origin.x = rtBegin.x;
@@ -528,12 +540,12 @@ void RenderTexture::onBegin()
     kmGLGetMatrix(KM_GL_MODELVIEW, &_oldTransMatrix);
     kmGLMatrixMode(KM_GL_MODELVIEW);
     kmGLLoadMatrix(&_transformMatrix);
-    
+    const Size& texSize = _texture->getContentSizeInPixels();
     if(!_keepMatrix)
     {
         director->setProjection(director->getProjection());
 
-        const Size& texSize = _texture->getContentSizeInPixels();
+        
 
         // Calculate the adjustment ratios based on the old and new projections
         float widthRatio = size.width / texSize.width;
@@ -553,7 +565,7 @@ void RenderTexture::onBegin()
         viewport.origin.x = (_fullRect.origin.x - _rtTextureRect.origin.x) * viewPortRectWidthRatio;
         viewport.origin.y = (_fullRect.origin.y - _rtTextureRect.origin.y) * viewPortRectHeightRatio;
         //glViewport(_fullviewPort.origin.x, _fullviewPort.origin.y, (GLsizei)_fullviewPort.size.width, (GLsizei)_fullviewPort.size.height);
-        glViewport(viewport.origin.x, viewport.origin.y, (GLsizei)viewport.size.width, (GLsizei)viewport.size.height);
+        glViewport(viewport.origin.x, viewport.origin.y, (GLsizei)texSize.width, (GLsizei)texSize.height);
     }
 
     // Adjust the orthographic projection and viewport

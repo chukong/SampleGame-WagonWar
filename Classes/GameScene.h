@@ -11,6 +11,7 @@
 
 #include "cocos2d.h"
 #include "Level.h"
+#include "bullet.h"
 
 class GameScene : public cocos2d::ParallaxNode
 {
@@ -20,14 +21,23 @@ public:
     
     bool onTouchBegan(cocos2d::Touch *touch, cocos2d::Event *event);
     void onTouchMoved(cocos2d::Touch *touch, cocos2d::Event *event);
+    void onTouchEnded(cocos2d::Touch *touch, cocos2d::Event *event);
     
     
     
     void update(float dt);
     
     CC_SYNTHESIZE(Level*, _level, Level);
-    CC_SYNTHESIZE(cocos2d::Layer*, PlayerLayer, PlayerLayer);
+    CC_SYNTHESIZE(cocos2d::Layer*, _PlayerLayer, PlayerLayer);
+    CC_SYNTHESIZE(cocos2d::Layer*, _bulletLayer, BulletLayer);
+    CC_SYNTHESIZE(cocos2d::Point, _wind, Wind);
+    CC_SYNTHESIZE(cocos2d::Point, _gravity, Gravity);
     
+    Bullet* addBullet(BulletTypes type, cocos2d::Point pos, cocos2d::Point vector);
+protected:
+    GameScene():_click(false),_steps(2){};
+    bool _click;
+    int _steps;
 };
 
 #endif /* defined(__TankMultiplayer__GameScene__) */
