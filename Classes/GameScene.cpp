@@ -46,6 +46,7 @@ bool GameScene::init()
     collChecker->setLevel(lvl);
     collChecker->setGameLayer(this);
     this->addChild(collChecker, 2, Point(1, 1), Point::ZERO);
+
     
     //load background
     auto background = Sprite::create("bluryBack.png");
@@ -60,10 +61,12 @@ bool GameScene::init()
     
     //layer for bullets
     auto bulletLayer =Layer::create();
+    bulletLayer->setContentSize(lvl->getRT()->getContentSize());
     this->setBulletLayer(bulletLayer);
     collChecker->setBulletLayer(bulletLayer);
-    this->addChild(bulletLayer, 4, Point::ANCHOR_TOP_RIGHT, Point::ZERO);
-    
+    bulletLayer->setAnchorPoint(Point::ANCHOR_MIDDLE);
+    bulletLayer->ignoreAnchorPointForPosition(false);
+    this->addChild(bulletLayer, 4, Point(1, 1), offset);
     
     //layer for effects
     
@@ -79,7 +82,37 @@ bool GameScene::init()
     //default gravity
     this->setGravity(Point(0,-0.1));
     this->scheduleUpdate();
+    
+    //init explosion masks
+    this->initExplosionMasks();
+    
     return true;
+}
+void GameScene::initExplosionMasks()
+{
+    _ex = Sprite::create("expMask.png");
+    _burn = Sprite::create("expMask2.png");
+    BlendFunc cut;
+    cut ={
+        GL_ZERO,
+        GL_ONE_MINUS_SRC_ALPHA
+    };
+    
+    BlendFunc keepAlpha;
+    keepAlpha={
+        GL_DST_ALPHA,
+        GL_ONE_MINUS_SRC_ALPHA
+    };
+    _ex->setBlendFunc(cut);
+    
+    _burn->setBlendFunc(keepAlpha);
+    _ex->retain();
+    _burn->retain();
+    
+    _burn->setScale(1.05);
+    _ex->addChild(_burn);
+    _burn->setPosition(Point(_ex->getContentSize()/2));
+    _ex->setScaleX(1.4);
 }
 
 bool GameScene::onTouchBegan(Touch* touch, Event* event)
@@ -96,7 +129,8 @@ void GameScene::onTouchEnded(Touch* touch, Event* event)
 {
     if(_click)
     {
-        addBullet(defaultB, touch->getLocation()-getPosition(), Point(2,5));
+        Point test(getBulletLayer()->convertToNodeSpace(touch->getLocation()));
+        addBullet(defaultB, test, Point(2,5));
 
     }
 }
@@ -110,11 +144,23 @@ Bullet* GameScene::addBullet(BulletTypes type, cocos2d::Point pos, cocos2d::Poin
 
 void GameScene::update(float dt)
 {
+    _level->getRT()->begin();
         for(Node* bullet : _bulletLayer->getChildren())
         {
             Bullet *b = dynamic_cast<Bullet*>(bullet);
             auto pos = b->getPosition();
-            b->setPosition(pos+(pos-b->getLastPos())+getGravity()+getWind());
-            b->setLastPos(pos);
+            if(b->willExplode())
+            {
+                //log("%f, %f", b->getPosition().x, b->getPosition().y);
+                _ex->setPosition(b->getPosition());
+                _ex->visit();
+                b->runAction(RemoveSelf::create());
+            }
+            else
+            {
+                b->setPosition(pos+(pos-b->getLastPos())+getGravity()+getWind());
+                b->setLastPos(pos);
+            }
         }
+    _level->getRT()->end();
 }

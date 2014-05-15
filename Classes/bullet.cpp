@@ -19,10 +19,10 @@ USING_NS_CC;
 //    Sprite::draw(renderer, transform, transformUpdated);
 //}
 
-BulletConfig Bullet::dddefaultBullet={
+BulletConfig Bullet::defaultBullet={
     "circle.png",
     100,
-    10,
+    5,
     20
 };
 
@@ -31,18 +31,6 @@ void Bullet::drawFinished()
     //_world->checkCollision(this);
 }
 
-Bullet* Bullet::create(HelloWorld *world)
-{
-    Bullet *b = new Bullet();
-    if(b->initWithFile("circle.png"))
-    {
-        b->autorelease();
-        b->setWorld(world);
-        return b;
-    }
-    CC_SAFE_DELETE(b);
-    return nullptr;
-}
 
 Bullet* Bullet::create(BulletTypes type, cocos2d::Point pos, cocos2d::Point vector)
 {
@@ -51,7 +39,7 @@ Bullet* Bullet::create(BulletTypes type, cocos2d::Point pos, cocos2d::Point vect
     {
         default:
         case defaultB:
-            b->setConfig(&dddefaultBullet);
+            b->setConfig(&defaultBullet);
             break;
     }
     if(b->initWithFile(b->getConfig()->filename))
@@ -63,4 +51,11 @@ Bullet* Bullet::create(BulletTypes type, cocos2d::Point pos, cocos2d::Point vect
     }
     CC_SAFE_DELETE(b);
     return nullptr;
+}
+bool Bullet::willExplode(){
+    return _willExplode;
+}
+void Bullet::explode()
+{
+    _willExplode = true;
 }

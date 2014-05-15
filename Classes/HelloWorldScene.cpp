@@ -62,7 +62,7 @@ bool HelloWorld::init()
     //map->getSprite()->setShaderProgram(p);
     
     
-    circ = Bullet::create(this);
+    //circ = Bullet::create(this);
         circ->setPosition(Point(600,400));
     //Helper::removeAfter(circ, 3);
     
