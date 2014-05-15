@@ -58,10 +58,27 @@ void CollisionCheckNode::checkCollision()
     //log("bullet layer aabb %f, %f", aabb2.origin.x, aabb2.origin.y);
     for(Node* bullet : _bullets->getChildren())
     {
+        bool coll = false;
         Bullet* b = dynamic_cast<Bullet*>(bullet);
         auto aabb1 = b->getBoundingBox();
         if(aabb2.intersectsRect(aabb1))
         {
+            //check if we are colliding with a player
+            for(Node* player : _players->getChildren())
+            {
+                TestNode* p = dynamic_cast<TestNode*>(player);
+                if(b->getPosition().getDistance(p->getPosition())< b->getConfig()->radius + p->radius)
+                {
+                    b->explode();
+                    log("collided with player");
+                    coll = true;
+                    break;
+                }
+            }
+            if(coll)
+                return;
+            
+            
             //Point pos(Director::getInstance()->convertToGL(b->getPosition()));
             Point pos(b->getPosition()+offset);
             int radius =b->getConfig()->radius;
@@ -70,7 +87,7 @@ void CollisionCheckNode::checkCollision()
             Color4B *buffer = (Color4B*)malloc(sizeof(Color4B)*bufferSize);
             
             glReadPixels(pos.x-radius, pos.y-radius, radius*2, radius*2, GL_RGBA, GL_UNSIGNED_BYTE, buffer);
-            bool coll = false;
+            
             for(int i = 0; i < bufferSize; i++)
             {
                 if(buffer[i].a>0)
@@ -94,4 +111,42 @@ void CollisionCheckNode::checkCollision()
             b->runAction(RemoveSelf::create());
         }
     }
+    
+    for(Node* player : _players->getChildren())
+    {
+        TestNode* p = dynamic_cast<TestNode*>(player);
+        if(p->airborn)
+        {
+            Point pos(p->getPosition()+offset);
+            int radius =p->getContentSize().width/2;
+            int bufferSize =pow(radius*2,2);
+            Color4B *buffer = (Color4B*)malloc(sizeof(Color4B)*bufferSize);
+            glReadPixels(pos.x-radius, pos.y-radius, radius*2, radius*2, GL_RGBA, GL_UNSIGNED_BYTE, buffer);
+            for(int i = 0; i < bufferSize; i++)
+            {
+                //TODO:: need to pass circle check
+                if(buffer[i].a>0)
+                {
+                    p->airborn = false;
+                    p->setLastPos(p->getPosition());
+                    break;
+                }
+            }
+            free(buffer);
+        }
+    }
+}
+
+
+TestNode* TestNode::create()
+{
+    TestNode* ret = new TestNode;
+    if(ret->initWithFile("CloseSelected.png"))
+    {
+        ret->radius = ret->getContentSize().width/2;
+        ret->autorelease();
+        return ret;
+    }
+    CC_SAFE_DELETE(ret);
+    return nullptr;
 }

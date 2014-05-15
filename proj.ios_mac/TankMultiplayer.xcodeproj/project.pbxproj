@@ -78,14 +78,14 @@
 		68BBD8AC192462DE001F9F73 /* circle.png in Resources */ = {isa = PBXBuildFile; fileRef = 68BBD8A2192462DE001F9F73 /* circle.png */; };
 		68BBD8AD192462DE001F9F73 /* CloseNormal.png in Resources */ = {isa = PBXBuildFile; fileRef = 68BBD8A3192462DE001F9F73 /* CloseNormal.png */; };
 		68BBD8AE192462DE001F9F73 /* CloseNormal.png in Resources */ = {isa = PBXBuildFile; fileRef = 68BBD8A3192462DE001F9F73 /* CloseNormal.png */; };
-		68BBD8AF192462DE001F9F73 /* CloseSelected.png in Resources */ = {isa = PBXBuildFile; fileRef = 68BBD8A4192462DE001F9F73 /* CloseSelected.png */; };
-		68BBD8B0192462DE001F9F73 /* CloseSelected.png in Resources */ = {isa = PBXBuildFile; fileRef = 68BBD8A4192462DE001F9F73 /* CloseSelected.png */; };
 		68BBD8B1192462DE001F9F73 /* expMask.png in Resources */ = {isa = PBXBuildFile; fileRef = 68BBD8A5192462DE001F9F73 /* expMask.png */; };
 		68BBD8B2192462DE001F9F73 /* expMask.png in Resources */ = {isa = PBXBuildFile; fileRef = 68BBD8A5192462DE001F9F73 /* expMask.png */; };
 		68BBD8B3192462DE001F9F73 /* expMask2.png in Resources */ = {isa = PBXBuildFile; fileRef = 68BBD8A6192462DE001F9F73 /* expMask2.png */; };
 		68BBD8B4192462DE001F9F73 /* expMask2.png in Resources */ = {isa = PBXBuildFile; fileRef = 68BBD8A6192462DE001F9F73 /* expMask2.png */; };
 		68BBD8B9192495E4001F9F73 /* map.png in Resources */ = {isa = PBXBuildFile; fileRef = 68BBD8B8192495E4001F9F73 /* map.png */; };
 		68BBD8BA192495E4001F9F73 /* map.png in Resources */ = {isa = PBXBuildFile; fileRef = 68BBD8B8192495E4001F9F73 /* map.png */; };
+		68BBD8C41924DC8E001F9F73 /* CloseSelected.png in Resources */ = {isa = PBXBuildFile; fileRef = 68BBD8C31924DC8E001F9F73 /* CloseSelected.png */; };
+		68BBD8C51924DC8E001F9F73 /* CloseSelected.png in Resources */ = {isa = PBXBuildFile; fileRef = 68BBD8C31924DC8E001F9F73 /* CloseSelected.png */; };
 		8589F76D19237690009BDBCD /* bullet.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8589F76319237690009BDBCD /* bullet.cpp */; };
 		8589F76E19237690009BDBCD /* bullet.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8589F76319237690009BDBCD /* bullet.cpp */; };
 		8589F76F19237690009BDBCD /* GameScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8589F76519237690009BDBCD /* GameScene.cpp */; };
@@ -303,10 +303,10 @@
 		68BBD8A1192462DE001F9F73 /* burnmark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = burnmark.png; sourceTree = "<group>"; };
 		68BBD8A2192462DE001F9F73 /* circle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = circle.png; sourceTree = "<group>"; };
 		68BBD8A3192462DE001F9F73 /* CloseNormal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = CloseNormal.png; sourceTree = "<group>"; };
-		68BBD8A4192462DE001F9F73 /* CloseSelected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = CloseSelected.png; sourceTree = "<group>"; };
 		68BBD8A5192462DE001F9F73 /* expMask.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = expMask.png; sourceTree = "<group>"; };
 		68BBD8A6192462DE001F9F73 /* expMask2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = expMask2.png; sourceTree = "<group>"; };
 		68BBD8B8192495E4001F9F73 /* map.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = map.png; sourceTree = "<group>"; };
+		68BBD8C31924DC8E001F9F73 /* CloseSelected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = CloseSelected.png; path = ../../Desktop/TankMultiplayer/Resources/CloseSelected.png; sourceTree = "<group>"; };
 		8589F76319237690009BDBCD /* bullet.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = bullet.cpp; path = ../Classes/bullet.cpp; sourceTree = "<group>"; };
 		8589F76419237690009BDBCD /* bullet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = bullet.h; path = ../Classes/bullet.h; sourceTree = "<group>"; };
 		8589F76519237690009BDBCD /* GameScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = GameScene.cpp; path = ../Classes/GameScene.cpp; sourceTree = "<group>"; };
@@ -527,6 +527,7 @@
 			isa = PBXGroup;
 			children = (
 				68BBD888192462D7001F9F73 /* HelloWorld.png */,
+				68BBD8C31924DC8E001F9F73 /* CloseSelected.png */,
 				68BBD8B8192495E4001F9F73 /* map.png */,
 				68BBD88A192462D7001F9F73 /* masked.fsh */,
 				68BBD88B192462D7001F9F73 /* test.png */,
@@ -538,7 +539,6 @@
 				68BBD8A1192462DE001F9F73 /* burnmark.png */,
 				68BBD8A2192462DE001F9F73 /* circle.png */,
 				68BBD8A3192462DE001F9F73 /* CloseNormal.png */,
-				68BBD8A4192462DE001F9F73 /* CloseSelected.png */,
 				68BBD8A5192462DE001F9F73 /* expMask.png */,
 				68BBD8A6192462DE001F9F73 /* expMask2.png */,
 			);
@@ -711,7 +711,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				68BBD89C192462D7001F9F73 /* test4.bmp in Resources */,
-				68BBD8AF192462DE001F9F73 /* CloseSelected.png in Resources */,
 				5087E78117EB970100C73F5D /* Icon-120.png in Resources */,
 				68BBD898192462D7001F9F73 /* test2.png in Resources */,
 				5087E78617EB970100C73F5D /* Icon-76.png in Resources */,
@@ -725,6 +724,7 @@
 				5087E77D17EB970100C73F5D /* Default-568h@2x.png in Resources */,
 				5087E78517EB970100C73F5D /* Icon-72.png in Resources */,
 				50EF62A317ECD613001EB2F8 /* Icon-50.png in Resources */,
+				68BBD8C41924DC8E001F9F73 /* CloseSelected.png in Resources */,
 				5087E78017EB970100C73F5D /* Icon-114.png in Resources */,
 				68BBD8B1192462DE001F9F73 /* expMask.png in Resources */,
 				50EF62A217ECD613001EB2F8 /* Icon-29.png in Resources */,
@@ -751,6 +751,7 @@
 				68BBD8B2192462DE001F9F73 /* expMask.png in Resources */,
 				68BBD897192462D7001F9F73 /* test.png in Resources */,
 				68BBD89D192462D7001F9F73 /* test4.bmp in Resources */,
+				68BBD8C51924DC8E001F9F73 /* CloseSelected.png in Resources */,
 				68BBD8AC192462DE001F9F73 /* circle.png in Resources */,
 				68BBD899192462D7001F9F73 /* test2.png in Resources */,
 				68BBD8AE192462DE001F9F73 /* CloseNormal.png in Resources */,
@@ -763,7 +764,6 @@
 				68BBD89B192462D7001F9F73 /* test3.png in Resources */,
 				68BBD89F192462D7001F9F73 /* test4.png in Resources */,
 				68BBD8A8192462DE001F9F73 /* bluryBack.png in Resources */,
-				68BBD8B0192462DE001F9F73 /* CloseSelected.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

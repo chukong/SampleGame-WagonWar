@@ -47,9 +47,21 @@ public:
     CREATE_FUNC(CollisionCheckNode);
     CC_SYNTHESIZE(Level*, _level, Level);
     CC_SYNTHESIZE(cocos2d::Layer*, _bullets, BulletLayer);
+    CC_SYNTHESIZE(cocos2d::Layer*, _players, PlayerLayer);
     CC_SYNTHESIZE(cocos2d::ParallaxNode*, _gameLayer, GameLayer);
 protected:
     cocos2d::CustomCommand _customCommand;
+};
+
+
+class TestNode : public cocos2d::Sprite
+{
+public:
+    static TestNode* create();
+    bool airborn;
+    int radius;
+    TestNode():airborn(true){};
+    CC_SYNTHESIZE(cocos2d::Point, _LastPos, LastPos);
 };
 
 

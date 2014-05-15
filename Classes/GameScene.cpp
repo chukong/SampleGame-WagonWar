@@ -58,6 +58,15 @@ bool GameScene::init()
     background->setBlendFunc(background_blendfunc);
 
     //layer for players
+    auto playerLayer = Layer::create();
+    this->addChild(playerLayer, 3, Point(1, 1), offset);
+    playerLayer->setContentSize(lvl->getRT()->getContentSize());
+    this->setPlayerLayer(playerLayer);
+    collChecker->setPlayerLayer(playerLayer);
+    playerLayer->setAnchorPoint(Point::ANCHOR_MIDDLE);
+    playerLayer->ignoreAnchorPointForPosition(false);
+    
+    
     
     //layer for bullets
     auto bulletLayer =Layer::create();
@@ -86,7 +95,17 @@ bool GameScene::init()
     //init explosion masks
     this->initExplosionMasks();
     
+    
+    //init tests
+    this->initTests();
     return true;
+}
+void GameScene::initTests()
+{
+    auto p = TestNode::create();
+    p->setPosition(500,800);
+    p->setLastPos(Point(500,800));
+    getPlayerLayer()->addChild(p);
 }
 void GameScene::initExplosionMasks()
 {
@@ -112,7 +131,8 @@ void GameScene::initExplosionMasks()
     _burn->setScale(1.05);
     _ex->addChild(_burn);
     _burn->setPosition(Point(_ex->getContentSize()/2));
-    _ex->setScaleX(1.4);
+    _ex->setScaleX(1.7);
+    _ex->setScaleY(1.4);
 }
 
 bool GameScene::onTouchBegan(Touch* touch, Event* event)
@@ -152,9 +172,18 @@ void GameScene::update(float dt)
             if(b->willExplode())
             {
                 //log("%f, %f", b->getPosition().x, b->getPosition().y);
-                _ex->setPosition(b->getPosition());
+                _ex->setPosition(pos);
                 _ex->visit();
                 b->runAction(RemoveSelf::create());
+                //check to see if any player got caught in the blast
+                for(Node* player : _PlayerLayer->getChildren())
+                {
+                    TestNode *p = dynamic_cast<TestNode*>(player);
+                    if(!p->airborn && p->getPosition().getDistance(pos)< b->getConfig()->expRadius)
+                    {
+                        p->airborn = true;
+                    }
+                }
             }
             else
             {
@@ -163,4 +192,14 @@ void GameScene::update(float dt)
             }
         }
     _level->getRT()->end();
+    for(Node* player : _PlayerLayer->getChildren())
+    {
+        TestNode *p = dynamic_cast<TestNode*>(player);
+        if(p->airborn)
+        {
+            auto pos = p->getPosition();
+            p->setPosition(pos+(pos-p->getLastPos())+getGravity()+getWind());
+            p->setLastPos(pos);
+        }
+    }
 }

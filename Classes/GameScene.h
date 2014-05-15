@@ -36,6 +36,7 @@ public:
     CC_SYNTHESIZE(cocos2d::Point, _wind, Wind);
     CC_SYNTHESIZE(cocos2d::Point, _gravity, Gravity);
     void initExplosionMasks();
+    void initTests();
     Bullet* addBullet(BulletTypes type, cocos2d::Point pos, cocos2d::Point vector);
     cocos2d::Point offset;
 protected:
