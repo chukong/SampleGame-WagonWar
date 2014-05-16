@@ -30,6 +30,8 @@ public:
     
     void update(float dt);
     
+    cocos2d::Point getActualPos(cocos2d::Touch * touch);
+    
     CC_SYNTHESIZE(Level*, _level, Level);
     CC_SYNTHESIZE(cocos2d::Layer*, _PlayerLayer, PlayerLayer);
     CC_SYNTHESIZE(cocos2d::Layer*, _bulletLayer, BulletLayer);

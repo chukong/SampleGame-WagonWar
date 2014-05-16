@@ -123,8 +123,41 @@ bool GameScene::onTouchBegan(Touch* touch, Event* event)
 void GameScene::onTouchMoved(Touch* touch, Event* event)
 {
     _click = false;
-    setPosition(getPosition()+touch->getDelta());
+    setPosition(getActualPos(touch));
 }
+
+Point GameScene::getActualPos(cocos2d::Touch * touch)
+{
+    const int base_distance = 200;
+    const float base_ratio = 0.0f;
+    
+    auto visibleSize = Director::getInstance()->getWinSize();
+    Point pos(getPosition()+touch->getDelta());
+    Point min_inclusive = Point(-(_level->getRT()->getContentSize().width-visibleSize.width)/2,-(_level->getRT()->getContentSize().height-visibleSize.height)/2);
+    Point max_inclusive = Point((_level->getRT()->getContentSize().width-visibleSize.width)/2,(_level->getRT()->getContentSize().height-visibleSize.height)/2);
+    Point actual_point = pos.getClampPoint(min_inclusive, max_inclusive);
+    if(actual_point.x>0 && max_inclusive.x-actual_point.x<base_distance && max_inclusive.x-actual_point.x>-3)
+    {
+        actual_point.x = getPosition().x+ (base_ratio+(max_inclusive.x-actual_point.x)/(100/(1-base_ratio)))*touch->getDelta().x;
+    }
+    else if(actual_point.x<0 && actual_point.x-min_inclusive.x<base_distance && actual_point.x-min_inclusive.x>-3)
+    {
+        actual_point.x = getPosition().x+ (base_ratio+(actual_point.x-min_inclusive.x)/(100/(1-base_ratio)))*touch->getDelta().x;
+    }
+    
+    if(actual_point.y>0 && max_inclusive.y-actual_point.y<base_distance && max_inclusive.y-actual_point.y>-3)
+    {
+        actual_point.y = getPosition().y+ (base_ratio+(max_inclusive.y-actual_point.y)/(100/(1-base_ratio)))*touch->getDelta().y;
+    }
+    else if(actual_point.y<0 && actual_point.y-min_inclusive.y<base_distance && actual_point.y-min_inclusive.y>-3)
+    {
+        actual_point.y = getPosition().y+ (base_ratio+(actual_point.y-min_inclusive.y)/(100/(1-base_ratio)))*touch->getDelta().y;
+    }
+    
+    log("WTF...%f,%f",actual_point.x,actual_point.y);
+    return actual_point;
+}
+
 void GameScene::onTouchEnded(Touch* touch, Event* event)
 {
     if(_click)
