@@ -31,22 +31,14 @@ bool GameScene::init()
     auto visibleSize = Director::getInstance()->getVisibleSize();
     auto offset = Point(visibleSize/2);
     
+    //load background
+    auto background = Sprite::create("bluryBack.png");
+    this->addChild(background, 1, Point(0.5, 0.5), offset);
     
     //load map
     auto lvl = Level::create("map.png");
-    this->addChild(lvl, 1, Point(1, 1), offset);
+    this->addChild(lvl, 2, Point(1, 1), offset);
     this->setLevel(lvl);
-    
-    
-    
-    //load background
-    auto background = Sprite::create("bluryBack.png");
-    this->addChild(background, 3, Point(0.5, 0.5), offset);
-    BlendFunc background_blendfunc={
-        GL_ONE_MINUS_DST_ALPHA,
-        GL_ONE
-    };
-    background->setBlendFunc(background_blendfunc);
     
 
     //layer for players
