@@ -25,7 +25,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
         
         director->setOpenGLView(glview);
     }
-    //glview->setDesignResolutionSize(960, 640, ResolutionPolicy::FIXED_HEIGHT);
+    glview->setDesignResolutionSize(960, 640, ResolutionPolicy::FIXED_HEIGHT);
     log("%f, scale", director->getContentScaleFactor());
     log("%f, scale2", director->getWinSize().width/ director->getOpenGLView()->getFrameSize().width  );
     // turn on display FPS
