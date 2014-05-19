@@ -19,6 +19,14 @@ void Helper::removeAfter(Node* node, float seconds)
                                      nullptr));
 }
 
+bool Helper::isInCircle(int index, int radius)
+{
+    //find out x and y;
+    int x = index/(radius*2);
+    int y = index%(radius*2);
+    return pow(x-radius,2) + pow(y-radius, 2) <= radius*radius;
+}
+
 void DepthOn::onDraw()
 {
     glEnable(GL_DEPTH_TEST);
@@ -55,6 +63,8 @@ void CollisionCheckNode::checkCollision()
     auto aabb2 = getBulletLayer()->getBoundingBox();
     Point offset(aabb2.origin+getGameLayer()->getPosition());
     aabb2.origin = Point::ZERO;
+    auto origin = Director::getInstance()->getVisibleOrigin();
+    
     //log("bullet layer aabb %f, %f", aabb2.origin.x, aabb2.origin.y);
     for(Node* bullet : _bullets->getChildren())
     {
@@ -86,11 +96,11 @@ void CollisionCheckNode::checkCollision()
             
             Color4B *buffer = (Color4B*)malloc(sizeof(Color4B)*bufferSize);
             
-            glReadPixels(pos.x-radius, pos.y-radius, radius*2, radius*2, GL_RGBA, GL_UNSIGNED_BYTE, buffer);
+            glReadPixels(int (pos.x-radius*0.833984), int (pos.y-radius*0.833984), int(radius*2*0.833984), int(radius*2*0.833984), GL_RGBA, GL_UNSIGNED_BYTE, buffer);
             
             for(int i = 0; i < bufferSize; i++)
             {
-                if(buffer[i].a>0)
+                if(buffer[i].a>0 && Helper::isInCircle(i, radius))
                 {
                     b->explode();
                     coll = true;
@@ -118,14 +128,14 @@ void CollisionCheckNode::checkCollision()
         if(p->airborn)
         {
             Point pos(p->getPosition()+offset);
-            int radius =p->getContentSize().width/2;
+            int radius =p->radius;
             int bufferSize =pow(radius*2,2);
             Color4B *buffer = (Color4B*)malloc(sizeof(Color4B)*bufferSize);
             glReadPixels(pos.x-radius, pos.y-radius, radius*2, radius*2, GL_RGBA, GL_UNSIGNED_BYTE, buffer);
             for(int i = 0; i < bufferSize; i++)
             {
                 //TODO:: need to pass circle check
-                if(buffer[i].a>0)
+                if(buffer[i].a>0 && Helper::isInCircle(i, radius)  )
                 {
                     p->airborn = false;
                     p->setLastPos(p->getPosition());
@@ -140,11 +150,20 @@ void CollisionCheckNode::checkCollision()
 
 TestNode* TestNode::create()
 {
+    auto sp = Sprite::create("testnode.png");
     TestNode* ret = new TestNode;
-    if(ret->initWithFile("CloseSelected.png"))
+    if(sp)
     {
         ret->radius = ret->getContentSize().width/2;
+        sp->setFlippedX(true);
+        ret->addChild(sp);
+        sp->setPosition(0, 50);
         ret->autorelease();
+        ret->radius = 20;
+        
+        auto drawN = DrawNode::create();
+        drawN ->drawDot(Point::ZERO, ret->radius, Color4F::GREEN);
+        ret->addChild(drawN);
         return ret;
     }
     CC_SAFE_DELETE(ret);

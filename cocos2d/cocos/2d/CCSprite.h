@@ -81,7 +81,10 @@ struct transformValues_;
 class CC_DLL Sprite : public Node, public TextureProtocol
 {
 public:
-
+    //Hack alert:
+    void ManualDraw();
+    
+    
     static const int INDEX_NOT_INITIALIZED = -1; /// Sprite invalid index on the SpriteBatchNode
 
     /// @{
