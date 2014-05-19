@@ -26,9 +26,11 @@ public:
     void onTouchMoved(cocos2d::Touch *touch, cocos2d::Event *event);
     void onTouchEnded(cocos2d::Touch *touch, cocos2d::Event *event);
     
-    
+    void filter();
     
     void update(float dt);
+    
+    cocos2d::Point getActualPos(cocos2d::Touch * touch);
     
     CC_SYNTHESIZE(Level*, _level, Level);
     CC_SYNTHESIZE(cocos2d::Layer*, _PlayerLayer, PlayerLayer);
