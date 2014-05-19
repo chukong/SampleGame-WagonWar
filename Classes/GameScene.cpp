@@ -86,6 +86,8 @@ bool GameScene::init()
     //init explosion masks
     this->initExplosionMasks();
     
+    filter();
+    
     return true;
 }
 void GameScene::initExplosionMasks()
@@ -160,7 +162,7 @@ Point GameScene::getActualPos(cocos2d::Touch * touch)
 
 void GameScene::onTouchEnded(Touch* touch, Event* event)
 {
-    if(_click)
+//    if(_click)
     {
         Point test(getBulletLayer()->convertToNodeSpace(touch->getLocation()));
         addBullet(defaultB, test, Point(2,5));
@@ -196,4 +198,21 @@ void GameScene::update(float dt)
             }
         }
     _level->getRT()->end();
+}
+
+
+void GameScene::filter()
+{
+    int count = 0;
+    int array[10][10]={0};
+    for (int i = 0; i<10 ; ++i) {
+        for (int j = 0; j<10; ++j) {
+            if(pow((i-5),2)+pow((j-5), 2) <= 25)
+            {
+                log("the ok value is array[%d][%d] = %d.",i,j,array[i][j]);
+                count++;
+            }
+        }
+    }
+    log("the count of ok is %d", count);
 }
