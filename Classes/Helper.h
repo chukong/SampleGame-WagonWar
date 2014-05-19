@@ -16,7 +16,7 @@ class Helper
 {
 public:
     static void removeAfter(cocos2d::Node* node, float seconds);
-    
+    static bool isInCircle(int index, int radius);
 };
 
 class DepthOn : public cocos2d::Node
@@ -44,12 +44,25 @@ class CollisionCheckNode : public cocos2d::Node
 public:
     void checkCollision();
     virtual void visit(cocos2d::Renderer *renderer, const kmMat4& parentTransform, bool parentTransformUpdated);
-    CREATE_FUNC(CollisionCheckNode);
-    CC_SYNTHESIZE(Level*, _level, Level);
+    CollisionCheckNode* create(cocos2d::ParallaxNode* game, cocos2d::Layer* player, cocos2d::Layer* bullet, cocos2d::RenderTexture* terrain);
+    CC_SYNTHESIZE(cocos2d::RenderTexture*, _level, Level);
     CC_SYNTHESIZE(cocos2d::Layer*, _bullets, BulletLayer);
+    CC_SYNTHESIZE(cocos2d::Layer*, _players, PlayerLayer);
     CC_SYNTHESIZE(cocos2d::ParallaxNode*, _gameLayer, GameLayer);
+    CC_SYNTHESIZE(cocos2d::RenderTexture*, _rt, RT);
 protected:
     cocos2d::CustomCommand _customCommand;
+};
+
+
+class TestNode : public cocos2d::Node
+{
+public:
+    static TestNode* create();
+    bool airborn;
+    int radius;
+    TestNode():airborn(true){};
+    CC_SYNTHESIZE(cocos2d::Point, _LastPos, LastPos);
 };
 
 

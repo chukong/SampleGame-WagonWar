@@ -21,12 +21,13 @@ bool AppDelegate::applicationDidFinishLaunching() {
         height = 640;
         width = height*(960.0/640.0);
         
-        glview = GLView::createWithRect("TankMultiplayer", Rect(0, 0, width, height));
+        glview = GLView::createWithRect("TankMultiplayer", Rect(0, 0, 1024, 768));
         
         director->setOpenGLView(glview);
     }
-    glview->setDesignResolutionSize(960, 640, ResolutionPolicy::FIXED_HEIGHT);
-    
+    //glview->setDesignResolutionSize(960, 640, ResolutionPolicy::FIXED_HEIGHT);
+    log("%f, scale", director->getContentScaleFactor());
+    log("%f, scale2", director->getWinSize().width/ director->getOpenGLView()->getFrameSize().width  );
     // turn on display FPS
     director->setDisplayStats(true);
     
@@ -34,8 +35,8 @@ bool AppDelegate::applicationDidFinishLaunching() {
     director->setAnimationInterval(1.0 / 60);
     
     // create a scene. it's an autorelease object
- //   auto scene = GameScene::createScene();
-    auto scene = MainScreenScene::createScene();
+    auto scene = GameScene::createScene();
+//    auto scene = MainScreenScene::createScene();
     // run
     director->runWithScene(scene);
     

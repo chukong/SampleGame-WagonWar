@@ -178,6 +178,9 @@ public:
     bool initWithWidthAndHeight(int w, int h, Texture2D::PixelFormat format, GLuint depthStencilFormat);
     virtual const Size& getContentSize() const;
     virtual Rect getBoundingBox() const;
+    
+    void onBegin();
+    void onEnd();
 protected:
     virtual void beginWithClear(float r, float g, float b, float a, float depthValue, int stencilValue, GLbitfield flags);
     
@@ -218,8 +221,7 @@ protected:
     CustomCommand _saveToFileCommand;
 protected:
     //renderer caches and callbacks
-    void onBegin();
-    void onEnd();
+
 
     void onClear();
     void onClearDepth();

@@ -585,7 +585,43 @@ void Sprite::updateTransform(void)
 }
 
 // draw
-
+void Sprite::ManualDraw()
+{
+    kmMat4 parentTransform;
+    kmGLGetMatrix(KM_GL_MODELVIEW, &parentTransform);
+    _modelViewTransform = this->transform(parentTransform);
+    auto shader = getShaderProgram();
+    shader->use();
+    shader->setUniformsForBuiltins(_modelViewTransform);
+    kmGLPushMatrix();
+    kmGLLoadMatrix(&_modelViewTransform);
+    
+    GL::enableVertexAttribs(cocos2d::GL::VERTEX_ATTRIB_FLAG_POS_COLOR_TEX );
+    GL::blendFunc(_blendFunc.src, _blendFunc.dst);
+    GL::bindTexture2D( getTexture()->getName());
+    
+    //
+    // Attributes
+    //
+#define kQuadSize sizeof(_quad.bl)
+    size_t offset = (size_t)&_quad;
+    
+    // vertex
+    int diff = offsetof( V3F_C4B_T2F, vertices);
+    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 3, GL_FLOAT, GL_FALSE, kQuadSize, (void*) (offset + diff));
+    
+    // texCoods
+    diff = offsetof( V3F_C4B_T2F, texCoords);
+    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORDS, 2, GL_FLOAT, GL_FALSE, kQuadSize, (void*)(offset + diff));
+    
+    // color
+    diff = offsetof( V3F_C4B_T2F, colors);
+    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_UNSIGNED_BYTE, GL_TRUE, kQuadSize, (void*)(offset + diff));
+    
+    glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+    CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1, 4);
+    kmGLPopMatrix();
+}
 void Sprite::draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated)
 {
     // Don't do calculate the culling if the transform was not updated

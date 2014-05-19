@@ -22,8 +22,8 @@ USING_NS_CC;
 BulletConfig Bullet::defaultBullet={
     "circle.png",
     100,
-    5,
-    20
+    3,
+    90
 };
 
 void Bullet::drawFinished()

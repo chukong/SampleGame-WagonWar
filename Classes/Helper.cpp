@@ -19,6 +19,14 @@ void Helper::removeAfter(Node* node, float seconds)
                                      nullptr));
 }
 
+bool Helper::isInCircle(int index, int radius)
+{
+    //find out x and y;
+    int x = index/(radius*2);
+    int y = index%(radius*2);
+    return pow(x-radius,2) + pow(y-radius, 2) <= radius*radius;
+}
+
 void DepthOn::onDraw()
 {
     glEnable(GL_DEPTH_TEST);
@@ -55,13 +63,32 @@ void CollisionCheckNode::checkCollision()
     auto aabb2 = getBulletLayer()->getBoundingBox();
     Point offset(aabb2.origin+getGameLayer()->getPosition());
     aabb2.origin = Point::ZERO;
+    auto origin = Director::getInstance()->getVisibleOrigin();
+    
     //log("bullet layer aabb %f, %f", aabb2.origin.x, aabb2.origin.y);
     for(Node* bullet : _bullets->getChildren())
     {
+        bool coll = false;
         Bullet* b = dynamic_cast<Bullet*>(bullet);
         auto aabb1 = b->getBoundingBox();
         if(aabb2.intersectsRect(aabb1))
         {
+            //check if we are colliding with a player
+            for(Node* player : _players->getChildren())
+            {
+                TestNode* p = dynamic_cast<TestNode*>(player);
+                if(b->getPosition().getDistance(p->getPosition())< b->getConfig()->radius + p->radius)
+                {
+                    b->explode();
+                    log("collided with player");
+                    coll = true;
+                    break;
+                }
+            }
+            if(coll)
+                return;
+            
+            
             //Point pos(Director::getInstance()->convertToGL(b->getPosition()));
             Point pos(b->getPosition()+offset);
             int radius =b->getConfig()->radius;
@@ -69,11 +96,11 @@ void CollisionCheckNode::checkCollision()
             
             Color4B *buffer = (Color4B*)malloc(sizeof(Color4B)*bufferSize);
             
-            glReadPixels(pos.x-radius, pos.y-radius, radius*2, radius*2, GL_RGBA, GL_UNSIGNED_BYTE, buffer);
-            bool coll = false;
+            glReadPixels(int (pos.x-radius*0.833984), int (pos.y-radius*0.833984), int(radius*2*0.833984), int(radius*2*0.833984), GL_RGBA, GL_UNSIGNED_BYTE, buffer);
+            
             for(int i = 0; i < bufferSize; i++)
             {
-                if(buffer[i].a>0)
+                if(buffer[i].a>0 && Helper::isInCircle(i, radius))
                 {
                     b->explode();
                     coll = true;
@@ -94,4 +121,51 @@ void CollisionCheckNode::checkCollision()
             b->runAction(RemoveSelf::create());
         }
     }
+    
+    for(Node* player : _players->getChildren())
+    {
+        TestNode* p = dynamic_cast<TestNode*>(player);
+        if(p->airborn)
+        {
+            Point pos(p->getPosition()+offset);
+            int radius =p->radius;
+            int bufferSize =pow(radius*2,2);
+            Color4B *buffer = (Color4B*)malloc(sizeof(Color4B)*bufferSize);
+            glReadPixels(pos.x-radius, pos.y-radius, radius*2, radius*2, GL_RGBA, GL_UNSIGNED_BYTE, buffer);
+            for(int i = 0; i < bufferSize; i++)
+            {
+                //TODO:: need to pass circle check
+                if(buffer[i].a>0 && Helper::isInCircle(i, radius)  )
+                {
+                    p->airborn = false;
+                    p->setLastPos(p->getPosition());
+                    break;
+                }
+            }
+            free(buffer);
+        }
+    }
+}
+
+
+TestNode* TestNode::create()
+{
+    auto sp = Sprite::create("testnode.png");
+    TestNode* ret = new TestNode;
+    if(sp)
+    {
+        ret->radius = ret->getContentSize().width/2;
+        sp->setFlippedX(true);
+        ret->addChild(sp);
+        sp->setPosition(0, 50);
+        ret->autorelease();
+        ret->radius = 20;
+        
+        auto drawN = DrawNode::create();
+        drawN ->drawDot(Point::ZERO, ret->radius, Color4F::GREEN);
+        ret->addChild(drawN);
+        return ret;
+    }
+    CC_SAFE_DELETE(ret);
+    return nullptr;
 }
