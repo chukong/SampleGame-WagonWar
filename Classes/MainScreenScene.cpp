@@ -36,7 +36,7 @@ bool MainScreenScene::init()
 //    m_pUILayer->scheduleUpdate();
 //    addChild(m_pUILayer);
 //    
-//    auto myLayout = dynamic_cast<Layout*>(GUIReader::getInstance()->widgetFromJsonFile("mainscreen.Exportjson"));
+//    auto myLayout = dynamic_cast<Layout*>(GUIReader::getInstance()->widgetFromJsonFile("MainScreen.Exportjson"));
 //    m_pUILayer->addChild(myLayout);
 //    
 //    auto startGame = static_cast<Button*>(Helper::seekWidgetByName(myLayout, "start_game"));
