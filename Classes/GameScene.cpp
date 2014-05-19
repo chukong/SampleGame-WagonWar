@@ -117,15 +117,16 @@ void GameScene::initExplosionMasks()
         GL_DST_ALPHA,
         GL_ONE_MINUS_SRC_ALPHA
     };
-    //_ex->setBlendFunc(cut);
+    _ex->setBlendFunc(cut);
     
-    //_burn->setBlendFunc(keepAlpha);
+    _burn->setBlendFunc(keepAlpha);
     _ex->retain();
     _burn->retain();
     
-    _burn->setScale(1.05);
-    _ex->addChild(_burn);
-    _burn->setPosition(Point(_ex->getContentSize()/2));
+    _burn->setScaleX(1.7*1.05);
+    _burn->setScaleY(1.4*1.05);
+    //_ex->addChild(_burn);
+    //_burn->setPosition(Point(_ex->getContentSize()/2));
     _ex->setScaleX(1.7);
     _ex->setScaleY(1.4);
 }
@@ -196,13 +197,13 @@ Bullet* GameScene::addBullet(BulletTypes type, cocos2d::Point pos, cocos2d::Poin
 }
 void GameScene::explode(Bullet *bullet)
 {
-    auto aabb2 = _bulletLayer->getBoundingBox();
-    Point offset(aabb2.origin+getPosition());
     auto pos = bullet->getPosition();
-    _ex->setPosition(pos+offset);
+    _ex->setPosition(pos);
     //TODO: set _ex size according to bullet config
     _ex->ManualDraw();
-//    bullet->runAction(RemoveSelf::create());
+    _burn->setPosition(pos);
+    _burn->ManualDraw();
+    bullet->runAction(RemoveSelf::create());
     
     //check to see if player got caught in the blast
     for(Node* player : _PlayerLayer->getChildren())
@@ -229,7 +230,6 @@ void GameScene::update(float dt)
     for(Node* bullet : _bulletLayer->getChildren())
     {
         Bullet *b = dynamic_cast<Bullet*>(bullet);
-        this->explode(b);
         auto pos = b->getPosition();
         bool coll = false;
         int bulletRadius =b->getConfig()->radius;

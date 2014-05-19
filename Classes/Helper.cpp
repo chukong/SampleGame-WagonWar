@@ -63,7 +63,6 @@ void CollisionCheckNode::checkCollision()
     auto aabb2 = getBulletLayer()->getBoundingBox();
     Point offset(aabb2.origin+getGameLayer()->getPosition());
     aabb2.origin = Point::ZERO;
-    auto origin = Director::getInstance()->getVisibleOrigin();
     
     //log("bullet layer aabb %f, %f", aabb2.origin.x, aabb2.origin.y);
     for(Node* bullet : _bullets->getChildren())
