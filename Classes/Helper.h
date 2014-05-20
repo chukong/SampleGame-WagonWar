@@ -17,6 +17,8 @@ class Helper
 public:
     static void removeAfter(cocos2d::Node* node, float seconds);
     static bool isInCircle(int index, int radius);
+    static float getAngleFromIndex(int index, int radius);
+    static cocos2d::Point getPointFromIndex(int index, int radius);
 };
 
 class DepthOn : public cocos2d::Node

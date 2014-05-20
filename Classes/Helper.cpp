@@ -26,6 +26,19 @@ bool Helper::isInCircle(int index, int radius)
     int y = index%(radius*2);
     return pow(x-radius,2) + pow(y-radius, 2) <= radius*radius;
 }
+float Helper::getAngleFromIndex(int index, int radius)
+{
+    int x = index/(radius*2);
+    int y = index%(radius*2);
+    if(x == y == radius)
+        return -999;
+    
+    return atan2f(y-radius, x-radius);
+}
+Point Helper::getPointFromIndex(int index, int radius)
+{
+    return Point(index/(radius*2),index%(radius*2));
+}
 
 void DepthOn::onDraw()
 {

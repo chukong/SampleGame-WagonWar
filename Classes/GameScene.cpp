@@ -122,10 +122,7 @@ void GameScene::initExplosionMasks()
     _ex->setScaleX(1.7);
     _ex->setScaleY(1.4);
 }
-void GameScene::draw(cocos2d::Renderer *renderer, const kmMat4 &transform, bool transformUpdated)
-{
-    //log("in draw");
-}
+
 
 
 bool GameScene::onTouchBegan(Touch* touch, Event* event)
@@ -302,6 +299,7 @@ void GameScene::update(float dt)
                 if(buffer[i].a> 0 && Helper::isInCircle(i, radius))
                 {
                     //TODO: need to fix position, so does not clip with terrain, and get angle
+                    p->setRotation(CC_RADIANS_TO_DEGREES(Helper::getAngleFromIndex(i, radius))+180);
                     p->airborn = false;
                     p->setLastPos(p->getPosition());
                     break;
