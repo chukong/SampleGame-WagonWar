@@ -42,7 +42,7 @@ public:
     Bullet* addBullet(BulletTypes type, cocos2d::Point pos, cocos2d::Point vector);
     cocos2d::Point offset;
     
-    virtual void draw(cocos2d::Renderer* renderer, const kmMat4 &transform, bool transformUpdated);
+    //virtual void draw(cocos2d::Renderer* renderer, const kmMat4 &transform, bool transformUpdated);
     void explode(Bullet* bullet);
 protected:
     GameScene():_click(false),_steps(2){};

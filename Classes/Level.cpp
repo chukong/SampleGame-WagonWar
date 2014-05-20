@@ -18,14 +18,10 @@ Level* Level::create(const std::string &filename)
     Texture2D::setDefaultAlphaPixelFormat(Texture2D::PixelFormat::RGBA8888);
     //ret->setDefaultSprite(sp);
     Size size = sp->getContentSize();
-    Size winSize = Director::getInstance()->getVisibleSize();
-    auto ret = RenderTexture::create(size.width, size.height, Texture2D::PixelFormat::RGBA8888);
+    //Size winSize = Director::getInstance()->getVisibleSize();
+    auto ret = RenderTexture::create(size.width, size.height, Texture2D::PixelFormat::RGBA4444);
     lvl->addChild(ret);
     lvl->setRT(ret);
-    
-    //** register post update after the drawing is done
-    auto listener = EventListenerCustom::create(Director::EVENT_AFTER_DRAW, CC_CALLBACK_0(Level::postUpdate, lvl));
-    ret->getEventDispatcher()->addEventListenerWithSceneGraphPriority(listener, ret);
     
     //** need to draw the default sprite
     ret->begin();
@@ -39,9 +35,4 @@ Level* Level::create(const std::string &filename)
     lvl->autorelease();
     
     return lvl;
-}
-
-void Level::postUpdate()
-{
-    
 }
