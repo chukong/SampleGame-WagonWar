@@ -22,6 +22,8 @@ Scene* GameScene::createScene()
     // add layer as a child to scene
     scene->addChild(layer);
     
+    
+    
     // return the scene
     return scene;
 }
@@ -164,7 +166,7 @@ Point GameScene::getActualPos(cocos2d::Touch * touch)
         actual_point.y = getPosition().y+ (base_ratio+(actual_point.y-min_inclusive.y)/(100/(1-base_ratio)))*touch->getDelta().y;
     }
     
-    log("WTF...%f,%f",actual_point.x,actual_point.y);
+    //log("WTF...%f,%f",actual_point.x,actual_point.y);
     return actual_point;
 }
 
@@ -192,15 +194,27 @@ void GameScene::explode(Bullet *bullet)
     _ex->ManualDraw();
     _burn->setPosition(pos);
     _burn->ManualDraw();
+    float exRad =bullet->getConfig()->expRadius;
     bullet->runAction(RemoveSelf::create());
     
     //check to see if player got caught in the blast
     for(Node* player : _PlayerLayer->getChildren())
     {
         TestNode *p = dynamic_cast<TestNode*>(player);
-        if(p->getPosition().getDistance(pos)< bullet->getConfig()->expRadius + p->radius)
+        Point ppos(p->getPosition());
+        float dist = ppos.getDistance(pos);
+        if(dist< exRad + p->radius)
         {
             p->airborn = true;
+            //TODO: bullet might have push force
+            //get angle from player to bullet
+
+            float rad = (ppos-pos).getAngle();
+            float pushForce = (exRad - dist)*0.05;
+            Point mid(ppos.x-pushForce*cosf(rad), ppos.y-pushForce*sinf(rad));
+            log("b pos %f, %f | m pos %f, %f", (pos-ppos).x, (pos-ppos).y, (mid-ppos).x, (mid-ppos).y);
+            p->setLastPos(mid);
+            
             //TODO: player should take damage
         }
     }
@@ -282,7 +296,7 @@ void GameScene::update(float dt)
     for(Node* player : _PlayerLayer->getChildren())
     {
         TestNode* p = dynamic_cast<TestNode*>(player);
-        if(p->airborn)
+        if(p->airborn || p->needFix)
         {
             //move this
             auto pos2 = p->getPosition();
@@ -294,18 +308,66 @@ void GameScene::update(float dt)
             int bufferSize = pow(radius*2, 2);
             Color4B *buffer = (Color4B*)malloc(sizeof(Color4B)*bufferSize);
             glReadPixels(pos.x-radius, pos.y-radius, radius*2, radius*2, GL_RGBA, GL_UNSIGNED_BYTE, buffer);
+            float angleTotal =0;
+            int angleCount = 0;
             for(int i = 0; i < bufferSize; i++)
             {
                 if(buffer[i].a> 0 && Helper::isInCircle(i, radius))
                 {
                     //TODO: need to fix position, so does not clip with terrain, and get angle
-                    p->setRotation(CC_RADIANS_TO_DEGREES(Helper::getAngleFromIndex(i, radius))+180);
+                    float an = Helper::getAngleFromIndex(i, radius);
+                    if(an != -999)
+                    {
+                        angleTotal+=an;
+                        angleCount++;
+                        //log("rad: %f, %i", an, i);
+                    }
                     p->airborn = false;
                     p->setLastPos(p->getPosition());
-                    break;
+                    //break;
                 }
             }
             free(buffer);
+            
+            //check how many collision points
+            if(angleCount)
+            {
+                //set angle to average
+                float deg =CC_RADIANS_TO_DEGREES(angleTotal/angleCount);
+                if(abs(deg) > 80)//TODO: each vehicle has a climbing angle limit
+                {
+                    p->setRotation((deg>0)? 80:-80);
+                    p->airborn = true;
+                }
+                else
+                {
+                    p->setRotation(deg);
+                }
+                if(angleCount > 3)
+                {
+                    //we are colliding with too many pixels
+                    p->needFix = true;
+                    float x = 0;
+                    if(deg>0)
+                    {
+                        //move right 1 pixel
+                        x= 0.5;
+                    }
+                    else if(deg < 0)
+                    {
+                        //move left 1 pixel
+                        x = -0.5;
+                    }
+                    Point pp(p->getPosition()+Point(x,0.5));
+                    p->setPosition(pp);
+                    p->setLastPos(pp);
+                }
+                else
+                {
+                    p->needFix = false;
+                }
+            }
+
         }
 
     _level->getRT()->onEnd();
