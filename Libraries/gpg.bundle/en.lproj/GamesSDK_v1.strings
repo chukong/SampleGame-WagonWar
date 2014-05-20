@@ -1,0 +1,811 @@
+/*
+  [GAMES]
+    Description: The text in a table cell when loading more data
+    CharacterLimit: 25
+*/
+"loading" = "Loading...";
+
+/*
+  [GAMES]
+    Description: The text in a table cell when loading more data
+    CharacterLimit: 25
+*/
+"load_more" = "Show 25 more...";
+
+/*
+  [GAMES]
+    Description: Text in a drag-refresh view when the top is dragged down
+    CharacterLimit: 25
+*/
+"drag_refresh_release" = "Release";
+
+/*
+  [GAMES]
+    Description: Text in a drag-refresh view when the top is partially dragged down
+    CharacterLimit: 32
+*/
+"drag_refresh_drag" = "Drag to reload";
+
+/*
+  [GAMES]
+    Description: Text in a drag-refresh view when new data is loading
+    CharacterLimit: 25
+*/
+"drag_refresh_loading" = "Loading...";
+
+/*
+  [GAMES]
+    Description: The title of the auth controller
+    CharacterLimit: 15
+*/
+"log_in" = "Log in";
+
+/*
+  [GAMES]
+    Description: Leaderboard navigation bar title
+    CharacterLimit: 12
+*/
+"leaderboard_title" = "Leaderboard";
+
+/*
+  [GAMES]
+    Description: Leaderboard navigation bar title when an error has occured
+    CharacterLimit: 10
+*/
+"leaderboard_title_error" = "Error";
+
+/*
+  [GAMES]
+    Description: Leaderboard time scope text for 'Today' scope
+    CharacterLimit: 10
+*/
+"leaderboard_time_scope_today" = "Today";
+
+/*
+  [GAMES]
+    Description: Leaderboard time scope text for 'This Week' scope
+    CharacterLimit: 11
+*/
+"leaderboard_time_scope_this_week" = "This Week";
+
+/*
+  [GAMES]
+    Description: Leaderboard time scope text for 'All Time' scope
+    CharacterLimit: 12
+*/
+"leaderboard_time_scope_all_time" = "All Time";
+
+/*
+  [GAMES]
+    Description: Leaderboard cell text for social-filter header
+    CharacterLimit: 20
+*/
+"leaderboard_cell_header_social" = "My Circles";
+
+/*
+  [GAMES]
+    Description: Leaderboard cell text when the player is the logged in user
+    CharacterLimit: 10
+*/
+"leaderboard_entry_me" = "You";
+
+/*
+  [GAMES]
+    Description: Leaderboard cell text for public header
+    CharacterLimit: 25
+*/
+"leaderboard_cell_header_public" = "Public";
+
+/*
+  [GAMES]
+    Description: Leaderboard cell text for an empty leaderboard
+    CharacterLimit: 25
+*/
+"leaderboard_cell_empty" = "No scores";
+
+/*
+ [GAMES]
+ Description: Leaderboard cell button title to launch detailed description for non-public player score.
+ CharacterLimit: 25
+*/
+"leaderboard_unranked_button" = "Learn more";
+
+/*
+ [GAMES]
+ Description: Description to explain why user isn't ranked on the leaderboard when he doesn't set game activity setting to Public.
+ CharacterLimit: 130
+ */
+"leaderboard_learnmore_text" = "You are not ranked because your game activity is not visible publicly.  To be ranked, change you game activity setting to Public.";
+
+/*
+ [GAMES]
+ Description: OK button title for a information dialog
+ CharacterLimit: 5
+ */
+"leaderboard_learnmore_ok" = "OK";
+
+/*
+ [GAMES]
+ Description: Title text on achievement notification toast view
+ CharacterLimit: 25
+ */
+"achievement_unlocked" = "Achievement Unlocked";
+
+/*
+  [GAMES]
+    Description: Achievement state when it has not been revealed to the user yet
+    CharacterLimit: 20
+*/
+"achievement_state_unrevealed" = "Secret";
+
+/*
+  [GAMES]
+    Description: Achievement value when only 1 point
+    CharacterLimit: 10
+*/
+"achievement_value_single" = "1 point";
+
+/*
+  [GAMES]
+    Description: Achievement value when more than 1 point, or zero points
+    CharacterLimit: 10
+    Variables:
+      %d = The value of the achievement in points.
+*/
+"achievement_value" = "%d pts";
+
+/*
+  [GAMES]
+    Description: Achievements widget detail text when achievement is unrevealed
+    CharacterLimit: 57
+*/
+"achievement_state_unrevealed_detail" = "Keep playing to learn about this achievement!";
+
+/*
+  [GAMES]
+    Description: Achievements title on navigation bar (G+)
+    CharacterLimit: 15
+*/
+"achievements_title" = "Achievements";
+
+/*
+  [GAMES]
+    Description: Achievements cell contents when no achievements found
+    CharacterLimit: 25
+*/
+"achievements_empty" = "No Achievements";
+
+/*
+  [GAMES]
+    Description: Achievements title in table header view (G+)
+    CharacterLimit: 25
+*/
+"achievements_total_unlocked" = "Total unlocked";
+
+/*
+  [GAMES]
+    Description: Achievements title in table header view with number of unlocked achievements and total number of achievements
+    CharacterLimit: 25
+    Variables:
+      %1$d = The number of unlocked achievements
+      %2$d = the number of total achievements
+*/
+"achievements_total_unlocked_num" = "Achievement Total: %1$d/%2$d";
+
+/*
+  [GAMES]
+    Description: Information about the achievements is currently unknown (G+)
+    CharacterLimit: 25
+*/
+"achievements_unknown" = "Unknown";
+
+/*
+ [GAMES]
+ Description: Error message to show when achievments fail to load
+ CharacterLimit: 70
+ */
+"achievements_load_error" = "We were unable to retrieve achievements. Refresh to try again.";
+
+/*
+  [GAMES]
+    Description: Leaderboards title on navigation bar (G+)
+    CharacterLimit: 15
+*/
+"leaderboards_title" = "Leaderboards";
+
+/*
+  [GAMES]
+    Description: Social Filter name for including everyone in circles
+    CharacterLimit: 15
+    OBSOLETE DO NOT TRANSLATE
+*/
+"leaderboard_social_filter_all_circles" = "All Circles";
+
+/*
+  [GAMES]
+    Description: Information to show when social leaderboard is empty and user may click button to find friends on G+
+    CharacterLimit: 50
+*/
+"leaderboard_social_empty_text" = "Add friends on Google+";
+
+/*
+  [GAMES]
+    Description: Detail information to show when social leaderboard is empty and user may click button to find friends on G+
+    CharacterLimit: 140
+*/
+"leaderboard_social_empty_subtitle" = "No one in your circles has played %@. Tell others about this game and compare scores when they play.";
+
+/*
+  [GAMES]
+    Description: Text on the button shown when social leaderboard is empty and user may click button to find friends on G+
+    CharacterLimit: 15
+*/
+"leaderboard_social_empty_button_text" = "Find Friends";
+
+/*
+  [GAMES]
+    Description: Circle Picker title on navigation bar
+    CharacterLimit: 15
+    OBSOLETE DO NOT TRANSLATE
+*/
+"circle_picker_title" = "Choose Circles";
+/*
+  [GAMES]
+    Description: Leaderboard widget (in-game) title on the navigation bar
+    CharacterLimit: 15
+*/
+"leaderboard_widget_title" = "High Scores";
+
+/*
+  [GAMES]
+    Description: Leaderboard widget (in-game) button text for continuing
+    CharacterLimit: 10
+*/
+"leaderboard_widget_button_text" = "Done";
+
+/*
+  [GAMES]
+    Description: Achievements widget (in-game) button text on navigation bar
+    CharacterLimit: 10
+*/
+"achievement_button_continue" = "Done";
+
+/*
+  [GAMES]
+    Description: Welcome back notification view shown after the player logs in
+    CharacterLimit: 20
+*/
+"welcome_back_notification" = "Welcome back";
+
+/*
+  [GAMES]
+    Description: Displays text like "1 / 10" for number of achievmeents achieved
+    CharacterLimit: 35
+    Variables:
+      %1$d = The current num achieved
+      %2$d = The total num achievable
+*/
+"achievement_compare_format" = "%1$d / %2$d";
+
+/*
+  [GAMES]
+    Description: Title for the settings view
+    CharacterLimit: 13
+*/
+"settings_title" = "Settings";
+
+/*
+  [GAMES]
+    Description: Text for button to change app settings on the web
+    CharacterLimit: 30
+ */
+"settings_app_settings" = "Change App settings";
+
+/*
+ [GAMES]
+ Description: Section title text for button to change app settings on web
+ CharacterLimit: 44
+ */
+"settings_title_app_settings" = "App settings on Google";
+
+/*
+ [GAMES]
+ Description: Button text for signing out of Play Games
+ CharacterLimit: 20
+ */
+"settings_signout" = "Sign out";
+
+/*
+ [GAMES]
+ Description: Error description for when request failed to authenticate
+ CharacterLimit: 30
+ */
+"error_invalid_auth" = "Failed to authenticate.";
+
+
+/* Multiplayer */
+
+
+/*
+ [GAMES]
+ Description: Match Table cell text when it is your turn.
+ Notes: should be as short as possible, the player's name could be long.
+ Variables:
+ %@ = The other player's name.
+ */
+"matches_cell_desc_your_turn" = "%@ is waiting";
+
+/*
+ [GAMES]
+ Description: Match Table cell text when it is not your turn.
+ Notes: should be as short as possible, the player's name could be long.
+ Variables:
+ %@ = The other player's name.
+ */
+"matches_cell_desc_their_turn" = "Waiting for %@";
+
+/*
+ [GAMES]
+ Description: Match Table cell title for match invitations
+ CharacterLimit: 25
+ */
+"matches_cell_title_invite" = "Invitations";
+
+/*
+ [GAMES]
+ Description: Match Table cell title for the matches that are your turn
+ CharacterLimit: 25
+ */
+"matches_cell_title_my_turn" = "My Turn";
+
+/*
+ [GAMES]
+ Description: Match Table cell title for the matches that are not your turn
+ CharacterLimit: 25
+ */
+"matches_cell_title_their_turn" = "Their Turn";
+
+/*
+ [GAMES]
+ Description: Match Table cell title for the matches that are completed
+ CharacterLimit: 25
+ */
+"matches_cell_title_completed" = "Completed Matches";
+
+/*
+ [GAMES]
+ Description: Match Table cell title when no new invites
+ CharacterLimit: 25
+ */
+"matches_cell_title_invite_empty" = "No new invites";
+
+/*
+ [GAMES]
+ Description: Match Table cell title when no matches are your turn
+ CharacterLimit: 25
+ */
+"matches_cell_title_your_turn_empty" = "Nobody is waiting for you";
+
+/*
+ [GAMES]
+ Description: Match Table cell title when no matches are their turn
+ CharacterLimit: 25
+ */
+"matches_cell_title_their_turn_empty" = "Not waiting for anyone";
+
+/*
+ [GAMES]
+ Description: Match Table cell title when no matches are completed
+ CharacterLimit: 25
+ */
+"matches_cell_title_completed_empty" = "No completed matches";
+
+/*
+ [GAMES]
+ Description: Match Table cell title when no matches exist
+ CharacterLimit: 25
+ */
+"matches_cell_title_no_matches" = "No matches";
+
+/*
+ [GAMES]
+ Description: Matches view title on navigation bar
+ CharacterLimit: 15
+ */
+"matches_title" = "Matches";
+
+/*
+ [GAMES]
+ Description: Table cell title when auto match making for multiplayer.
+ CharacterLimit: 20
+ */
+"multiplayer_autoselect_cell" = "Auto-pick Player";
+
+/*
+ [GAMES]
+ Description: Table cell details when auto match making for multiplayer.
+ CharacterLimit: 40
+ */
+"multiplayer_autoselect_details" = "Invite a player, or auto-match";
+
+
+/*
+ [GAMES]
+ Description: Match widget (in-game) button text for cancelling
+ CharacterLimit: 10
+ */
+"matches_widget_button_cancel" = "Cancel";
+
+/*
+ [GAMES]
+ Description: Matches widget message when loading a matches data
+ CharacterLimit: 26
+ */
+"matches_widget_loading_match" = "Loading match data ...";
+
+
+/*
+ [GAMES]
+ Description: People Picker title on navigation bar
+ CharacterLimit: 15
+ */
+"people_picker_title" = "People";
+
+/*
+ [GAMES]
+ Description: People Picker button on navigation bar for continuing
+ CharacterLimit: 10
+ */
+"people_picker_button_continue" = "Start";
+
+/*
+ [GAMES]
+ Description: People Picker button on navigation bar for cancelling
+ CharacterLimit: 10
+ */
+"people_picker_button_cancel" = "Cancel";
+
+/*
+ [GAMES]
+ Description: A table section divider for matches, says 'Versus' or 'vs.'
+ CharacterLimit: 10
+ */
+"matches_table_section_divider_vs" = "VS";
+
+/*
+ [GAMES]
+ Description: The text for the invite button on a autoselect table cell in
+ the match creation screen.
+ CharacterLimit: 10
+ */
+"matches_autoselect_invite_button_title" = "Invite";
+
+/*
+ [GAMES]
+ Description: The title on the navigation bar for the match creation screen.
+ CharacterLimit: 11
+ */
+"matches_create_title" = "Create Match";
+
+/*
+ [GAMES]
+ Description: The text on the Play button on the matches create screen.
+ CharacterLimit: 10
+ */
+"matches_create_play_button" = "Play";
+
+/*
+ [GAMES]
+ Description: The text on the matches invite screen saying how many players
+ have been selected so far
+ Variables:
+ %1$d : The current number of players
+ %2$d : The maximum number of players
+ CharacterLimit: 20
+ */
+"matches_create_num_players" = "%1$d of %2$d";
+
+/*
+ [GAMES]
+ Description: The text on the matches invite screen saying how many players
+ can be selected for a match
+ Variables:
+ %d : The maximum number of players
+ CharacterLimit: 20
+ */
+"matches_create_max_players" = "(Up to %d players)";
+
+/*
+ [GAMES]
+ Description: The text on the matches invite screen for the AddPlayer button.
+ CharacterLimit: 15
+ */
+"matches_create_add_player" = "Add Player";
+
+/*
+ [GAMES]
+ Description: The text on the matches invite screen for the Done button.
+ CharacterLimit: 10
+ */
+"matches_create_done" = "Done";
+
+/*
+ [GAMES]
+ Description: The text on the matches invite screen for the
+ EditPlayers button.
+ CharacterLimit: 18
+ */
+"matches_create_edit_players" = "Edit Players";
+
+/*
+ [GAMES]
+ Description: The text on the matches invite screen for the
+ accept invitation button.
+ CharacterLimit: 10
+ */
+"matches_invite_accept_button" = "Accept";
+
+/*
+ [GAMES]
+ Description: The text on the matches invite screen for the
+ decline invitation button.
+ CharacterLimit: 10
+ */
+"matches_invite_decline_button" = "Decline";
+
+/*
+ [GAMES]
+ Description: The text on the matches invite screen for the
+ navigation bar title
+ CharacterLimit: 15
+ */
+"matches_invite_title" = "Match Invite";
+
+/*
+ [GAMES]
+ Description: The text on the matches list screen for the
+ cell's view-invitation button.
+ CharacterLimit: 10
+ */
+"matches_list_cell_view_button" = "View";
+
+/*
+ [GAMES]
+ Description: The text on the matches list screen for the
+ cell's play-game button.
+ CharacterLimit: 10
+ */
+"matches_list_cell_play_button" = "Play";
+
+/*
+ [GAMES]
+ Description: The text on the matches list screen for the
+ cell's leave button indicating leaving a match.
+ CharacterLimit: 10
+ */
+"matches_list_cell_leave_button" = "Leave";
+
+/*
+ [GAMES]
+ Description: The text on the matches list screen for the
+ cell's rematch button indicating rematching a completed match.
+ CharacterLimit: 10
+ */
+"matches_list_cell_rematch_button" = "Rematch";
+
+/*
+ [GAMES]
+ Description: The text on the matches list screen for the
+ cell's timestamp when very recent.
+ CharacterLimit: 10
+ */
+"matches_list_cell_timestamp_recent" = "Just Now";
+
+/*
+ [GAMES]
+ Description: The text on the matches list screen for the
+ cell's timestamp when the timestamp is from 1-2 years ago.
+ CharacterLimit: 13
+ */
+"matches_timestamp_years_single" = "1 year ago";
+
+/*
+ [GAMES]
+ Description: The text on the matches list screen for the
+ cell's timestamp when the timestamp is from more than 2 years ago.
+ CharacterLimit: 13
+ */
+"matches_timestamp_years_plural" = "%d years ago";
+
+/*
+ [GAMES]
+ Description: The text on the matches list screen for the
+ cell's timestamp when the timestamp is from 1-2 months ago.
+ CharacterLimit: 13
+ */
+"matches_timestamp_months_single" = "1 month ago";
+
+/*
+ [GAMES]
+ Description: The text on the matches list screen for the
+ cell's timestamp when the timestamp is from more than 2 months ago but
+ less than a year ago.
+ CharacterLimit: 13
+ */
+"matches_timestamp_months_plural" = "%d months ago";
+
+/*
+ [GAMES]
+ Description: The text on the matches list screen for the
+ cell's timestamp when the timestamp is from 1-2 weeks ago.
+ CharacterLimit: 13
+ */
+"matches_timestamp_weeks_single" = "1 week ago";
+
+/*
+ [GAMES]
+ Description: The text on the matches list screen for the
+ cell's timestamp when the timestamp is from more than 2 weeks ago but
+ less than a month ago.
+ CharacterLimit: 12
+ */
+"matches_timestamp_weeks_plural" = "%d weeks ago";
+
+/*
+ [GAMES]
+ Description: The text on the matches list screen for the
+ cell's timestamp when the timestamp is from 1-2 days ago.
+ CharacterLimit: 11
+ */
+"matches_timestamp_days_single" = "1 day ago";
+
+/*
+ [GAMES]
+ Description: The text on the matches list screen for the
+ cell's timestamp when the timestamp is from more than 2 days ago and
+ less than a week ago.
+ CharacterLimit: 10
+ */
+"matches_timestamp_days_plural" = "%d days ago";
+
+/*
+ [GAMES]
+ Description: The text on the matches list screen for the
+ cell's timestamp when the timestamp is from 1-2 hours ago.
+ CharacterLimit: 11
+ */
+"matches_timestamp_hours_single" = "1 hour ago";
+
+/*
+ [GAMES]
+ Description: The text on the matches list screen for the
+ cell's timestamp when the timestamp is from more than 2 hours ago and
+ less than a day ago.
+ CharacterLimit: 11
+ */
+"matches_timestamp_hours_plural" = "%d hours ago";
+
+/*
+ [GAMES]
+ Description: The text on the matches list screen for the
+ cell's timestamp when the timestamp is from 1-2 minutes ago.
+ CharacterLimit: 12
+ */
+"matches_timestamp_minutes_single" = "1 min ago";
+
+/*
+ [GAMES]
+ Description: The text on the matches list screen for the
+ cell's timestamp when the timestamp is from more than 2 minutes ago but
+ less than an hour ago.
+ CharacterLimit: 10
+ */
+"matches_timestamp_minutes_plural" = "%d mins ago";
+
+/*
+ [GAMES]
+ Description: The text on the matches list screen for the
+ cell's swipe-to-delete button when the match is in an invite state.
+ CharacterLimit: 10
+ */
+"matches_swipe_invite_decline" = "Decline";
+
+/*
+ [GAMES]
+ Description: The text on the matches list screen for the
+ cell's swipe-to-delete button when the match is active.
+ CharacterLimit: 10
+ */
+"matches_swipe_match_leave" = "Leave";
+
+/*
+ [GAMES]
+ Description: The text on the matches list screen for the
+ cell's swipe-to-delete button when the match is active.
+ CharacterLimit: 10
+ */
+"matches_swipe_match_cancel" = "Cancel";
+
+/*
+ [GAMES]
+ Description: The text on the matches list screen for the
+ cell's swipe-to-delete button when the match is completed.
+ CharacterLimit: 10
+ */
+"matches_swipe_match_delete" = "Delete";
+
+/*
+ [GAMES]
+ Description: The text on the RTMP waiting room screen for the
+ navigation bar title
+ CharacterLimit: 20
+ */
+"matches_waiting_room_title" = "Waiting for players";
+
+/*
+ [GAMES]
+ Description: The title text on the people picker auto select cell.
+ CharacterLimit: 20
+ */
+"people_picker_autoselect_cell_title" = "Random Opponent";
+
+/*
+ [GAMES]
+ Description: The details text on the people picker auto select cell.
+ CharacterLimit: 39
+ */
+"people_picker_autoselect_cell_details" = "We'll find someone for you";
+
+/*
+ [GAMES]
+ Description: The text on the people picker screen saying how many players
+ have been selected so far
+ Variables:
+ %1$d : The current number of players
+ %2$d : The maximum number of players
+ CharacterLimit: 20
+ */
+"people_picker_num_players" = "%1$d of %2$d";
+
+/*
+ [GAMES]
+ Description: The text on the people screen saying how many players
+ can be selected for a match when minPlayers == maxPlayers
+ Variables:
+ %d : The maximum number of players
+ CharacterLimit: 33
+ */
+"people_picker_min_players" = "(Requires %d players including you.)";
+
+/*
+ [GAMES]
+ Description: The text on the people screen saying how many players
+ can be selected for a match when minPlayers != maxPlayers
+ Variables:
+ %d : The maximum number of players
+ CharacterLimit: 20
+ */
+"people_picker_minmax_players" = "(From %d to %d players including you.)";
+
+/*
+ [GAMES]
+ Description: The text on the people picker screen for the
+ navigation bar title
+ CharacterLimit: 15
+ */
+"people_picker_title" = "Create Match";
+
+/*
+ [GAMES]
+ Description: The text on the people picker screen when no players to pick
+ CharacterLimit: 25
+ */
+"people_picker_no_players" = "No players found.";
+
+/*
+ [GAMES]
+ Description: The text on the lable near the navigation block indicating
+ there is NUMBER slots more in next screen.
+ CharacterLimit: 10
+ */
+"number_more" = "%d more";

@@ -34,6 +34,9 @@ THE SOFTWARE.
 #include <android/log.h>
 #include <jni.h>
 
+// For GPGS
+#include "gpg/android_initialization.h"
+
 #define  LOG_TAG    "main"
 #define  LOGD(...)  __android_log_print(ANDROID_LOG_DEBUG,LOG_TAG,__VA_ARGS__)
 
@@ -47,6 +50,8 @@ extern "C"
 jint JNI_OnLoad(JavaVM *vm, void *reserved)
 {
     JniHelper::setJavaVM(vm);
+
+    gpg::AndroidInitialization::JNI_OnLoad(vm);
 
     return JNI_VERSION_1_4;
 }

@@ -1,0 +1,323 @@
+/*
+  [GAMES]
+    Description: The text in a table cell when loading more data
+    CharacterLimit: 25
+*/
+"loading" = "Indlæser...";
+
+/*
+  [GAMES]
+    Description: The text in a table cell when loading more data
+    CharacterLimit: 25
+*/
+"load_more" = "Indlæser 25 mere...";
+
+/*
+  [GAMES]
+    Description: Text in a drag-refresh view when the top is dragged down
+    CharacterLimit: 25
+*/
+"drag_refresh_release" = "Slip";
+
+/*
+  [GAMES]
+    Description: Text in a drag-refresh view when the top is partially dragged down
+    CharacterLimit: 32
+*/
+"drag_refresh_drag" = "Træk for at genindlæse";
+
+/*
+  [GAMES]
+    Description: Text in a drag-refresh view when new data is loading
+    CharacterLimit: 25
+*/
+"drag_refresh_loading" = "Indlæser...";
+
+/*
+  [GAMES]
+    Description: The title of the auth controller
+    CharacterLimit: 15
+*/
+"log_in" = "Log ind";
+
+/*
+  [GAMES]
+    Description: Leaderboard navigation bar title
+    CharacterLimit: 12
+*/
+"leaderboard_title" = "Resultattavle";
+
+/*
+  [GAMES]
+    Description: Leaderboard navigation bar title when an error has occured
+    CharacterLimit: 10
+*/
+"leaderboard_title_error" = "Fejl";
+
+/*
+  [GAMES]
+    Description: Leaderboard time scope text for 'Today' scope
+    CharacterLimit: 10
+*/
+"leaderboard_time_scope_today" = "I dag";
+
+/*
+  [GAMES]
+    Description: Leaderboard time scope text for 'This Week' scope
+    CharacterLimit: 11
+*/
+"leaderboard_time_scope_this_week" = "Denne uge";
+
+/*
+  [GAMES]
+    Description: Leaderboard time scope text for 'All Time' scope
+    CharacterLimit: 12
+*/
+"leaderboard_time_scope_all_time" = "Hele tiden";
+
+/*
+  [GAMES]
+    Description: Leaderboard cell text for social-filter header
+    CharacterLimit: 20
+*/
+"leaderboard_cell_header_social" = "Mine cirkler";
+
+/*
+  [GAMES]
+    Description: Leaderboard cell text when the player is the logged in user
+    CharacterLimit: 10
+*/
+"leaderboard_entry_me" = "Dig";
+
+/*
+  [GAMES]
+    Description: Leaderboard cell text for public header
+    CharacterLimit: 25
+*/
+"leaderboard_cell_header_public" = "Offentlig";
+
+/*
+  [GAMES]
+    Description: Leaderboard cell text for an empty leaderboard
+    CharacterLimit: 25
+*/
+"leaderboard_cell_empty" = "Ingen resultater";
+
+/*
+ [GAMES]
+ Description: Leaderboard cell button title to launch detailed description for non-public player score.
+ CharacterLimit: 25
+*/
+"leaderboard_unranked_button" = "Få flere oplysninger";
+
+/*
+ [GAMES]
+ Description: Description to explain why user isn't ranked on the leaderboard when he doesn't set game activity setting to Public.
+ CharacterLimit: 130
+ */
+"leaderboard_learnmore_text" = "Du er ikke rangeret, fordi din spilaktivitet ikke vises offentligt. Indstil spilaktiviteten til offentlig, hvis du vil rangeres.";
+
+/*
+ [GAMES]
+ Description: OK button title for a information dialog
+ CharacterLimit: 5
+ */
+"leaderboard_learnmore_ok" = "OK";
+
+/*
+ [GAMES]
+ Description: Title text on achievement notification toast view
+ CharacterLimit: 25
+ */
+"achievement_unlocked" = "Præstationen er låst op";
+
+/*
+  [GAMES]
+    Description: Achievement state when it has not been revealed to the user yet
+    CharacterLimit: 20
+*/
+"achievement_state_unrevealed" = "Hemmelig";
+
+/*
+  [GAMES]
+    Description: Achievement value when only 1 point
+    CharacterLimit: 10
+*/
+"achievement_value_single" = "1 point";
+
+/*
+  [GAMES]
+    Description: Achievement value when more than 1 point, or zero points
+    CharacterLimit: 10
+    Variables:
+      %d = The value of the achievement in points.
+*/
+"achievement_value" = "%d point";
+
+/*
+  [GAMES]
+    Description: Achievements widget detail text when achievement is unrevealed
+    CharacterLimit: 57
+*/
+"achievement_state_unrevealed_detail" = "Spil mere for at få mere info om dette resultat.";
+
+/*
+  [GAMES]
+    Description: Achievements title on navigation bar (G+)
+    CharacterLimit: 15
+*/
+"achievements_title" = "Præstationer";
+
+/*
+  [GAMES]
+    Description: Achievements cell contents when no achievements found
+    CharacterLimit: 25
+*/
+"achievements_empty" = "Ingen præstationer";
+
+/*
+  [GAMES]
+    Description: Achievements title in table header view (G+)
+    CharacterLimit: 25
+*/
+"achievements_total_unlocked" = "Ulåste præstationer i alt";
+
+/*
+  [GAMES]
+    Description: Achievements title in table header view with number of unlocked achievements and total number of achievements
+    CharacterLimit: 25
+    Variables:
+      %1$d = The number of unlocked achievements
+      %2$d = the number of total achievements
+*/
+"achievements_total_unlocked_num" = "Samlede præstationer: %1$d/%2$d";
+
+/*
+  [GAMES]
+    Description: Information about the achievements is currently unknown (G+)
+    CharacterLimit: 25
+*/
+"achievements_unknown" = "Ukendt";
+
+/*
+ [GAMES]
+ Description: Error message to show when achievments fail to load
+ CharacterLimit: 70
+ */
+"achievements_load_error" = "Præstationer ikke hentet. Opdater for at prøve igen.";
+
+/*
+  [GAMES]
+    Description: Leaderboards title on navigation bar (G+)
+    CharacterLimit: 15
+*/
+"leaderboards_title" = "Resultattavler";
+
+/*
+  [GAMES]
+    Description: Social Filter name for including everyone in circles
+    CharacterLimit: 15
+    OBSOLETE DO NOT TRANSLATE
+*/
+"leaderboard_social_filter_all_circles" = "Alle cirkler";
+
+/*
+  [GAMES]
+    Description: Information to show when social leaderboard is empty and user may click button to find friends on G+
+    CharacterLimit: 50
+*/
+"leaderboard_social_empty_text" = "Tilføj venner på Google+";
+
+/*
+  [GAMES]
+    Description: Detail information to show when social leaderboard is empty and user may click button to find friends on G+
+    CharacterLimit: 140
+*/
+"leaderboard_social_empty_subtitle" = "Ingen i dine cirkler har spillet %@. Fortæl andre om dette spil, og sammenlign resultater, når de spiller.";
+
+/*
+  [GAMES]
+    Description: Text on the button shown when social leaderboard is empty and user may click button to find friends on G+
+    CharacterLimit: 15
+*/
+"leaderboard_social_empty_button_text" = "Find venner";
+
+/*
+  [GAMES]
+    Description: Circle Picker title on navigation bar
+    CharacterLimit: 15
+    OBSOLETE DO NOT TRANSLATE
+*/
+"circle_picker_title" = "Vælg netværk";
+/*
+  [GAMES]
+    Description: Leaderboard widget (in-game) title on the navigation bar
+    CharacterLimit: 15
+*/
+"leaderboard_widget_title" = "Rekorder";
+
+/*
+  [GAMES]
+    Description: Leaderboard widget (in-game) button text for continuing
+    CharacterLimit: 10
+*/
+"leaderboard_widget_button_text" = "Færdig";
+
+/*
+  [GAMES]
+    Description: Achievements widget (in-game) button text on navigation bar
+    CharacterLimit: 10
+*/
+"achievement_button_continue" = "Færdig";
+
+/*
+  [GAMES]
+    Description: Welcome back notification view shown after the player logs in
+    CharacterLimit: 20
+*/
+"welcome_back_notification" = "Velkommen tilbage";
+
+/*
+  [GAMES]
+    Description: Displays text like "1 / 10" for number of achievmeents achieved
+    CharacterLimit: 35
+    Variables:
+      %1$d = The current num achieved
+      %2$d = The total num achievable
+*/
+"achievement_compare_format" = "%1$d/%2$d";
+
+/*
+  [GAMES]
+    Description: Title for the settings view
+    CharacterLimit: 13
+*/
+"settings_title" = "Indstillinger";
+
+/*
+  [GAMES]
+    Description: Text for button to change app settings on the web
+    CharacterLimit: 30
+ */
+"settings_app_settings" = "Skift appindstillinger";
+
+/*
+ [GAMES]
+ Description: Section title text for button to change app settings on web
+ CharacterLimit: 44
+ */
+"settings_title_app_settings" = "Appindstillinger på Google";
+
+/*
+ [GAMES]
+ Description: Button text for signing out of Play Games
+ CharacterLimit: 20
+ */
+"settings_signout" = "Log ud";
+
+/*
+ [GAMES]
+ Description: Error description for when request failed to authenticate
+ CharacterLimit: 30
+ */
+"error_invalid_auth" = "Godkendelsen slog fejl.";

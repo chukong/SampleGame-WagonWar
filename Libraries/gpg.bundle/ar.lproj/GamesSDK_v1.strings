@@ -1,0 +1,323 @@
+/*
+  [GAMES]
+    Description: The text in a table cell when loading more data
+    CharacterLimit: 25
+*/
+"loading" = "جارٍ التحميل...";
+
+/*
+  [GAMES]
+    Description: The text in a table cell when loading more data
+    CharacterLimit: 25
+*/
+"load_more" = "عرض 25 أخرى...";
+
+/*
+  [GAMES]
+    Description: Text in a drag-refresh view when the top is dragged down
+    CharacterLimit: 25
+*/
+"drag_refresh_release" = "تحرير";
+
+/*
+  [GAMES]
+    Description: Text in a drag-refresh view when the top is partially dragged down
+    CharacterLimit: 32
+*/
+"drag_refresh_drag" = "سحب لإعادة التحميل";
+
+/*
+  [GAMES]
+    Description: Text in a drag-refresh view when new data is loading
+    CharacterLimit: 25
+*/
+"drag_refresh_loading" = "جارٍ التحميل...";
+
+/*
+  [GAMES]
+    Description: The title of the auth controller
+    CharacterLimit: 15
+*/
+"log_in" = "تسجيل الدخول";
+
+/*
+  [GAMES]
+    Description: Leaderboard navigation bar title
+    CharacterLimit: 12
+*/
+"leaderboard_title" = "ليدربورد";
+
+/*
+  [GAMES]
+    Description: Leaderboard navigation bar title when an error has occured
+    CharacterLimit: 10
+*/
+"leaderboard_title_error" = "خطأ";
+
+/*
+  [GAMES]
+    Description: Leaderboard time scope text for 'Today' scope
+    CharacterLimit: 10
+*/
+"leaderboard_time_scope_today" = "اليوم";
+
+/*
+  [GAMES]
+    Description: Leaderboard time scope text for 'This Week' scope
+    CharacterLimit: 11
+*/
+"leaderboard_time_scope_this_week" = "هذا الأسبوع";
+
+/*
+  [GAMES]
+    Description: Leaderboard time scope text for 'All Time' scope
+    CharacterLimit: 12
+*/
+"leaderboard_time_scope_all_time" = "طوال الوقت";
+
+/*
+  [GAMES]
+    Description: Leaderboard cell text for social-filter header
+    CharacterLimit: 20
+*/
+"leaderboard_cell_header_social" = "دوائري";
+
+/*
+  [GAMES]
+    Description: Leaderboard cell text when the player is the logged in user
+    CharacterLimit: 10
+*/
+"leaderboard_entry_me" = "أنت";
+
+/*
+  [GAMES]
+    Description: Leaderboard cell text for public header
+    CharacterLimit: 25
+*/
+"leaderboard_cell_header_public" = "عام";
+
+/*
+  [GAMES]
+    Description: Leaderboard cell text for an empty leaderboard
+    CharacterLimit: 25
+*/
+"leaderboard_cell_empty" = "لا درجات";
+
+/*
+ [GAMES]
+ Description: Leaderboard cell button title to launch detailed description for non-public player score.
+ CharacterLimit: 25
+*/
+"leaderboard_unranked_button" = "مزيد من المعلومات";
+
+/*
+ [GAMES]
+ Description: Description to explain why user isn't ranked on the leaderboard when he doesn't set game activity setting to Public.
+ CharacterLimit: 130
+ */
+"leaderboard_learnmore_text" = "أنت لا تحمل ترتيبًا نظرًا لأن أنشطة ألعابك ليست مرئية على مستوى عام. يمكنك تغيير إعداد أنشطة ألعابك إلى \"عام\"، حتى تحصل على ترتيب.";
+
+/*
+ [GAMES]
+ Description: OK button title for a information dialog
+ CharacterLimit: 5
+ */
+"leaderboard_learnmore_ok" = "موافق";
+
+/*
+ [GAMES]
+ Description: Title text on achievement notification toast view
+ CharacterLimit: 25
+ */
+"achievement_unlocked" = "المجال مفتوح أمام الإنجاز";
+
+/*
+  [GAMES]
+    Description: Achievement state when it has not been revealed to the user yet
+    CharacterLimit: 20
+*/
+"achievement_state_unrevealed" = "سري";
+
+/*
+  [GAMES]
+    Description: Achievement value when only 1 point
+    CharacterLimit: 10
+*/
+"achievement_value_single" = "نقطة واحدة";
+
+/*
+  [GAMES]
+    Description: Achievement value when more than 1 point, or zero points
+    CharacterLimit: 10
+    Variables:
+      %d = The value of the achievement in points.
+*/
+"achievement_value" = "%d نقطة";
+
+/*
+  [GAMES]
+    Description: Achievements widget detail text when achievement is unrevealed
+    CharacterLimit: 57
+*/
+"achievement_state_unrevealed_detail" = "واصل اللعب لتتعرف على هذا الإنجاز!";
+
+/*
+  [GAMES]
+    Description: Achievements title on navigation bar (G+)
+    CharacterLimit: 15
+*/
+"achievements_title" = "الإنجازات";
+
+/*
+  [GAMES]
+    Description: Achievements cell contents when no achievements found
+    CharacterLimit: 25
+*/
+"achievements_empty" = "لا إنجازات";
+
+/*
+  [GAMES]
+    Description: Achievements title in table header view (G+)
+    CharacterLimit: 25
+*/
+"achievements_total_unlocked" = "تم إلغاء تأمين المجموع";
+
+/*
+  [GAMES]
+    Description: Achievements title in table header view with number of unlocked achievements and total number of achievements
+    CharacterLimit: 25
+    Variables:
+      %1$d = The number of unlocked achievements
+      %2$d = the number of total achievements
+*/
+"achievements_total_unlocked_num" = "إجمالي الإنجاز: %1$d/%2$d";
+
+/*
+  [GAMES]
+    Description: Information about the achievements is currently unknown (G+)
+    CharacterLimit: 25
+*/
+"achievements_unknown" = "غير معروف";
+
+/*
+ [GAMES]
+ Description: Error message to show when achievments fail to load
+ CharacterLimit: 70
+ */
+"achievements_load_error" = "تعذر جلب الإنجازات. يمكنك التحديث لإعادة المحاولة.";
+
+/*
+  [GAMES]
+    Description: Leaderboards title on navigation bar (G+)
+    CharacterLimit: 15
+*/
+"leaderboards_title" = "أشكال ليدربورد";
+
+/*
+  [GAMES]
+    Description: Social Filter name for including everyone in circles
+    CharacterLimit: 15
+    OBSOLETE DO NOT TRANSLATE
+*/
+"leaderboard_social_filter_all_circles" = "كل الدوائر";
+
+/*
+  [GAMES]
+    Description: Information to show when social leaderboard is empty and user may click button to find friends on G+
+    CharacterLimit: 50
+*/
+"leaderboard_social_empty_text" = "إضافة الأصدقاء على +Google";
+
+/*
+  [GAMES]
+    Description: Detail information to show when social leaderboard is empty and user may click button to find friends on G+
+    CharacterLimit: 140
+*/
+"leaderboard_social_empty_subtitle" = "لم يُشغّل أي ممن في دوائرك اللعبة %@. يمكنك إخبار الآخرين عن هذه اللعبة ومقارنة النتائج بعد تشغيلهم لها.";
+
+/*
+  [GAMES]
+    Description: Text on the button shown when social leaderboard is empty and user may click button to find friends on G+
+    CharacterLimit: 15
+*/
+"leaderboard_social_empty_button_text" = "البحث عن أصدقاء";
+
+/*
+  [GAMES]
+    Description: Circle Picker title on navigation bar
+    CharacterLimit: 15
+    OBSOLETE DO NOT TRANSLATE
+*/
+"circle_picker_title" = "اختيار دوائر";
+/*
+  [GAMES]
+    Description: Leaderboard widget (in-game) title on the navigation bar
+    CharacterLimit: 15
+*/
+"leaderboard_widget_title" = "درجات عالية";
+
+/*
+  [GAMES]
+    Description: Leaderboard widget (in-game) button text for continuing
+    CharacterLimit: 10
+*/
+"leaderboard_widget_button_text" = "تم";
+
+/*
+  [GAMES]
+    Description: Achievements widget (in-game) button text on navigation bar
+    CharacterLimit: 10
+*/
+"achievement_button_continue" = "تم";
+
+/*
+  [GAMES]
+    Description: Welcome back notification view shown after the player logs in
+    CharacterLimit: 20
+*/
+"welcome_back_notification" = "مرحبًا بك من جديد";
+
+/*
+  [GAMES]
+    Description: Displays text like "1 / 10" for number of achievmeents achieved
+    CharacterLimit: 35
+    Variables:
+      %1$d = The current num achieved
+      %2$d = The total num achievable
+*/
+"achievement_compare_format" = "%1$d / %2$d";
+
+/*
+  [GAMES]
+    Description: Title for the settings view
+    CharacterLimit: 13
+*/
+"settings_title" = "الإعدادات";
+
+/*
+  [GAMES]
+    Description: Text for button to change app settings on the web
+    CharacterLimit: 30
+ */
+"settings_app_settings" = "تغيير إعدادات التطبيق";
+
+/*
+ [GAMES]
+ Description: Section title text for button to change app settings on web
+ CharacterLimit: 44
+ */
+"settings_title_app_settings" = "إعدادات التطبيق في Google";
+
+/*
+ [GAMES]
+ Description: Button text for signing out of Play Games
+ CharacterLimit: 20
+ */
+"settings_signout" = "تسجيل الخروج";
+
+/*
+ [GAMES]
+ Description: Error description for when request failed to authenticate
+ CharacterLimit: 30
+ */
+"error_invalid_auth" = "أخفقت المصادقة.";
