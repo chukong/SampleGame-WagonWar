@@ -31,8 +31,19 @@ import org.cocos2dx.lib.Cocos2dxGLSurfaceView;
 
 import android.graphics.PixelFormat;
 
+import android.os.Bundle;
+
 public class AppActivity extends Cocos2dxActivity {
     
+    @Override
+	protected void onCreate(final Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		
+		nativeInitGPGS(this);
+	}
+	
+	private static native void nativeInitGPGS(AppActivity act);
+
     public Cocos2dxGLSurfaceView onCreateView() {
         Cocos2dxGLSurfaceView glSurfaceView = new Cocos2dxGLSurfaceView(this);
         // TestCpp should create stencil buffer
@@ -42,4 +53,5 @@ public class AppActivity extends Cocos2dxActivity {
         
         return glSurfaceView;
     }
+
 }

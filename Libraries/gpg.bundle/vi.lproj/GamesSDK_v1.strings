@@ -1,0 +1,323 @@
+/*
+  [GAMES]
+    Description: The text in a table cell when loading more data
+    CharacterLimit: 25
+*/
+"loading" = "Đang tải...";
+
+/*
+  [GAMES]
+    Description: The text in a table cell when loading more data
+    CharacterLimit: 25
+*/
+"load_more" = "Hiển thị thêm 25...";
+
+/*
+  [GAMES]
+    Description: Text in a drag-refresh view when the top is dragged down
+    CharacterLimit: 25
+*/
+"drag_refresh_release" = "Nhả";
+
+/*
+  [GAMES]
+    Description: Text in a drag-refresh view when the top is partially dragged down
+    CharacterLimit: 32
+*/
+"drag_refresh_drag" = "Kéo để tải lại";
+
+/*
+  [GAMES]
+    Description: Text in a drag-refresh view when new data is loading
+    CharacterLimit: 25
+*/
+"drag_refresh_loading" = "Đang tải...";
+
+/*
+  [GAMES]
+    Description: The title of the auth controller
+    CharacterLimit: 15
+*/
+"log_in" = "Đăng nhập";
+
+/*
+  [GAMES]
+    Description: Leaderboard navigation bar title
+    CharacterLimit: 12
+*/
+"leaderboard_title" = "Bảng dẫn";
+
+/*
+  [GAMES]
+    Description: Leaderboard navigation bar title when an error has occured
+    CharacterLimit: 10
+*/
+"leaderboard_title_error" = "Lỗi";
+
+/*
+  [GAMES]
+    Description: Leaderboard time scope text for 'Today' scope
+    CharacterLimit: 10
+*/
+"leaderboard_time_scope_today" = "Hôm nay";
+
+/*
+  [GAMES]
+    Description: Leaderboard time scope text for 'This Week' scope
+    CharacterLimit: 11
+*/
+"leaderboard_time_scope_this_week" = "Tuần này";
+
+/*
+  [GAMES]
+    Description: Leaderboard time scope text for 'All Time' scope
+    CharacterLimit: 12
+*/
+"leaderboard_time_scope_all_time" = "Mọi lúc";
+
+/*
+  [GAMES]
+    Description: Leaderboard cell text for social-filter header
+    CharacterLimit: 20
+*/
+"leaderboard_cell_header_social" = "Vòng kết nối của tôi";
+
+/*
+  [GAMES]
+    Description: Leaderboard cell text when the player is the logged in user
+    CharacterLimit: 10
+*/
+"leaderboard_entry_me" = "Bạn";
+
+/*
+  [GAMES]
+    Description: Leaderboard cell text for public header
+    CharacterLimit: 25
+*/
+"leaderboard_cell_header_public" = "Công khai";
+
+/*
+  [GAMES]
+    Description: Leaderboard cell text for an empty leaderboard
+    CharacterLimit: 25
+*/
+"leaderboard_cell_empty" = "Không có điểm số nào";
+
+/*
+ [GAMES]
+ Description: Leaderboard cell button title to launch detailed description for non-public player score.
+ CharacterLimit: 25
+*/
+"leaderboard_unranked_button" = "Tìm hiểu thêm";
+
+/*
+ [GAMES]
+ Description: Description to explain why user isn't ranked on the leaderboard when he doesn't set game activity setting to Public.
+ CharacterLimit: 130
+ */
+"leaderboard_learnmore_text" = "Bạn chưa được xếp hạng vì hoạt động trò chơi ko hiển thị công khai. Để được xếp hạng, thay đổi cài đặt hoạt động trò chơi thành Công khai.";
+
+/*
+ [GAMES]
+ Description: OK button title for a information dialog
+ CharacterLimit: 5
+ */
+"leaderboard_learnmore_ok" = "OK";
+
+/*
+ [GAMES]
+ Description: Title text on achievement notification toast view
+ CharacterLimit: 25
+ */
+"achievement_unlocked" = "Đã mở khóa thành tích";
+
+/*
+  [GAMES]
+    Description: Achievement state when it has not been revealed to the user yet
+    CharacterLimit: 20
+*/
+"achievement_state_unrevealed" = "Bí mật";
+
+/*
+  [GAMES]
+    Description: Achievement value when only 1 point
+    CharacterLimit: 10
+*/
+"achievement_value_single" = "1 điểm";
+
+/*
+  [GAMES]
+    Description: Achievement value when more than 1 point, or zero points
+    CharacterLimit: 10
+    Variables:
+      %d = The value of the achievement in points.
+*/
+"achievement_value" = "%d điểm";
+
+/*
+  [GAMES]
+    Description: Achievements widget detail text when achievement is unrevealed
+    CharacterLimit: 57
+*/
+"achievement_state_unrevealed_detail" = "Tiếp tục chơi để tìm hiểu về thành tích này!";
+
+/*
+  [GAMES]
+    Description: Achievements title on navigation bar (G+)
+    CharacterLimit: 15
+*/
+"achievements_title" = "Thành tích";
+
+/*
+  [GAMES]
+    Description: Achievements cell contents when no achievements found
+    CharacterLimit: 25
+*/
+"achievements_empty" = "Không có thành tích nào";
+
+/*
+  [GAMES]
+    Description: Achievements title in table header view (G+)
+    CharacterLimit: 25
+*/
+"achievements_total_unlocked" = "Tổng số được mở khóa";
+
+/*
+  [GAMES]
+    Description: Achievements title in table header view with number of unlocked achievements and total number of achievements
+    CharacterLimit: 25
+    Variables:
+      %1$d = The number of unlocked achievements
+      %2$d = the number of total achievements
+*/
+"achievements_total_unlocked_num" = "Tổng số thành tích: %1$d/%2$d";
+
+/*
+  [GAMES]
+    Description: Information about the achievements is currently unknown (G+)
+    CharacterLimit: 25
+*/
+"achievements_unknown" = "Không xác định";
+
+/*
+ [GAMES]
+ Description: Error message to show when achievments fail to load
+ CharacterLimit: 70
+ */
+"achievements_load_error" = "Chúng tôi không thể truy xuất thành tích. Hãy làm mới để thử lại.";
+
+/*
+  [GAMES]
+    Description: Leaderboards title on navigation bar (G+)
+    CharacterLimit: 15
+*/
+"leaderboards_title" = "Bảng dẫn";
+
+/*
+  [GAMES]
+    Description: Social Filter name for including everyone in circles
+    CharacterLimit: 15
+    OBSOLETE DO NOT TRANSLATE
+*/
+"leaderboard_social_filter_all_circles" = "Mọi vòng k.nối";
+
+/*
+  [GAMES]
+    Description: Information to show when social leaderboard is empty and user may click button to find friends on G+
+    CharacterLimit: 50
+*/
+"leaderboard_social_empty_text" = "Thêm bạn bè trên Google+";
+
+/*
+  [GAMES]
+    Description: Detail information to show when social leaderboard is empty and user may click button to find friends on G+
+    CharacterLimit: 140
+*/
+"leaderboard_social_empty_subtitle" = "Chưa có ai trong vòng kết nối của bạn chơi %@. Hãy giới thiệu với người khác về trò chơi này và so sánh điểm khi họ chơi.";
+
+/*
+  [GAMES]
+    Description: Text on the button shown when social leaderboard is empty and user may click button to find friends on G+
+    CharacterLimit: 15
+*/
+"leaderboard_social_empty_button_text" = "Tìm bạn bè";
+
+/*
+  [GAMES]
+    Description: Circle Picker title on navigation bar
+    CharacterLimit: 15
+    OBSOLETE DO NOT TRANSLATE
+*/
+"circle_picker_title" = "Chọn vòng kết nối";
+/*
+  [GAMES]
+    Description: Leaderboard widget (in-game) title on the navigation bar
+    CharacterLimit: 15
+*/
+"leaderboard_widget_title" = "Điểm số cao";
+
+/*
+  [GAMES]
+    Description: Leaderboard widget (in-game) button text for continuing
+    CharacterLimit: 10
+*/
+"leaderboard_widget_button_text" = "Xong";
+
+/*
+  [GAMES]
+    Description: Achievements widget (in-game) button text on navigation bar
+    CharacterLimit: 10
+*/
+"achievement_button_continue" = "Xong";
+
+/*
+  [GAMES]
+    Description: Welcome back notification view shown after the player logs in
+    CharacterLimit: 20
+*/
+"welcome_back_notification" = "Chào mừng bạn quay trở lại";
+
+/*
+  [GAMES]
+    Description: Displays text like "1 / 10" for number of achievmeents achieved
+    CharacterLimit: 35
+    Variables:
+      %1$d = The current num achieved
+      %2$d = The total num achievable
+*/
+"achievement_compare_format" = "%1$d / %2$d";
+
+/*
+  [GAMES]
+    Description: Title for the settings view
+    CharacterLimit: 13
+*/
+"settings_title" = "Cài đặt";
+
+/*
+  [GAMES]
+    Description: Text for button to change app settings on the web
+    CharacterLimit: 30
+ */
+"settings_app_settings" = "Thay đổi cài đặt ứng dụng";
+
+/*
+ [GAMES]
+ Description: Section title text for button to change app settings on web
+ CharacterLimit: 44
+ */
+"settings_title_app_settings" = "Cài đặt ứng dụng trên Google";
+
+/*
+ [GAMES]
+ Description: Button text for signing out of Play Games
+ CharacterLimit: 20
+ */
+"settings_signout" = "Đăng xuất";
+
+/*
+ [GAMES]
+ Description: Error description for when request failed to authenticate
+ CharacterLimit: 30
+ */
+"error_invalid_auth" = "Không thể xác thực.";

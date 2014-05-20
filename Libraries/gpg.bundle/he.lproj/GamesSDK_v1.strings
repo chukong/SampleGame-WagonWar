@@ -1,0 +1,323 @@
+/*
+  [GAMES]
+    Description: The text in a table cell when loading more data
+    CharacterLimit: 25
+*/
+"loading" = "טוען...";
+
+/*
+  [GAMES]
+    Description: The text in a table cell when loading more data
+    CharacterLimit: 25
+*/
+"load_more" = "הצג עוד 25...";
+
+/*
+  [GAMES]
+    Description: Text in a drag-refresh view when the top is dragged down
+    CharacterLimit: 25
+*/
+"drag_refresh_release" = "שחרר";
+
+/*
+  [GAMES]
+    Description: Text in a drag-refresh view when the top is partially dragged down
+    CharacterLimit: 32
+*/
+"drag_refresh_drag" = "גרור כדי לטעון מחדש";
+
+/*
+  [GAMES]
+    Description: Text in a drag-refresh view when new data is loading
+    CharacterLimit: 25
+*/
+"drag_refresh_loading" = "טוען...";
+
+/*
+  [GAMES]
+    Description: The title of the auth controller
+    CharacterLimit: 15
+*/
+"log_in" = "התחברות";
+
+/*
+  [GAMES]
+    Description: Leaderboard navigation bar title
+    CharacterLimit: 12
+*/
+"leaderboard_title" = "Leaderboard";
+
+/*
+  [GAMES]
+    Description: Leaderboard navigation bar title when an error has occured
+    CharacterLimit: 10
+*/
+"leaderboard_title_error" = "שגיאה";
+
+/*
+  [GAMES]
+    Description: Leaderboard time scope text for 'Today' scope
+    CharacterLimit: 10
+*/
+"leaderboard_time_scope_today" = "היום";
+
+/*
+  [GAMES]
+    Description: Leaderboard time scope text for 'This Week' scope
+    CharacterLimit: 11
+*/
+"leaderboard_time_scope_this_week" = "השבוע";
+
+/*
+  [GAMES]
+    Description: Leaderboard time scope text for 'All Time' scope
+    CharacterLimit: 12
+*/
+"leaderboard_time_scope_all_time" = "כל הזמן";
+
+/*
+  [GAMES]
+    Description: Leaderboard cell text for social-filter header
+    CharacterLimit: 20
+*/
+"leaderboard_cell_header_social" = "המעגלים שלי";
+
+/*
+  [GAMES]
+    Description: Leaderboard cell text when the player is the logged in user
+    CharacterLimit: 10
+*/
+"leaderboard_entry_me" = "אתה";
+
+/*
+  [GAMES]
+    Description: Leaderboard cell text for public header
+    CharacterLimit: 25
+*/
+"leaderboard_cell_header_public" = "ציבורי";
+
+/*
+  [GAMES]
+    Description: Leaderboard cell text for an empty leaderboard
+    CharacterLimit: 25
+*/
+"leaderboard_cell_empty" = "אין ניקוד";
+
+/*
+ [GAMES]
+ Description: Leaderboard cell button title to launch detailed description for non-public player score.
+ CharacterLimit: 25
+*/
+"leaderboard_unranked_button" = "למידע נוסף";
+
+/*
+ [GAMES]
+ Description: Description to explain why user isn't ranked on the leaderboard when he doesn't set game activity setting to Public.
+ CharacterLimit: 130
+ */
+"leaderboard_learnmore_text" = "אינך מדורג מכיוון שפעילות המשחקים שלך לא חשופה באופן ציבורי. כדי להיות מדורג, שנה את ההגדרה של פעילות המשחקים שלך ל'ציבורית'.";
+
+/*
+ [GAMES]
+ Description: OK button title for a information dialog
+ CharacterLimit: 5
+ */
+"leaderboard_learnmore_ok" = "אישור";
+
+/*
+ [GAMES]
+ Description: Title text on achievement notification toast view
+ CharacterLimit: 25
+ */
+"achievement_unlocked" = "הישג שוחרר";
+
+/*
+  [GAMES]
+    Description: Achievement state when it has not been revealed to the user yet
+    CharacterLimit: 20
+*/
+"achievement_state_unrevealed" = "סודי";
+
+/*
+  [GAMES]
+    Description: Achievement value when only 1 point
+    CharacterLimit: 10
+*/
+"achievement_value_single" = "נקודה אחת";
+
+/*
+  [GAMES]
+    Description: Achievement value when more than 1 point, or zero points
+    CharacterLimit: 10
+    Variables:
+      %d = The value of the achievement in points.
+*/
+"achievement_value" = "%d נק'";
+
+/*
+  [GAMES]
+    Description: Achievements widget detail text when achievement is unrevealed
+    CharacterLimit: 57
+*/
+"achievement_state_unrevealed_detail" = "המשך לשחק לקבלת מידע נוסף על הישג זה!";
+
+/*
+  [GAMES]
+    Description: Achievements title on navigation bar (G+)
+    CharacterLimit: 15
+*/
+"achievements_title" = "הישגים";
+
+/*
+  [GAMES]
+    Description: Achievements cell contents when no achievements found
+    CharacterLimit: 25
+*/
+"achievements_empty" = "אין הישגים";
+
+/*
+  [GAMES]
+    Description: Achievements title in table header view (G+)
+    CharacterLimit: 25
+*/
+"achievements_total_unlocked" = "סה\"כ שוחררו";
+
+/*
+  [GAMES]
+    Description: Achievements title in table header view with number of unlocked achievements and total number of achievements
+    CharacterLimit: 25
+    Variables:
+      %1$d = The number of unlocked achievements
+      %2$d = the number of total achievements
+*/
+"achievements_total_unlocked_num" = "הישג כולל: %1$d/%2$d";
+
+/*
+  [GAMES]
+    Description: Information about the achievements is currently unknown (G+)
+    CharacterLimit: 25
+*/
+"achievements_unknown" = "לא ידוע";
+
+/*
+ [GAMES]
+ Description: Error message to show when achievments fail to load
+ CharacterLimit: 70
+ */
+"achievements_load_error" = "לא הצלחנו לאחזר הישגים. רענן ונסה שוב.";
+
+/*
+  [GAMES]
+    Description: Leaderboards title on navigation bar (G+)
+    CharacterLimit: 15
+*/
+"leaderboards_title" = "Leaderboards";
+
+/*
+  [GAMES]
+    Description: Social Filter name for including everyone in circles
+    CharacterLimit: 15
+    OBSOLETE DO NOT TRANSLATE
+*/
+"leaderboard_social_filter_all_circles" = "כל המעגלים";
+
+/*
+  [GAMES]
+    Description: Information to show when social leaderboard is empty and user may click button to find friends on G+
+    CharacterLimit: 50
+*/
+"leaderboard_social_empty_text" = "הוסף חברים ב-Google+‎";
+
+/*
+  [GAMES]
+    Description: Detail information to show when social leaderboard is empty and user may click button to find friends on G+
+    CharacterLimit: 140
+*/
+"leaderboard_social_empty_subtitle" = "אף אחד מחברי המעגלים שלך לא שיחק ב-%@. ספר לאחרים על המשחק הזה והשווה ניקוד כשהם ישחקו.";
+
+/*
+  [GAMES]
+    Description: Text on the button shown when social leaderboard is empty and user may click button to find friends on G+
+    CharacterLimit: 15
+*/
+"leaderboard_social_empty_button_text" = "חפש חברים";
+
+/*
+  [GAMES]
+    Description: Circle Picker title on navigation bar
+    CharacterLimit: 15
+    OBSOLETE DO NOT TRANSLATE
+*/
+"circle_picker_title" = "בחר מעגלים";
+/*
+  [GAMES]
+    Description: Leaderboard widget (in-game) title on the navigation bar
+    CharacterLimit: 15
+*/
+"leaderboard_widget_title" = "ניקוד גבוה";
+
+/*
+  [GAMES]
+    Description: Leaderboard widget (in-game) button text for continuing
+    CharacterLimit: 10
+*/
+"leaderboard_widget_button_text" = "בוצע";
+
+/*
+  [GAMES]
+    Description: Achievements widget (in-game) button text on navigation bar
+    CharacterLimit: 10
+*/
+"achievement_button_continue" = "בוצע";
+
+/*
+  [GAMES]
+    Description: Welcome back notification view shown after the player logs in
+    CharacterLimit: 20
+*/
+"welcome_back_notification" = "שמחים שחזרת";
+
+/*
+  [GAMES]
+    Description: Displays text like "1 / 10" for number of achievmeents achieved
+    CharacterLimit: 35
+    Variables:
+      %1$d = The current num achieved
+      %2$d = The total num achievable
+*/
+"achievement_compare_format" = "%1$d / %2$d";
+
+/*
+  [GAMES]
+    Description: Title for the settings view
+    CharacterLimit: 13
+*/
+"settings_title" = "הגדרות";
+
+/*
+  [GAMES]
+    Description: Text for button to change app settings on the web
+    CharacterLimit: 30
+ */
+"settings_app_settings" = "שנה הגדרות יישום";
+
+/*
+ [GAMES]
+ Description: Section title text for button to change app settings on web
+ CharacterLimit: 44
+ */
+"settings_title_app_settings" = "הגדרות יישום ב-Google";
+
+/*
+ [GAMES]
+ Description: Button text for signing out of Play Games
+ CharacterLimit: 20
+ */
+"settings_signout" = "צא";
+
+/*
+ [GAMES]
+ Description: Error description for when request failed to authenticate
+ CharacterLimit: 30
+ */
+"error_invalid_auth" = "האימות נכשל.";

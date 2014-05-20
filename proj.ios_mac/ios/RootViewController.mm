@@ -27,17 +27,30 @@
 #import "cocos2d.h"
 #import "CCEAGLView.h"
 
+#import "StateManager.h"
+
+// ClientID
+const char* GPG_CLIENTID = "942456544563";
+
+@interface RootViewController () {
+    StateManager* _stateManager;
+}
+- (void)setupGPG;
+
+@end
+
 @implementation RootViewController
 
-/*
+
  // The designated initializer.  Override if you create the controller programmatically and want to perform customization that is not appropriate for viewDidLoad.
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     if ((self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil])) {
         // Custom initialization
+        [self setupGPG];
     }
     return self;
 }
-*/
+
 
 /*
 // Implement loadView to create a view hierarchy programmatically, without using a nib.
@@ -110,5 +123,36 @@
     [super dealloc];
 }
 
+- (void)setupGPG
+{
+    gpg::IosPlatformConfiguration config;
+    config.SetClientID(std::string(GPG_CLIENTID));
+    config.SetOptionalViewControllerForPopups(self);
+    
+    _stateManager = new StateManager();
+    _stateManager->InitServices(config, [self](gpg::AuthOperation op)
+                                {
+                                    NSLog(@"Start oauth action ... by Jacky_iOS");
+                                },
+                                [self](gpg::AuthOperation op, gpg::AuthStatus status)
+                                {
+                                    NSLog(@"Finished oauth action ... by Jacky_iOS");
+                                    switch( status )
+                                    {
+                                        case gpg::AuthStatus::VALID:
+                                            NSLog(@"Signed in!!");
+                                            break;
+                                        case gpg::AuthStatus::ERROR_INTERNAL:
+                                        case gpg::AuthStatus::ERROR_NOT_AUTHORIZED:
+                                        case gpg::AuthStatus::ERROR_VERSION_UPDATE_REQUIRED:
+                                        case gpg::AuthStatus::ERROR_TIMEOUT:
+                                        default:
+                                            NSLog(@"Sign-in failure");
+                                            break;
+                                    }
+                                    
+                                } );
+    
+}
 
 @end
