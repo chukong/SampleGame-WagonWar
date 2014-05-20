@@ -22,7 +22,12 @@ public:
     
     CREATE_FUNC(MainScreenScene);
     
-    void start_callback(cocos2d::Ref *pSender, cocos2d::ui::TouchEventType type);
+    void startgame_callback(cocos2d::Ref *pSender, cocos2d::ui::TouchEventType type);
+    
+    void showleaderboard_callback(cocos2d::Ref *pSender, cocos2d::ui::TouchEventType type);
+    
+    void showachievement_callback(cocos2d::Ref *pSender, cocos2d::ui::TouchEventType type);
+
 };
 
 #endif /* defined(__TankMultiplayer__MainScreenScene__) */
