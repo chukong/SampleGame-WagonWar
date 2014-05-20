@@ -33,7 +33,7 @@ float Helper::getAngleFromIndex(int index, int radius)
     if(x == y == radius)
         return -999;
     
-    return atan2f(y-radius, x-radius);
+    return atan2f(radius-y, radius-x);
 }
 Point Helper::getPointFromIndex(int index, int radius)
 {

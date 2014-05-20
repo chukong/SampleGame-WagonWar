@@ -62,8 +62,9 @@ class TestNode : public cocos2d::Node
 public:
     static TestNode* create();
     bool airborn;
+    bool needFix;
     int radius;
-    TestNode():airborn(true){};
+    TestNode():airborn(true), needFix(false){};
     CC_SYNTHESIZE(cocos2d::Point, _LastPos, LastPos);
 };
 
