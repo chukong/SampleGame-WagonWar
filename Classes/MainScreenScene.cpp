@@ -9,7 +9,7 @@
 #include "MainScreenScene.h"
 #include "ui/CocosGUI.h"
 #include "GameScene.h"
-#include "StateManager.h"
+//#include "StateManager.h"
 
 using namespace cocos2d;
 using namespace cocostudio;
@@ -48,21 +48,21 @@ bool MainScreenScene::init()
 
 void MainScreenScene::start_callback(Ref *pSender, TouchEventType type)
 {
-	switch (type)
-	{
-        case TouchEventType::TOUCH_EVENT_ENDED:
-		{
-            //Director::getInstance()->replaceScene(GameScene::createScene());
-            if (StateManager::IsSignedIn()) {
-                Director::getInstance()->replaceScene(GameScene::createScene());
-            }
-            else
-            {
-                StateManager::BeginUserInitiatedSignIn();
-            }
-		}
-            break;
-        default:
-            break;
-	}
+//	switch (type)
+//	{
+//        case TouchEventType::TOUCH_EVENT_ENDED:
+//		{
+//            //Director::getInstance()->replaceScene(GameScene::createScene());
+//            if (StateManager::IsSignedIn()) {
+//                Director::getInstance()->replaceScene(GameScene::createScene());
+//            }
+//            else
+//            {
+//                StateManager::BeginUserInitiatedSignIn();
+//            }
+//		}
+//            break;
+//        default:
+//            break;
+//	}
 }

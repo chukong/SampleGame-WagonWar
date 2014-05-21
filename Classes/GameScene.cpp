@@ -8,11 +8,13 @@
 
 #include "GameScene.h"
 #include "Helper.h"
+#include "GameUI.h"
 
 USING_NS_CC;
 
 Scene* GameScene::createScene()
 {
+    auto uiLayer = GameUI::create();
     // 'scene' is an autorelease object
     auto scene = Scene::create();
     
@@ -23,6 +25,7 @@ Scene* GameScene::createScene()
     scene->addChild(layer);
     
     
+    scene->addChild(uiLayer);
     
     // return the scene
     return scene;
@@ -71,8 +74,21 @@ bool GameScene::init()
     listener->onTouchMoved = CC_CALLBACK_2(GameScene::onTouchMoved, this);
     _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
     
+    //event to move left right
+    auto moveListener = EventListenerCustom::create("go left", CC_CALLBACK_0(GameScene::movePlayer, this, -0.3));
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(moveListener, this);
+    auto moveListener2 = EventListenerCustom::create("go right", CC_CALLBACK_0(GameScene::movePlayer, this, 0.3));
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(moveListener2, this);
+    auto stopListener = EventListenerCustom::create("stop", CC_CALLBACK_0(GameScene::movePlayer, this, 0));
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(stopListener, this);
+
+    
+    srand((unsigned)time(NULL));
+    srand(rand());
+    srand(rand());
     //default wind
-    this->setWind(Point::ZERO);
+    this->setWind(Point(CCRANDOM_MINUS1_1()*0.025,CCRANDOM_MINUS1_1()*0.025));
+    log("Wind is : %f, %f", getWind().x, getWind().y);
     //default gravity
     this->setGravity(Point(0,-0.1));
     this->scheduleUpdate();
@@ -85,6 +101,20 @@ bool GameScene::init()
     this->initTests();
     return true;
 }
+void GameScene::onEnter()
+{
+    ParallaxNode::onEnter();
+    _eventDispatcher->dispatchCustomEvent("wind", &_wind);
+}
+void GameScene::movePlayer(float x)
+{
+    _moveDelta.x = x;
+    //TODO: replace with proper get current player
+    auto player = _PlayerLayer->getChildren().front();
+    TestNode* p = dynamic_cast<TestNode*>(player);
+    p->needFix = true;
+}
+
 void GameScene::initTests()
 {
     auto p = TestNode::create();
@@ -130,6 +160,8 @@ void GameScene::initExplosionMasks()
 bool GameScene::onTouchBegan(Touch* touch, Event* event)
 {
     _click = true;
+    setWind(Point(CCRANDOM_MINUS1_1()*0.035,CCRANDOM_MINUS1_1()*0.035));
+    _eventDispatcher->dispatchCustomEvent("wind", &_wind);
     return true;
 }
 void GameScene::onTouchMoved(Touch* touch, Event* event)
@@ -296,7 +328,10 @@ void GameScene::update(float dt)
     for(Node* player : _PlayerLayer->getChildren())
     {
         TestNode* p = dynamic_cast<TestNode*>(player);
-        if(p->airborn || p->needFix)
+
+        
+        
+        if(p->airborn || p->needFix || _moveDelta.x)
         {
             //move this
             auto pos2 = p->getPosition();
@@ -322,7 +357,7 @@ void GameScene::update(float dt)
                         angleCount++;
                         //log("rad: %f, %i", an, i);
                     }
-                    p->airborn = false;
+
                     p->setLastPos(p->getPosition());
                     //break;
                 }
@@ -330,8 +365,9 @@ void GameScene::update(float dt)
             free(buffer);
             
             //check how many collision points
-            if(angleCount)
+            if(angleCount>1)
             {
+                p->airborn = false;
                 //set angle to average
                 float deg =CC_RADIANS_TO_DEGREES(angleTotal/angleCount);
                 if(abs(deg) > 80)//TODO: each vehicle has a climbing angle limit
@@ -343,24 +379,14 @@ void GameScene::update(float dt)
                 {
                     p->setRotation(deg);
                 }
-                if(angleCount > 3)
+                if(angleCount > 8)
                 {
                     //we are colliding with too many pixels
+
+                    float pushForce = 0.4;
+                    Point mid(pos.x-pushForce*sinf(angleTotal/angleCount), pos.y-pushForce*cosf(angleTotal/angleCount));
+                    p->setLastPos(mid);
                     p->needFix = true;
-                    float x = 0;
-                    if(deg>0)
-                    {
-                        //move right 1 pixel
-                        x= 0.5;
-                    }
-                    else if(deg < 0)
-                    {
-                        //move left 1 pixel
-                        x = -0.5;
-                    }
-                    Point pp(p->getPosition()+Point(x,0.5));
-                    p->setPosition(pp);
-                    p->setLastPos(pp);
                 }
                 else
                 {
@@ -369,47 +395,14 @@ void GameScene::update(float dt)
             }
 
         }
+        if(_moveDelta.x)
+        {
+            p->setPosition(p->getPosition()+_moveDelta);
+            p->setLastPos(p->getLastPos()+_moveDelta);
+        }
 
     _level->getRT()->onEnd();
     //kmGLPopMatrix();
     }
     
-//    _level->getRT()->begin();
-//        for(Node* bullet : _bulletLayer->getChildren())
-//        {
-//            Bullet *b = dynamic_cast<Bullet*>(bullet);
-//            auto pos = b->getPosition();
-//            if(b->willExplode())
-//            {
-//                //log("%f, %f", b->getPosition().x, b->getPosition().y);
-//                _ex->setPosition(pos);
-//                _ex->visit();
-//                b->runAction(RemoveSelf::create());
-//                //check to see if any player got caught in the blast
-//                for(Node* player : _PlayerLayer->getChildren())
-//                {
-//                    TestNode *p = dynamic_cast<TestNode*>(player);
-//                    if(!p->airborn && p->getPosition().getDistance(pos)< b->getConfig()->expRadius)
-//                    {
-//                        p->airborn = true;
-//                    }
-//                }
-//            }
-//            else
-//            {
-//                b->setPosition(pos+(pos-b->getLastPos())+getGravity()+getWind());
-//                b->setLastPos(pos);
-//            }
-//        }
-//    _level->getRT()->end();
-//    for(Node* player : _PlayerLayer->getChildren())
-//    {
-//        TestNode *p = dynamic_cast<TestNode*>(player);
-//        if(p->airborn)
-//        {
-//            auto pos = p->getPosition();
-//            p->setPosition(pos+(pos-p->getLastPos())+getGravity()+getWind());
-//            p->setLastPos(pos);
-//        }
-//    }
 }

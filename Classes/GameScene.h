@@ -44,13 +44,17 @@ public:
     
     //virtual void draw(cocos2d::Renderer* renderer, const kmMat4 &transform, bool transformUpdated);
     void explode(Bullet* bullet);
+    
+    void movePlayer(float x);
+    virtual void onEnter();
 protected:
-    GameScene():_click(false),_steps(2){};
+    cocos2d::Point _moveDelta;
+    void _movePlayer(float x);
+    GameScene():_click(false),_steps(2),_moveDelta(0,0.02){};
     bool _click;
     int _steps;
     cocos2d::Sprite* _ex;
     cocos2d::Sprite* _burn;
-
 };
 
 #endif /* defined(__TankMultiplayer__GameScene__) */
