@@ -40,8 +40,8 @@ bool MainScreenScene::init()
     auto myLayout = dynamic_cast<Layout*>(GUIReader::getInstance()->widgetFromJsonFile("MainScreen.ExportJson"));
     m_pUILayer->addChild(myLayout);
     
-    auto startGame = static_cast<Button*>(Helper::seekWidgetByName(myLayout, "start_game"));
-    startGame->addTouchEventListener(this,toucheventselector(MainScreenScene::start_callback));
+    //auto startGame = static_cast<Button*>(Helper::seekWidgetByName(myLayout, "start_game"));
+    //startGame->addTouchEventListener(this,toucheventselector(MainScreenScene::start_callback));
     
     return true;
 }

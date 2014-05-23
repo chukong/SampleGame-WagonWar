@@ -176,6 +176,11 @@ TestNode* TestNode::create()
         auto drawN = DrawNode::create();
         drawN ->drawDot(Point::ZERO, ret->radius, Color4F(0,1,0,0.5));
         ret->addChild(drawN);
+        
+        ret->gunPoint = Node::create();
+        ret->addChild(ret->gunPoint);
+        ret->gunPoint->setPosition(43, 45);
+        
         return ret;
     }
     CC_SAFE_DELETE(ret);

@@ -12,6 +12,7 @@
 #include "cocos2d.h"
 #include "Level.h"
 #include "bullet.h"
+#include "Helper.h"
 
 class GameScene : public cocos2d::ParallaxNode
 {
@@ -31,6 +32,7 @@ public:
     void update(float dt);
     
     cocos2d::Point getActualPos(cocos2d::Touch * touch);
+    cocos2d::Size getMovableSize();
     
     CC_SYNTHESIZE(Level*, _level, Level);
     CC_SYNTHESIZE(cocos2d::Layer*, _PlayerLayer, PlayerLayer);
@@ -38,7 +40,11 @@ public:
     CC_SYNTHESIZE(cocos2d::Point, _wind, Wind);
     CC_SYNTHESIZE(cocos2d::Point, _gravity, Gravity);
     void initExplosionMasks();
+    void initListeners();
     void initTests();
+    void startShoot();
+    void endShoot();
+    TestNode *getCurrentPlayer();
     Bullet* addBullet(BulletTypes type, cocos2d::Point pos, cocos2d::Point vector);
     cocos2d::Point offset;
     
@@ -47,10 +53,15 @@ public:
     
     void movePlayer(float x);
     virtual void onEnter();
+    void randomWind();
 protected:
+    cocos2d::Node* _following;
+    cocos2d::Point _offset;
+    timeval _now;
+    cocos2d::Size _movableSize;
     cocos2d::Point _moveDelta;
     void _movePlayer(float x);
-    GameScene():_click(false),_steps(2),_moveDelta(0,0.02){};
+    GameScene():_click(false),_steps(2),_moveDelta(0,0.02),_following(nullptr){};
     bool _click;
     int _steps;
     cocos2d::Sprite* _ex;

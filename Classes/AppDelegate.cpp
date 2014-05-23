@@ -24,7 +24,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
         height = 640;
         width = height*(960.0/640.0);
         
-        glview = GLView::createWithRect("TankMultiplayer", Rect(0, 0, 1024, 768));
+        glview = GLView::createWithRect("TankMultiplayer", Rect(0, 0, 960, 640));
         
         director->setOpenGLView(glview);
     }

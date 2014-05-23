@@ -22,10 +22,12 @@ public:
     
     cocos2d::Sprite* left;
     cocos2d::Sprite* right;
+    cocos2d::Sprite* fire;
 protected:
     bool _left;
     bool _right;
-    GameUI():_left(false), _right(false){};
+    bool _startShoot;
+    GameUI():_left(false), _right(false),_startShoot(false){};
 };
 
 class WindIndicator : public cocos2d::Node

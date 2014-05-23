@@ -26,8 +26,12 @@ bool GameUI::init()
     
     right = Sprite::create("f1.png");
     auto rightsize = right->getContentSize();
-    right->setPosition(Point(Director::getInstance()->getVisibleSize().width-rightsize.width, 30+rightsize.height));
+    right->setPosition(Point(vsize.width-rightsize.width, 30+rightsize.height));
     addChild(right);
+    
+    fire = Sprite::create("closeSelected.png");
+    addChild(fire);
+    fire->setPosition(Point(vsize.width/2, 30));
     
     
     auto listener = EventListenerTouchOneByOne::create();
@@ -59,19 +63,41 @@ bool GameUI::onTouchBegan(Touch *touch, Event *event)
         _right=true;
         return true;
     }
+    if(touch->getLocation().y > 600)
+    {
+        _eventDispatcher->dispatchCustomEvent("randomWind");
+        return true;
+    }
+    if(fire->getBoundingBox().containsPoint(touch->getLocation()))
+    {
+        _eventDispatcher->dispatchCustomEvent("start shoot");
+        _startShoot = true;
+        return true;
+    }
     return false;
 }
 
 void GameUI::onTouchEnded(Touch *touch, Event *event)
 {
     if(_left)
+    {
         left->runAction(EaseElasticOut::create(ScaleTo::create(0.7, 1)));
-    if(_right)
+        _eventDispatcher->dispatchCustomEvent("stop");
+    }
+    else if(_right)
+    {
         right->runAction(EaseElasticOut::create(ScaleTo::create(0.7, 1)));
+        _eventDispatcher->dispatchCustomEvent("stop");
+    }
+    else if(_startShoot)
+    {
+        _eventDispatcher->dispatchCustomEvent("end shoot");
+    }
     
+    _startShoot = false;
     _left = false;
     _right = false;
-    _eventDispatcher->dispatchCustomEvent("stop");
+    
 }
 
 
