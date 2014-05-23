@@ -78,8 +78,6 @@
 		68BBD8AC192462DE001F9F73 /* circle.png in Resources */ = {isa = PBXBuildFile; fileRef = 68BBD8A2192462DE001F9F73 /* circle.png */; };
 		68BBD8AD192462DE001F9F73 /* CloseNormal.png in Resources */ = {isa = PBXBuildFile; fileRef = 68BBD8A3192462DE001F9F73 /* CloseNormal.png */; };
 		68BBD8AE192462DE001F9F73 /* CloseNormal.png in Resources */ = {isa = PBXBuildFile; fileRef = 68BBD8A3192462DE001F9F73 /* CloseNormal.png */; };
-		68BBD8AF192462DE001F9F73 /* CloseSelected.png in Resources */ = {isa = PBXBuildFile; fileRef = 68BBD8A4192462DE001F9F73 /* CloseSelected.png */; };
-		68BBD8B0192462DE001F9F73 /* CloseSelected.png in Resources */ = {isa = PBXBuildFile; fileRef = 68BBD8A4192462DE001F9F73 /* CloseSelected.png */; };
 		68BBD8B1192462DE001F9F73 /* expMask.png in Resources */ = {isa = PBXBuildFile; fileRef = 68BBD8A5192462DE001F9F73 /* expMask.png */; };
 		68BBD8B2192462DE001F9F73 /* expMask.png in Resources */ = {isa = PBXBuildFile; fileRef = 68BBD8A5192462DE001F9F73 /* expMask.png */; };
 		68BBD8B3192462DE001F9F73 /* expMask2.png in Resources */ = {isa = PBXBuildFile; fileRef = 68BBD8A6192462DE001F9F73 /* expMask2.png */; };
@@ -98,6 +96,22 @@
 		8504EF8D1929F3CB003B810B /* MainScreen1.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8504EF841929F3CB003B810B /* MainScreen1.plist */; };
 		8504EF8E1929F3CB003B810B /* MainScreen1.png in Resources */ = {isa = PBXBuildFile; fileRef = 8504EF851929F3CB003B810B /* MainScreen1.png */; };
 		8504EF8F1929F3CB003B810B /* MainScreen1.png in Resources */ = {isa = PBXBuildFile; fileRef = 8504EF851929F3CB003B810B /* MainScreen1.png */; };
+		85111B9C192F4D9F00C8D3C8 /* GameUI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 85111B9A192F4D9F00C8D3C8 /* GameUI.cpp */; };
+		85111B9D192F4D9F00C8D3C8 /* GameUI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 85111B9A192F4D9F00C8D3C8 /* GameUI.cpp */; };
+		85111BA7192F4DBE00C8D3C8 /* b1.png in Resources */ = {isa = PBXBuildFile; fileRef = 85111BA0192F4DBE00C8D3C8 /* b1.png */; };
+		85111BA8192F4DBE00C8D3C8 /* b1.png in Resources */ = {isa = PBXBuildFile; fileRef = 85111BA0192F4DBE00C8D3C8 /* b1.png */; };
+		85111BA9192F4DBE00C8D3C8 /* f1.png in Resources */ = {isa = PBXBuildFile; fileRef = 85111BA1192F4DBE00C8D3C8 /* f1.png */; };
+		85111BAA192F4DBE00C8D3C8 /* f1.png in Resources */ = {isa = PBXBuildFile; fileRef = 85111BA1192F4DBE00C8D3C8 /* f1.png */; };
+		85111BAB192F4DBE00C8D3C8 /* Marker Felt.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 85111BA3192F4DBE00C8D3C8 /* Marker Felt.ttf */; };
+		85111BAC192F4DBE00C8D3C8 /* Marker Felt.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 85111BA3192F4DBE00C8D3C8 /* Marker Felt.ttf */; };
+		85111BAD192F4DBE00C8D3C8 /* number1.png in Resources */ = {isa = PBXBuildFile; fileRef = 85111BA4192F4DBE00C8D3C8 /* number1.png */; };
+		85111BAE192F4DBE00C8D3C8 /* number1.png in Resources */ = {isa = PBXBuildFile; fileRef = 85111BA4192F4DBE00C8D3C8 /* number1.png */; };
+		85111BAF192F4DBE00C8D3C8 /* windArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 85111BA5192F4DBE00C8D3C8 /* windArrow.png */; };
+		85111BB0192F4DBE00C8D3C8 /* windArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 85111BA5192F4DBE00C8D3C8 /* windArrow.png */; };
+		85111BB1192F4DBE00C8D3C8 /* windDial.png in Resources */ = {isa = PBXBuildFile; fileRef = 85111BA6192F4DBE00C8D3C8 /* windDial.png */; };
+		85111BB2192F4DBE00C8D3C8 /* windDial.png in Resources */ = {isa = PBXBuildFile; fileRef = 85111BA6192F4DBE00C8D3C8 /* windDial.png */; };
+		85111BB4192F4E3C00C8D3C8 /* CloseSelected.png in Resources */ = {isa = PBXBuildFile; fileRef = 85111BB3192F4E3C00C8D3C8 /* CloseSelected.png */; };
+		85111BB5192F4E3C00C8D3C8 /* CloseSelected.png in Resources */ = {isa = PBXBuildFile; fileRef = 85111BB3192F4E3C00C8D3C8 /* CloseSelected.png */; };
 		85529F701925E55F0024FFEF /* LoadingScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 85529F6E1925E55F0024FFEF /* LoadingScene.cpp */; };
 		85529F711925E55F0024FFEF /* LoadingScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 85529F6E1925E55F0024FFEF /* LoadingScene.cpp */; };
 		85529F751925EAEA0024FFEF /* MainScreenScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 85529F731925EAEA0024FFEF /* MainScreenScene.cpp */; };
@@ -329,7 +343,6 @@
 		68BBD8A1192462DE001F9F73 /* burnmark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = burnmark.png; sourceTree = "<group>"; };
 		68BBD8A2192462DE001F9F73 /* circle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = circle.png; sourceTree = "<group>"; };
 		68BBD8A3192462DE001F9F73 /* CloseNormal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = CloseNormal.png; sourceTree = "<group>"; };
-		68BBD8A4192462DE001F9F73 /* CloseSelected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = CloseSelected.png; sourceTree = "<group>"; };
 		68BBD8A5192462DE001F9F73 /* expMask.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = expMask.png; sourceTree = "<group>"; };
 		68BBD8A6192462DE001F9F73 /* expMask2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = expMask2.png; sourceTree = "<group>"; };
 		68BBD8B8192495E4001F9F73 /* map.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = map.png; sourceTree = "<group>"; };
@@ -339,6 +352,15 @@
 		8504EF831929F3CB003B810B /* MainScreen0.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MainScreen0.png; sourceTree = "<group>"; };
 		8504EF841929F3CB003B810B /* MainScreen1.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = MainScreen1.plist; sourceTree = "<group>"; };
 		8504EF851929F3CB003B810B /* MainScreen1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MainScreen1.png; sourceTree = "<group>"; };
+		85111B9A192F4D9F00C8D3C8 /* GameUI.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = GameUI.cpp; path = ../Classes/GameUI.cpp; sourceTree = "<group>"; };
+		85111B9B192F4D9F00C8D3C8 /* GameUI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GameUI.h; path = ../Classes/GameUI.h; sourceTree = "<group>"; };
+		85111BA0192F4DBE00C8D3C8 /* b1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = b1.png; sourceTree = "<group>"; };
+		85111BA1192F4DBE00C8D3C8 /* f1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = f1.png; sourceTree = "<group>"; };
+		85111BA3192F4DBE00C8D3C8 /* Marker Felt.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Marker Felt.ttf"; sourceTree = "<group>"; };
+		85111BA4192F4DBE00C8D3C8 /* number1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = number1.png; sourceTree = "<group>"; };
+		85111BA5192F4DBE00C8D3C8 /* windArrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = windArrow.png; sourceTree = "<group>"; };
+		85111BA6192F4DBE00C8D3C8 /* windDial.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = windDial.png; sourceTree = "<group>"; };
+		85111BB3192F4E3C00C8D3C8 /* CloseSelected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = CloseSelected.png; sourceTree = "<group>"; };
 		85529F6E1925E55F0024FFEF /* LoadingScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LoadingScene.cpp; sourceTree = "<group>"; };
 		85529F6F1925E55F0024FFEF /* LoadingScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoadingScene.h; sourceTree = "<group>"; };
 		85529F731925EAEA0024FFEF /* MainScreenScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MainScreenScene.cpp; sourceTree = "<group>"; };
@@ -447,6 +469,8 @@
 		15AA9C4015B7EC450033D6C2 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				85111B9A192F4D9F00C8D3C8 /* GameUI.cpp */,
+				85111B9B192F4D9F00C8D3C8 /* GameUI.h */,
 				856CF134192B406300DD7519 /* StateManager.cpp */,
 				856CF135192B406300DD7519 /* StateManager.h */,
 				8589F76319237690009BDBCD /* bullet.cpp */,
@@ -592,6 +616,13 @@
 		78C7DDAA14EBA5050085D0C2 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				85111BB3192F4E3C00C8D3C8 /* CloseSelected.png */,
+				85111BA0192F4DBE00C8D3C8 /* b1.png */,
+				85111BA1192F4DBE00C8D3C8 /* f1.png */,
+				85111BA2192F4DBE00C8D3C8 /* fonts */,
+				85111BA4192F4DBE00C8D3C8 /* number1.png */,
+				85111BA5192F4DBE00C8D3C8 /* windArrow.png */,
+				85111BA6192F4DBE00C8D3C8 /* windDial.png */,
 				8504EF811929F3CB003B810B /* MainScreen.ExportJson */,
 				8504EF821929F3CB003B810B /* MainScreen0.plist */,
 				8504EF831929F3CB003B810B /* MainScreen0.png */,
@@ -610,12 +641,19 @@
 				68BBD8A1192462DE001F9F73 /* burnmark.png */,
 				68BBD8A2192462DE001F9F73 /* circle.png */,
 				68BBD8A3192462DE001F9F73 /* CloseNormal.png */,
-				68BBD8A4192462DE001F9F73 /* CloseSelected.png */,
 				68BBD8A5192462DE001F9F73 /* expMask.png */,
 				68BBD8A6192462DE001F9F73 /* expMask2.png */,
 			);
 			name = Resources;
 			path = ../Resources;
+			sourceTree = "<group>";
+		};
+		85111BA2192F4DBE00C8D3C8 /* fonts */ = {
+			isa = PBXGroup;
+			children = (
+				85111BA3192F4DBE00C8D3C8 /* Marker Felt.ttf */,
+			);
+			path = fonts;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -787,30 +825,36 @@
 				8504EF8E1929F3CB003B810B /* MainScreen1.png in Resources */,
 				68BBD89C192462D7001F9F73 /* test4.bmp in Resources */,
 				8504EF6B1929E73E003B810B /* testnode.png in Resources */,
-				68BBD8AF192462DE001F9F73 /* CloseSelected.png in Resources */,
 				5087E78117EB970100C73F5D /* Icon-120.png in Resources */,
 				68BBD898192462D7001F9F73 /* test2.png in Resources */,
 				5087E78617EB970100C73F5D /* Icon-76.png in Resources */,
 				5087E77F17EB970100C73F5D /* Default@2x.png in Resources */,
 				68BBD8B3192462DE001F9F73 /* expMask2.png in Resources */,
 				50EF629917ECD46A001EB2F8 /* Icon-100.png in Resources */,
+				85111BB1192F4DBE00C8D3C8 /* windDial.png in Resources */,
 				68BBD8A9192462DE001F9F73 /* burnmark.png in Resources */,
+				85111BAF192F4DBE00C8D3C8 /* windArrow.png in Resources */,
 				5087E78317EB970100C73F5D /* Icon-152.png in Resources */,
 				68BBD8B9192495E4001F9F73 /* map.png in Resources */,
 				68BBD89E192462D7001F9F73 /* test4.png in Resources */,
+				85111BAB192F4DBE00C8D3C8 /* Marker Felt.ttf in Resources */,
 				8504EF8A1929F3CB003B810B /* MainScreen0.png in Resources */,
 				5087E77D17EB970100C73F5D /* Default-568h@2x.png in Resources */,
 				5087E78517EB970100C73F5D /* Icon-72.png in Resources */,
 				50EF62A317ECD613001EB2F8 /* Icon-50.png in Resources */,
+				85111BA7192F4DBE00C8D3C8 /* b1.png in Resources */,
 				5087E78017EB970100C73F5D /* Icon-114.png in Resources */,
 				68BBD8B1192462DE001F9F73 /* expMask.png in Resources */,
 				50EF62A217ECD613001EB2F8 /* Icon-29.png in Resources */,
 				68BBD8A7192462DE001F9F73 /* bluryBack.png in Resources */,
+				85111BAD192F4DBE00C8D3C8 /* number1.png in Resources */,
 				68BBD896192462D7001F9F73 /* test.png in Resources */,
 				68BBD8AD192462DE001F9F73 /* CloseNormal.png in Resources */,
 				8504EF881929F3CB003B810B /* MainScreen0.plist in Resources */,
 				68BBD89A192462D7001F9F73 /* test3.png in Resources */,
+				85111BB4192F4E3C00C8D3C8 /* CloseSelected.png in Resources */,
 				50EF629617ECD46A001EB2F8 /* Icon-40.png in Resources */,
+				85111BA9192F4DBE00C8D3C8 /* f1.png in Resources */,
 				68BBD894192462D7001F9F73 /* masked.fsh in Resources */,
 				8504EF861929F3CB003B810B /* MainScreen.ExportJson in Resources */,
 				5087E78217EB970100C73F5D /* Icon-144.png in Resources */,
@@ -828,13 +872,18 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				85111BB0192F4DBE00C8D3C8 /* windArrow.png in Resources */,
+				85111BAA192F4DBE00C8D3C8 /* f1.png in Resources */,
 				68BBD8B2192462DE001F9F73 /* expMask.png in Resources */,
+				85111BAE192F4DBE00C8D3C8 /* number1.png in Resources */,
 				8504EF891929F3CB003B810B /* MainScreen0.plist in Resources */,
+				85111BA8192F4DBE00C8D3C8 /* b1.png in Resources */,
 				68BBD897192462D7001F9F73 /* test.png in Resources */,
 				8504EF8B1929F3CB003B810B /* MainScreen0.png in Resources */,
 				8504EF8F1929F3CB003B810B /* MainScreen1.png in Resources */,
 				68BBD89D192462D7001F9F73 /* test4.bmp in Resources */,
 				8504EF6C1929E73E003B810B /* testnode.png in Resources */,
+				85111BAC192F4DBE00C8D3C8 /* Marker Felt.ttf in Resources */,
 				68BBD8AC192462DE001F9F73 /* circle.png in Resources */,
 				68BBD899192462D7001F9F73 /* test2.png in Resources */,
 				68BBD8AE192462DE001F9F73 /* CloseNormal.png in Resources */,
@@ -849,7 +898,8 @@
 				68BBD89F192462D7001F9F73 /* test4.png in Resources */,
 				68BBD8A8192462DE001F9F73 /* bluryBack.png in Resources */,
 				8504EF871929F3CB003B810B /* MainScreen.ExportJson in Resources */,
-				68BBD8B0192462DE001F9F73 /* CloseSelected.png in Resources */,
+				85111BB2192F4DBE00C8D3C8 /* windDial.png in Resources */,
+				85111BB5192F4E3C00C8D3C8 /* CloseSelected.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -871,6 +921,7 @@
 				1AFAF8B716D35DE700DB1158 /* AppDelegate.cpp in Sources */,
 				8589F76F19237690009BDBCD /* GameScene.cpp in Sources */,
 				85529F701925E55F0024FFEF /* LoadingScene.cpp in Sources */,
+				85111B9C192F4D9F00C8D3C8 /* GameUI.cpp in Sources */,
 				503AE10117EB989F00D1A890 /* main.m in Sources */,
 				1AFAF8B816D35DE700DB1158 /* HelloWorldScene.cpp in Sources */,
 				856CF136192B406300DD7519 /* StateManager.cpp in Sources */,
@@ -892,6 +943,7 @@
 				85529F761925EAEA0024FFEF /* MainScreenScene.cpp in Sources */,
 				856CF137192B406300DD7519 /* StateManager.cpp in Sources */,
 				8589F77219237690009BDBCD /* Helper.cpp in Sources */,
+				85111B9D192F4D9F00C8D3C8 /* GameUI.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

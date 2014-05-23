@@ -169,13 +169,18 @@ TestNode* TestNode::create()
         ret->radius = ret->getContentSize().width/2;
         sp->setFlippedX(true);
         ret->addChild(sp);
-        sp->setPosition(0, 50);
+        sp->setPosition(0, 40);
         ret->autorelease();
         ret->radius = 20;
         
         auto drawN = DrawNode::create();
-        drawN ->drawDot(Point::ZERO, ret->radius, Color4F::GREEN);
+        drawN ->drawDot(Point::ZERO, ret->radius, Color4F(0,1,0,0.5));
         ret->addChild(drawN);
+        
+        ret->gunPoint = Node::create();
+        ret->addChild(ret->gunPoint);
+        ret->gunPoint->setPosition(43, 45);
+        
         return ret;
     }
     CC_SAFE_DELETE(ret);

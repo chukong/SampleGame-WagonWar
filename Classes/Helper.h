@@ -66,6 +66,7 @@ public:
     int radius;
     TestNode():airborn(true), needFix(false){};
     CC_SYNTHESIZE(cocos2d::Point, _LastPos, LastPos);
+    Node* gunPoint;
 };
 
 

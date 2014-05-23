@@ -8,19 +8,24 @@
 
 #include "GameScene.h"
 #include "Helper.h"
+#include "GameUI.h"
+#include "time.h"
 
 USING_NS_CC;
 
 Scene* GameScene::createScene()
 {
+
     // 'scene' is an autorelease object
     auto scene = Scene::create();
-    
+    auto uiLayer = GameUI::create();
+    scene->addChild(uiLayer, 2);
     // 'layer' is an autorelease object
     auto layer = GameScene::create();
     
     // add layer as a child to scene
     scene->addChild(layer);
+    
     
     
     
@@ -64,15 +69,12 @@ bool GameScene::init()
     //layer for effects
 
     
-    //register touches
-    auto listener = EventListenerTouchOneByOne::create();
-    listener->onTouchBegan = CC_CALLBACK_2(GameScene::onTouchBegan, this);
-    listener->onTouchEnded = CC_CALLBACK_2(GameScene::onTouchEnded, this);
-    listener->onTouchMoved = CC_CALLBACK_2(GameScene::onTouchMoved, this);
-    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
-    
+    srand((unsigned)time(NULL));
+    srand(rand());
+    srand(rand());
     //default wind
-    this->setWind(Point::ZERO);
+    this->setWind(Point(CCRANDOM_MINUS1_1()*0.025,CCRANDOM_MINUS1_1()*0.025));
+    log("Wind is : %f, %f", getWind().x, getWind().y);
     //default gravity
     this->setGravity(Point(0,-0.1));
     this->scheduleUpdate();
@@ -83,8 +85,73 @@ bool GameScene::init()
     
     //init tests
     this->initTests();
+    
+    //init listeners
+    initListeners();
     return true;
 }
+void GameScene::initListeners()
+{
+    //register touches
+    auto listener = EventListenerTouchOneByOne::create();
+    listener->onTouchBegan = CC_CALLBACK_2(GameScene::onTouchBegan, this);
+    listener->onTouchEnded = CC_CALLBACK_2(GameScene::onTouchEnded, this);
+    listener->onTouchMoved = CC_CALLBACK_2(GameScene::onTouchMoved, this);
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
+    
+    //event to move left right
+    auto moveListener = EventListenerCustom::create("go left", CC_CALLBACK_0(GameScene::movePlayer, this, -0.3));
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(moveListener, this);
+    auto moveListener2 = EventListenerCustom::create("go right", CC_CALLBACK_0(GameScene::movePlayer, this, 0.3));
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(moveListener2, this);
+    auto stopListener = EventListenerCustom::create("stop", CC_CALLBACK_0(GameScene::movePlayer, this, 0));
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(stopListener, this);
+    auto windListener = EventListenerCustom::create("randomWind", CC_CALLBACK_0(GameScene::randomWind, this));
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(windListener, this);
+    auto startShootListener = EventListenerCustom::create("start shoot", CC_CALLBACK_0(GameScene::startShoot, this));
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(startShootListener, this);
+    auto endShootListener = EventListenerCustom::create("end shoot", CC_CALLBACK_0(GameScene::endShoot, this));
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(endShootListener, this);
+    
+}
+void GameScene::startShoot()
+{
+    gettimeofday(&_now, nullptr);
+    
+}
+void GameScene::endShoot()
+{
+    struct timeval now;
+    gettimeofday(&now, nullptr);
+    long seconds = now.tv_sec-_now.tv_sec;
+    int usec = now.tv_usec - _now.tv_usec;
+    float timed = seconds + float(usec)/1000000;
+    timed = (timed>3)? 3 : timed;
+    log("diff is %f", timed);
+    auto p = getCurrentPlayer();
+    auto offset = getMovableSize();
+    auto gunlocation = p->gunPoint->getNodeToWorldAffineTransform();
+    auto b = addBullet(defaultB, Point(gunlocation.tx, gunlocation.ty)+Point(offset/2)-getPosition(), Point(timed*2,timed*2));
+    _following = dynamic_cast<Node*>(b);
+}
+void GameScene::randomWind()
+{
+    setWind(Point(CCRANDOM_MINUS1_1()*0.035,CCRANDOM_MINUS1_1()*0.035));
+    _eventDispatcher->dispatchCustomEvent("wind", &_wind);
+}
+void GameScene::onEnter()
+{
+    ParallaxNode::onEnter();
+    _eventDispatcher->dispatchCustomEvent("wind", &_wind);
+}
+void GameScene::movePlayer(float x)
+{
+    _moveDelta.x = x;
+    //TODO: replace with proper get current player
+    TestNode* p = getCurrentPlayer();
+    p->needFix = true;
+}
+
 void GameScene::initTests()
 {
     auto p = TestNode::create();
@@ -130,6 +197,7 @@ void GameScene::initExplosionMasks()
 bool GameScene::onTouchBegan(Touch* touch, Event* event)
 {
     _click = true;
+
     return true;
 }
 void GameScene::onTouchMoved(Touch* touch, Event* event)
@@ -137,31 +205,39 @@ void GameScene::onTouchMoved(Touch* touch, Event* event)
     _click = false;
     setPosition(getActualPos(touch));
 }
-
+Size GameScene::getMovableSize()
+{
+    if(!&_movableSize || _movableSize.equals(Size::ZERO) )
+    {
+        auto visibleSize = Director::getInstance()->getWinSize();
+        _movableSize =_level->getRT()->getContentSize()-visibleSize;
+    }
+    return _movableSize;
+}
 Point GameScene::getActualPos(cocos2d::Touch * touch)
 {
     const int base_distance = 200;
-    const float base_ratio = 0.0f;
+    const float base_ratio = 0.3f;
     
     auto visibleSize = Director::getInstance()->getWinSize();
     Point pos(getPosition()+touch->getDelta());
     Point min_inclusive = Point(-(_level->getRT()->getContentSize().width-visibleSize.width)/2,-(_level->getRT()->getContentSize().height-visibleSize.height)/2);
     Point max_inclusive = Point((_level->getRT()->getContentSize().width-visibleSize.width)/2,(_level->getRT()->getContentSize().height-visibleSize.height)/2);
     Point actual_point = pos.getClampPoint(min_inclusive, max_inclusive);
-    if(actual_point.x>0 && max_inclusive.x-actual_point.x<base_distance && max_inclusive.x-actual_point.x>-3)
+    if(actual_point.x>0 && max_inclusive.x-actual_point.x<base_distance && max_inclusive.x-actual_point.x>0)
     {
         actual_point.x = getPosition().x+ (base_ratio+(max_inclusive.x-actual_point.x)/(100/(1-base_ratio)))*touch->getDelta().x;
     }
-    else if(actual_point.x<0 && actual_point.x-min_inclusive.x<base_distance && actual_point.x-min_inclusive.x>-3)
+    else if(actual_point.x<0 && actual_point.x-min_inclusive.x<base_distance && actual_point.x-min_inclusive.x>0)
     {
         actual_point.x = getPosition().x+ (base_ratio+(actual_point.x-min_inclusive.x)/(100/(1-base_ratio)))*touch->getDelta().x;
     }
     
-    if(actual_point.y>0 && max_inclusive.y-actual_point.y<base_distance && max_inclusive.y-actual_point.y>-3)
+    if(actual_point.y>0 && max_inclusive.y-actual_point.y<base_distance && max_inclusive.y-actual_point.y>0)
     {
         actual_point.y = getPosition().y+ (base_ratio+(max_inclusive.y-actual_point.y)/(100/(1-base_ratio)))*touch->getDelta().y;
     }
-    else if(actual_point.y<0 && actual_point.y-min_inclusive.y<base_distance && actual_point.y-min_inclusive.y>-3)
+    else if(actual_point.y<0 && actual_point.y-min_inclusive.y<base_distance && actual_point.y-min_inclusive.y>0)
     {
         actual_point.y = getPosition().y+ (base_ratio+(actual_point.y-min_inclusive.y)/(100/(1-base_ratio)))*touch->getDelta().y;
     }
@@ -172,22 +248,21 @@ Point GameScene::getActualPos(cocos2d::Touch * touch)
 
 void GameScene::onTouchEnded(Touch* touch, Event* event)
 {
-//    if(_click)
-    {
-        Point test(getBulletLayer()->convertToNodeSpace(touch->getLocation()));
-        addBullet(defaultB, test, Point(2,5));
-
-    }
 }
-
 Bullet* GameScene::addBullet(BulletTypes type, cocos2d::Point pos, cocos2d::Point vector)
 {
     auto b = Bullet::create(type, pos, vector);
     _bulletLayer->addChild(b);
     return b;
 }
+TestNode* GameScene::getCurrentPlayer()
+{
+    auto player = _PlayerLayer->getChildren().front();
+    return dynamic_cast<TestNode*>(player);
+}
 void GameScene::explode(Bullet *bullet)
 {
+    _following = nullptr;
     auto pos = bullet->getPosition();
     _ex->setPosition(pos);
     //TODO: set _ex size according to bullet config
@@ -222,6 +297,17 @@ void GameScene::explode(Bullet *bullet)
 
 void GameScene::update(float dt)
 {
+    //if we have a following target, then follow it
+    if(_following)
+    {
+        auto fp = _following->getPosition();
+        auto tp =-fp + Point(_PlayerLayer->getContentSize()/2);
+        auto cp = getPosition();
+        setPosition(cp+(tp-cp)*0.02);
+    }
+    
+    
+    
     //hack alert::switch GL target to the map
     //kmGLPushMatrix();
     _level->getRT()->onBegin();
@@ -288,6 +374,10 @@ void GameScene::update(float dt)
         else
         {
             b->runAction(RemoveSelf::create());
+            if(_following == b)
+            {
+                _following = nullptr;
+            }
         }
     }
     
@@ -296,7 +386,10 @@ void GameScene::update(float dt)
     for(Node* player : _PlayerLayer->getChildren())
     {
         TestNode* p = dynamic_cast<TestNode*>(player);
-        if(p->airborn || p->needFix)
+
+        
+        
+        if(p->airborn || p->needFix || _moveDelta.x)
         {
             //move this
             auto pos2 = p->getPosition();
@@ -322,7 +415,7 @@ void GameScene::update(float dt)
                         angleCount++;
                         //log("rad: %f, %i", an, i);
                     }
-                    p->airborn = false;
+
                     p->setLastPos(p->getPosition());
                     //break;
                 }
@@ -330,8 +423,9 @@ void GameScene::update(float dt)
             free(buffer);
             
             //check how many collision points
-            if(angleCount)
+            if(angleCount>1)
             {
+                p->airborn = false;
                 //set angle to average
                 float deg =CC_RADIANS_TO_DEGREES(angleTotal/angleCount);
                 if(abs(deg) > 80)//TODO: each vehicle has a climbing angle limit
@@ -343,24 +437,14 @@ void GameScene::update(float dt)
                 {
                     p->setRotation(deg);
                 }
-                if(angleCount > 3)
+                if(angleCount > 8)
                 {
                     //we are colliding with too many pixels
+
+                    float pushForce = 0.4;
+                    Point mid(pos.x-pushForce*sinf(angleTotal/angleCount), pos.y-pushForce*cosf(angleTotal/angleCount));
+                    p->setLastPos(mid);
                     p->needFix = true;
-                    float x = 0;
-                    if(deg>0)
-                    {
-                        //move right 1 pixel
-                        x= 0.5;
-                    }
-                    else if(deg < 0)
-                    {
-                        //move left 1 pixel
-                        x = -0.5;
-                    }
-                    Point pp(p->getPosition()+Point(x,0.5));
-                    p->setPosition(pp);
-                    p->setLastPos(pp);
                 }
                 else
                 {
@@ -369,47 +453,22 @@ void GameScene::update(float dt)
             }
 
         }
+        if(_moveDelta.x)
+        {
+            p->setPosition(p->getPosition()+_moveDelta);
+            p->setLastPos(p->getLastPos()+_moveDelta);
+            if(_moveDelta.x>0)
+            {
+                //TODO: replace with proper flip code
+                p->setScaleX(1);
+            }
+            else{
+                p->setScaleX(-1);
+            }
+        }
 
     _level->getRT()->onEnd();
     //kmGLPopMatrix();
     }
     
-//    _level->getRT()->begin();
-//        for(Node* bullet : _bulletLayer->getChildren())
-//        {
-//            Bullet *b = dynamic_cast<Bullet*>(bullet);
-//            auto pos = b->getPosition();
-//            if(b->willExplode())
-//            {
-//                //log("%f, %f", b->getPosition().x, b->getPosition().y);
-//                _ex->setPosition(pos);
-//                _ex->visit();
-//                b->runAction(RemoveSelf::create());
-//                //check to see if any player got caught in the blast
-//                for(Node* player : _PlayerLayer->getChildren())
-//                {
-//                    TestNode *p = dynamic_cast<TestNode*>(player);
-//                    if(!p->airborn && p->getPosition().getDistance(pos)< b->getConfig()->expRadius)
-//                    {
-//                        p->airborn = true;
-//                    }
-//                }
-//            }
-//            else
-//            {
-//                b->setPosition(pos+(pos-b->getLastPos())+getGravity()+getWind());
-//                b->setLastPos(pos);
-//            }
-//        }
-//    _level->getRT()->end();
-//    for(Node* player : _PlayerLayer->getChildren())
-//    {
-//        TestNode *p = dynamic_cast<TestNode*>(player);
-//        if(p->airborn)
-//        {
-//            auto pos = p->getPosition();
-//            p->setPosition(pos+(pos-p->getLastPos())+getGravity()+getWind());
-//            p->setLastPos(pos);
-//        }
-//    }
 }

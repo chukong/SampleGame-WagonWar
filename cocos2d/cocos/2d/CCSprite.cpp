@@ -591,29 +591,6 @@ void Sprite::ManualDraw()
     kmGLGetMatrix(KM_GL_MODELVIEW, &parentTransform);
     _modelViewTransform = this->transform(parentTransform);
     
-//    int i = 0;
-//    if(!_children.empty())
-//    {
-//        sortAllChildren();
-//        // draw children zOrder < 0
-//        for( ; i < _children.size(); i++ )
-//        {
-//            auto node = _children.at(i);
-//            
-//            if ( node && node->getLocalZOrder() < 0 )
-//                node->visit(renderer, _modelViewTransform, dirty);
-//            else
-//                break;
-//        }
-//        // self draw
-//        this->draw(renderer, _modelViewTransform, dirty);
-//        
-//        for(auto it=_children.cbegin()+i; it != _children.cend(); ++it)
-//            (*it)->visit(renderer, _modelViewTransform, dirty);
-//    }
-    
-    
-    
     auto shader = getShaderProgram();
     shader->use();
     shader->setUniformsForBuiltins(_modelViewTransform);

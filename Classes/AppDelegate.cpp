@@ -1,6 +1,9 @@
 #include "AppDelegate.h"
 #include "GameScene.h"
-#include "MainScreenScene.h"
+
+
+
+//#include "MainScreenScene.h"
 
 USING_NS_CC;
 
@@ -21,11 +24,11 @@ bool AppDelegate::applicationDidFinishLaunching() {
         height = 640;
         width = height*(960.0/640.0);
         
-        glview = GLView::createWithRect("TankMultiplayer", Rect(0, 0, 1024, 768));
+        glview = GLView::createWithRect("TankMultiplayer", Rect(0, 0, 960, 640));
         
         director->setOpenGLView(glview);
     }
-    glview->setDesignResolutionSize(960, 640, ResolutionPolicy::EXACT_FIT);
+    glview->setDesignResolutionSize(960, 640, ResolutionPolicy::FIXED_HEIGHT);
     log("%f, scale", director->getContentScaleFactor());
     log("%f, scale2", director->getWinSize().width/ director->getOpenGLView()->getFrameSize().width  );
     // turn on display FPS
@@ -35,8 +38,8 @@ bool AppDelegate::applicationDidFinishLaunching() {
     director->setAnimationInterval(1.0 / 60);
     
     // create a scene. it's an autorelease object
- //   auto scene = GameScene::createScene();
-    auto scene = MainScreenScene::createScene();
+    auto scene = GameScene::createScene();
+ //   auto scene = MainScreenScene::createScene();
     // run
     director->runWithScene(scene);
     
