@@ -61,8 +61,7 @@ class GPG_EXPORT Score {
    * accompanied by a successful response status; false for an
    * unpopulated user-created score or for a populated one accompanied by
    * an unsuccessful response status.
-   * It must be true for the getter functions on this achievement (Rank, Value)
-   * to be usable.
+   * It must be true for the getter functions on this object to be usable.
    */
   bool Valid() const;
 

@@ -14,13 +14,15 @@
 #include <memory>
 #include <string>
 #include "gpg/common.h"
+#include "gpg/types.h"
 
 namespace gpg {
 
 class PlayerImpl;
+class PlayerLevel;
 
 /**
- * A single data structure containing data about a specific player.
+ * A data structure that allows you to access data about a specific player.
  * @ingroup ValueType
  */
 class GPG_EXPORT Player {
@@ -28,31 +30,29 @@ class GPG_EXPORT Player {
   Player();
 
   /**
-   * Explicit constructor.
+   * Constructs a <code>Player</code> from a <code>shared_ptr</code> to a
+   * <code>PlayerImpl</code>.
+   * Intended for internal use by the API.
    */
   explicit Player(std::shared_ptr<PlayerImpl const> impl);
 
   /**
-   * Copy constructor for copying an existing player into a new one.
+   * Creates a copy of an existing <code>Player</code>.
    */
   Player(Player const &copy_from);
 
   /**
-   * Constructor for moving an existing player into a new one.
-   * r-value-reference version.
+   * Moves an existing <code>Player</code> into a new one.
    */
   Player(Player &&move_from);
 
   /**
-   * Assignment operator for assigning this achievement's value from
-   * another achievement.
+   * Assigns this <code>Player</code> by copying from another one.
    */
   Player &operator=(Player const &copy_from);
 
   /**
-   * Assignment operator for assigning this achievement's value
-   * from another achievement.
-   * r-value-reference version
+   * Assigns this <code>Player</code> value by moving another one into it.
    */
   Player &operator=(Player &&move_from);
   ~Player();
@@ -62,27 +62,77 @@ class GPG_EXPORT Player {
    * accompanied by a successful response status; false for an
    * unpopulated user-created player or for a populated one accompanied by
    * an unsuccessful response status.
-   * It must be true for the getter functions on this achievement (id, Name,
-   * etc.) to be usable.
+   * It must return true for the getter functions on this object to be usable.
    */
   bool Valid() const;
 
   /**
-   * Returns the ID of the currently signed-in player.
-   * It can only be called when Player::Valid() returns true.
+   * Returns the <code>Id</code> of the currently signed-in player.
+   * <code>Player::Valid()</code> must return true for this function to be
+   * usable.
    */
   std::string const &Id() const;
   /**
    * Returns the Google+ name of the currently signed-in player.
-   * It can only be called when Player::Valid() returns true.
+   * <code>Player::Valid()</code> must return true for this function to be
+   * usable.
    */
   std::string const &Name() const;
 
   /**
-   * Returns the URL leading to the image of the currently signed-in player's
-   * avatar.
-   * It can only be called when Player::Valid() returns true.
+   * Returns the URL where the image of this <code>Player</code>'s avatar
+   * resides. The <code>ImageResolution</code> parameter specifies the
+   * resolution of the image. <code>Player::Valid()</code> must return true for
+   * this function to be usable.
    */
+  std::string const &AvatarUrl(ImageResolution resolution) const;
+
+  /**
+   * Returns whether or not this player has level information available. If
+   * it returns false, <code>CurrentLevel()</code> and <code>NextLevel()</code>
+   * return <code>PlayerLevel</code> objects that are not valid.
+   */
+  bool HasLevelInfo() const;
+
+  /**
+   * Retrieves the current level data for this player, if known. If
+   * HasLevelInfo() returns false, this will return a PlayerLevel object for
+   * which Valid() also returns false.
+   */
+  PlayerLevel const &CurrentLevel() const;
+
+  /**
+   * Retrieves the next level data for this player, if known. If
+   * HasLevelInfo() returns false, this will return a PlayerLevel object for
+   * which Valid() also returns false. This is the level that the player is
+   * currently working towards. If the player is already at
+   * the maximum level they can reach, CurrentLevel() and NextLevel() will
+   * return identical values.
+   */
+  PlayerLevel const &NextLevel() const;
+
+  /**
+   * Retrieves the player's current XP total. If HasLevelInfo() returns false,
+   * this will return zero. If HasLevelInfo() returns true, the player's current
+   * XP total will be in the range CurrentLevel().MinimumXP to
+   * CurrentLevel().MaximumXP.
+   */
+  uint64_t CurrentXP() const;
+
+  /**
+   * Retrieves the timestamp at which this player last leveled up. If
+   * HasLevelInfo() returns false, or if the player has never leveled up, this
+   * will return zero (the epoch).
+   */
+  Timestamp LastLevelUpTimestamp() const;
+
+  /**
+   * Retrieves the title of the player. This is based on actions the player has
+   * taken across the Google Play games ecosystem. Note that not all players
+   * have titles, and that a player's title may change over time. If a player
+   * does not have a title, Title() will return an empty string.
+   */
+  std::string const &Title() const;
 
  private:
   std::shared_ptr<PlayerImpl const> impl_;

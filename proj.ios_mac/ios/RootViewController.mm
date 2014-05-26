@@ -130,28 +130,7 @@ const char* GPG_CLIENTID = "942456544563";
     config.SetOptionalViewControllerForPopups(self);
     
     _stateManager = new StateManager();
-    _stateManager->InitServices(config, [self](gpg::AuthOperation op)
-                                {
-                                    NSLog(@"Start oauth action ... by Jacky_iOS");
-                                },
-                                [self](gpg::AuthOperation op, gpg::AuthStatus status)
-                                {
-                                    NSLog(@"Finished oauth action ... by Jacky_iOS");
-                                    switch( status )
-                                    {
-                                        case gpg::AuthStatus::VALID:
-                                            NSLog(@"Signed in!!");
-                                            break;
-                                        case gpg::AuthStatus::ERROR_INTERNAL:
-                                        case gpg::AuthStatus::ERROR_NOT_AUTHORIZED:
-                                        case gpg::AuthStatus::ERROR_VERSION_UPDATE_REQUIRED:
-                                        case gpg::AuthStatus::ERROR_TIMEOUT:
-                                        default:
-                                            NSLog(@"Sign-in failure");
-                                            break;
-                                    }
-                                    
-                                } );
+    _stateManager->InitServices(config);
     
 }
 

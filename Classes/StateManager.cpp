@@ -37,21 +37,29 @@ const int32_t BUFFER_SIZE = 256;
 
 bool StateManager::isSignedIn = false;
 std::unique_ptr<gpg::GameServices> StateManager::gameServices;
+gpg::TurnBasedMatch StateManager::current_match_;
 
-void OnAuthActionFinished(gpg::AuthOperation op, gpg::AuthStatus status) {
-  LOGI("OnAuthActionFinished");
-}
 
 void OnAuthActionStarted(gpg::AuthOperation op) {
   LOGI("OnAuthActionStarted");
   switch ( op ) {
   case gpg::AuthOperation::SIGN_IN:
-    LOGI("Signing In");
+    LOGI("Signing In...");
     break;
   case gpg::AuthOperation::SIGN_OUT:
-    LOGI("Signing Out");
+    LOGI("Signing Out...");
     break;
   }
+}
+
+void OnAuthActionFinished(gpg::AuthOperation op, gpg::AuthStatus status) {
+    LOGI("OnAuthActionFinished");
+    if (op == gpg::AuthOperation::SIGN_IN){
+        LOGI("Signing In.");
+    }
+    else{
+        LOGI("Signing Out.");
+    }
 }
 
 gpg::GameServices *StateManager::GetGameServices() {
@@ -112,9 +120,8 @@ void StateManager::ShowLeaderboard(const char *leaderboardId)
 }
 
 
-void StateManager::InitServices(gpg::PlatformConfiguration &pc,
-                                gpg::GameServices::Builder::OnAuthActionStartedCallback started_callback,
-                                gpg::GameServices::Builder::OnAuthActionFinishedCallback finished_callback) {
+void StateManager::InitServices(gpg::PlatformConfiguration &pc)
+{
   LOGI("Initializing Services");
   if (!gameServices) {
     LOGI("Uninitialized services, so creating");
@@ -125,26 +132,214 @@ void StateManager::InitServices(gpg::PlatformConfiguration &pc,
       // Add a test scope (we don't actually use this).
       //    .AddOauthScope("https://www.googleapis.com/auth/appstate")
       //    .InternalSetRootURL("https://www-googleapis-staging.sandbox.google.com/")
-      .SetOnAuthActionStarted([started_callback](gpg::AuthOperation op){
-          started_callback(op);
+      .SetOnAuthActionStarted([](gpg::AuthOperation op){
+          OnAuthActionStarted(op);
       })
-      .SetOnAuthActionFinished([finished_callback](gpg::AuthOperation op, gpg::AuthStatus status){
+      .SetOnAuthActionFinished([](gpg::AuthOperation op, gpg::AuthStatus status){
           LOGI("Sign in finished with a result of %d", status);
-//          LOGI("what's the status of VALID ====>>>>%d",gpg::AuthStatus::VALID);
-//          LOGI("what's the status of ERROR_INTERNAL ====>>>>%d",gpg::AuthStatus::ERROR_INTERNAL);
-//          LOGI("what's the status of ERROR_NOT_AUTHORIZED ====>>>>%d",gpg::AuthStatus::ERROR_NOT_AUTHORIZED);
-//          LOGI("what's the status of ERROR_VERSION_UPDATE_REQUIRED ====>>>>%d",gpg::AuthStatus::ERROR_VERSION_UPDATE_REQUIRED);
-//          LOGI("what's the status of ERROR_TIMEOUT ====>>>>%d",gpg::AuthStatus::ERROR_TIMEOUT);
           if( status == gpg::AuthStatus::VALID )
               isSignedIn = true;
           else
               isSignedIn = false;
-          finished_callback( op, status);
-      } )
-      .Create(pc);
-      
+          OnAuthActionFinished( op, status);
+      })
+      .SetOnTurnBasedMatchEvent([](gpg::TurnBasedMultiplayerEvent event, std::string match_id,
+                                       gpg::TurnBasedMatch match) {
+                                    LOGI("TurnBasedMultiplayerEvent callback");
+                                    //Show default inbox
+//                                    ShowMatchInbox();
+      })
+      .SetOnMultiplayerInvitationEvent([](gpg::TurnBasedMultiplayerEvent event, std::string match_id,
+                                              gpg::MultiplayerInvitation invitation) {
+                                           LOGI("MultiplayerInvitationEvent callback");
+                                           //Show default inbox
+//                                           ShowMatchInbox();
+      }).Create(pc);
   }
   LOGI("Created");
 }
 
+void StateManager::QuickMatch()
+{
+    gpg::TurnBasedMultiplayerManager& manager = gameServices->TurnBasedMultiplayer();
+    gpg::TurnBasedMatchConfig config = gpg::TurnBasedMatchConfig::Builder()
+    .SetMinimumAutomatchingPlayers(MIN_PLAYERS)
+    .SetMaximumAutomatchingPlayers(MAX_PLAYERS).Create();
+    
+    manager.CreateTurnBasedMatch(config,
+                                 [](gpg::TurnBasedMultiplayerManager::TurnBasedMatchResponse const &matchResponse)
+                                 {
+                                     if (matchResponse.status == gpg::MultiplayerStatus::VALID) {
+                                         LOGI("QuickMatch Game Begin...By Jacky");
+                                         //QuickMatch...
+                                         //PlayGame(matchResponse.match);
+                                     }
+                                 });
+}
 
+void StateManager::InviteFriend()
+{
+    gameServices->TurnBasedMultiplayer().ShowPlayerSelectUI(MIN_PLAYERS, MAX_PLAYERS, true,
+                                                        [](gpg::TurnBasedMultiplayerManager::PlayerSelectUIResponse const & response)
+                                                        {
+                                                            LOGI("selected match %d", response.status);
+                                                            if (response.status == gpg::UIStatus::VALID) {
+                                                                // Create new match with the config
+                                                                gpg::TurnBasedMatchConfig config = gpg::TurnBasedMatchConfig::Builder()
+                                                                .SetMinimumAutomatchingPlayers(response.minimum_automatching_players)
+                                                                .SetMaximumAutomatchingPlayers(response.maximum_automatching_players)
+                                                                .AddAllPlayersToInvite(response.player_ids).Create();
+                                                                
+                                                                gameServices->TurnBasedMultiplayer().CreateTurnBasedMatch(config, [](gpg::TurnBasedMultiplayerManager::TurnBasedMatchResponse const & matchResponse)
+                                                                {
+                                                                    if (matchResponse.status == gpg::MultiplayerStatus::VALID)
+                                                                    {
+                                                                        LOGI("InviteFriend Game Begin...By Jacky");
+                                                                      //InviteFriend...
+                                                                      //PlayGame(matchResponse.match);
+                                                                    }
+                                                                });
+                                                            }
+                                                        });
+}
+
+void StateManager::ShowMatchInbox()
+{
+    gameServices->TurnBasedMultiplayer().ShowMatchInboxUI([](gpg::TurnBasedMultiplayerManager::MatchInboxUIResponse const & response)
+    {
+        if (response.status == gpg::UIStatus::VALID) {
+            //Show game based on the user's selection
+            switch (response.match.Status()) {
+                case gpg::MatchStatus::THEIR_TURN:
+                    //Manage match with dismiss, leave and cancel options
+                    LOGI("Their turn...By Jacky");
+                    ManageGame(response.match, true, true, false);
+                    break;
+                case gpg::MatchStatus::MY_TURN:
+                    //Play selected game
+                    LOGI("My turn...By Jacky");
+                    PlayGame(response.match);
+                    break;
+                case gpg::MatchStatus::COMPLETED:
+                    //Manage match with dismiss, rematch options
+                    LOGI("Completed...By Jacky");
+                    ManageGame(response.match, false, false, true);
+                    break;
+                case gpg::MatchStatus::EXPIRED:
+                default:
+                    //Manage match with dismiss option
+                    LOGI("Expired & default...By Jacky");
+                    ManageGame(response.match, false, false, false);
+                    break;
+            }
+        } else {
+            LOGI("Invalid response status...By Jacky");
+        }
+    });
+}
+
+void StateManager::LeaveMatch()
+{
+    gpg::TurnBasedMultiplayerManager& manager = gameServices->TurnBasedMultiplayer();
+    if (current_match_.Status() == gpg::MatchStatus::MY_TURN) {
+        //Leave a game
+        std::vector<gpg::MultiplayerParticipant> participants = current_match_.Participants();
+        int32_t nextPlayerIndex = GetNextParticipant();
+        if (nextPlayerIndex == NEXT_PARTICIPANT_AUTOMATCH) {
+            manager.LeaveMatchDuringMyTurnAndAutomatch(current_match_, [](gpg::MultiplayerStatus status) {
+                                                           LOGI("Left the game...NEXT_PARTICIPANT_AUTOMATCH...By Jacky");
+                                                       });
+            return;
+        } else {
+            manager.LeaveMatchDuringMyTurn(current_match_, participants[nextPlayerIndex],
+                                           [](gpg::MultiplayerStatus status) {
+                                               LOGI("Left the game...NOT_NEXT_PARTICIPANT_AUTOMATCH...By Jacky");
+                                           });
+        }
+    } else {
+        manager.LeaveMatchDuringTheirTurn(current_match_, [](gpg::MultiplayerStatus status) {
+                                              LOGI("Left the game...NOT_MY_TURN...By Jacky");
+                                          });
+    }
+}
+
+void StateManager::CancelMatch()
+{
+    gameServices->TurnBasedMultiplayer().CancelMatch(current_match_, [](gpg::MultiplayerStatus status)
+    {
+        LOGI("Canceled the game...By Jacky");
+    });
+}
+
+void StateManager::DismissMatch()
+{
+    gameServices->TurnBasedMultiplayer().DismissMatch(current_match_);
+}
+
+void StateManager::Rematch()
+{
+    gameServices->TurnBasedMultiplayer().Rematch(current_match_, [](gpg::TurnBasedMultiplayerManager::TurnBasedMatchResponse matchResponse)
+                    {
+                        LOGI("Remathing the game...By Jacky");
+                        if (matchResponse.status == gpg::MultiplayerStatus::VALID) {
+                            LOGI("ReMatch the game...By Jacky");
+                            //Rematch...
+                            //PlayGame(matchResponse.match);
+                        }
+                    });
+}
+
+int32_t StateManager::GetNextParticipant() {
+    gpg::PlayerManager::FetchSelfResponse localPlayer =
+    gameServices->Players().FetchSelfBlocking();
+    
+    //Retrieve next participant
+    std::vector<gpg::MultiplayerParticipant> participants =
+    current_match_.Participants();
+    int32_t localPlayerIndex = -1;
+    int32_t nextPlayerIndex = -1;
+    int32_t size = participants.size();
+    
+    LOGI("# of participants: %d", size);
+    for (int32_t i = 0; i < size; ++i) {
+        if (participants[i].Player().Id().compare(localPlayer.data.Id()) == 0) {
+            localPlayerIndex = i;
+        }
+        LOGI("participant: %s", participants[i].Player().Id().c_str());
+    }
+    if (localPlayerIndex == -1) {
+        LOGI("Local player not found in a match?");
+        return -1;
+    }
+    
+    for (int32_t i = 1; i < size; ++i) {
+        int32_t index = (localPlayerIndex + i) % size;
+        if (participants[index].Status() == gpg::ParticipantStatus::INVITED ||
+            participants[index].Status() == gpg::ParticipantStatus::JOINED) {
+            LOGI("Found next participant");
+            nextPlayerIndex = index;
+        }
+    }
+    if (nextPlayerIndex == -1) {
+        // No next participant found
+        // Do we have Auto-match player?
+        if (current_match_.AutomatchingSlotsAvailable()) {
+            LOGI("Auto matching for next participant");
+            return NEXT_PARTICIPANT_AUTOMATCH;
+        } else
+            return NEXT_PARTICIPANT_NONE;
+    }
+    return nextPlayerIndex;
+}
+
+void StateManager::ManageGame(gpg::TurnBasedMatch const& match, const bool leave, const bool cancel, const bool rematch)
+{
+    current_match_ = match;
+    //...
+}
+
+void StateManager::PlayGame(gpg::TurnBasedMatch const& match)
+{
+    current_match_ = match;
+    //...
+}

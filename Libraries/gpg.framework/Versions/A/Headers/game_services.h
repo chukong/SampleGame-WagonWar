@@ -22,9 +22,13 @@ namespace gpg {
 
 class AchievementManager;
 class BuilderImpl;
+class EventManager;
 class GameServicesImpl;
 class LeaderboardManager;
 class PlayerManager;
+class QuestManager;
+class SnapshotManager;
+class TurnBasedMultiplayerManager;
 
 /**
  * The starting point for interacting with Google Play Games.
@@ -72,8 +76,6 @@ class GPG_EXPORT GameServices {
   GameServices() = delete;
   ~GameServices();
 
-  void StartAuthorizationSilent();
-
   /// Brings up a platform-specific user authorization flow.
   void StartAuthorizationUI();
 
@@ -99,10 +101,22 @@ class GPG_EXPORT GameServices {
   AchievementManager &Achievements();
 
   /**
-   * Provides a const & to the AchievementManager object used for accessing
-   * and manipulating achievements.
+   * Provides a const reference to the AchievementManager object used for
+   * accessing and manipulating achievements.
    */
   AchievementManager const &Achievements() const;
+
+  /**
+   * Provides a reference to the EventManager object used for accessing
+   * and manipulating events.
+   */
+  EventManager &Events();
+
+  /**
+   * Provides a const reference to the EventManager object used for accessing
+   * and manipulating events.
+   */
+  EventManager const &Events() const;
 
   /**
    * Provides a reference to the LeaderboardManager object used for accessing
@@ -111,10 +125,22 @@ class GPG_EXPORT GameServices {
   LeaderboardManager &Leaderboards();
 
   /**
-   * Provides a const & to the LeaderboardManager object used for accessing
-   * and manipulating achievements.
+   * Provides a const reference to the LeaderboardManager object used for
+   * accessing and manipulating achievements.
    */
   LeaderboardManager const &Leaderboards() const;
+
+  /**
+   * Provides a reference to the SnapshotManager object used for accessing
+   * and manipulating snapshots.
+   */
+  SnapshotManager &Snapshots();
+
+  /**
+   * Provides a const reference to the SnapshotManager object used for accessing
+   * and manipulating snapshots.
+   */
+  SnapshotManager const &Snapshots() const;
 
   /**
    * Provides a reference to the PlayerManager object, which allows access
@@ -123,10 +149,34 @@ class GPG_EXPORT GameServices {
   PlayerManager &Players();
 
   /**
-   * Provides a const & to the PlayerManager object, which allows access
+   * Provides a const reference to the PlayerManager object, which allows access
    * to information about players.
    */
   PlayerManager const &Players() const;
+
+  /**
+   * Provides a reference to the QuestManager object, which allows access
+   * to information about quests.
+   */
+  QuestManager &Quests();
+
+  /**
+   * Provides a const reference to the QuestManager object used for accessing
+   * info, accepting, and claiming rewards for quests.
+   */
+  QuestManager const &Quests() const;
+
+  /**
+   * Provides a reference to the TurnBasedMultiplayerManager object, which
+   * allows access to TBMP related methods.
+   */
+  TurnBasedMultiplayerManager &TurnBasedMultiplayer();
+
+  /**
+   * Provides a const reference to the TurnBasedMultiplayerManager object, which
+   * allows access to TBMP related methods.
+   */
+  TurnBasedMultiplayerManager const &TurnBasedMultiplayer() const;
 
   /**
    * Defines a callback type that receives the result (status) of a Flush
@@ -166,7 +216,7 @@ class GPG_EXPORT GameServices {
   GameServices(GameServices const &) = delete;
   GameServices &operator=(GameServices const &) = delete;
 
-  std::unique_ptr<GameServicesImpl> impl_;
+  std::shared_ptr<GameServicesImpl> impl_;
 };
 
 }  // namespace gpg

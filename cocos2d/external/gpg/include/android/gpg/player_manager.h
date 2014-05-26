@@ -35,8 +35,7 @@ class GPG_EXPORT PlayerManager {
    */
   struct FetchSelfResponse {
     /**
-     * Can be: VALID, STALE, ERROR_LICENSE_CHECK_FAILED, ERROR_INTERNAL
-     * ERROR_NOT_AUTHORIZED, or ERROR_TIMEOUT.
+     * Can be one of the values enumerated in {@link ResponseStatus}.
      * If the response is unsuccessful, FetchSelfResponse data object comes
      * back empty.
      */
@@ -113,6 +112,7 @@ class GPG_EXPORT PlayerManager {
   FetchSelfResponse FetchSelfBlocking(DataSource data_source, Timeout timeout);
 
   /**
+   * UNDOCUMENTED
    * @ingroup ResponseType
    */
   struct FetchResponse {

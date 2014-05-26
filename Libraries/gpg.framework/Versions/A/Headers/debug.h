@@ -28,6 +28,9 @@
 #include "gpg/common.h"
 #include "gpg/leaderboard.h"
 #include "gpg/player.h"
+#include "gpg/player_level.h"
+#include "gpg/quest.h"
+#include "gpg/quest_milestone.h"
 #include "gpg/score.h"
 #include "gpg/score_page.h"
 #include "gpg/status.h"
@@ -38,125 +41,204 @@ namespace gpg {
 // Achievements
 
 /// Returns a human-readable achievement type.
-std::string GPG_EXPORT DebugString(AchievementType type);
+std::string DebugString(AchievementType type) GPG_EXPORT;
 
 /// Returns a human-readable achievement state.
-std::string GPG_EXPORT DebugString(AchievementState state);
+std::string DebugString(AchievementState state) GPG_EXPORT;
 
 /// Returns a human-readable achievement.
-std::string GPG_EXPORT DebugString(Achievement const &achievement);
+std::string DebugString(Achievement const &achievement) GPG_EXPORT;
 
 /// Writes a human-readable achievement type to an output stream.
-std::ostream GPG_EXPORT &operator<<(std::ostream &os, AchievementType type);
+std::ostream &operator<<(std::ostream &os, AchievementType type) GPG_EXPORT;
 
 /// Writes a human-readable achievement state to an output stream.
-std::ostream GPG_EXPORT &operator<<(std::ostream &os, AchievementState state);
+std::ostream &operator<<(std::ostream &os, AchievementState state) GPG_EXPORT;
 
 /// Writes a human-readable achievement to an output stream.
-std::ostream GPG_EXPORT &operator<<(std::ostream &os,
-                                    Achievement const &achievement);
+std::ostream &operator<<(std::ostream &os,
+                         Achievement const &achievement) GPG_EXPORT;
 
 // Leaderboards
 
 /// Returns the value of order in human-readable form.
-std::string GPG_EXPORT DebugString(LeaderboardOrder order);
+std::string DebugString(LeaderboardOrder order) GPG_EXPORT;
 
 /// Returns all leaderboard data in human-redable form.
-std::string GPG_EXPORT DebugString(Leaderboard const &leaderboard);
+std::string DebugString(Leaderboard const &leaderboard) GPG_EXPORT;
 
 /// Returns the value of start in human-readable form.
-std::string GPG_EXPORT DebugString(LeaderboardStart start);
+std::string DebugString(LeaderboardStart start) GPG_EXPORT;
 
 /// Returns the value of time_span in human-readable form.
-std::string GPG_EXPORT DebugString(LeaderboardTimeSpan time_span);
+std::string DebugString(LeaderboardTimeSpan time_span) GPG_EXPORT;
 
 /// Returns the value of collection in human-readable form.
-std::string GPG_EXPORT DebugString(LeaderboardCollection collection);
+std::string DebugString(LeaderboardCollection collection) GPG_EXPORT;
 
 /// Returns all score data in human-readable form.
-std::string GPG_EXPORT DebugString(Score const &score);
+std::string DebugString(Score const &score) GPG_EXPORT;
 
 /// Returns all score-page data in human-readable form.
-std::string GPG_EXPORT DebugString(ScorePage const &score_page);
+std::string DebugString(ScorePage const &score_page) GPG_EXPORT;
 
 /// Returns all score entries in human-readable form.
-std::string GPG_EXPORT DebugString(ScorePage::Entry const &entry);
+std::string DebugString(ScorePage::Entry const &entry) GPG_EXPORT;
 
 /// Provided for easy use of the corresponding debug string with streams.
-std::ostream GPG_EXPORT &operator<<(std::ostream &os, LeaderboardOrder order);
+std::ostream &operator<<(std::ostream &os, LeaderboardOrder order) GPG_EXPORT;
 
 /// Provided for easy use of the corresponding debug string with streams.
-std::ostream GPG_EXPORT &operator<<(std::ostream &os, Leaderboard const &order);
+std::ostream &operator<<(std::ostream &os, Leaderboard const &order) GPG_EXPORT;
 
 /// Provided for easy use of the corresponding debug string with streams.
-std::ostream GPG_EXPORT &operator<<(std::ostream &os, LeaderboardStart start);
+std::ostream &operator<<(std::ostream &os, LeaderboardStart start) GPG_EXPORT;
 
 /// Provided for easy use of the corresponding debug string with streams.
-std::ostream GPG_EXPORT &operator<<(std::ostream &os,
-                                    LeaderboardTimeSpan time_span);
+std::ostream &operator<<(std::ostream &os,
+                         LeaderboardTimeSpan time_span) GPG_EXPORT;
 
 /// Provided for easy use of the corresponding debug string with streams.
-std::ostream GPG_EXPORT &operator<<(std::ostream &os,
-                                    LeaderboardCollection collection);
+std::ostream &operator<<(std::ostream &os,
+                         LeaderboardCollection collection) GPG_EXPORT;
 
 /// Provided for easy use of the corresponding debug string with streams.
-std::ostream GPG_EXPORT &operator<<(std::ostream &os, Score const &score);
+std::ostream &operator<<(std::ostream &os, Score const &score) GPG_EXPORT;
 
 /// Provided for easy use of the corresponding debug string with streams.
-std::ostream GPG_EXPORT &operator<<(std::ostream &os,
-                                    ScorePage const &score_page);
+std::ostream &operator<<(std::ostream &os,
+                         ScorePage const &score_page) GPG_EXPORT;
 
 /// Provided for easy use of the corresponding debug string with streams.
-std::ostream GPG_EXPORT &operator<<(std::ostream &os,
-                                    ScorePage::Entry const &entry);
+std::ostream &operator<<(std::ostream &os,
+                         ScorePage::Entry const &entry) GPG_EXPORT;
 
 // Players
 
 /// Returns all player data in human-readable form.
-std::string GPG_EXPORT DebugString(Player const &player);
+std::string DebugString(Player const &player) GPG_EXPORT;
+
+/// Returns player level info in human-readable form.
+std::string DebugString(PlayerLevel const &player) GPG_EXPORT;
+
+/// Returns player level info in human-readable form.
+std::string DebugString(PlayerLevel const &player) GPG_EXPORT;
 
 /// Provided for easy use of the corresponding debug string with streams.
-std::ostream GPG_EXPORT &operator<<(std::ostream &os, Player const &player);
+std::ostream &operator<<(std::ostream &os, Player const &player) GPG_EXPORT;
+
+/// Provided for easy use of the corresponding debug string with streams.
+std::ostream &operator<<(std::ostream &os,
+                         PlayerLevel const &player) GPG_EXPORT;
+
+// Quests
+
+/// Returns a human-readable quest state.
+std::string DebugString(QuestState const &quest_state) GPG_EXPORT;
+
+/// Returns a human-readable milestone state.
+std::string DebugString(QuestMilestoneState const &milestone_state) GPG_EXPORT;
+
+/// Returns all quest data in human-readable form.
+std::string DebugString(Quest const &quest) GPG_EXPORT;
+
+/// Provided for easy use of the corresponding debug string with streams.
+std::ostream &operator<<(std::ostream &os,
+                         QuestState const &quest_state) GPG_EXPORT;
+
+/// Provided for easy use of the corresponding debug string with streams.
+std::ostream &operator<<(std::ostream &os,
+                         QuestMilestoneState const &milestone_state) GPG_EXPORT;
+
+/// Provided for easy use of the corresponding debug string with streams.
+std::ostream &operator<<(std::ostream &os, Quest const &quest) GPG_EXPORT;
+
+// Snapshots
+
+// TODO(jleahey): Update DebugString to include Snapshots (b/14590586).
 
 // Status
 
+/// Returns a BaseStatus in human-readable form.
+std::string DebugString(BaseStatus::StatusCode status) GPG_EXPORT;
+
 /// Returns authorization status in human-readable form.
-std::string GPG_EXPORT DebugString(AuthStatus status);
+std::string DebugString(AuthStatus status) GPG_EXPORT;
 
 /// Returns response status in human-readable form.
-std::string GPG_EXPORT DebugString(ResponseStatus status);
+std::string DebugString(ResponseStatus status) GPG_EXPORT;
 
 /// Returns flush status in human-redable form.
-std::string GPG_EXPORT DebugString(FlushStatus status);
+std::string DebugString(FlushStatus status) GPG_EXPORT;
+
+/// Returns UI status in human-redable form.
+std::string DebugString(UIStatus status) GPG_EXPORT;
+
+/// Returns multiplayer status in human-redable form.
+std::string DebugString(MultiplayerStatus status) GPG_EXPORT;
+
+/// Returns quest accept status in human-redable form.
+std::string DebugString(QuestAcceptStatus status) GPG_EXPORT;
+
+/// Returns quest claim milestone status in human-redable form.
+std::string DebugString(QuestClaimMilestoneStatus status) GPG_EXPORT;
 
 /// Provided for easy use of the corresponding debug string with streams.
-std::ostream GPG_EXPORT &operator<<(std::ostream &os, AuthStatus status);
+std::ostream &operator<<(std::ostream &os,
+                         BaseStatus::StatusCode status) GPG_EXPORT;
 
 /// Provided for easy use of the corresponding debug string with streams.
-std::ostream GPG_EXPORT &operator<<(std::ostream &os, ResponseStatus status);
+std::ostream &operator<<(std::ostream &os, AuthStatus status) GPG_EXPORT;
 
 /// Provided for easy use of the corresponding debug string with streams.
-std::ostream GPG_EXPORT &operator<<(std::ostream &os, FlushStatus status);
+std::ostream &operator<<(std::ostream &os, ResponseStatus status) GPG_EXPORT;
+
+/// Provided for easy use of the corresponding debug string with streams.
+std::ostream &operator<<(std::ostream &os, FlushStatus status) GPG_EXPORT;
+
+/// Provided for easy use of the corresponding debug string with streams.
+std::ostream &operator<<(std::ostream &os, UIStatus status) GPG_EXPORT;
+
+/// Provided for easy use of the corresponding debug string with streams.
+std::ostream &operator<<(std::ostream &os, MultiplayerStatus status) GPG_EXPORT;
 
 // Types
 
+/// Returns timeout in human-readable form.
+std::string DebugString(Timeout timeout) GPG_EXPORT;
+
+/// Returns timestamp in human-readable form.
+std::string DebugString(Timestamp timestamp) GPG_EXPORT;
+
+/// Returns timestamp in human-readable form.
+std::string DebugString(Duration duration) GPG_EXPORT;
+
 /// Returns data source in human-readable form.
-std::string GPG_EXPORT DebugString(DataSource source);
+std::string DebugString(DataSource source) GPG_EXPORT;
 
 /// Returns log level in human-readable form.
-std::string GPG_EXPORT DebugString(LogLevel level);
+std::string DebugString(LogLevel level) GPG_EXPORT;
 
 /// Returns authorization operation in human-readable form.
-std::string GPG_EXPORT DebugString(AuthOperation op);
+std::string DebugString(AuthOperation op) GPG_EXPORT;
 
 /// Provided for easy use of the corresponding debug string with streams.
-std::ostream GPG_EXPORT &operator<<(std::ostream &os, DataSource status);
+std::ostream &operator<<(std::ostream &os, Timeout timeout) GPG_EXPORT;
 
 /// Provided for easy use of the corresponding debug string with streams.
-std::ostream GPG_EXPORT &operator<<(std::ostream &os, LogLevel status);
+std::ostream &operator<<(std::ostream &os, Timestamp timestamp) GPG_EXPORT;
 
 /// Provided for easy use of the corresponding debug string with streams.
-std::ostream GPG_EXPORT &operator<<(std::ostream &os, AuthOperation op);
+std::ostream &operator<<(std::ostream &os, Duration duration) GPG_EXPORT;
+
+/// Provided for easy use of the corresponding debug string with streams.
+std::ostream &operator<<(std::ostream &os, DataSource status) GPG_EXPORT;
+
+/// Provided for easy use of the corresponding debug string with streams.
+std::ostream &operator<<(std::ostream &os, LogLevel status) GPG_EXPORT;
+
+/// Provided for easy use of the corresponding debug string with streams.
+std::ostream &operator<<(std::ostream &os, AuthOperation op) GPG_EXPORT;
 
 }  // namespace gpg
 

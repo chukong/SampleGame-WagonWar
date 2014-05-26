@@ -29,7 +29,8 @@ bool GameUI::init()
     right->setPosition(Point(vsize.width-rightsize.width, 30+rightsize.height));
     addChild(right);
     
-    fire = Sprite::create("closeSelected.png");
+    fire = Sprite::create("CloseSelected.png");
+    fire->setScale(2.0f);
     addChild(fire);
     fire->setPosition(Point(vsize.width/2, 30));
     

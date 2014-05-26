@@ -19,6 +19,7 @@ namespace gpg {
 
 class AndroidPlatformConfigurationImpl;
 
+/// UNDOCUMENTED
 class GPG_EXPORT AndroidPlatformConfiguration {
  public:
   AndroidPlatformConfiguration();
@@ -38,6 +39,7 @@ class GPG_EXPORT AndroidPlatformConfiguration {
    */
   AndroidPlatformConfiguration &SetActivity(jobject android_app_activity);
 
+  /// UNDOCUMENTED
   bool Valid() const;
 
  private:

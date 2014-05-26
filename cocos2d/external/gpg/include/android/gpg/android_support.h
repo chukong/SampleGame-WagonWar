@@ -125,17 +125,37 @@ namespace gpg {
  * \endcode
  */
 struct GPG_EXPORT AndroidSupport {
+  /// UNDOCUMENTED
   static void OnActivityCreated(JNIEnv *env,
                                 jobject activity,
                                 jobject saved_instance_state);
+
+  /// UNDOCUMENTED
   static void OnActivityDestroyed(JNIEnv *env, jobject activity);
+
+  /// UNDOCUMENTED
   static void OnActivityPaused(JNIEnv *env, jobject activity);
+
+  /// UNDOCUMENTED
   static void OnActivityResumed(JNIEnv *env, jobject activity);
+
+  /// UNDOCUMENTED
   static void OnActivitySaveInstanceState(JNIEnv *env,
                                           jobject activity,
                                           jobject out_state);
+
+  /// UNDOCUMENTED
   static void OnActivityStarted(JNIEnv *env, jobject activity);
+
+  /// UNDOCUMENTED
   static void OnActivityStopped(JNIEnv *env, jobject activity);
+
+  /// UNDOCUMENTED
+  static void OnActivityResult(JNIEnv *env,
+                               jobject activity,
+                               jint result_code,
+                               jint request_code,
+                               jobject result);
 };
 
 }  // namespace gpg
