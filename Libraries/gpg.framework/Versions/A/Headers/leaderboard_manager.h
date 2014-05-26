@@ -11,6 +11,7 @@
 #error Header file supports C++ only
 #endif  // __cplusplus
 
+#include <functional>
 #include <memory>
 #include <string>
 #include <vector>
@@ -29,6 +30,7 @@ namespace gpg {
  */
 class GPG_EXPORT LeaderboardManager {
  public:
+  /// UNDOCUMENTED
   explicit LeaderboardManager(GameServicesImpl *game_services_impl);
   ~LeaderboardManager();
 
@@ -52,8 +54,7 @@ class GPG_EXPORT LeaderboardManager {
    */
   struct FetchResponse {
   /**
-   * Can be: VALID, STALE, ERROR_LICENSE_CHECK_FAILED, ERROR_INTERNAL,
-   * ERROR_NOT_AUTHORIZED, or ERROR_TIMEOUT
+   * Can be one of the values enumerated in {@link ResponseStatus}.
    */
     ResponseStatus status;
 
@@ -99,8 +100,8 @@ class GPG_EXPORT LeaderboardManager {
   FetchResponse FetchBlocking(std::string const &leaderboard_id);
 
   /**
-   * Synchronously loads all leaderboard data for the currently signed-in
-   * player, directly returning the FetchResponse. Specify data_source as
+   * Synchronously loads leaderboard data for the currently signed-in player,
+   * directly returning the FetchResponse. Specify data_source as
    * CACHE_OR_NETWORK or NETWORK_ONLY. Not specifying timeout makes this
    * function call equivalent to calling
    * FetchResponse FetchBlocking(DataSource data_source, Timeout timeout),
@@ -134,14 +135,12 @@ class GPG_EXPORT LeaderboardManager {
 
   /**
    * Contains data and response statuses for all leaderboards.
-   * Status can be: VALID, STALE, ERROR_LICENSE_CHECK_FAILED, ERROR_INTERNAL
-   * ERROR_NOT_AUTHORIZED, or ERROR_TIMEOUT
+   * Can be one of the values enumerated in {@link ResponseStatus}.
    * @ingroup ResponseType
    */
   struct FetchAllResponse {
     /**
-     * Can be: VALID, STALE, ERROR_LICENSE_CHECK_FAILED, ERROR_INTERNAL
-     * ERROR_NOT_AUTHORIZED, or ERROR_TIMEOUT.
+     * Can be one of the values enumerated in {@link ResponseStatus}.
      */
     ResponseStatus status;
 
@@ -167,7 +166,7 @@ class GPG_EXPORT LeaderboardManager {
   void FetchAll(FetchAllCallback callback);
 
   /**
-   * Asynchronously loads data for a specific leaderboard for the currently
+   * Asynchronously loads data for all leaderboards for the currently
    * signed-in player.
    * Specify data_source as CACHE_OR_NETWORK or NETWORK_ONLY.
    */
@@ -218,8 +217,7 @@ class GPG_EXPORT LeaderboardManager {
    */
   struct FetchScorePageResponse {
     /**
-     * Can be: VALID, STALE, ERROR_LICENSE_CHECK_FAILED, ERROR_INTERNAL,
-     * ERROR_NOT_AUTHORIZED, or ERROR_TIMEOUT.
+     * Can be one of the values enumerated in {@link ResponseStatus}.
      */
     ResponseStatus status;
     ScorePage data;
@@ -399,8 +397,7 @@ class GPG_EXPORT LeaderboardManager {
    */
   struct FetchScoreSummaryResponse {
     /**
-     * Can be: VALID, STALE, ERROR_LICENSE_CHECK_FAILED, ERROR_INTERNAL,
-     * ERROR_NOT_AUTHORIZED, or ERROR_TIMEOUT.
+     * Can be one of the values enumerated in {@link ResponseStatus}.
      */
     ResponseStatus status;
 
@@ -522,8 +519,7 @@ class GPG_EXPORT LeaderboardManager {
    */
   struct FetchAllScoreSummariesResponse {
     /**
-     * Can be: VALID, STALE, ERROR_LICENSE_CHECK_FAILED, ERROR_INTERNAL.
-     * ERROR_NOT_AUTHORIZED, or ERROR_TIMEOUT.
+     * Can be one of the values enumerated in {@link ResponseStatus}.
      */
     ResponseStatus status;
     /**

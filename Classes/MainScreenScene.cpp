@@ -44,14 +44,14 @@ bool MainScreenScene::init()
     auto myLayout = dynamic_cast<Layout*>(GUIReader::getInstance()->widgetFromJsonFile("MainScreen.ExportJson"));
     m_pUILayer->addChild(myLayout);
     
-//    auto startGame = static_cast<Button*>(Helper::seekWidgetByName(myLayout, "start_game"));
-//    startGame->addTouchEventListener(this,toucheventselector(MainScreenScene::startgame_callback));
-//    
-//    auto showAchievement = static_cast<Button*>(Helper::seekWidgetByName(myLayout, "show_achievement"));
-//    showAchievement->addTouchEventListener(this, toucheventselector(MainScreenScene::showachievement_callback));
-//    
-//    auto showleaderboard = static_cast<Button*>(Helper::seekWidgetByName(myLayout, "show_leaderboard"));
-//    showleaderboard->addTouchEventListener(this, toucheventselector(MainScreenScene::showleaderboard_callback));
+    auto startGame = static_cast<Button*>(ui::Helper::seekWidgetByName(myLayout, "start_game"));
+    startGame->addTouchEventListener(this,toucheventselector(MainScreenScene::startgame_callback));
+    
+    auto showAchievement = static_cast<Button*>(ui::Helper::seekWidgetByName(myLayout, "show_achievement"));
+    showAchievement->addTouchEventListener(this, toucheventselector(MainScreenScene::showachievement_callback));
+    
+    auto showleaderboard = static_cast<Button*>(ui::Helper::seekWidgetByName(myLayout, "show_leaderboard"));
+    showleaderboard->addTouchEventListener(this, toucheventselector(MainScreenScene::showleaderboard_callback));
     
     return true;
 }

@@ -30,12 +30,25 @@ class ScoreSummaryImpl;
 class GPG_EXPORT ScoreSummary {
  public:
   ScoreSummary();
+
+  /// UNDOCUMENTED
   explicit ScoreSummary(std::shared_ptr<ScoreSummaryImpl const> impl);
+
+  /// UNDOCUMENTED
   ScoreSummary(ScoreSummary const &copy_from);
+
+  /// UNDOCUMENTED
   ScoreSummary(ScoreSummary &&move_from);
+
+  /// UNDOCUMENTED
   ScoreSummary &operator=(ScoreSummary const &copy_from);
+
+  /// UNDOCUMENTED
   ScoreSummary &operator=(ScoreSummary &&move_from);
+
   ~ScoreSummary();
+
+  /// UNDOCUMENTED
   bool Valid() const;
 
   // Properties that define the leaderboard variant this score summary is based

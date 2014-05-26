@@ -27,7 +27,11 @@ namespace gpg {
 class GPG_EXPORT AchievementManager {
  public:
   /**
-   * An explicit constructor.
+   * Constructs an <code>AchievementManager</code> from a
+   * <code>GameServicesImpl</code>. This function is not intended to be called
+   * by consumers of this API. Instead, an app should retrieve the
+   * <code>AchievementManager</code> via the
+   * <code>GameServices::AchievementManager</code> call.
    */
   explicit AchievementManager(GameServicesImpl *game_services_impl);
   ~AchievementManager();
@@ -37,12 +41,11 @@ class GPG_EXPORT AchievementManager {
    * @ingroup ResponseType
    */
   struct FetchAllResponse {
-   /**
-    * Can be: VALID, STALE, ERROR_LICENSE_CHECK_FAILED, ERROR_INTERNAL
-    * ERROR_NOT_AUTHORIZED, or ERROR_TIMEOUT.
-    * If the response is unsuccessful, FetchAllResponse's data vector will be
-    * empty.
-    */
+    /**
+     * Can be one of the values enumerated in {@link ResponseStatus}.
+     * If the response is unsuccessful, <code>FetchAllResponse</code>'s data
+     * vector is empty.
+     */
     ResponseStatus status;
 
     /**
@@ -53,64 +56,76 @@ class GPG_EXPORT AchievementManager {
   };
 
   /**
-   * Defines a callback type that receives a FetchAllResponse. This callback
-   * type is provided to the FetchAll(*) functions below.
+   * Defines a callback type that receives a <code>FetchAllResponse</code>.
+   * This callback type is provided to the <code>FetchAll(*)</code> functions
+   * below.
    * @ingroup Callbacks
    */
   typedef std::function<void(FetchAllResponse const &)> FetchAllCallback;
 
   /**
    * Asynchronously loads all achievement data for the currently signed-in
-   * player. Calls the provided FetchAllCallback on operation completion.
-   * Not specifying data_source makes this function call equivalent to calling
-   * FetchAll(DataSource data_source, FetchAllCallback), with data_source
-   * specified as CACHE_OR_NETWORK.
+   * player. Calls the provided <code>FetchAllCallback</code> upon operation
+   * completion. Not specifying <code>data_source</code> makes this function
+   * call equivalent to calling
+   * <code>FetchAll(DataSource data_source, FetchAllCallback)</code>, with
+   * <code>data_source</code> specified as <code>CACHE_OR_NETWORK</code>.
    */
   void FetchAll(FetchAllCallback callback);
 
   /**
    * Asynchronously loads all achievement data for the currently signed-in
-   * player. Calls the provided FetchAllCallback on operation completion.
-   * Specify data_source as CACHE_OR_NETWORK or NETWORK_ONLY.
+   * player. Calls the provided <code>FetchAllCallback</code> upon operation
+   * completion. Specify <code>data_source</code> as
+   * <code>CACHE_OR_NETWORK</code> or <code>NETWORK_ONLY</code>.
    */
   void FetchAll(DataSource data_source, FetchAllCallback callback);
 
   /**
    * Synchronously loads all achievement data for the currently signed-in
-   * player, directly returning the FetchAllResponse. Specifying neither
-   * data_source nor timeout makes this function call equivalent to calling
-   * FetchAllResponse FetchAllBlocking(DataSource data_source, Timeout timeout),
-   * with data_source specified as CACHE_OR_NETWORK, and timeout specified as 10
+   * player, directly returning the <code>FetchAllResponse</code>. Specifying
+   * neither <code>data_source</code> nor <code>timeout</code> makes this
+   * function call equivalent to calling
+   * <code>FetchAllResponse FetchAllBlocking(DataSource data_source, </code>
+   * <code>Timeout timeout)</code>,
+   * with <code>data_source</code> specified as
+   * <code>CACHE_OR_NETWORK</code>, and <code>timeout</code> specified as 10
    * years.
    */
   FetchAllResponse FetchAllBlocking();
 
   /**
    * Synchronously loads all achievement data for the currently signed-in
-   * player, directly returning the FetchAllResponse. Specify data_source
-   * as CACHE_OR_NETWORK or NETWORK_ONLY. Not specifying timeout makes this
+   * player, directly returning the <code>FetchAllResponse</code>.
+   * Specify <code>data_source</code> as <code>CACHE_OR_NETWORK</code> or
+   * <code>NETWORK_ONLY</code>. Not specifying <code>timeout</code> makes this
    * function call equivalent to calling
-   * FetchAllBlocking FetchAllResponse(DataSource data_source, Timeout timeout),
-   * with your specified data_source value, and timeout specified as 10 years.
+   * <code>FetchAllBlocking FetchAllResponse(DataSource data_source, </code>
+   * <code>Timeout timeout)</code>,
+   * with your specified <code>data_source</code> value, and <code>timeout</code>
+   * specified as 10 years.
    */
   FetchAllResponse FetchAllBlocking(DataSource data_source);
 
   /**
    * Synchronously loads all achievement data for the currently signed-in
-   * player, directly returning the FetchAllResponse. Specify timeout as an
-   * arbitrary number of milliseconds. Not specifying data_source makes
-   * this function call equivalent to calling
-   * FetchAllResponse FetchAllBlocking(DataSource data_source, Timeout timeout),
-   * with data_source specified as CACHE_OR_NETWORK, and timeout containing your
-   * specified value.
+   * player, directly returning the <code>FetchAllResponse</code>. Specify
+   * <code>timeout</code> as an arbitrary number of milliseconds.
+   * Not specifying <code>data_source</code> makes this function call equivalent
+   * to calling
+   * <code>FetchAllResponse FetchAllBlocking(DataSource data_source, </code>
+   * <code>Timeout timeout)</code>,
+   * with <code>data_source</code> specified as <code>CACHE_OR_NETWORK</code>,
+   * and <code>timeout</code> containing your specified value.
    */
   FetchAllResponse FetchAllBlocking(Timeout timeout);
 
   /**
    * Synchronously loads all achievement data for the currently signed-in
-   * player, directly returning the FetchAllResponse. Specify data_source
-   * as CACHE_OR_NETWORK or NETWORK_ONLY. Specify timeout as an arbitrary
-   * number of milliseconds.
+   * player, directly returning the <code>FetchAllResponse</code>. Specify
+   * <code>data_source</code> as <code>CACHE_OR_NETWORK</code> or
+   * <code>NETWORK_ONLY</code>. Specify timeout as an arbitrary number of
+   * milliseconds.
    */
   FetchAllResponse FetchAllBlocking(DataSource data_source, Timeout timeout);
 
@@ -120,10 +135,9 @@ class GPG_EXPORT AchievementManager {
    */
   struct FetchResponse {
     /**
-     * Can be: VALID, STALE, ERROR_LICENSE_CHECK_FAILED, ERROR_INTERNAL
-     * ERROR_NOT_AUTHORIZED, or ERROR_TIMEOUT.
-     * If the response is unsuccessful, FetchResponse's data vector will be
-     * empty.
+     * Can be one of the values enumerated in {@link ResponseStatus}.
+     * If the response is unsuccessful, <code>FetchResponse</code>'s
+     * data vector will be empty.
      */
     ResponseStatus status;
 
@@ -134,8 +148,9 @@ class GPG_EXPORT AchievementManager {
   };
 
   /**
-   * Defines a callback type that receives a FetchResponse. This callback type
-   * is provided to the Fetch(*) functions below.
+   * Defines a callback type that receives a <code>FetchResponse</code>.
+   * This callback type is provided to the <code>Fetch(*)</code> functions
+   * below.
    * @ingroup Callbacks
    */
   typedef std::function<void(FetchResponse const &)> FetchCallback;
@@ -143,17 +158,20 @@ class GPG_EXPORT AchievementManager {
   /**
    * Asynchronously loads data for a specific achievement for the currently
    * signed-in player.
-   * Calls the provided FetchCallback on operation completion.
-   * Not specifying data_source makes this function call equivalent to
-   * calling Fetch(DataSource data_source, std::string const &id,
-   * FetchCallback), with data_source specified as CACHE_OR_NETWORK.
+   * Calls the provided <code>FetchCallback</code> upon operation completion.
+   * Not specifying <code>data_source</code> makes this function call
+   * equivalent to calling
+   * <code>Fetch(DataSource data_source, std::string const &id, </code>
+   * <code>FetchCallback)</code>, with <code>data_source</code> specified as
+   * <code>CACHE_OR_NETWORK</code>.
    */
   void Fetch(std::string const &achievement_id, FetchCallback callback);
 
   /**
    * Asynchronously loads data for a specific achievement for the currently
-   * signed-in player Calls the provided FetchCallback on operation completion.
-   * Specify data_source as CACHE_OR_NETWORK or NETWORK_ONLY.
+   * signed-in player. Calls the provided <code>FetchCallback</code> on
+   * operation completion. Specify data_source as <code>CACHE_OR_NETWORK</code>
+   * or <code>NETWORK_ONLY</code>.
    */
   void Fetch(DataSource data_source,
              std::string const &achievement_id,
@@ -161,22 +179,27 @@ class GPG_EXPORT AchievementManager {
 
   /**
    * Synchronously loads data for a specific achievement, identified by string
-   * id, for the currently signed-in player; directly returns the FetchResponse.
-   * Leaving data_source, and timeout unspecified makes this function call
-   * equivalent to calling
-   * FetchResponse FetchBlocking(DataSource data_source, Timeout timeout,
-   * std::string const &id), with data_source specified as CACHE_OR_NETWORK,
-   * and timeout specified as 10 years.
+   * id, for the currently signed-in player; directly returns the
+   * <code>FetchResponse</code>. Leaving <code>data_source</code> and
+   * <code>timeout</code> unspecified makes this function call equivalent to
+   * calling
+   * <code>FetchResponse FetchBlocking(DataSource data_source, </code>
+   * <code>Timeout timeout, std::string const &id)</code>, with
+   * <code>data_source</code> specified as <code>CACHE_OR_NETWORK</code>,
+   * and <code>timeout</code> specified as 10 years.
    */
   FetchResponse FetchBlocking(std::string const &achievement_id);
 
   /**
    * Synchronously loads data for a specific achievement, identified by string
-   * id, for the currently signed-in player; directly returns the FetchResponse.
-   * Specify data_source as CACHE_OR_NETWORK or NETWORK_ONLY. Leaving
-   * timeout unspecified makes this function call equivalent to calling
-   * FetchResponse FetchBlocking(DataSource data_source, Timeout timeout,
-   * std::string const &id), with your specified data_source value, and timeout
+   * id, for the currently signed-in player; directly returns the
+   * <code>FetchResponse</code>. Specify <code>data_source</code> as
+   * <code>CACHE_OR_NETWORK</code> or <code>NETWORK_ONLY</code>. Leaving
+   * <code>timeout</code> unspecified makes this function call equivalent to
+   * calling
+   * <code>FetchResponse FetchBlocking(DataSource data_source, </code>
+   * <code> Timeout timeout, std::string const &id)</code>, with your
+   * specified <code>data_source</code> value, and <code>timeout</code>
    * specified as 10 years.
    */
   FetchResponse FetchBlocking(DataSource data_source,
@@ -184,21 +207,25 @@ class GPG_EXPORT AchievementManager {
 
   /**
    * Synchronously loads data for a specific achievement, identified by string
-   * id, for the currently signed-in player; directly returns the FetchResponse.
-   * Specify timeout as an arbitrary number of milliseconds. Leaving data_source
-   * unspecified makes this function call equivalent to calling
-   * FetchResponse FetchBlocking(DataSource data_source, Timeout timeout,
-   * std::string const &id), with data_source specified as CACHE_OR_NETWORK and
-   * timeout containing your specified value.
+   * id, for the currently signed-in player; directly returns the
+   * <code>FetchResponse</code>. Specify <code>timeout</code> as an arbitrary
+   * number of milliseconds. Leaving <code>data_source</code> unspecified makes
+   * this function call equivalent to calling
+   * <code>FetchResponse FetchBlocking(DataSource data_source, </code>
+   * <code>Timeout timeout, std::string const &id)</code>, with
+   * <code>data_source</code> specified as <code>CACHE_OR_NETWORK</code>, and
+   * <code>timeout</code> containing your specified value.
    */
   FetchResponse FetchBlocking(Timeout timeout,
                               std::string const &achievement_id);
 
   /**
    * Synchronously loads data for a specific achievement, identified by string
-   * id, for the currently signed-in player; directly returns the FetchResponse.
-   * Specify DataSource as CACHE_OR_NETWORK or NETWORK_ONLY. Specify
-   * timeout as an arbitrary number of milliseconds.
+   * id, for the currently signed-in player; directly returns the
+   * <code>FetchResponse.</code>
+   * Specify <code>data_source</code> as <code>CACHE_OR_NETWORK</code> or
+   * <code>NETWORK_ONLY</code>. Specify <code>timeout</code> as an arbitrary
+   * number of milliseconds.
    */
   FetchResponse FetchBlocking(DataSource data_source,
                               Timeout timeout,

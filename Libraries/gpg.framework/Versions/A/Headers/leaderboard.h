@@ -92,6 +92,12 @@ class GPG_EXPORT Leaderboard {
    */
   LeaderboardOrder Order() const;
 
+  /**
+   * Returns the URL leading to the image of the icon for this Leaderboard.
+   * It can only be called when Leaderboard::Valid() returns true.
+   */
+  std::string const &IconUrl() const;
+
  private:
   std::shared_ptr<LeaderboardImpl const> impl_;
 };

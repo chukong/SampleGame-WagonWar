@@ -95,7 +95,7 @@ class GPG_EXPORT ScorePage {
      * Returns time at which the entry was last modified (expressed as
      * milliseconds since the Unix epoch).
      */
-    std::chrono::milliseconds LastModified() const;
+    Timestamp LastModified() const;
 
    private:
     std::shared_ptr<EntryImpl const> impl_;
@@ -194,6 +194,8 @@ class GPG_EXPORT ScorePage {
    */
   ScorePage &operator=(ScorePage &&move_from);
   ~ScorePage();
+
+  /// UNDOCUMENTED
   bool Valid() const;
 
   // Properties that define this score page

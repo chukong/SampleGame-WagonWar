@@ -33,31 +33,28 @@ class GPG_EXPORT Achievement {
  public:
   Achievement();
   /**
-   * Explicit constructor.
+   * Constructs an <code>Achievement</code> from a <code>shared_ptr</code> to
+   * an <code>AchievementImpl</code>.Intended for internal use by the API.
    */
   explicit Achievement(std::shared_ptr<AchievementImpl const> impl);
 
   /**
-   * Copy constructor for copying an existing achievement into a new one.
+   * Creates a copy of an existing <code>Achievement</code>.
    */
   Achievement(Achievement const &copy_from);
 
   /**
-   * Constructor for moving an existing achievement into a new one.
-   * r-value-reference version.
+   * Moves an existing <code>Achievement</code>.
    */
   Achievement(Achievement &&move_from);
 
   /**
-   * Assignment operator for assigning this achievement's value from another
-   * achievement.
+   * Assigns this <code>Achievement</code> by copying from another one.
    */
   Achievement &operator=(Achievement const &copy_from);
 
   /**
-   * Assignment operator for assigning this achievement's value from another
-   * achievement.
-   * r-value-reference version.
+   * Assigns this <code>Achievement</code> by moving another one into it.
    */
   Achievement &operator=(Achievement &&move_from);
   ~Achievement();
@@ -124,13 +121,34 @@ class GPG_EXPORT Achievement {
    */
   uint32_t TotalSteps() const;
 
-    /**
-     * Returns time at which the entry was last modified (expressed as
-     * milliseconds since the Unix epoch).
-     * It can only be called when Achievement::Valid() returns true.
-     */
+  /**
+   * The number of experience points awarded by this achievement.
+   * It can only be called when Achievement::Valid() returns true.
+   */
+  uint64_t XP() const;
 
-  std::chrono::milliseconds LastModified() const;
+  /**
+   * Returns the URL leading to the image of the revealed icon for this
+   * Achievement.  This icon is intended to be shown when the Achievement has
+   * been revealed, but not yet unlocked.
+   * This function can only be called when Achievement::Valid() returns true.
+   */
+  std::string const &RevealedIconUrl() const;
+
+  /**
+   * Returns the URL leading to the image of the unlocked icon for this
+   * Achievement.  This icon is intended to be shown when the Achievement has
+   * been unlocked (and hence also revealed).
+   * This function can only be called when Achievement::Valid() returns true.
+   */
+  std::string const &UnlockedIconUrl() const;
+
+  /**
+   * Returns time at which the entry was last modified (expressed as
+   * milliseconds since the Unix epoch).
+   * It can only be called when Achievement::Valid() returns true.
+   */
+  Timestamp LastModified() const;
 
  private:
   std::shared_ptr<AchievementImpl const> impl_;

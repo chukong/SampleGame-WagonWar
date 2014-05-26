@@ -12,6 +12,7 @@
 #include "cocos2d.h"
 #include "cocostudio/CocoStudio.h"
 
+
 class MainScreenScene: public cocos2d::Layer
 {
 public:

@@ -24,37 +24,37 @@ void Java_org_cocos2dx_cpp_AppActivity_nativeInitGPGS(JNIEnv*  env, jobject thiz
 {
     gpg::AndroidPlatformConfiguration platform_configuration;
     platform_configuration.SetActivity(activity);
-    StateManager::InitServices(
-                                platform_configuration,
-                                [](gpg::AuthOperation op) {
-                                    LOGD("Start oauth action ... by Jacky_Android");
-                                   //  if (op == gpg::AuthOperation::SIGN_IN) {
-                                   //      LOGD("Signing In...");
-                                   //   } else {
-                                   //      LOGD("Signing Out...");
-                                   // }
-                                },
-                                [](gpg::AuthOperation op, gpg::AuthStatus status) {
-                                    LOGD("Finished oauth action ... by Jacky_Android");
-                                    // if (op == gpg::AuthOperation::SIGN_IN) {
-                                    //     LOGD("Signing In.");
-                                    // } else {
-                                    //     LOGD("Signing Out.");
-                                    // }
-                                    switch( status )
-                                    {
-                                        case gpg::AuthStatus::VALID:
-                                            LOGD("Signed in!!");
-                                            break;
-                                        case gpg::AuthStatus::ERROR_INTERNAL:
-                                        case gpg::AuthStatus::ERROR_NOT_AUTHORIZED:
-                                        case gpg::AuthStatus::ERROR_VERSION_UPDATE_REQUIRED:
-                                        case gpg::AuthStatus::ERROR_TIMEOUT:
-                                        default:
-                                            LOGD("Sign-in failure");
-                                            break;
-                                    }
-                               });
+    StateManager::InitServices(platform_configuration
+                               //  ,[](gpg::AuthOperation op) {
+                               //      LOGD("Start oauth action ... by Jacky_Android");
+                               //     //  if (op == gpg::AuthOperation::SIGN_IN) {
+                               //     //      LOGD("Signing In...");
+                               //     //   } else {
+                               //     //      LOGD("Signing Out...");
+                               //     // }
+                               //  },
+                               //  [](gpg::AuthOperation op, gpg::AuthStatus status) {
+                               //      LOGD("Finished oauth action ... by Jacky_Android");
+                               //      // if (op == gpg::AuthOperation::SIGN_IN) {
+                               //      //     LOGD("Signing In.");
+                               //      // } else {
+                               //      //     LOGD("Signing Out.");
+                               //      // }
+                               //      switch( status )
+                               //      {
+                               //          case gpg::AuthStatus::VALID:
+                               //              LOGD("Signed in!!");
+                               //              break;
+                               //          case gpg::AuthStatus::ERROR_INTERNAL:
+                               //          case gpg::AuthStatus::ERROR_NOT_AUTHORIZED:
+                               //          case gpg::AuthStatus::ERROR_VERSION_UPDATE_REQUIRED:
+                               //          case gpg::AuthStatus::ERROR_TIMEOUT:
+                               //          default:
+                               //              LOGD("Sign-in failure");
+                               //              break;
+                               //      }
+                               // }
+                               );
 
 }
 

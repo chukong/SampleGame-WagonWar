@@ -16,4 +16,9 @@
  */
 #define GPG_EXPORT __attribute__((visibility("default")))
 
+/**
+ * Marks deprecated methods and functions.
+ */
+#define GPG_DEPRECATED __attribute__((deprecated))
+
 #endif  // GPG_COMMON_H_

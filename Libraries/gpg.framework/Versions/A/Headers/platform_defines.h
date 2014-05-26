@@ -12,7 +12,7 @@
 #error Header file supports C++ only
 #endif  // __cplusplus
 
-#if __ANDROID_API__
+#if __ANDROID__
 
 #define GPG_ANDROID 1
 
