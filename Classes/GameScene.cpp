@@ -133,6 +133,11 @@ void GameScene::endShoot()
     auto gunlocation = p->gunPoint->getNodeToWorldAffineTransform();
     auto b = addBullet(defaultB, Point(gunlocation.tx, gunlocation.ty)+Point(offset/2)-getPosition(), Point(timed*2,timed*2));
     _following = dynamic_cast<Node*>(b);
+    if(_playback)
+    {
+        //this is the last action
+        _waitToClear = true;
+    }
 }
 void GameScene::randomWind()
 {
@@ -158,6 +163,14 @@ void GameScene::initTests()
     p->setPosition(500,800);
     p->setLastPos(Point(500,800));
     getPlayerLayer()->addChild(p);
+    
+    
+    
+    //here is some json
+    std::string data = "{\"actions\":[{\"tick\":30,\"action\":\"go right\"},{\"tick\":200,\"action\":\"stop\"},{\"tick\":300,\"action\":\"start shoot\"},{\"tick\":450,\"action\":\"end shoot\"}]}";
+
+    //log("is array? %d", doc["actions"].IsArray());
+    playback(data);
 }
 void GameScene::initExplosionMasks()
 {
@@ -294,9 +307,34 @@ void GameScene::explode(Bullet *bullet)
         }
     }
 }
+void GameScene::playback(std::string json)
+{
+    _json.Parse<rapidjson::kParseDefaultFlags>(json.c_str());
+    _tick = 0;
+    _playback = true;
+    //TODO: need to disable UI layer touch
+    
+}
 
 void GameScene::update(float dt)
 {
+    bool everythingSleep = true;
+    
+	if(_playback)
+    {
+        rapidjson::Value &array = _json["actions"];
+        if(array.IsArray())
+        {
+            for(int i=0; i < array.Size(); i++)
+            {
+                if(_tick == array[i]["tick"].GetInt())
+                {
+                    //execute that action
+                    _eventDispatcher->dispatchCustomEvent(array[i]["action"].GetString());
+                }
+            }
+        }
+    }
     //if we have a following target, then follow it
     if(_following)
     {
@@ -318,6 +356,7 @@ void GameScene::update(float dt)
     aabb2.origin = Point::ZERO;
     for(Node* bullet : _bulletLayer->getChildren())
     {
+        everythingSleep = false;
         Bullet *b = dynamic_cast<Bullet*>(bullet);
         auto pos = b->getPosition();
         bool coll = false;
@@ -383,92 +422,101 @@ void GameScene::update(float dt)
     
     
     //Finished looping bullet, now lets loop player
-    for(Node* player : _PlayerLayer->getChildren())
+    auto playerNodes = _PlayerLayer->getChildren();
+    if(playerNodes.size())
     {
-        TestNode* p = dynamic_cast<TestNode*>(player);
-
-        
-        
-        if(p->airborn || p->needFix || _moveDelta.x)
+        for(Node* player : _PlayerLayer->getChildren())
         {
-            //move this
-            auto pos2 = p->getPosition();
-            auto pos = pos2+(pos2-p->getLastPos())+getGravity()+getWind();
-            p->setPosition(pos);
-            p->setLastPos(pos2);
-
-            int radius = p->radius;
-            int bufferSize = pow(radius*2, 2);
-            Color4B *buffer = (Color4B*)malloc(sizeof(Color4B)*bufferSize);
-            glReadPixels(pos.x-radius, pos.y-radius, radius*2, radius*2, GL_RGBA, GL_UNSIGNED_BYTE, buffer);
-            float angleTotal =0;
-            int angleCount = 0;
-            for(int i = 0; i < bufferSize; i++)
+            TestNode* p = dynamic_cast<TestNode*>(player);
+            if(p->airborn || p->needFix || _moveDelta.x)
             {
-                if(buffer[i].a> 0 && Helper::isInCircle(i, radius))
+                everythingSleep = false;
+                //move this
+                auto pos2 = p->getPosition();
+                auto pos = pos2+(pos2-p->getLastPos())+getGravity()+getWind();
+                p->setPosition(pos);
+                p->setLastPos(pos2);
+                
+                int radius = p->radius;
+                int bufferSize = pow(radius*2, 2);
+                Color4B *buffer = (Color4B*)malloc(sizeof(Color4B)*bufferSize);
+                glReadPixels(pos.x-radius, pos.y-radius, radius*2, radius*2, GL_RGBA, GL_UNSIGNED_BYTE, buffer);
+                float angleTotal =0;
+                int angleCount = 0;
+                for(int i = 0; i < bufferSize; i++)
                 {
-                    //TODO: need to fix position, so does not clip with terrain, and get angle
-                    float an = Helper::getAngleFromIndex(i, radius);
-                    if(an != -999)
+                    if(buffer[i].a> 0 && Helper::isInCircle(i, radius))
                     {
-                        angleTotal+=an;
-                        angleCount++;
-                        //log("rad: %f, %i", an, i);
+                        //TODO: need to fix position, so does not clip with terrain, and get angle
+                        float an = Helper::getAngleFromIndex(i, radius);
+                        if(an != -999)
+                        {
+                            angleTotal+=an;
+                            angleCount++;
+                            //log("rad: %f, %i", an, i);
+                        }
+                        
+                        p->setLastPos(p->getPosition());
+                        //break;
                     }
-
-                    p->setLastPos(p->getPosition());
-                    //break;
                 }
+                free(buffer);
+                
+                //check how many collision points
+                if(angleCount>1)
+                {
+                    p->airborn = false;
+                    //set angle to average
+                    float deg =CC_RADIANS_TO_DEGREES(angleTotal/angleCount);
+                    if(abs(deg) > 80)//TODO: each vehicle has a climbing angle limit
+                    {
+                        p->setRotation((deg>0)? 80:-80);
+                        p->airborn = true;
+                    }
+                    else
+                    {
+                        p->setRotation(deg);
+                    }
+                    if(angleCount > 8)
+                    {
+                        //we are colliding with too many pixels
+                        
+                        float pushForce = 0.4;
+                        Point mid(pos.x-pushForce*sinf(angleTotal/angleCount), pos.y-pushForce*cosf(angleTotal/angleCount));
+                        p->setLastPos(mid);
+                        p->needFix = true;
+                    }
+                    else
+                    {
+                        p->needFix = false;
+                    }
+                }
+                
             }
-            free(buffer);
-            
-            //check how many collision points
-            if(angleCount>1)
+            if(_moveDelta.x)
             {
-                p->airborn = false;
-                //set angle to average
-                float deg =CC_RADIANS_TO_DEGREES(angleTotal/angleCount);
-                if(abs(deg) > 80)//TODO: each vehicle has a climbing angle limit
+                p->setPosition(p->getPosition()+_moveDelta);
+                p->setLastPos(p->getLastPos()+_moveDelta);
+                if(_moveDelta.x>0)
                 {
-                    p->setRotation((deg>0)? 80:-80);
-                    p->airborn = true;
+                    //TODO: replace with proper flip code
+                    p->setScaleX(1);
                 }
-                else
-                {
-                    p->setRotation(deg);
-                }
-                if(angleCount > 8)
-                {
-                    //we are colliding with too many pixels
-
-                    float pushForce = 0.4;
-                    Point mid(pos.x-pushForce*sinf(angleTotal/angleCount), pos.y-pushForce*cosf(angleTotal/angleCount));
-                    p->setLastPos(mid);
-                    p->needFix = true;
-                }
-                else
-                {
-                    p->needFix = false;
+                else{
+                    p->setScaleX(-1);
                 }
             }
-
+            //kmGLPopMatrix();
         }
-        if(_moveDelta.x)
-        {
-            p->setPosition(p->getPosition()+_moveDelta);
-            p->setLastPos(p->getLastPos()+_moveDelta);
-            if(_moveDelta.x>0)
-            {
-                //TODO: replace with proper flip code
-                p->setScaleX(1);
-            }
-            else{
-                p->setScaleX(-1);
-            }
-        }
-
-    _level->getRT()->onEnd();
-    //kmGLPopMatrix();
     }
+    _level->getRT()->onEnd();
+    _tick++;
     
+    if(_waitToClear && everythingSleep)
+    {
+        //TODO: re-enable touch on game ui
+        _waitToClear = false;
+        _playback = false;
+        log("play back finished");
+    }
 }

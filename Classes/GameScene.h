@@ -13,6 +13,8 @@
 #include "Level.h"
 #include "bullet.h"
 #include "Helper.h"
+#include "json/rapidjson.h"
+#include "json/document.h"
 
 class GameScene : public cocos2d::ParallaxNode
 {
@@ -54,14 +56,19 @@ public:
     void movePlayer(float x);
     virtual void onEnter();
     void randomWind();
+    void playback(std::string json);
 protected:
+    rapidjson::Document _json;
+    int _tick;
+    bool _playback;
+    bool _waitToClear;
     cocos2d::Node* _following;
     cocos2d::Point _offset;
     timeval _now;
     cocos2d::Size _movableSize;
     cocos2d::Point _moveDelta;
     void _movePlayer(float x);
-    GameScene():_click(false),_steps(2),_moveDelta(0,0.02),_following(nullptr){};
+    GameScene():_waitToClear(false),_playback(false),_click(false),_steps(2),_moveDelta(0,0.02),_following(nullptr),_tick(0),_json(nullptr){};
     bool _click;
     int _steps;
     cocos2d::Sprite* _ex;

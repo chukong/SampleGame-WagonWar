@@ -45,6 +45,8 @@ bool GameUI::init()
     auto wind = WindIndicator::create();
     addChild(wind);
     wind->setPosition(vsize.width/2+vorigin.x, vsize.height- vorigin.y - 50);
+    
+    
     return true;
 }
 
