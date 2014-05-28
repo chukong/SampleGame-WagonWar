@@ -148,6 +148,12 @@ void GameScene::onEnter()
 {
     ParallaxNode::onEnter();
     _eventDispatcher->dispatchCustomEvent("wind", &_wind);
+    
+    //here is some json
+    std::string data = "{\"actions\":[{\"tick\":30,\"action\":\"go right\"},{\"tick\":200,\"action\":\"stop\"},{\"tick\":300,\"action\":\"start shoot\"},{\"tick\":450,\"action\":\"end shoot\"}]}";
+    
+    //log("is array? %d", doc["actions"].IsArray());
+    playback(data);
 }
 void GameScene::movePlayer(float x)
 {
@@ -166,11 +172,7 @@ void GameScene::initTests()
     
     
     
-    //here is some json
-    std::string data = "{\"actions\":[{\"tick\":30,\"action\":\"go right\"},{\"tick\":200,\"action\":\"stop\"},{\"tick\":300,\"action\":\"start shoot\"},{\"tick\":450,\"action\":\"end shoot\"}]}";
 
-    //log("is array? %d", doc["actions"].IsArray());
-    playback(data);
 }
 void GameScene::initExplosionMasks()
 {
@@ -313,7 +315,7 @@ void GameScene::playback(std::string json)
     _tick = 0;
     _playback = true;
     //TODO: need to disable UI layer touch
-    
+    _eventDispatcher->dispatchCustomEvent("touch off");
 }
 
 void GameScene::update(float dt)
@@ -514,7 +516,7 @@ void GameScene::update(float dt)
     
     if(_waitToClear && everythingSleep)
     {
-        //TODO: re-enable touch on game ui
+        _eventDispatcher->dispatchCustomEvent("touch on");
         _waitToClear = false;
         _playback = false;
         log("play back finished");

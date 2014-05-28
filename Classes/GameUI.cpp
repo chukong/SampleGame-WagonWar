@@ -35,21 +35,28 @@ bool GameUI::init()
     fire->setPosition(Point(vsize.width/2, 30));
     
     
-    auto listener = EventListenerTouchOneByOne::create();
-    listener->onTouchBegan = CC_CALLBACK_2(GameUI::onTouchBegan, this);
-    listener->onTouchEnded = CC_CALLBACK_2(GameUI::onTouchEnded, this);
-    listener->setSwallowTouches(true);
-    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
-    
+    _mytouchListener = EventListenerTouchOneByOne::create();
+    _mytouchListener->onTouchBegan = CC_CALLBACK_2(GameUI::onTouchBegan, this);
+    _mytouchListener->onTouchEnded = CC_CALLBACK_2(GameUI::onTouchEnded, this);
+    _mytouchListener->setSwallowTouches(true);
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(_mytouchListener, this);
     
     auto wind = WindIndicator::create();
     addChild(wind);
     wind->setPosition(vsize.width/2+vorigin.x, vsize.height- vorigin.y - 50);
     
+    auto touchOffListener = EventListenerCustom::create("touch off", CC_CALLBACK_0(GameUI::_toggleTouchEnable, this, false));
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(touchOffListener, this);
     
+    auto touchOnListener = EventListenerCustom::create("touch on", CC_CALLBACK_0(GameUI::_toggleTouchEnable, this, true));
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(touchOnListener, this);
     return true;
 }
 
+void GameUI::_toggleTouchEnable(bool onoff)
+{
+    _mytouchListener->setEnabled(onoff);
+}
 bool GameUI::onTouchBegan(Touch *touch, Event *event)
 {
     if(left->getBoundingBox().containsPoint(touch->getLocation()))
