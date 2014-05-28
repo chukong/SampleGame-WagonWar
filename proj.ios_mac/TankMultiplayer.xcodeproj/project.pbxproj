@@ -116,8 +116,16 @@
 		85529F711925E55F0024FFEF /* LoadingScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 85529F6E1925E55F0024FFEF /* LoadingScene.cpp */; };
 		85529F751925EAEA0024FFEF /* MainScreenScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 85529F731925EAEA0024FFEF /* MainScreenScene.cpp */; };
 		85529F761925EAEA0024FFEF /* MainScreenScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 85529F731925EAEA0024FFEF /* MainScreenScene.cpp */; };
-		856CF136192B406300DD7519 /* StateManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 856CF134192B406300DD7519 /* StateManager.cpp */; };
-		856CF137192B406300DD7519 /* StateManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 856CF134192B406300DD7519 /* StateManager.cpp */; };
+		856CF136192B406300DD7519 /* GPGSManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 856CF134192B406300DD7519 /* GPGSManager.cpp */; };
+		856CF137192B406300DD7519 /* GPGSManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 856CF134192B406300DD7519 /* GPGSManager.cpp */; };
+		857A84C91932F2AD00A2041E /* VisibleRect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 857A84C71932F2AD00A2041E /* VisibleRect.cpp */; };
+		857A84CA1932F2AD00A2041E /* VisibleRect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 857A84C71932F2AD00A2041E /* VisibleRect.cpp */; };
+		857A84CF1932F3DE00A2041E /* Configuration.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 857A84CD1932F3DE00A2041E /* Configuration.cpp */; };
+		857A84D01932F3DE00A2041E /* Configuration.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 857A84CD1932F3DE00A2041E /* Configuration.cpp */; };
+		857A84D319330A3C00A2041E /* LoadResourceLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 857A84D119330A3C00A2041E /* LoadResourceLayer.cpp */; };
+		857A84D419330A3C00A2041E /* LoadResourceLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 857A84D119330A3C00A2041E /* LoadResourceLayer.cpp */; };
+		857A84D7193316AF00A2041E /* TestTBMP.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 857A84D5193316AF00A2041E /* TestTBMP.cpp */; };
+		857A84D8193316AF00A2041E /* TestTBMP.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 857A84D5193316AF00A2041E /* TestTBMP.cpp */; };
 		8589F76D19237690009BDBCD /* bullet.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8589F76319237690009BDBCD /* bullet.cpp */; };
 		8589F76E19237690009BDBCD /* bullet.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8589F76319237690009BDBCD /* bullet.cpp */; };
 		8589F76F19237690009BDBCD /* GameScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8589F76519237690009BDBCD /* GameScene.cpp */; };
@@ -366,8 +374,16 @@
 		85529F6F1925E55F0024FFEF /* LoadingScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoadingScene.h; sourceTree = "<group>"; };
 		85529F731925EAEA0024FFEF /* MainScreenScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MainScreenScene.cpp; sourceTree = "<group>"; };
 		85529F741925EAEA0024FFEF /* MainScreenScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainScreenScene.h; sourceTree = "<group>"; };
-		856CF134192B406300DD7519 /* StateManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = StateManager.cpp; path = ../Classes/StateManager.cpp; sourceTree = "<group>"; };
-		856CF135192B406300DD7519 /* StateManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = StateManager.h; path = ../Classes/StateManager.h; sourceTree = "<group>"; };
+		856CF134192B406300DD7519 /* GPGSManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = GPGSManager.cpp; path = ../Classes/GPGSManager.cpp; sourceTree = "<group>"; };
+		856CF135192B406300DD7519 /* GPGSManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GPGSManager.h; path = ../Classes/GPGSManager.h; sourceTree = "<group>"; };
+		857A84C71932F2AD00A2041E /* VisibleRect.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VisibleRect.cpp; sourceTree = "<group>"; };
+		857A84C81932F2AD00A2041E /* VisibleRect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VisibleRect.h; sourceTree = "<group>"; };
+		857A84CD1932F3DE00A2041E /* Configuration.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Configuration.cpp; sourceTree = "<group>"; };
+		857A84CE1932F3DE00A2041E /* Configuration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Configuration.h; sourceTree = "<group>"; };
+		857A84D119330A3C00A2041E /* LoadResourceLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LoadResourceLayer.cpp; sourceTree = "<group>"; };
+		857A84D219330A3C00A2041E /* LoadResourceLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoadResourceLayer.h; sourceTree = "<group>"; };
+		857A84D5193316AF00A2041E /* TestTBMP.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TestTBMP.cpp; sourceTree = "<group>"; };
+		857A84D6193316AF00A2041E /* TestTBMP.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestTBMP.h; sourceTree = "<group>"; };
 		8589F76319237690009BDBCD /* bullet.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = bullet.cpp; path = ../Classes/bullet.cpp; sourceTree = "<group>"; };
 		8589F76419237690009BDBCD /* bullet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = bullet.h; path = ../Classes/bullet.h; sourceTree = "<group>"; };
 		8589F76519237690009BDBCD /* GameScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = GameScene.cpp; path = ../Classes/GameScene.cpp; sourceTree = "<group>"; };
@@ -472,10 +488,16 @@
 		15AA9C4015B7EC450033D6C2 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				857A84D119330A3C00A2041E /* LoadResourceLayer.cpp */,
+				857A84D219330A3C00A2041E /* LoadResourceLayer.h */,
+				857A84CD1932F3DE00A2041E /* Configuration.cpp */,
+				857A84CE1932F3DE00A2041E /* Configuration.h */,
+				857A84C71932F2AD00A2041E /* VisibleRect.cpp */,
+				857A84C81932F2AD00A2041E /* VisibleRect.h */,
 				85111B9A192F4D9F00C8D3C8 /* GameUI.cpp */,
 				85111B9B192F4D9F00C8D3C8 /* GameUI.h */,
-				856CF134192B406300DD7519 /* StateManager.cpp */,
-				856CF135192B406300DD7519 /* StateManager.h */,
+				856CF134192B406300DD7519 /* GPGSManager.cpp */,
+				856CF135192B406300DD7519 /* GPGSManager.h */,
 				8589F76319237690009BDBCD /* bullet.cpp */,
 				8589F76419237690009BDBCD /* bullet.h */,
 				8589F76519237690009BDBCD /* GameScene.cpp */,
@@ -496,6 +518,8 @@
 				85529F6F1925E55F0024FFEF /* LoadingScene.h */,
 				85529F731925EAEA0024FFEF /* MainScreenScene.cpp */,
 				85529F741925EAEA0024FFEF /* MainScreenScene.h */,
+				857A84D5193316AF00A2041E /* TestTBMP.cpp */,
+				857A84D6193316AF00A2041E /* TestTBMP.h */,
 			);
 			name = Classes;
 			path = ../classes;
@@ -919,16 +943,20 @@
 				8589F76D19237690009BDBCD /* bullet.cpp in Sources */,
 				503AE10217EB989F00D1A890 /* RootViewController.mm in Sources */,
 				85529F751925EAEA0024FFEF /* MainScreenScene.cpp in Sources */,
+				857A84D319330A3C00A2041E /* LoadResourceLayer.cpp in Sources */,
 				8589F77519237690009BDBCD /* MaskSprite.cpp in Sources */,
 				8589F77D19237DA1009BDBCD /* Player.cpp in Sources */,
 				8589F77119237690009BDBCD /* Helper.cpp in Sources */,
+				857A84CF1932F3DE00A2041E /* Configuration.cpp in Sources */,
 				1AFAF8B716D35DE700DB1158 /* AppDelegate.cpp in Sources */,
 				8589F76F19237690009BDBCD /* GameScene.cpp in Sources */,
 				85529F701925E55F0024FFEF /* LoadingScene.cpp in Sources */,
+				857A84D7193316AF00A2041E /* TestTBMP.cpp in Sources */,
 				85111B9C192F4D9F00C8D3C8 /* GameUI.cpp in Sources */,
+				857A84C91932F2AD00A2041E /* VisibleRect.cpp in Sources */,
 				503AE10117EB989F00D1A890 /* main.m in Sources */,
 				1AFAF8B816D35DE700DB1158 /* HelloWorldScene.cpp in Sources */,
-				856CF136192B406300DD7519 /* StateManager.cpp in Sources */,
+				856CF136192B406300DD7519 /* GPGSManager.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -936,16 +964,20 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				857A84D8193316AF00A2041E /* TestTBMP.cpp in Sources */,
 				8589F77019237690009BDBCD /* GameScene.cpp in Sources */,
 				5087E75717EB910900C73F5D /* AppDelegate.cpp in Sources */,
+				857A84D01932F3DE00A2041E /* Configuration.cpp in Sources */,
 				8589F77619237690009BDBCD /* MaskSprite.cpp in Sources */,
+				857A84CA1932F2AD00A2041E /* VisibleRect.cpp in Sources */,
 				5087E75817EB910900C73F5D /* HelloWorldScene.cpp in Sources */,
 				8589F77419237690009BDBCD /* Level.cpp in Sources */,
 				503AE10517EB98FF00D1A890 /* main.cpp in Sources */,
+				857A84D419330A3C00A2041E /* LoadResourceLayer.cpp in Sources */,
 				85529F711925E55F0024FFEF /* LoadingScene.cpp in Sources */,
 				8589F76E19237690009BDBCD /* bullet.cpp in Sources */,
 				85529F761925EAEA0024FFEF /* MainScreenScene.cpp in Sources */,
-				856CF137192B406300DD7519 /* StateManager.cpp in Sources */,
+				856CF137192B406300DD7519 /* GPGSManager.cpp in Sources */,
 				8589F77219237690009BDBCD /* Helper.cpp in Sources */,
 				85111B9D192F4D9F00C8D3C8 /* GameUI.cpp in Sources */,
 			);

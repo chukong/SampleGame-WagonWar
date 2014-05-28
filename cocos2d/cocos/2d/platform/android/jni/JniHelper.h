@@ -60,6 +60,9 @@ public:
     static jmethodID loadclassMethod_methodID;
     static jobject classloader;
 
+    static void detach_current_thread(void* env);
+
+
 private:
     static JNIEnv* cacheEnv(JavaVM* jvm);
 

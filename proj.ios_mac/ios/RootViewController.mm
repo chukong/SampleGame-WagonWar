@@ -27,13 +27,13 @@
 #import "cocos2d.h"
 #import "CCEAGLView.h"
 
-#import "StateManager.h"
+#import "GPGSManager.h"
 
 // ClientID
 const char* GPG_CLIENTID = "942456544563";
 
 @interface RootViewController () {
-    StateManager* _stateManager;
+    GPGSManager* _gpgsManager;
 }
 - (void)setupGPG;
 
@@ -129,8 +129,8 @@ const char* GPG_CLIENTID = "942456544563";
     config.SetClientID(std::string(GPG_CLIENTID));
     config.SetOptionalViewControllerForPopups(self);
     
-    _stateManager = new StateManager();
-    _stateManager->InitServices(config);
+    _gpgsManager = new GPGSManager();
+    _gpgsManager->InitServices(config);
     
 }
 

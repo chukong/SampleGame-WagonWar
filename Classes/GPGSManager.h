@@ -1,5 +1,5 @@
-#ifndef STATE_MANAGER_H
-#define STATE_MANAGER_H
+#ifndef GPGS_MANAGER_H
+#define GPGS_MANAGER_H
 
 #ifdef __OBJC__
 #include <objc/NSObjCRuntime.h>
@@ -15,7 +15,7 @@ enum NEXT_PARTICIPANT {
     NEXT_PARTICIPANT_NONE = -2,
 };
 
-class StateManager {
+class GPGSManager {
     
 public:
     static void InitServices(gpg::PlatformConfiguration &pc);
@@ -33,14 +33,14 @@ public:
     static void QuickMatch();
     static void InviteFriend();
     static void ShowMatchInbox();
+    
     static void LeaveMatch();
     static void CancelMatch();
     static void DismissMatch();
     static void Rematch();
-
-private:
+    
+    static void TakeTurn(const bool winning, const bool losing, std::vector<uint8_t> match_data);
     static int32_t GetNextParticipant();
-    static void ManageGame(gpg::TurnBasedMatch const& match, const bool leave, const bool cancel, const bool rematch);
     static void PlayGame(gpg::TurnBasedMatch const& match);
 
 private:
@@ -51,4 +51,4 @@ private:
 };
 
 
-#endif // STATE_MANAGER_HPP
+#endif // GPGS_MANAGER_HPP
