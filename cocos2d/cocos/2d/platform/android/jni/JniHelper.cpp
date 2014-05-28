@@ -71,7 +71,7 @@ namespace cocos2d {
         LOGD("JniHelper::setJavaVM(%p), pthread_self() = %ld", javaVM, thisthread);
         _psJavaVM = javaVM;
 
-        pthread_key_create(&g_key, NULL);
+        pthread_key_create(&g_key, &detach_current_thread);
     }
 
     JNIEnv* JniHelper::cacheEnv(JavaVM* jvm) {
@@ -268,6 +268,11 @@ namespace cocos2d {
         pEnv->ReleaseStringUTFChars(jstr, chars);
 
         return ret;
+    }
+
+    void JniHelper::detach_current_thread(void* env)
+    {
+        _psJavaVM->DetachCurrentThread();
     }
 
 } //namespace cocos2d

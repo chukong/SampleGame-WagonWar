@@ -28,7 +28,10 @@ public:
     void showleaderboard_callback(cocos2d::Ref *pSender, cocos2d::ui::TouchEventType type);
     
     void showachievement_callback(cocos2d::Ref *pSender, cocos2d::ui::TouchEventType type);
+    
+    void startxxxgame(int i);
 
+    void starxxxxxgame(float dt);
 };
 
 #endif /* defined(__TankMultiplayer__MainScreenScene__) */

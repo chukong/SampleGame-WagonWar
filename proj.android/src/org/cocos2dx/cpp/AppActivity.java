@@ -29,6 +29,8 @@ package org.cocos2dx.cpp;
 import org.cocos2dx.lib.Cocos2dxActivity;
 import org.cocos2dx.lib.Cocos2dxGLSurfaceView;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.graphics.PixelFormat;
 
 import android.os.Bundle;
@@ -40,9 +42,9 @@ public class AppActivity extends Cocos2dxActivity {
 		super.onCreate(savedInstanceState);
 		
 		nativeInitGPGS(this);
+        nativeOnActivityCreated(this, savedInstanceState);
 	}
 	
-	private static native void nativeInitGPGS(AppActivity act);
 
     public Cocos2dxGLSurfaceView onCreateView() {
         Cocos2dxGLSurfaceView glSurfaceView = new Cocos2dxGLSurfaceView(this);
@@ -53,5 +55,77 @@ public class AppActivity extends Cocos2dxActivity {
         
         return glSurfaceView;
     }
+    
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        nativeOnActivityResult(this, requestCode,resultCode, data);
+    }
+    
+	@Override
+	protected void onResume() {
+		// TODO Auto-generated method stub
+		super.onResume();
+        nativeOnActivityResumed(this);
+	}
+
+
+	@Override
+	protected void onPause() {
+		// TODO Auto-generated method stub
+		super.onPause();
+        nativeOnActivityPaused(this);
+	}
+
+
+	@Override
+	protected void onDestroy() {
+		// TODO Auto-generated method stub
+		super.onDestroy();
+        nativeOnActivityDestroyed(this);
+	}
+
+
+	@Override
+	protected void onSaveInstanceState(Bundle outState) {
+		// TODO Auto-generated method stub
+		super.onSaveInstanceState(outState);
+        nativeOnActivitySaveInstanceState(this, outState);
+	}
+
+
+	@Override
+	protected void onStart() {
+		// TODO Auto-generated method stub
+		super.onStart();
+        nativeOnActivityStarted(this);
+	}
+
+
+	@Override
+	protected void onStop() {
+		// TODO Auto-generated method stub
+		super.onStop();
+        nativeOnActivityStopped(this);
+	}
+    
+
+    // Implemented in C++.
+
+	private static native void nativeInitGPGS(AppActivity act);
+
+    public static native void nativeOnActivityResult(Activity activity, int requestCode, int resultCode, Intent data);
+
+    public static native void nativeOnActivityCreated(Activity activity, Bundle savedInstanceState);
+
+    private static native void nativeOnActivityDestroyed(Activity activity);
+
+    private static native void nativeOnActivityPaused(Activity activity);
+
+    private static native void nativeOnActivityResumed(Activity activity);
+
+    private static native void nativeOnActivitySaveInstanceState(Activity activity, Bundle outState);
+
+    private static native void nativeOnActivityStarted(Activity activity);
+
+    private static native void nativeOnActivityStopped(Activity activity);
 
 }
