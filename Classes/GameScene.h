@@ -58,7 +58,10 @@ public:
     void randomWind();
     void playback(std::string json);
 protected:
-    rapidjson::Document _json;
+    void printMyTurn();
+    rapidjson::Document _replay;
+    rapidjson::Document _myturn;
+    void buildMyTurn();
     int _tick;
     bool _playback;
     bool _waitToClear;
@@ -66,9 +69,8 @@ protected:
     cocos2d::Point _offset;
     timeval _now;
     cocos2d::Size _movableSize;
-    cocos2d::Point _moveDelta;
     void _movePlayer(float x);
-    GameScene():_waitToClear(false),_playback(false),_click(false),_steps(2),_moveDelta(0,0.02),_following(nullptr),_tick(0),_json(nullptr){};
+    GameScene():_waitToClear(false),_playback(false),_click(false),_steps(2),_following(nullptr),_tick(0),_replay(nullptr),_myturn(nullptr){};
     bool _click;
     int _steps;
     cocos2d::Sprite* _ex;

@@ -64,9 +64,10 @@ public:
     bool airborn;
     bool needFix;
     int radius;
-    TestNode():airborn(true), needFix(false){};
+    TestNode():airborn(true), needFix(false), moveDelta(0,0.02){};
     CC_SYNTHESIZE(cocos2d::Point, _LastPos, LastPos);
     Node* gunPoint;
+    cocos2d::Point moveDelta;
 };
 
 
