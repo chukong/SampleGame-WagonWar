@@ -226,6 +226,7 @@ void GameScene::initTests()
 
     //log("is array? %d", doc["actions"].IsArray());
     playback(g_gameConfig.match_string);
+    //playback(data);
 }
 void GameScene::initExplosionMasks()
 {
@@ -410,7 +411,7 @@ void GameScene::playback(std::string json)
 
     
     //copy all explosions to my turn
-    if(_replay["explosions"].Size())
+    if(_replay.HasMember("explosions"))
     {
         //recreate those explosions
         _level->getRT()->onBegin();
