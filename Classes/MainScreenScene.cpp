@@ -14,8 +14,10 @@
 #include "VisibleRect.h"
 #include "Configuration.h"
 #include "GameScene.h"
+#include "Configuration.h"
+#include "WagonSelect.h"
 
-using namespace cocos2d;
+USING_NS_CC;
 
 #define ACH_ACHIEVEMENT_01 "CgkIs7qm9rYbEAIQAQ"
 #define ACH_ACHIEVEMENT_02 "CgkIs7qm9rYbEAIQAg"
@@ -236,7 +238,7 @@ void MainScreenScene::quickmatch_callback(cocos2d::Ref* pSender)
 {
     log("QuickMatch");
     if (GPGSManager::IsSignedIn()) {
-        GPGSManager::QuickMatch();
+        Director::getInstance()->replaceScene(WagonSelect::createScene(FIRSR_TURN));
     }
     else{
         GPGSManager::BeginUserInitiatedSignIn();
