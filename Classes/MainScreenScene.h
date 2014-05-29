@@ -10,7 +10,6 @@
 #define __TankMultiplayer__MainScreenScene__
 
 #include "cocos2d.h"
-#include "cocostudio/CocoStudio.h"
 
 
 class MainScreenScene: public cocos2d::Layer
@@ -23,15 +22,29 @@ public:
     
     CREATE_FUNC(MainScreenScene);
     
-    void startgame_callback(cocos2d::Ref *pSender, cocos2d::ui::TouchEventType type);
+    void quickmatch_callback(cocos2d::Ref* pSender);
+    void invitefriend_callback(cocos2d::Ref* pSender);
+    void mygames_callback(cocos2d::Ref* pSender);
+    void achievements_callback(cocos2d::Ref* pSender);
+    void leaderboard_callback(cocos2d::Ref* pSender);
     
-    void showleaderboard_callback(cocos2d::Ref *pSender, cocos2d::ui::TouchEventType type);
+    void enableUI(bool isEnable);
     
-    void showachievement_callback(cocos2d::Ref *pSender, cocos2d::ui::TouchEventType type);
+    void updateStatus(float dt);
     
-    void startxxxgame(int i);
+    void entergame();
 
     void starxxxxxgame(float dt);
+    
+private:
+    
+    cocos2d::MenuItemImage* quickmatch_menuitem;
+    cocos2d::MenuItemImage* invitefriend_menuitem;
+    cocos2d::MenuItemImage* mygames_menuitem;
+    cocos2d::MenuItemImage* achievements_menuitem;
+    cocos2d::MenuItemImage* leaderboard_menuitem;
+    
+    cocos2d::Label* sign_status;
 };
 
 #endif /* defined(__TankMultiplayer__MainScreenScene__) */
