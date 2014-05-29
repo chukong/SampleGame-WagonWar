@@ -174,8 +174,6 @@ void GameScene::onEnter()
     std::string data = "{\"wind\":{\"x\":-0.01, \"y\":-0.01},\"explosions\":[{\"x\":722.227,\"y\":479.584},{\"x\":741.922,\"y\":435.848},{\"x\":648.444,\"y\":500.432}],\"actions\":[{\"tick\":30,\"action\":\"go right\"},{\"tick\":200,\"action\":\"stop\"},{\"tick\":300,\"action\":\"start shoot\"},{\"tick\":310,\"action\":\"end shoot\"}]}";
     //std::string data = "{\"explosions\":[{\"x\":722.227,\"y\":479.584},{\"x\":741.922,\"y\":435.848},{\"x\":648.444,\"y\":500.432},{\"x\":755.788,\"y\":394.456}],\"actions\":[{\"tick\":405,\"action\":\"go left\"},{\"tick\":439,\"action\":\"stop\"},{\"tick\":471,\"action\":\"go right\"},{\"tick\":488,\"action\":\"stop\"},{\"tick\":505,\"action\":\"go left\"},{\"tick\":541,\"action\":\"stop\"},{\"tick\":563,\"action\":\"go right\"},{\"tick\":567,\"action\":\"stop\"}]}";
     //log("is array? %d", doc["actions"].IsArray());
-
-    
     playback(data);
 }
 void GameScene::movePlayer(float x)
@@ -220,13 +218,6 @@ void GameScene::initTests()
     p2->setLastPos(Point(800,800));
     getPlayerLayer()->addChild(p2);
 
-    
-    //here is some json
-    std::string data = "{\"actions\":[{\"tick\":30,\"action\":\"go right\"},{\"tick\":200,\"action\":\"stop\"},{\"tick\":300,\"action\":\"start shoot\"},{\"tick\":450,\"action\":\"end shoot\"}]}";
-
-    //log("is array? %d", doc["actions"].IsArray());
-    playback(g_gameConfig.match_string);
-    //playback(data);
 }
 void GameScene::initExplosionMasks()
 {
