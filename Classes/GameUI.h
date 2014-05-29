@@ -28,6 +28,8 @@ protected:
     bool _right;
     bool _startShoot;
     GameUI():_left(false), _right(false),_startShoot(false){};
+    cocos2d::EventListenerTouchOneByOne *_mytouchListener;
+    void _toggleTouchEnable(bool onoff);
 };
 
 class WindIndicator : public cocos2d::Node
@@ -40,6 +42,7 @@ public:
 protected:
     cocos2d::LabelAtlas *_label;
     cocos2d::Sprite *_arrow;
+    
 };
 
 #endif /* defined(__TankMultiplayer__GameUI__) */

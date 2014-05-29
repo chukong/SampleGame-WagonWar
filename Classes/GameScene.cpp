@@ -10,6 +10,8 @@
 #include "Helper.h"
 #include "GameUI.h"
 #include "time.h"
+#include "json/writer.h"
+#include "json/stringbuffer.h"
 #include "Configuration.h"
 #include "GPGSManager.h"
 
@@ -87,6 +89,10 @@ bool GameScene::init()
     
     //init listeners
     initListeners();
+    
+    
+    //build my turn json
+    buildMyTurn();
     return true;
 }
 void GameScene::initListeners()
@@ -116,7 +122,14 @@ void GameScene::initListeners()
 void GameScene::startShoot()
 {
     gettimeofday(&_now, nullptr);
-    
+    if(!_playback)
+    {
+        rapidjson::Document::AllocatorType& allocator = _myturn.GetAllocator();
+        rapidjson::Value value(rapidjson::kObjectType);
+        value.AddMember("tick",_tick,allocator);
+        value.AddMember("action", "start shoot", allocator);
+        _myturn["actions"].PushBack(value, allocator);
+    }
 }
 void GameScene::endShoot()
 {
@@ -137,8 +150,15 @@ void GameScene::endShoot()
         //this is the last action
         _waitToClear = true;
     }
-    
-    GPGSManager::TakeTurn(false, false);
+    else
+    {
+        rapidjson::Document::AllocatorType& allocator = _myturn.GetAllocator();
+        rapidjson::Value value(rapidjson::kObjectType);
+        value.AddMember("tick",_tick,allocator);
+        value.AddMember("action", "stop shoot", allocator);
+        _myturn["actions"].PushBack(value, allocator);
+        GPGSManager::TakeTurn(false, false);
+    }
 }
 void GameScene::randomWind()
 {
@@ -149,12 +169,41 @@ void GameScene::onEnter()
 {
     ParallaxNode::onEnter();
     _eventDispatcher->dispatchCustomEvent("wind", &_wind);
+    
+    //here is some json
+    std::string data = "{\"wind\":{\"x\":-0.01, \"y\":-0.01},\"explosions\":[{\"x\":722.227,\"y\":479.584},{\"x\":741.922,\"y\":435.848},{\"x\":648.444,\"y\":500.432}],\"actions\":[{\"tick\":30,\"action\":\"go right\"},{\"tick\":200,\"action\":\"stop\"},{\"tick\":300,\"action\":\"start shoot\"},{\"tick\":310,\"action\":\"end shoot\"}]}";
+    //std::string data = "{\"explosions\":[{\"x\":722.227,\"y\":479.584},{\"x\":741.922,\"y\":435.848},{\"x\":648.444,\"y\":500.432},{\"x\":755.788,\"y\":394.456}],\"actions\":[{\"tick\":405,\"action\":\"go left\"},{\"tick\":439,\"action\":\"stop\"},{\"tick\":471,\"action\":\"go right\"},{\"tick\":488,\"action\":\"stop\"},{\"tick\":505,\"action\":\"go left\"},{\"tick\":541,\"action\":\"stop\"},{\"tick\":563,\"action\":\"go right\"},{\"tick\":567,\"action\":\"stop\"}]}";
+    //log("is array? %d", doc["actions"].IsArray());
+
+    
+    playback(data);
 }
 void GameScene::movePlayer(float x)
 {
-    _moveDelta.x = x;
+    if(!_playback)
+    {
+        //save to my turn
+        rapidjson::Document::AllocatorType& allocator = _myturn.GetAllocator();
+        rapidjson::Value value(rapidjson::kObjectType);
+        value.AddMember("tick",_tick,allocator);
+        if(x>0)
+        {
+            value.AddMember("action", "go right", allocator);
+        }
+        else if(x < 0)
+        {
+            value.AddMember("action", "go left", allocator);
+        }
+        else
+        {
+           value.AddMember("action", "stop", allocator);
+        }
+        _myturn["actions"].PushBack(value, allocator);
+        printMyTurn();
+    }
     //TODO: replace with proper get current player
     TestNode* p = getCurrentPlayer();
+    p->moveDelta.x = x;
     p->needFix = true;
 }
 
@@ -166,12 +215,18 @@ void GameScene::initTests()
     getPlayerLayer()->addChild(p);
     
     
+    auto p2 = TestNode::create();
+    p2->setPosition(800,800);
+    p2->setLastPos(Point(800,800));
+    getPlayerLayer()->addChild(p2);
+
     
     //here is some json
-    //std::string data = "{\"actions\":[{\"tick\":30,\"action\":\"go right\"},{\"tick\":200,\"action\":\"stop\"},{\"tick\":300,\"action\":\"start shoot\"},{\"tick\":450,\"action\":\"end shoot\"}]}";
+    std::string data = "{\"actions\":[{\"tick\":30,\"action\":\"go right\"},{\"tick\":200,\"action\":\"stop\"},{\"tick\":300,\"action\":\"start shoot\"},{\"tick\":450,\"action\":\"end shoot\"}]}";
 
     //log("is array? %d", doc["actions"].IsArray());
     playback(g_gameConfig.match_string);
+    //playback(data);
 }
 void GameScene::initExplosionMasks()
 {
@@ -274,10 +329,47 @@ TestNode* GameScene::getCurrentPlayer()
     auto player = _PlayerLayer->getChildren().front();
     return dynamic_cast<TestNode*>(player);
 }
+void GameScene::buildMyTurn()
+{
+    _myturn.SetObject();
+    rapidjson::Value array(rapidjson::kArrayType);
+    rapidjson::Document::AllocatorType& allocator = _myturn.GetAllocator();
+    _myturn.AddMember("explosions", array, allocator);
+    
+    rapidjson::Value actions(rapidjson::kArrayType);
+    _myturn.AddMember("actions", actions, allocator);
+
+    
+    printMyTurn();
+}
+void GameScene::printMyTurn()
+{
+    rapidjson::StringBuffer strbuf;
+    rapidjson::Writer<rapidjson::StringBuffer> writer(strbuf);
+    _myturn.Accept(writer);
+    log("--\n%s\n--\n", strbuf.GetString());
+}
 void GameScene::explode(Bullet *bullet)
 {
     _following = nullptr;
     auto pos = bullet->getPosition();
+    
+    if(!_playback)
+    {
+        rapidjson::Value object(rapidjson::kObjectType);
+        rapidjson::Document::AllocatorType& allocator = _myturn.GetAllocator();
+        object.AddMember("x", pos.x, allocator);
+        object.AddMember("y", pos.y, allocator);
+        _myturn["explosions"].PushBack(object, allocator);
+        
+        rapidjson::StringBuffer strbuf;
+        rapidjson::Writer<rapidjson::StringBuffer> writer(strbuf);
+        _myturn.Accept(writer);
+        log("--\n%s\n--\n", strbuf.GetString());
+    }
+
+    
+    
     _ex->setPosition(pos);
     //TODO: set _ex size according to bullet config
     _ex->ManualDraw();
@@ -310,10 +402,41 @@ void GameScene::explode(Bullet *bullet)
 }
 void GameScene::playback(std::string json)
 {
-    _json.Parse<rapidjson::kParseDefaultFlags>(json.c_str());
+    _replay.Parse<rapidjson::kParseDefaultFlags>(json.c_str());
     _tick = 0;
     _playback = true;
     //TODO: need to disable UI layer touch
+    _eventDispatcher->dispatchCustomEvent("touch off");
+    
+
+    
+    //copy all explosions to my turn
+    if(_replay.HasMember("explosions"))
+    {
+        //recreate those explosions
+        _level->getRT()->onBegin();
+        for(int i = 0; i < _replay["explosions"].Size(); i++)
+        {
+            auto &jsonPos =_replay["explosions"][i];
+            Point pos(jsonPos["x"].GetDouble(), jsonPos["y"].GetDouble());
+            _ex->setPosition(pos);
+            //TODO: set _ex size according to explosion size
+            _ex->ManualDraw();
+            _burn->setPosition(pos);
+            _burn->ManualDraw();
+            
+        }
+        _level->getRT()->onEnd();
+        _myturn["explosions"] = _replay["explosions"];
+    }
+    //set wind according to data
+    if(_replay["wind"].IsObject())
+    {
+        auto &jsonWind = _replay["wind"];
+        Point wind(jsonWind["x"].GetDouble(), jsonWind["y"].GetDouble());
+        setWind(wind);
+    }
+    
     
 }
 
@@ -323,7 +446,7 @@ void GameScene::update(float dt)
     
 	if(_playback)
     {
-        rapidjson::Value &array = _json["actions"];
+        rapidjson::Value &array = _replay["actions"];
         if(array.IsArray())
         {
             for(int i=0; i < array.Size(); i++)
@@ -429,7 +552,7 @@ void GameScene::update(float dt)
         for(Node* player : _PlayerLayer->getChildren())
         {
             TestNode* p = dynamic_cast<TestNode*>(player);
-            if(p->airborn || p->needFix || _moveDelta.x)
+            if(p->airborn || p->needFix || p->moveDelta.x)
             {
                 everythingSleep = false;
                 //move this
@@ -494,11 +617,11 @@ void GameScene::update(float dt)
                 }
                 
             }
-            if(_moveDelta.x)
+            if(p->moveDelta.x)
             {
-                p->setPosition(p->getPosition()+_moveDelta);
-                p->setLastPos(p->getLastPos()+_moveDelta);
-                if(_moveDelta.x>0)
+                p->setPosition(p->getPosition()+p->moveDelta);
+                p->setLastPos(p->getLastPos()+p->moveDelta);
+                if(p->moveDelta.x>0)
                 {
                     //TODO: replace with proper flip code
                     p->setScaleX(1);
@@ -515,9 +638,10 @@ void GameScene::update(float dt)
     
     if(_waitToClear && everythingSleep)
     {
-        //TODO: re-enable touch on game ui
+        _eventDispatcher->dispatchCustomEvent("touch on");
         _waitToClear = false;
         _playback = false;
+        _tick = 0;
         log("play back finished");
     }
 }
