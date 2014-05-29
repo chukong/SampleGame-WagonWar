@@ -1,6 +1,8 @@
 #include "AppDelegate.h"
 #include "GameScene.h"
-
+#include "Configuration.h"
+#include "MainScreenScene.h"
+#include "TestTBMP.h"
 
 
 //#include "MainScreenScene.h"
@@ -37,13 +39,17 @@ bool AppDelegate::applicationDidFinishLaunching() {
     // set FPS. the default value is 1.0/60 if you don't call this
     director->setAnimationInterval(1.0 / 60);
     
+    g_gameConfig.lazyInit();
+    
     // create a scene. it's an autorelease object
-    auto scene = GameScene::createScene();
- //   auto scene = MainScreenScene::createScene();
+ //    auto scene = GameScene::createScene();
+      auto scene = MainScreenScene::createScene();
+  //    auto scene = TestTBMP::createScene("345678");
     // run
     director->runWithScene(scene);
     
-    return true;}
+    return true;
+}
 
 // This function will be called when the app is inactive. When comes a phone call,it's be invoked too
 void AppDelegate::applicationDidEnterBackground() {

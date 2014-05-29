@@ -28,9 +28,6 @@ Scene* GameScene::createScene()
     // add layer as a child to scene
     scene->addChild(layer);
     
-    
-    
-    
     // return the scene
     return scene;
 }
@@ -140,7 +137,7 @@ void GameScene::endShoot()
     int usec = now.tv_usec - _now.tv_usec;
     float timed = seconds + float(usec)/1000000;
     timed = (timed>3)? 3 : timed;
-    log("diff is %f", timed);
+//    log("diff is %f", timed);
     auto p = getCurrentPlayer();
     auto offset = getMovableSize();
     auto gunlocation = p->gunPoint->getNodeToWorldAffineTransform();
