@@ -12,6 +12,8 @@
 #include "time.h"
 #include "json/writer.h"
 #include "json/stringbuffer.h"
+#include "Configuration.h"
+#include "GPGSManager.h"
 
 USING_NS_CC;
 
@@ -155,6 +157,7 @@ void GameScene::endShoot()
         value.AddMember("tick",_tick,allocator);
         value.AddMember("action", "stop shoot", allocator);
         _myturn["actions"].PushBack(value, allocator);
+        GPGSManager::TakeTurn(false, false);
     }
 }
 void GameScene::randomWind()
@@ -217,6 +220,12 @@ void GameScene::initTests()
     p2->setLastPos(Point(800,800));
     getPlayerLayer()->addChild(p2);
 
+    
+    //here is some json
+    std::string data = "{\"actions\":[{\"tick\":30,\"action\":\"go right\"},{\"tick\":200,\"action\":\"stop\"},{\"tick\":300,\"action\":\"start shoot\"},{\"tick\":450,\"action\":\"end shoot\"}]}";
+
+    //log("is array? %d", doc["actions"].IsArray());
+    playback(g_gameConfig.match_string);
 }
 void GameScene::initExplosionMasks()
 {
@@ -398,9 +407,7 @@ void GameScene::playback(std::string json)
     //TODO: need to disable UI layer touch
     _eventDispatcher->dispatchCustomEvent("touch off");
     
-    rapidjson::StringBuffer strbuf;
-    rapidjson::Writer<rapidjson::StringBuffer> writer(strbuf);
-    _replay.Accept(writer);
+
     
     //copy all explosions to my turn
     if(_replay["explosions"].Size())
@@ -430,7 +437,6 @@ void GameScene::playback(std::string json)
     }
     
     
-    log("--\n%s\n--\n", strbuf.GetString());
 }
 
 void GameScene::update(float dt)

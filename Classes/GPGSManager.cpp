@@ -22,6 +22,7 @@ const int32_t BUFFER_SIZE = 256;
 
 #include "cocos2d.h"
 #include "TestTBMP.h"
+#include "Configuration.h"
 
 bool GPGSManager::isSignedIn = false;
 std::unique_ptr<gpg::GameServices> GPGSManager::gameServices;
@@ -158,12 +159,11 @@ void GPGSManager::QuickMatch()
                                  {
                                      if (matchResponse.status == gpg::MultiplayerStatus::VALID) {
                                          LOGI("QuickMatch Game Begin...By Jacky");
-                                         //QuickMatch...
-//                                         PlayGame(matchResponse.match);
+                                         PlayGame(matchResponse.match);
                                      }
                                      else
                                      {
-                                         LOGI("Invalid TurnBasedMatchResponse response status...%d...By Jacky", matchResponse.status);
+                                         LOGI("QuickMatchs Game Failed...===>%d...By Jacky", matchResponse.status);
 
                                      }
                                  });
@@ -189,11 +189,11 @@ void GPGSManager::InviteFriend()
                                                                     {
                                                                         LOGI("InviteFriend Game Begin...By Jacky");
                                                                       //InviteFriend...
-                                                                      //PlayGame(matchResponse.match);
+                                                                      PlayGame(matchResponse.match);
                                                                     }
                                                                     else
                                                                     {
-                                                                        LOGI("InviteFriend Failed...===>%d",matchResponse.status);
+                                                                        LOGI("InviteFriend Game Failed...===>%d...By Jacky",matchResponse.status);
                                                                     }
                                                                 });
                                                             }
@@ -329,20 +329,31 @@ int32_t GPGSManager::GetNextParticipant() {
 void GPGSManager::PlayGame(gpg::TurnBasedMatch const& match)
 {
     current_match_ = match;
+    if (current_match_.HasData()) {
+        g_gameConfig.match_data = current_match_.Data();
+        g_gameConfig.match_string.clear();
+        g_gameConfig.match_string.assign(g_gameConfig.match_data.begin(), g_gameConfig.match_data.end());
+    }
+    else
+    {
+        cocos2d::log("match no data");
+    }
 //    LOGI("Replace with TestTMBP Scene...before");
 //    auto scene = TestTBMP::createScene("123456");
 //    cocos2d::Director::getInstance()->replaceScene(scene);
 //    LOGI("Replace with TestTMBP Scene...after");
     //...
     
-    cocos2d::Director::getInstance()->getEventDispatcher()->dispatchCustomEvent("replacexxx");
+    cocos2d::Director::getInstance()->getEventDispatcher()->dispatchCustomEvent("entergame");
 }
 
-void GPGSManager::TakeTurn(const bool winning, const bool losing, std::vector<uint8_t> match_data)
+void GPGSManager::TakeTurn(const bool winning, const bool losing)
 {
+    LOGI("StarTakeTurn...0");
     gpg::TurnBasedMultiplayerManager& manager = gameServices->TurnBasedMultiplayer();
     gpg::PlayerManager::FetchSelfResponse localPlayer = gameServices->Players().FetchSelfBlocking();
     
+    LOGI("StarTakeTurn...1");
     //Find the participant for the local player.
     gpg::MultiplayerParticipant localParticipant;
     for (auto &participant : current_match_.Participants()) {
@@ -358,6 +369,14 @@ void GPGSManager::TakeTurn(const bool winning, const bool losing, std::vector<ui
     std::vector<gpg::MultiplayerParticipant> participants =
     current_match_.Participants();
     int32_t nextPlayerIndex = GetNextParticipant();
+    
+    LOGI("StarTakeTurn...2...%d",nextPlayerIndex);
+    
+    //std::string to std::vector
+    g_gameConfig.match_data.clear();
+    g_gameConfig.match_data.resize(g_gameConfig.match_string.size());
+    g_gameConfig.match_data.assign(g_gameConfig.match_string.begin(), g_gameConfig.match_string.end());
+
     
     //By default, passing through existing participatntResults
     gpg::ParticipantResults results = current_match_.ParticipantResults();
@@ -378,11 +397,16 @@ void GPGSManager::TakeTurn(const bool winning, const bool losing, std::vector<ui
                     );
     }
     
+    LOGI("StarTakeTurn...3");
+    LOGI("current_match_ is %d",current_match_.Valid());
+    LOGI("results is %d",results.Valid());
+    LOGI("match_data is %d",g_gameConfig.match_data.at(0));
+
     //Take normal turn
     switch (nextPlayerIndex) {
         default:
             manager.TakeMyTurn(
-                               current_match_, match_data, results, participants[nextPlayerIndex],
+                               current_match_, g_gameConfig.match_data, results, participants[nextPlayerIndex],
                                [](
                                       gpg::TurnBasedMultiplayerManager::TurnBasedMatchResponse const &
                                       response) {
@@ -391,7 +415,7 @@ void GPGSManager::TakeTurn(const bool winning, const bool losing, std::vector<ui
             break;
         case NEXT_PARTICIPANT_AUTOMATCH:
             manager.TakeMyTurnAndAutomatch(
-                                           current_match_, match_data, results,
+                                           current_match_, g_gameConfig.match_data, results,
                                            [](
                                                   gpg::TurnBasedMultiplayerManager::TurnBasedMatchResponse const &
                                                   response) {
@@ -403,4 +427,7 @@ void GPGSManager::TakeTurn(const bool winning, const bool losing, std::vector<ui
             manager.DismissMatch(current_match_);
             break;
     }
+    
+    LOGI("StarTakeTurn...4");
+
 }
