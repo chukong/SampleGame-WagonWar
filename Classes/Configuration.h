@@ -1,6 +1,10 @@
 #pragma once
 
 #include <string>
+#include <vector>
+
+#define FIRSR_TURN 1;
+#define SECOND_TURN 2;
 
 class GameConfig
 {
@@ -17,6 +21,9 @@ public:
 
     float musicVolume;
     float sfxVolume;
+    
+    std::vector<uint8_t> match_data;
+    std::string match_string;
 };
 
 extern GameConfig g_gameConfig;

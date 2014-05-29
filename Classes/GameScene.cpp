@@ -10,6 +10,8 @@
 #include "Helper.h"
 #include "GameUI.h"
 #include "time.h"
+#include "Configuration.h"
+#include "GPGSManager.h"
 
 USING_NS_CC;
 
@@ -135,6 +137,8 @@ void GameScene::endShoot()
         //this is the last action
         _waitToClear = true;
     }
+    
+    GPGSManager::TakeTurn(false, false);
 }
 void GameScene::randomWind()
 {
@@ -164,10 +168,10 @@ void GameScene::initTests()
     
     
     //here is some json
-    std::string data = "{\"actions\":[{\"tick\":30,\"action\":\"go right\"},{\"tick\":200,\"action\":\"stop\"},{\"tick\":300,\"action\":\"start shoot\"},{\"tick\":450,\"action\":\"end shoot\"}]}";
+    //std::string data = "{\"actions\":[{\"tick\":30,\"action\":\"go right\"},{\"tick\":200,\"action\":\"stop\"},{\"tick\":300,\"action\":\"start shoot\"},{\"tick\":450,\"action\":\"end shoot\"}]}";
 
     //log("is array? %d", doc["actions"].IsArray());
-    playback(data);
+    playback(g_gameConfig.match_string);
 }
 void GameScene::initExplosionMasks()
 {

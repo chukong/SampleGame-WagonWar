@@ -10,6 +10,7 @@ const int GameConfig::defaultFontSize = 30;
 void GameConfig::lazyInit()
 {
     g_visibleRect.lazyInit();
+    match_data.clear();
 }
 
 void GameConfig::saveConfig()

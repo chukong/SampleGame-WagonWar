@@ -39,7 +39,7 @@ public:
     static void DismissMatch();
     static void Rematch();
     
-    static void TakeTurn(const bool winning, const bool losing, std::vector<uint8_t> match_data);
+    static void TakeTurn(const bool winning, const bool losing);
     static int32_t GetNextParticipant();
     static void PlayGame(gpg::TurnBasedMatch const& match);
 
