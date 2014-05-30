@@ -240,6 +240,13 @@ bool MainScreenScene::init()
     auto listener3 = EventListenerCustom::create("enterGame", CC_CALLBACK_0(MainScreenScene::enterGame, this));
     _eventDispatcher->addEventListenerWithSceneGraphPriority(listener3, this);
     
+    
+//    auto cnm = Sprite::createWithSpriteFrameName("cnm_idle01.png");
+//    auto cnmhit=AnimationCache::getInstance()->getAnimation(g_gameConfig._animation.cnm_hit);
+//    cnm->runAction(RepeatForever::create(Animate::create(cnmhit)));
+//    this->addChild(cnm,100);
+//    cnm->setPosition(300,300);
+    
     return true;
 }
 

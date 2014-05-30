@@ -2,12 +2,23 @@
 
 #include <string>
 #include <vector>
+#include "cocos2d.h"
 
 enum TurnType
 {
     FIRSR_TURN,
     SECOND_TURN
 };
+
+
+typedef struct{
+    //cnm
+    const std::string cnm_hit = "cnm_hit";
+    const std::string cnm_idle = "cnm_idle";
+    const std::string cnm_move = "cnm_move";
+    const std::string cnm_shoot = "cnm_shoot";
+    
+}gameAnimation;
 
 const int WAGONSELECTTAG = 777;
 const int MAINLAYERTAG = 888;
@@ -29,12 +40,18 @@ public:
 
     void saveConfig();
 
+    cocos2d::Animate* getAnimate(const std::string animationame);
+
     float musicVolume;
     float sfxVolume;
     
     std::vector<uint8_t> match_data;
     std::string match_string;
+    
+    gameAnimation _animation;
+    
 };
 
 extern GameConfig g_gameConfig;
 
+//auto xxxanimation=AnimationCache::getInstance()->getAnimationByName(g_gameconfig._animation.cnm_hit);

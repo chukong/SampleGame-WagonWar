@@ -248,6 +248,7 @@ void GPGSManager::ShowMatchInbox()
                     
                     //PlayGame(response.match);
                     current_match_ = response.match;
+                    ParseMatchData();
                     //todo:is second turn?
                     int cur_match_turn = GetMatchTurn();//no found, must return 0;
                     cur_match_turn++;
