@@ -20,6 +20,12 @@ public:
     
     virtual bool init();
     
+    void setError(std::string err);
+    
+    cocos2d::Label* label;
+    
+    void remove(float dt);
+    
 };
 
 #endif /* defined(__TankMultiplayer__NoTouchLayer__) */

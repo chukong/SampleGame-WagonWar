@@ -9,6 +9,11 @@ enum TurnType
     SECOND_TURN
 };
 
+const int WAGONSELECTTAG = 777;
+const int MAINLAYERTAG = 888;
+const int NOTOUCHTAG = 999;
+
+
 class GameConfig
 {
 public:

@@ -7,6 +7,7 @@
 //
 
 #include "NoTouchLayer.h"
+#include "VisibleRect.h"
 
 USING_NS_CC;
 
@@ -17,7 +18,7 @@ bool NoTouchLayer::init()
         return false;
     }
     
-    initWithColor(Color4B(100,100,100,20));
+    initWithColor(Color4B(100,100,100,200));
     
     //register touches
     auto listener = EventListenerTouchOneByOne::create();
@@ -27,5 +28,22 @@ bool NoTouchLayer::init()
     listener->onTouchMoved = [](Touch* touch, Event* event){};
     _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
     
+    label = Label::create("Connecting to Google Service...", "Arial", 40);
+    label->setAnchorPoint(Point::ANCHOR_MIDDLE);
+    label->setPosition(g_visibleRect.center);
+    this->addChild(label);
+    
     return true;
+}
+
+void NoTouchLayer::setError(std::string err)
+{
+    label->setString(err);
+    
+    this->scheduleOnce(schedule_selector(NoTouchLayer::remove), 2.0f);
+}
+
+void NoTouchLayer::remove(float dt)
+{
+    removeFromParentAndCleanup(true);
 }

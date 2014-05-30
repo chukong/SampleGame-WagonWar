@@ -12,6 +12,7 @@
 #include "cocos2d.h"
 #include "Configuration.h"
 
+
 class WagonSelect : public cocos2d::Layer
 {
 public:
