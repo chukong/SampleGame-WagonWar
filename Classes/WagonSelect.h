@@ -23,12 +23,24 @@ public:
     virtual bool init(TurnType turntype);
     
     void createUI();
+    
+    void boy_selected_callback(cocos2d::Ref* ref);
+    
+    void girl_selected_callback(cocos2d::Ref* ref);
         
     void ready_callback(cocos2d::Ref* ref);
     
+    void setup_player1_mactchdata();
+    
+    void setup_player2_mactchdata();
+
 private:
     
+    WagonSelect():isBoy(true){};
+    
     TurnType _turntype;
+    
+    bool isBoy;
 };
 
 #endif /* defined(__TankMultiplayer__WagonSelect__) */

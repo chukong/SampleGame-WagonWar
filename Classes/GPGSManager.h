@@ -41,7 +41,9 @@ public:
     
     static void TakeTurn(const bool winning, const bool losing);
     static int32_t GetNextParticipant();
-    static void PlayGame(gpg::TurnBasedMatch const& match);
+    static void PlayGame();
+    
+    static int GetMatchTurn();
 
 private:
     static bool isSignedIn;

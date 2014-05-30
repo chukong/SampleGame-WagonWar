@@ -186,35 +186,35 @@ bool MainScreenScene::init()
     
     mainscreen_logo->runAction(RepeatForever::create(Sequence::create(MoveBy::create(1.0f, Point(0,-20)),MoveBy::create(1.0f, Point(0,20)),nullptr)));
     
-    quickmatch_menuitem = MenuItemImage::create("btn_quickmatch.png",
-                                                     "btn_quickmatch.png",
+    quickmatch_menuitem = MenuItemImage::create("btn_quickmatch_0.png",
+                                                     "btn_quickmatch_1.png",
                                                      CC_CALLBACK_1(MainScreenScene::quickmatch_callback, this));
     quickmatch_menuitem->setAnchorPoint(Point::ANCHOR_MIDDLE);
-    quickmatch_menuitem->setPosition(Point(800,600));
+    quickmatch_menuitem->setPosition(Point(800,700));
     
-    invitefriend_menuitem = MenuItemImage::create("btn_invitefriend.png",
-                                                     "btn_invitefriend.png",
+    invitefriend_menuitem = MenuItemImage::create("btn_invitefriend_0.png",
+                                                     "btn_invitefriend_1.png",
                                                      CC_CALLBACK_1(MainScreenScene::invitefriend_callback, this));
     invitefriend_menuitem->setAnchorPoint(Point::ANCHOR_MIDDLE);
-    invitefriend_menuitem->setPosition(Point(800,400));
+    invitefriend_menuitem->setPosition(Point(800,500));
     
-    mygames_menuitem = MenuItemImage::create("btn_mygames.png",
-                                                     "btn_mygames.png",
+    mygames_menuitem = MenuItemImage::create("btn_mygames_0.png",
+                                                     "btn_mygames_1.png",
                                                      CC_CALLBACK_1(MainScreenScene::mygames_callback, this));
     mygames_menuitem->setAnchorPoint(Point::ANCHOR_MIDDLE);
-    mygames_menuitem->setPosition(Point(800,200));
+    mygames_menuitem->setPosition(Point(800,300));
     
-    achievements_menuitem = MenuItemImage::create("btn_achievements.png",
-                                                     "btn_achievements.png",
+    achievements_menuitem = MenuItemImage::create("btn_achievements_0.png",
+                                                     "btn_achievements_1.png",
                                                      CC_CALLBACK_1(MainScreenScene::achievements_callback, this));
     achievements_menuitem->setAnchorPoint(Point::ANCHOR_MIDDLE);
-    achievements_menuitem->setPosition(Point(650,50));
+    achievements_menuitem->setPosition(Point(700,100));
     
-    leaderboard_menuitem = MenuItemImage::create("btn_leaderboard.png",
-                                                     "btn_leaderboard.png",
+    leaderboard_menuitem = MenuItemImage::create("btn_leaderboard_0.png",
+                                                     "btn_leaderboard_1.png",
                                                      CC_CALLBACK_1(MainScreenScene::leaderboard_callback, this));
     leaderboard_menuitem->setAnchorPoint(Point::ANCHOR_MIDDLE);
-    leaderboard_menuitem->setPosition(Point(950,50));
+    leaderboard_menuitem->setPosition(Point(880,100));
     
     auto menu = Menu::create(quickmatch_menuitem, invitefriend_menuitem, mygames_menuitem, achievements_menuitem, leaderboard_menuitem, nullptr);
     menu->setPosition(Point(150,-50));
@@ -238,7 +238,7 @@ void MainScreenScene::quickmatch_callback(cocos2d::Ref* pSender)
 {
     log("QuickMatch");
     if (GPGSManager::IsSignedIn()) {
-        Director::getInstance()->replaceScene(WagonSelect::createScene(FIRSR_TURN));
+        GPGSManager::QuickMatch();
     }
     else{
         GPGSManager::BeginUserInitiatedSignIn();

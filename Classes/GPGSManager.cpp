@@ -23,6 +23,7 @@ const int32_t BUFFER_SIZE = 256;
 #include "cocos2d.h"
 #include "TestTBMP.h"
 #include "Configuration.h"
+#include "WagonSelect.h"
 
 bool GPGSManager::isSignedIn = false;
 std::unique_ptr<gpg::GameServices> GPGSManager::gameServices;
@@ -159,12 +160,13 @@ void GPGSManager::QuickMatch()
                                  {
                                      if (matchResponse.status == gpg::MultiplayerStatus::VALID) {
                                          LOGI("QuickMatch Game Begin...By Jacky");
-                                         PlayGame(matchResponse.match);
+//                                         PlayGame(matchResponse.match);
+                                         current_match_ = matchResponse.match;
+                                         cocos2d::Director::getInstance()->replaceScene(cocos2d::TransitionJumpZoom::create(0.3f, WagonSelect::createScene(FIRSR_TURN)));
                                      }
                                      else
                                      {
                                          LOGI("QuickMatchs Game Failed...===>%d...By Jacky", matchResponse.status);
-
                                      }
                                  });
 }
@@ -188,8 +190,9 @@ void GPGSManager::InviteFriend()
                                                                     if (matchResponse.status == gpg::MultiplayerStatus::VALID)
                                                                     {
                                                                         LOGI("InviteFriend Game Begin...By Jacky");
-                                                                      //InviteFriend...
-                                                                      PlayGame(matchResponse.match);
+                                                                      //PlayGame(matchResponse.match);
+                                                                        current_match_ = matchResponse.match;
+                                                                        cocos2d::Director::getInstance()->replaceScene(cocos2d::TransitionJumpZoom::create(0.3f, WagonSelect::createScene(FIRSR_TURN)));
                                                                     }
                                                                     else
                                                                     {
@@ -206,15 +209,30 @@ void GPGSManager::ShowMatchInbox()
     {
         if (response.status == gpg::UIStatus::VALID) {
             //Show game based on the user's selection
+            current_match_ = response.match;
             switch (response.match.Status()) {
                 case gpg::MatchStatus::THEIR_TURN:
                     //Manage match with dismiss, leave and cancel options
                     LOGI("Their turn...By Jacky");
                     break;
                 case gpg::MatchStatus::MY_TURN:
-                    //Play selected game
+                {//Play selected game
                     LOGI("My turn...By Jacky");
-                    PlayGame(response.match);
+                    //PlayGame(response.match);
+                    current_match_ = response.match;
+                    //todo:is second turn?
+                    int cur_match_turn = GetMatchTurn();//no found, must return 0;
+                    cur_match_turn++;
+                    if(cur_match_turn == 1){
+                        cocos2d::Director::getInstance()->replaceScene(cocos2d::TransitionJumpZoom::create(0.3f, WagonSelect::createScene(FIRSR_TURN)));
+                    }
+                    else if(cur_match_turn ==2){
+                        cocos2d::Director::getInstance()->replaceScene(cocos2d::TransitionJumpZoom::create(0.3f, WagonSelect::createScene(SECOND_TURN)));
+                    }
+                    else if(cur_match_turn >=3){
+                        //enter the game.
+                    }
+                }
                     break;
                 case gpg::MatchStatus::COMPLETED:
                     //Manage match with dismiss, rematch options
@@ -326,9 +344,8 @@ int32_t GPGSManager::GetNextParticipant() {
     return nextPlayerIndex;
 }
 
-void GPGSManager::PlayGame(gpg::TurnBasedMatch const& match)
+void GPGSManager::PlayGame()
 {
-    current_match_ = match;
     if (current_match_.HasData()) {
         g_gameConfig.match_data = current_match_.Data();
         g_gameConfig.match_string.clear();
@@ -366,8 +383,7 @@ void GPGSManager::TakeTurn(const bool winning, const bool losing)
     LOGI("Taking my turn. local participant id:%s",
          localParticipant.Id().c_str());
     
-    std::vector<gpg::MultiplayerParticipant> participants =
-    current_match_.Participants();
+    std::vector<gpg::MultiplayerParticipant> participants = current_match_.Participants();
     int32_t nextPlayerIndex = GetNextParticipant();
     
     LOGI("StarTakeTurn...2...%d",nextPlayerIndex);
@@ -430,4 +446,10 @@ void GPGSManager::TakeTurn(const bool winning, const bool losing)
     
     LOGI("StarTakeTurn...4");
 
+}
+
+int GPGSManager::GetMatchTurn()
+{
+    //todo: parse jason, get match turn.
+    return 2;
 }

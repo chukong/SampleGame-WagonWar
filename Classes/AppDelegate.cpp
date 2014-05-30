@@ -3,6 +3,7 @@
 #include "Configuration.h"
 #include "MainScreenScene.h"
 #include "TestTBMP.h"
+#include "WagonSelect.h"
 
 
 //#include "MainScreenScene.h"
@@ -42,9 +43,10 @@ bool AppDelegate::applicationDidFinishLaunching() {
     g_gameConfig.lazyInit();
     
     // create a scene. it's an autorelease object
-     auto scene = GameScene::createScene();
-      //auto scene = MainScreenScene::createScene();
+  //   auto scene = GameScene::createScene();
+//      auto scene = MainScreenScene::createScene();
   //    auto scene = TestTBMP::createScene("345678");
+    auto scene = WagonSelect::createScene(FIRSR_TURN);
     // run
     director->runWithScene(scene);
     
