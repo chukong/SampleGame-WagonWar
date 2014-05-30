@@ -41,7 +41,7 @@ public:
     
     static void TakeTurn(const bool winning, const bool losing);
     static int32_t GetNextParticipant();
-    static void PlayGame();
+    static void ParseMatchData();
     
     static int GetMatchTurn();
 

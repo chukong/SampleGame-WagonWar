@@ -10,6 +10,7 @@
 #include "GPGSManager.h"
 #include "GameScene.h"
 #include "VisibleRect.h"
+#include "NoTouchLayer.h"
 #include "json/writer.h"
 #include "json/stringbuffer.h"
 
@@ -35,6 +36,7 @@ Scene* WagonSelect::createScene(TurnType turntype)
 {
     auto scene = Scene::create();
     auto layer = WagonSelect::create(turntype);
+    layer->setTag(WAGONSELECTTAG);
     scene->addChild(layer);
     return scene;
 }
@@ -127,6 +129,10 @@ void WagonSelect::createUI()
 
 void WagonSelect::ready_callback(Ref* ref)
 {
+    auto notouchlayer = NoTouchLayer::create();
+    notouchlayer->setTag(NOTOUCHTAG);
+    this->addChild(notouchlayer,100);
+    
     if (_turntype == FIRSR_TURN) {
         setup_player1_mactchdata();
         GPGSManager::TakeTurn(false, false);
