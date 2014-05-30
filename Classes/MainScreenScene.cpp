@@ -14,8 +14,10 @@
 #include "VisibleRect.h"
 #include "Configuration.h"
 #include "GameScene.h"
+#include "Configuration.h"
+#include "WagonSelect.h"
 
-using namespace cocos2d;
+USING_NS_CC;
 
 #define ACH_ACHIEVEMENT_01 "CgkIs7qm9rYbEAIQAQ"
 #define ACH_ACHIEVEMENT_02 "CgkIs7qm9rYbEAIQAg"
@@ -170,53 +172,54 @@ bool MainScreenScene::init()
 //    this->addChild(menu);
     
     auto mainscreen_bk = Sprite::create("mainscreen_bk.jpg");
+    if(g_visibleRect.visibleWidth>960)
+    {
+        mainscreen_bk->setScaleX(g_visibleRect.visibleWidth/960);
+    }
     mainscreen_bk->setAnchorPoint(Point::ANCHOR_MIDDLE);
     mainscreen_bk->setPosition(g_visibleRect.center);
-    mainscreen_bk->setScale(0.8f);
     this->addChild(mainscreen_bk);
     
     auto mainscreen_logo = Sprite::create("mainscreen_logo.png");
     mainscreen_logo->setAnchorPoint(Point::ANCHOR_MIDDLE);
     mainscreen_logo->setPosition(Point(g_visibleRect.center.x-150,g_visibleRect.center.y+130));
-    mainscreen_logo->setScale(0.75f);
     mainscreen_logo->setRotation(-10);
     this->addChild(mainscreen_logo,2);
     
     mainscreen_logo->runAction(RepeatForever::create(Sequence::create(MoveBy::create(1.0f, Point(0,-20)),MoveBy::create(1.0f, Point(0,20)),nullptr)));
     
-    quickmatch_menuitem = MenuItemImage::create("btn_quickmatch.png",
-                                                     "btn_quickmatch.png",
+    quickmatch_menuitem = MenuItemImage::create("btn_quickmatch_0.png",
+                                                     "btn_quickmatch_1.png",
                                                      CC_CALLBACK_1(MainScreenScene::quickmatch_callback, this));
     quickmatch_menuitem->setAnchorPoint(Point::ANCHOR_MIDDLE);
-    quickmatch_menuitem->setPosition(Point(800,600));
+    quickmatch_menuitem->setPosition(Point(g_visibleRect.visibleWidth-350,g_visibleRect.visibleHeight-100));
     
-    invitefriend_menuitem = MenuItemImage::create("btn_invitefriend.png",
-                                                     "btn_invitefriend.png",
+    invitefriend_menuitem = MenuItemImage::create("btn_invitefriend_0.png",
+                                                     "btn_invitefriend_1.png",
                                                      CC_CALLBACK_1(MainScreenScene::invitefriend_callback, this));
     invitefriend_menuitem->setAnchorPoint(Point::ANCHOR_MIDDLE);
-    invitefriend_menuitem->setPosition(Point(800,400));
+    invitefriend_menuitem->setPosition(Point(g_visibleRect.visibleWidth-350,g_visibleRect.visibleHeight-250));
     
-    mygames_menuitem = MenuItemImage::create("btn_mygames.png",
-                                                     "btn_mygames.png",
+    mygames_menuitem = MenuItemImage::create("btn_mygames_0.png",
+                                                     "btn_mygames_1.png",
                                                      CC_CALLBACK_1(MainScreenScene::mygames_callback, this));
     mygames_menuitem->setAnchorPoint(Point::ANCHOR_MIDDLE);
-    mygames_menuitem->setPosition(Point(800,200));
+    mygames_menuitem->setPosition(Point(g_visibleRect.visibleWidth-350,g_visibleRect.visibleHeight-400));
     
-    achievements_menuitem = MenuItemImage::create("btn_achievements.png",
-                                                     "btn_achievements.png",
+    achievements_menuitem = MenuItemImage::create("btn_achievements_0.png",
+                                                     "btn_achievements_1.png",
                                                      CC_CALLBACK_1(MainScreenScene::achievements_callback, this));
     achievements_menuitem->setAnchorPoint(Point::ANCHOR_MIDDLE);
-    achievements_menuitem->setPosition(Point(650,50));
+    achievements_menuitem->setPosition(Point(g_visibleRect.visibleWidth-420,g_visibleRect.visibleHeight-520));
     
-    leaderboard_menuitem = MenuItemImage::create("btn_leaderboard.png",
-                                                     "btn_leaderboard.png",
+    leaderboard_menuitem = MenuItemImage::create("btn_leaderboard_0.png",
+                                                     "btn_leaderboard_1.png",
                                                      CC_CALLBACK_1(MainScreenScene::leaderboard_callback, this));
     leaderboard_menuitem->setAnchorPoint(Point::ANCHOR_MIDDLE);
-    leaderboard_menuitem->setPosition(Point(950,50));
+    leaderboard_menuitem->setPosition(Point(g_visibleRect.visibleWidth-280,g_visibleRect.visibleHeight-520));
     
     auto menu = Menu::create(quickmatch_menuitem, invitefriend_menuitem, mygames_menuitem, achievements_menuitem, leaderboard_menuitem, nullptr);
     menu->setPosition(Point(150,-50));
-    menu->setScale(0.65f);
     this->addChild(menu,1);
     
     sign_status = Label::create("status:unknown.", GameConfig::defaultFontName, 20);
@@ -225,9 +228,14 @@ bool MainScreenScene::init()
     this->addChild(sign_status,1);
     this->schedule(schedule_selector(MainScreenScene::updateStatus), 0.1f, kRepeatForever, 2.0f);
     
-    auto listener = EventListenerCustom::create("entergame", CC_CALLBACK_0(MainScreenScene::entergame, this));
-    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
+    auto listener1 = EventListenerCustom::create("enterWagonSelect_1", CC_CALLBACK_0(MainScreenScene::enterWagonSelect_1, this));
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener1, this);
 
+    auto listener2 = EventListenerCustom::create("enterWagonSelect_2", CC_CALLBACK_0(MainScreenScene::enterWagonSelect_2, this));
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener2, this);
+    
+    auto listener3 = EventListenerCustom::create("enterGame", CC_CALLBACK_0(MainScreenScene::enterGame, this));
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener3, this);
     
     return true;
 }
@@ -237,6 +245,7 @@ void MainScreenScene::quickmatch_callback(cocos2d::Ref* pSender)
     log("QuickMatch");
     if (GPGSManager::IsSignedIn()) {
         GPGSManager::QuickMatch();
+        //Director::getInstance()->replaceScene(WagonSelect::createScene(SECOND_TURN));
     }
     else{
         GPGSManager::BeginUserInitiatedSignIn();
@@ -294,27 +303,47 @@ void MainScreenScene::enableUI(bool isEnable)
 
 void MainScreenScene::updateStatus(float dt)
 {
-    if (GPGSManager::IsSignedIn()) {
-        sign_status->setString("status:sign in.");
-    }
-    else
-    {
-        sign_status->setString("status:sign out.");
-    }
+//    if (GPGSManager::IsSignedIn()) {
+//        sign_status->setString("status:sign in.");
+//    }
+//    else
+//    {
+//        sign_status->setString("status:sign out.");
+//    }
 }
 
-void MainScreenScene::entergame()
+void MainScreenScene::enterWagonSelect_1()
 {
     
-    scheduleOnce(schedule_selector(MainScreenScene::starxxxxxgame), 0.0);
+    scheduleOnce(schedule_selector(MainScreenScene::enterWagonSelectWithDelay_1), transSceneDelayTime);
 }
 
-void MainScreenScene::starxxxxxgame(float dt)
+void MainScreenScene::enterWagonSelectWithDelay_1(float dt)
 {
-    log("Replace with TestTMBP Scene...before");
-//    g_gameConfig.match_string = "{\"actions\":[{\"tick\":30,\"action\":\"go right\"},{\"tick\":200,\"action\":\"stop\"},{\"tick\":300,\"action\":\"start shoot\"},{\"tick\":450,\"action\":\"end shoot\"}]}";
+    log("recv data is ===>%s", g_gameConfig.match_string.c_str());
+    auto scene = WagonSelect::createScene(FIRSR_TURN);
+    cocos2d::Director::getInstance()->replaceScene(scene);
+}
+
+void MainScreenScene::enterWagonSelect_2()
+{
+    scheduleOnce(schedule_selector(MainScreenScene::enterWagonSelectWithDelay_2), transSceneDelayTime);
+}
+
+void MainScreenScene::enterWagonSelectWithDelay_2(float dt)
+{
+    log("recv data is ===>%s", g_gameConfig.match_string.c_str());
+    auto scene = WagonSelect::createScene(SECOND_TURN);
+    cocos2d::Director::getInstance()->replaceScene(scene);
+}
+
+void MainScreenScene::enterGame()
+{
+    scheduleOnce(schedule_selector(MainScreenScene::enterGameWithDelay), transSceneDelayTime);
+}
+void MainScreenScene::enterGameWithDelay(float dt)
+{
     log("recv data is ===>%s", g_gameConfig.match_string.c_str());
     auto scene = GameScene::createScene();
-    cocos2d::Director::getInstance()->replaceScene(TransitionJumpZoom::create(0.2f, scene));
-    log("Replace with TestTMBP Scene...after");
+    cocos2d::Director::getInstance()->replaceScene(scene);
 }

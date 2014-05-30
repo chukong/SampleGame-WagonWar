@@ -3,8 +3,11 @@
 #include <string>
 #include <vector>
 
-#define FIRSR_TURN 1;
-#define SECOND_TURN 2;
+enum TurnType
+{
+    FIRSR_TURN,
+    SECOND_TURN
+};
 
 class GameConfig
 {
