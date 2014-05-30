@@ -16,6 +16,7 @@
 #include "GameScene.h"
 #include "Configuration.h"
 #include "WagonSelect.h"
+#include "NoTouchLayer.h"
 
 USING_NS_CC;
 
@@ -28,6 +29,8 @@ Scene* MainScreenScene::createScene()
     auto scene = Scene::create();
     
     auto layer = MainScreenScene::create();
+    
+    layer->setTag(MAINLAYERTAG);
     
     scene->addChild(layer);
     
@@ -237,6 +240,13 @@ bool MainScreenScene::init()
     auto listener3 = EventListenerCustom::create("enterGame", CC_CALLBACK_0(MainScreenScene::enterGame, this));
     _eventDispatcher->addEventListenerWithSceneGraphPriority(listener3, this);
     
+    
+//    auto cnm = Sprite::createWithSpriteFrameName("cnm_idle01.png");
+//    auto cnmhit=AnimationCache::getInstance()->getAnimation(g_gameConfig._animation.cnm_hit);
+//    cnm->runAction(RepeatForever::create(Animate::create(cnmhit)));
+//    this->addChild(cnm,100);
+//    cnm->setPosition(300,300);
+    
     return true;
 }
 
@@ -244,6 +254,11 @@ void MainScreenScene::quickmatch_callback(cocos2d::Ref* pSender)
 {
     log("QuickMatch");
     if (GPGSManager::IsSignedIn()) {
+        
+        auto notouchlayer = NoTouchLayer::create();
+        notouchlayer->setTag(NOTOUCHTAG);
+        this->addChild(notouchlayer,100);
+        
         GPGSManager::QuickMatch();
         //Director::getInstance()->replaceScene(WagonSelect::createScene(SECOND_TURN));
     }
@@ -321,6 +336,7 @@ void MainScreenScene::enterWagonSelect_1()
 void MainScreenScene::enterWagonSelectWithDelay_1(float dt)
 {
     log("recv data is ===>%s", g_gameConfig.match_string.c_str());
+    this->removeChildByTag(NOTOUCHTAG);
     auto scene = WagonSelect::createScene(FIRSR_TURN);
     cocos2d::Director::getInstance()->replaceScene(scene);
 }
@@ -333,6 +349,7 @@ void MainScreenScene::enterWagonSelect_2()
 void MainScreenScene::enterWagonSelectWithDelay_2(float dt)
 {
     log("recv data is ===>%s", g_gameConfig.match_string.c_str());
+    this->removeChildByTag(NOTOUCHTAG);
     auto scene = WagonSelect::createScene(SECOND_TURN);
     cocos2d::Director::getInstance()->replaceScene(scene);
 }
@@ -344,6 +361,7 @@ void MainScreenScene::enterGame()
 void MainScreenScene::enterGameWithDelay(float dt)
 {
     log("recv data is ===>%s", g_gameConfig.match_string.c_str());
+    this->removeChildByTag(NOTOUCHTAG);
     auto scene = GameScene::createScene();
     cocos2d::Director::getInstance()->replaceScene(scene);
 }
