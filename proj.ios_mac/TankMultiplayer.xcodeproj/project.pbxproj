@@ -56,6 +56,12 @@
 		50EF629917ECD46A001EB2F8 /* Icon-100.png in Resources */ = {isa = PBXBuildFile; fileRef = 50EF629517ECD46A001EB2F8 /* Icon-100.png */; };
 		50EF62A217ECD613001EB2F8 /* Icon-29.png in Resources */ = {isa = PBXBuildFile; fileRef = 50EF62A017ECD613001EB2F8 /* Icon-29.png */; };
 		50EF62A317ECD613001EB2F8 /* Icon-50.png in Resources */ = {isa = PBXBuildFile; fileRef = 50EF62A117ECD613001EB2F8 /* Icon-50.png */; };
+		688029771938A4FA008AD16F /* Wagon.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 688029751938A4FA008AD16F /* Wagon.cpp */; };
+		688029781938A4FA008AD16F /* Wagon.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 688029751938A4FA008AD16F /* Wagon.cpp */; };
+		6880297D1938AFEB008AD16F /* cnm.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6880297B1938AFEB008AD16F /* cnm.plist */; };
+		6880297E1938AFEB008AD16F /* cnm.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6880297B1938AFEB008AD16F /* cnm.plist */; };
+		6880297F1938AFEB008AD16F /* cnm.png in Resources */ = {isa = PBXBuildFile; fileRef = 6880297C1938AFEB008AD16F /* cnm.png */; };
+		688029801938AFEB008AD16F /* cnm.png in Resources */ = {isa = PBXBuildFile; fileRef = 6880297C1938AFEB008AD16F /* cnm.png */; };
 		68BBD890192462D7001F9F73 /* HelloWorld.png in Resources */ = {isa = PBXBuildFile; fileRef = 68BBD888192462D7001F9F73 /* HelloWorld.png */; };
 		68BBD891192462D7001F9F73 /* HelloWorld.png in Resources */ = {isa = PBXBuildFile; fileRef = 68BBD888192462D7001F9F73 /* HelloWorld.png */; };
 		68BBD894192462D7001F9F73 /* masked.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 68BBD88A192462D7001F9F73 /* masked.fsh */; };
@@ -391,6 +397,10 @@
 		50EF629517ECD46A001EB2F8 /* Icon-100.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-100.png"; sourceTree = "<group>"; };
 		50EF62A017ECD613001EB2F8 /* Icon-29.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-29.png"; sourceTree = "<group>"; };
 		50EF62A117ECD613001EB2F8 /* Icon-50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-50.png"; sourceTree = "<group>"; };
+		688029751938A4FA008AD16F /* Wagon.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Wagon.cpp; path = ../Classes/Wagon.cpp; sourceTree = "<group>"; };
+		688029761938A4FA008AD16F /* Wagon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Wagon.h; path = ../Classes/Wagon.h; sourceTree = "<group>"; };
+		6880297B1938AFEB008AD16F /* cnm.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = cnm.plist; sourceTree = "<group>"; };
+		6880297C1938AFEB008AD16F /* cnm.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cnm.png; sourceTree = "<group>"; };
 		68BBD888192462D7001F9F73 /* HelloWorld.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = HelloWorld.png; sourceTree = "<group>"; };
 		68BBD88A192462D7001F9F73 /* masked.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = masked.fsh; sourceTree = "<group>"; };
 		68BBD88B192462D7001F9F73 /* test.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = test.png; sourceTree = "<group>"; };
@@ -601,6 +611,8 @@
 				85AD5ED919373BFC00E57DB2 /* WagonSelect.h */,
 				85E8A309193892EC00B0B650 /* NoTouchLayer.cpp */,
 				85E8A30A193892EC00B0B650 /* NoTouchLayer.h */,
+				688029751938A4FA008AD16F /* Wagon.cpp */,
+				688029761938A4FA008AD16F /* Wagon.h */,
 			);
 			name = Classes;
 			path = ../classes;
@@ -743,6 +755,8 @@
 				85E8A2BF19382D0A00B0B650 /* btn_ready_1.png */,
 				85E8A2C019382D0A00B0B650 /* btn_start_0.png */,
 				85E8A2C119382D0A00B0B650 /* btn_start_1.png */,
+				6880297B1938AFEB008AD16F /* cnm.plist */,
+				6880297C1938AFEB008AD16F /* cnm.png */,
 				85E8A2C219382D0A00B0B650 /* fonts */,
 				85E8A2C419382D0A00B0B650 /* girl_0.png */,
 				85E8A2C519382D0A00B0B650 /* girl_1.png */,
@@ -987,6 +1001,7 @@
 				85E8A2CE19382D0A00B0B650 /* boy_1.png in Resources */,
 				85E8A2EE19382D0A00B0B650 /* girl_0.png in Resources */,
 				68BBD8A9192462DE001F9F73 /* burnmark.png in Resources */,
+				6880297D1938AFEB008AD16F /* cnm.plist in Resources */,
 				85E8A2F619382D0A00B0B650 /* wagon_flash.png in Resources */,
 				85E8A307193865A500B0B650 /* btn_start_2.png in Resources */,
 				85111BAF192F4DBE00C8D3C8 /* windArrow.png in Resources */,
@@ -1025,6 +1040,7 @@
 				50EF629817ECD46A001EB2F8 /* Icon-80.png in Resources */,
 				5087E78417EB970100C73F5D /* Icon-57.png in Resources */,
 				5087E77E17EB970100C73F5D /* Default.png in Resources */,
+				6880297F1938AFEB008AD16F /* cnm.png in Resources */,
 				68BBD890192462D7001F9F73 /* HelloWorld.png in Resources */,
 				50EF629717ECD46A001EB2F8 /* Icon-58.png in Resources */,
 				85E8A2F419382D0A00B0B650 /* wagon_bk.png in Resources */,
@@ -1052,11 +1068,13 @@
 				85E8A2D719382D0A00B0B650 /* btn_invitefriend_1.png in Resources */,
 				68BBD897192462D7001F9F73 /* test.png in Resources */,
 				85E8A2F519382D0A00B0B650 /* wagon_bk.png in Resources */,
+				6880297E1938AFEB008AD16F /* cnm.plist in Resources */,
 				85E8A2F719382D0A00B0B650 /* wagon_flash.png in Resources */,
 				68BBD89D192462D7001F9F73 /* test4.bmp in Resources */,
 				85E8A2ED19382D0A00B0B650 /* Marker Felt.ttf in Resources */,
 				85E8A2DD19382D0A00B0B650 /* btn_mygames_0.png in Resources */,
 				85E8A2FB19382D0A00B0B650 /* wagon_item_1.png in Resources */,
+				688029801938AFEB008AD16F /* cnm.png in Resources */,
 				850C86D71935D1EE0040A5EE /* mainscreen_bk.jpg in Resources */,
 				8504EF6C1929E73E003B810B /* testnode.png in Resources */,
 				85E8A2E919382D0A00B0B650 /* btn_start_0.png in Resources */,
@@ -1114,6 +1132,7 @@
 				857A84D7193316AF00A2041E /* TestTBMP.cpp in Sources */,
 				85111B9C192F4D9F00C8D3C8 /* GameUI.cpp in Sources */,
 				857A84C91932F2AD00A2041E /* VisibleRect.cpp in Sources */,
+				688029771938A4FA008AD16F /* Wagon.cpp in Sources */,
 				503AE10117EB989F00D1A890 /* main.m in Sources */,
 				1AFAF8B816D35DE700DB1158 /* HelloWorldScene.cpp in Sources */,
 				856CF136192B406300DD7519 /* GPGSManager.cpp in Sources */,
@@ -1126,6 +1145,7 @@
 			files = (
 				857A84D8193316AF00A2041E /* TestTBMP.cpp in Sources */,
 				85AD5EDB19373BFC00E57DB2 /* WagonSelect.cpp in Sources */,
+				688029781938A4FA008AD16F /* Wagon.cpp in Sources */,
 				8589F77019237690009BDBCD /* GameScene.cpp in Sources */,
 				5087E75717EB910900C73F5D /* AppDelegate.cpp in Sources */,
 				857A84D01932F3DE00A2041E /* Configuration.cpp in Sources */,

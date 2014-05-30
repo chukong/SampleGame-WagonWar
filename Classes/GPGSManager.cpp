@@ -166,6 +166,7 @@ void GPGSManager::QuickMatch()
                                          LOGI("QuickMatch Game Begin...By Jacky");
 //                                         PlayGame(matchResponse.match);
                                          current_match_ = matchResponse.match;
+                                         ParseMatchData();
                                          if (current_match_.HasData() == false && current_match_.Data().size() == 0)
                                          {
                                              cocos2d::Director::getInstance()->getEventDispatcher()->dispatchCustomEvent("enterWagonSelect_1");

@@ -21,6 +21,8 @@ public:
     const static int defaultFontSize;
 
     void lazyInit();
+    
+    void initAnimation();
 
     void setMusicVolume(float volume);
     void setSFXVolume(float volume);
