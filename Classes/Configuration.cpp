@@ -27,3 +27,4 @@ void GameConfig::setSFXVolume(float volume)
 {
 
 }
+
