@@ -171,8 +171,6 @@
 		85E8A2EF19382D0A00B0B650 /* girl_0.png in Resources */ = {isa = PBXBuildFile; fileRef = 85E8A2C419382D0A00B0B650 /* girl_0.png */; };
 		85E8A2F019382D0A00B0B650 /* girl_1.png in Resources */ = {isa = PBXBuildFile; fileRef = 85E8A2C519382D0A00B0B650 /* girl_1.png */; };
 		85E8A2F119382D0A00B0B650 /* girl_1.png in Resources */ = {isa = PBXBuildFile; fileRef = 85E8A2C519382D0A00B0B650 /* girl_1.png */; };
-		85E8A2F219382D0A00B0B650 /* LOGO.png in Resources */ = {isa = PBXBuildFile; fileRef = 85E8A2C619382D0A00B0B650 /* LOGO.png */; };
-		85E8A2F319382D0A00B0B650 /* LOGO.png in Resources */ = {isa = PBXBuildFile; fileRef = 85E8A2C619382D0A00B0B650 /* LOGO.png */; };
 		85E8A2F419382D0A00B0B650 /* wagon_bk.png in Resources */ = {isa = PBXBuildFile; fileRef = 85E8A2C719382D0A00B0B650 /* wagon_bk.png */; };
 		85E8A2F519382D0A00B0B650 /* wagon_bk.png in Resources */ = {isa = PBXBuildFile; fileRef = 85E8A2C719382D0A00B0B650 /* wagon_bk.png */; };
 		85E8A2F619382D0A00B0B650 /* wagon_flash.png in Resources */ = {isa = PBXBuildFile; fileRef = 85E8A2C819382D0A00B0B650 /* wagon_flash.png */; };
@@ -183,6 +181,12 @@
 		85E8A2FB19382D0A00B0B650 /* wagon_item_1.png in Resources */ = {isa = PBXBuildFile; fileRef = 85E8A2CA19382D0A00B0B650 /* wagon_item_1.png */; };
 		85E8A2FC19382D0A00B0B650 /* wagonselect_bk.png in Resources */ = {isa = PBXBuildFile; fileRef = 85E8A2CB19382D0A00B0B650 /* wagonselect_bk.png */; };
 		85E8A2FD19382D0A00B0B650 /* wagonselect_bk.png in Resources */ = {isa = PBXBuildFile; fileRef = 85E8A2CB19382D0A00B0B650 /* wagonselect_bk.png */; };
+		85E8A305193865A500B0B650 /* btn_ready_2.png in Resources */ = {isa = PBXBuildFile; fileRef = 85E8A303193865A500B0B650 /* btn_ready_2.png */; };
+		85E8A306193865A500B0B650 /* btn_ready_2.png in Resources */ = {isa = PBXBuildFile; fileRef = 85E8A303193865A500B0B650 /* btn_ready_2.png */; };
+		85E8A307193865A500B0B650 /* btn_start_2.png in Resources */ = {isa = PBXBuildFile; fileRef = 85E8A304193865A500B0B650 /* btn_start_2.png */; };
+		85E8A308193865A500B0B650 /* btn_start_2.png in Resources */ = {isa = PBXBuildFile; fileRef = 85E8A304193865A500B0B650 /* btn_start_2.png */; };
+		85E8A30B193892EC00B0B650 /* NoTouchLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 85E8A309193892EC00B0B650 /* NoTouchLayer.cpp */; };
+		85E8A30C193892EC00B0B650 /* NoTouchLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 85E8A309193892EC00B0B650 /* NoTouchLayer.cpp */; };
 		85F8465D192F774300DAD41B /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 85F8465C192F774300DAD41B /* CoreData.framework */; };
 		85F8465F192F774E00DAD41B /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 85F8465E192F774D00DAD41B /* Security.framework */; };
 		85F84661192F775700DAD41B /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 85F84660192F775700DAD41B /* CoreText.framework */; };
@@ -460,12 +464,15 @@
 		85E8A2C319382D0A00B0B650 /* Marker Felt.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Marker Felt.ttf"; sourceTree = "<group>"; };
 		85E8A2C419382D0A00B0B650 /* girl_0.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = girl_0.png; sourceTree = "<group>"; };
 		85E8A2C519382D0A00B0B650 /* girl_1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = girl_1.png; sourceTree = "<group>"; };
-		85E8A2C619382D0A00B0B650 /* LOGO.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LOGO.png; sourceTree = "<group>"; };
 		85E8A2C719382D0A00B0B650 /* wagon_bk.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = wagon_bk.png; sourceTree = "<group>"; };
 		85E8A2C819382D0A00B0B650 /* wagon_flash.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = wagon_flash.png; sourceTree = "<group>"; };
 		85E8A2C919382D0A00B0B650 /* wagon_item_0.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = wagon_item_0.png; sourceTree = "<group>"; };
 		85E8A2CA19382D0A00B0B650 /* wagon_item_1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = wagon_item_1.png; sourceTree = "<group>"; };
 		85E8A2CB19382D0A00B0B650 /* wagonselect_bk.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = wagonselect_bk.png; sourceTree = "<group>"; };
+		85E8A303193865A500B0B650 /* btn_ready_2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = btn_ready_2.png; sourceTree = "<group>"; };
+		85E8A304193865A500B0B650 /* btn_start_2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = btn_start_2.png; sourceTree = "<group>"; };
+		85E8A309193892EC00B0B650 /* NoTouchLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = NoTouchLayer.cpp; path = ../Classes/NoTouchLayer.cpp; sourceTree = "<group>"; };
+		85E8A30A193892EC00B0B650 /* NoTouchLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NoTouchLayer.h; path = ../Classes/NoTouchLayer.h; sourceTree = "<group>"; };
 		85F8465C192F774300DAD41B /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.1.sdk/System/Library/Frameworks/CoreData.framework; sourceTree = DEVELOPER_DIR; };
 		85F8465E192F774D00DAD41B /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.1.sdk/System/Library/Frameworks/Security.framework; sourceTree = DEVELOPER_DIR; };
 		85F84660192F775700DAD41B /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.1.sdk/System/Library/Frameworks/CoreText.framework; sourceTree = DEVELOPER_DIR; };
@@ -592,6 +599,8 @@
 				857A84D6193316AF00A2041E /* TestTBMP.h */,
 				85AD5ED819373BFC00E57DB2 /* WagonSelect.cpp */,
 				85AD5ED919373BFC00E57DB2 /* WagonSelect.h */,
+				85E8A309193892EC00B0B650 /* NoTouchLayer.cpp */,
+				85E8A30A193892EC00B0B650 /* NoTouchLayer.h */,
 			);
 			name = Classes;
 			path = ../classes;
@@ -716,6 +725,8 @@
 		78C7DDAA14EBA5050085D0C2 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				85E8A303193865A500B0B650 /* btn_ready_2.png */,
+				85E8A304193865A500B0B650 /* btn_start_2.png */,
 				85E8A2B219382D0A00B0B650 /* boy_0.png */,
 				85E8A2B319382D0A00B0B650 /* boy_1.png */,
 				85E8A2B419382D0A00B0B650 /* btn_achievements_0.png */,
@@ -735,7 +746,6 @@
 				85E8A2C219382D0A00B0B650 /* fonts */,
 				85E8A2C419382D0A00B0B650 /* girl_0.png */,
 				85E8A2C519382D0A00B0B650 /* girl_1.png */,
-				85E8A2C619382D0A00B0B650 /* LOGO.png */,
 				85E8A2C719382D0A00B0B650 /* wagon_bk.png */,
 				85E8A2C819382D0A00B0B650 /* wagon_flash.png */,
 				85E8A2C919382D0A00B0B650 /* wagon_item_0.png */,
@@ -978,8 +988,8 @@
 				85E8A2EE19382D0A00B0B650 /* girl_0.png in Resources */,
 				68BBD8A9192462DE001F9F73 /* burnmark.png in Resources */,
 				85E8A2F619382D0A00B0B650 /* wagon_flash.png in Resources */,
+				85E8A307193865A500B0B650 /* btn_start_2.png in Resources */,
 				85111BAF192F4DBE00C8D3C8 /* windArrow.png in Resources */,
-				85E8A2F219382D0A00B0B650 /* LOGO.png in Resources */,
 				85E8A2E219382D0A00B0B650 /* btn_quickmatch_1.png in Resources */,
 				85E8A2E419382D0A00B0B650 /* btn_ready_0.png in Resources */,
 				85E8A2D219382D0A00B0B650 /* btn_achievements_1.png in Resources */,
@@ -1008,6 +1018,7 @@
 				85111BA9192F4DBE00C8D3C8 /* f1.png in Resources */,
 				85E8A2F819382D0A00B0B650 /* wagon_item_0.png in Resources */,
 				68BBD894192462D7001F9F73 /* masked.fsh in Resources */,
+				85E8A305193865A500B0B650 /* btn_ready_2.png in Resources */,
 				5087E78217EB970100C73F5D /* Icon-144.png in Resources */,
 				68BBD8AB192462DE001F9F73 /* circle.png in Resources */,
 				85E8A2DC19382D0A00B0B650 /* btn_mygames_0.png in Resources */,
@@ -1027,6 +1038,7 @@
 				85111BB0192F4DBE00C8D3C8 /* windArrow.png in Resources */,
 				85E8A2DF19382D0A00B0B650 /* btn_mygames_1.png in Resources */,
 				85111BAA192F4DBE00C8D3C8 /* f1.png in Resources */,
+				85E8A306193865A500B0B650 /* btn_ready_2.png in Resources */,
 				68BBD8B2192462DE001F9F73 /* expMask.png in Resources */,
 				85E8A2FD19382D0A00B0B650 /* wagonselect_bk.png in Resources */,
 				85111BAE192F4DBE00C8D3C8 /* number1.png in Resources */,
@@ -1051,12 +1063,12 @@
 				85E8A2DB19382D0A00B0B650 /* btn_leaderboard_1.png in Resources */,
 				85111BAC192F4DBE00C8D3C8 /* Marker Felt.ttf in Resources */,
 				68BBD8AC192462DE001F9F73 /* circle.png in Resources */,
+				85E8A308193865A500B0B650 /* btn_start_2.png in Resources */,
 				85E8A2D919382D0A00B0B650 /* btn_leaderboard_0.png in Resources */,
 				68BBD899192462D7001F9F73 /* test2.png in Resources */,
 				68BBD8AE192462DE001F9F73 /* CloseNormal.png in Resources */,
 				503AE0F817EB97AB00D1A890 /* Icon.icns in Resources */,
 				850C86D51935D1EE0040A5EE /* mainscreen_logo.png in Resources */,
-				85E8A2F319382D0A00B0B650 /* LOGO.png in Resources */,
 				68BBD895192462D7001F9F73 /* masked.fsh in Resources */,
 				85E8A2D319382D0A00B0B650 /* btn_achievements_1.png in Resources */,
 				68BBD8BA192495E4001F9F73 /* map.png in Resources */,
@@ -1088,6 +1100,7 @@
 				8589F77319237690009BDBCD /* Level.cpp in Sources */,
 				503AE10017EB989F00D1A890 /* AppController.mm in Sources */,
 				8589F76D19237690009BDBCD /* bullet.cpp in Sources */,
+				85E8A30B193892EC00B0B650 /* NoTouchLayer.cpp in Sources */,
 				503AE10217EB989F00D1A890 /* RootViewController.mm in Sources */,
 				85529F751925EAEA0024FFEF /* MainScreenScene.cpp in Sources */,
 				857A84D319330A3C00A2041E /* LoadResourceLayer.cpp in Sources */,
@@ -1127,6 +1140,7 @@
 				85529F761925EAEA0024FFEF /* MainScreenScene.cpp in Sources */,
 				856CF137192B406300DD7519 /* GPGSManager.cpp in Sources */,
 				8589F77219237690009BDBCD /* Helper.cpp in Sources */,
+				85E8A30C193892EC00B0B650 /* NoTouchLayer.cpp in Sources */,
 				85111B9D192F4D9F00C8D3C8 /* GameUI.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

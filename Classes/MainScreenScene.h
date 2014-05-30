@@ -11,6 +11,7 @@
 
 #include "cocos2d.h"
 
+const float transSceneDelayTime = 1.0f;
 
 class MainScreenScene: public cocos2d::Layer
 {
@@ -32,9 +33,14 @@ public:
     
     void updateStatus(float dt);
     
-    void entergame();
-
-    void starxxxxxgame(float dt);
+    void enterWagonSelect_1();
+    void enterWagonSelectWithDelay_1(float dt);
+    
+    void enterWagonSelect_2();
+    void enterWagonSelectWithDelay_2(float dt);
+    
+    void enterGame();
+    void enterGameWithDelay(float dt);
     
 private:
     

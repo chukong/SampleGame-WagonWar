@@ -27,6 +27,14 @@ public:
     void boy_selected_callback(cocos2d::Ref* ref);
     
     void girl_selected_callback(cocos2d::Ref* ref);
+    
+    void wagon1_selected_callback(cocos2d::Ref* ref);
+    
+    void wagon2_selected_callback(cocos2d::Ref* ref);
+    
+    void wagon3_selected_callback(cocos2d::Ref* ref);
+    
+    void wagon4_selected_callback(cocos2d::Ref* ref);
         
     void ready_callback(cocos2d::Ref* ref);
     
@@ -36,11 +44,12 @@ public:
 
 private:
     
-    WagonSelect():isBoy(true){};
+    WagonSelect():_isBoy(true), _wagon(0){};
     
     TurnType _turntype;
     
-    bool isBoy;
+    bool _isBoy;
+    int _wagon;
 };
 
 #endif /* defined(__TankMultiplayer__WagonSelect__) */
