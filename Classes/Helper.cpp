@@ -8,6 +8,7 @@
 
 #include "Helper.h"
 #include "bullet.h"
+#include "Aimer.h"
 USING_NS_CC;
 
 void Helper::removeAfter(Node* node, float seconds)
@@ -178,8 +179,12 @@ TestNode* TestNode::create()
         ret->addChild(drawN);
         
         ret->gunPoint = Node::create();
-        ret->addChild(ret->gunPoint);
+        ret->addChild(ret->gunPoint, -1);
         ret->gunPoint->setPosition(43, 45);
+        
+        auto aim = Aimer::create();
+        ret->gunPoint->addChild(aim);
+        //aim->setPosition(500,750);
         
         return ret;
     }
