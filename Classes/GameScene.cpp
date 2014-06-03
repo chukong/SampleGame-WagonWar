@@ -198,20 +198,34 @@ void GameScene::movePlayer(float x)
     Hero* p = getCurrentPlayer();
     p->moveDelta.x = x;
     p->needFix = true;
+    if (x>0)
+    {
+        p->moveright();
+    }
+    else if(x<0)
+    {
+        p->moveleft();
+    }
+    else
+    {
+        p->stop();
+    }
 }
 
 void GameScene::initTests()
 {
-    auto p_me = Hero::create();
+    auto p_me = Hero::create(Other,BOY,ROCK,false);
     p_me->setTag(TAG_MYSELF);
     p_me->setPosition(500,800);
     p_me->setLastPos(Point(500,800));
+    p_me->stop();
     getPlayerLayer()->addChild(p_me);
     
-    auto p_other = Hero::create();
+    auto p_other = Hero::create(Other,GIRL,MECH,false);
     p_other->setTag(TAG_OTHER);
     p_other->setPosition(800,800);
     p_other->setLastPos(Point(800,800));
+    p_other->stop();
     getPlayerLayer()->addChild(p_other);
 
 }
@@ -313,7 +327,7 @@ Bullet* GameScene::addBullet(BulletTypes type, cocos2d::Point pos, cocos2d::Poin
 }
 Hero* GameScene::getCurrentPlayer()
 {
-    auto player = _PlayerLayer->getChildByTag(TAG_MYSELF);
+    auto player = _PlayerLayer->getChildByTag(_playback?TAG_OTHER:TAG_MYSELF);
     return dynamic_cast<Hero*>(player);
 }
 void GameScene::buildMyTurn()
