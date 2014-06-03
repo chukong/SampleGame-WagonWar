@@ -195,6 +195,7 @@ void PowerIndicator::update(float delta){
     
     if(_powerFlag){
         int tick = _tick - _tickPre;
+        tick = tick>180?180:tick;
         innerpower->setScale(tick/180.0f);
     }
 }
