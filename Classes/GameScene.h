@@ -50,6 +50,7 @@ public:
     void initTests();
     void startShoot();
     void endShoot();
+    void playerdead(cocos2d::EventCustom* event);
     Hero *getCurrentPlayer();
     Bullet* addBullet(BulletTypes type, cocos2d::Point pos, cocos2d::Point vector);
     cocos2d::Point offset;
