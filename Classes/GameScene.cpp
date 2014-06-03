@@ -122,7 +122,7 @@ void GameScene::initListeners()
 }
 void GameScene::startShoot()
 {
-    gettimeofday(&_now, nullptr);
+    _tickPre = _tick;
     if(!_playback)
     {
         rapidjson::Document::AllocatorType& allocator = _myturn.GetAllocator();
@@ -134,17 +134,12 @@ void GameScene::startShoot()
 }
 void GameScene::endShoot()
 {
-    struct timeval now;
-    gettimeofday(&now, nullptr);
-    long seconds = now.tv_sec-_now.tv_sec;
-    int usec = now.tv_usec - _now.tv_usec;
-    float timed = seconds + float(usec)/1000000;
-    timed = (timed>3)? 3 : timed;
-//    log("diff is %f", timed);
+    int tick = _tick - _tickPre;
+    //log("tick %d", tick);
     auto p = getCurrentPlayer();
     auto offset = getMovableSize();
     auto gunlocation = p->gunPoint->getNodeToWorldAffineTransform();
-    auto b = addBullet(defaultB, Point(gunlocation.tx, gunlocation.ty)+Point(offset/2)-getPosition(), Point(timed*2,timed*2));
+    auto b = addBullet(defaultB, Point(gunlocation.tx, gunlocation.ty)+Point(offset/2)-getPosition(), Point(tick/60.0f*2, tick/60.0f*2));
     _following = dynamic_cast<Node*>(b);
     if(_playback)
     {

@@ -45,6 +45,11 @@ bool GameUI::init()
     addChild(wind);
     wind->setPosition(vsize.width/2+vorigin.x, vsize.height- vorigin.y - 50);
     
+    auto power = PowerIndicator::create();
+    //power->setAnchorPoint(Point(0.5f, 0.0f));
+    addChild(power);
+    power->setPosition(vsize.width/2+vorigin.x, 191);
+    
     auto touchOffListener = EventListenerCustom::create("touch off", CC_CALLBACK_0(GameUI::_toggleTouchEnable, this, false));
     _eventDispatcher->addEventListenerWithSceneGraphPriority(touchOffListener, this);
     
@@ -81,6 +86,7 @@ bool GameUI::onTouchBegan(Touch *touch, Event *event)
     if(fire->getBoundingBox().containsPoint(touch->getLocation()))
     {
         _eventDispatcher->dispatchCustomEvent("start shoot");
+        _eventDispatcher->dispatchCustomEvent("increasePower");
         _startShoot = true;
         return true;
     }
@@ -102,6 +108,7 @@ void GameUI::onTouchEnded(Touch *touch, Event *event)
     else if(_startShoot)
     {
         _eventDispatcher->dispatchCustomEvent("end shoot");
+        _eventDispatcher->dispatchCustomEvent("dismissPower");
     }
     
     _startShoot = false;
@@ -141,4 +148,53 @@ void WindIndicator::setWind(Point pos)
     log("dist %d", int(pos.getDistance(Point::ZERO)*1000));
     _label->setString(Value(int(pos.getDistance(Point::ZERO)*1000)).asString());
     //pos.getAngle();
+}
+
+
+bool PowerIndicator::init(){
+    powerbar = Sprite::create("powerbar.png");
+    powerbar->setAnchorPoint(Point(0.5f, 0.30713f));
+    powerbar->setVisible(false);
+    addChild(powerbar);
+    
+    innerpower = Sprite::create("innerpower.png");
+    //innerpower->setAnchorPoint(Point(0.5f, 0.34854f));
+    //innerpower->setScale(0.1f);
+    innerpower->setVisible(false);
+    addChild(innerpower);
+    
+    auto increasePowerListener = EventListenerCustom::create("increasePower",CC_CALLBACK_0(PowerIndicator::increasePower, this));
+    auto dismissPowerListener = EventListenerCustom::create("dismissPower",CC_CALLBACK_0(PowerIndicator::dismissPower, this));
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(increasePowerListener, this);
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(dismissPowerListener, this);
+    
+    this->scheduleUpdate();
+    
+    return true;
+}
+
+void PowerIndicator::increasePower(){
+    _powerFlag = true;
+    powerbar->setVisible(true);
+    innerpower->setVisible(true);
+    innerpower->runAction(FadeIn::create(0.1));
+    powerbar->runAction(FadeIn::create(0.1));
+
+    _tickPre = _tick;
+}
+
+void PowerIndicator::dismissPower(){
+    _powerFlag = false;
+    innerpower->runAction(FadeOut::create(0.4));
+    powerbar->runAction(FadeOut::create(0.4));
+}
+
+void PowerIndicator::update(float delta){
+    
+    _tick++;
+    
+    if(_powerFlag){
+        int tick = _tick - _tickPre;
+        innerpower->setScale(tick/180.0f);
+    }
 }
