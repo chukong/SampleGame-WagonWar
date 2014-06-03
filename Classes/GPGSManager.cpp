@@ -167,6 +167,8 @@ void GPGSManager::QuickMatch()
 //                                         PlayGame(matchResponse.match);
                                          current_match_ = matchResponse.match;
                                          ParseMatchData();
+                                         LOGI("current match data hasdata...%d,", current_match_.HasData());
+                                         LOGI("curenet match data size ....%d", current_match_.Data().size());
                                          if (current_match_.HasData() == false && current_match_.Data().size() == 0)
                                          {
                                              cocos2d::Director::getInstance()->getEventDispatcher()->dispatchCustomEvent("enterWagonSelect_1");
@@ -381,14 +383,15 @@ int32_t GPGSManager::GetNextParticipant() {
 
 void GPGSManager::ParseMatchData()
 {
-    if (current_match_.HasData()) {
+    if (current_match_.Data().size()) {
         g_gameConfig.match_data = current_match_.Data();
         g_gameConfig.match_string.clear();
         g_gameConfig.match_string.assign(g_gameConfig.match_data.begin(), g_gameConfig.match_data.end());
+        LOGI("ParseMatchData is %s", g_gameConfig.match_string.c_str());
     }
     else
     {
-        cocos2d::log("match no data");
+        LOGI("Parse match no data");
     }
 }
 
@@ -484,7 +487,7 @@ int GPGSManager::GetMatchTurn()
 {
     //todo: parse json, get match turn.
     
-    if(current_match_.HasData())
+    if(current_match_.Data().size())
     {
         g_gameConfig.match_string.clear();
         g_gameConfig.match_string.resize(current_match_.Data().size());

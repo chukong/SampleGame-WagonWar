@@ -11,6 +11,7 @@
 
 #include "cocos2d.h"
 #include "Level.h"
+#include "Hero.h"
 
 class Helper
 {
@@ -54,20 +55,6 @@ public:
     CC_SYNTHESIZE(cocos2d::RenderTexture*, _rt, RT);
 protected:
     cocos2d::CustomCommand _customCommand;
-};
-
-
-class TestNode : public cocos2d::Node
-{
-public:
-    static TestNode* create();
-    bool airborn;
-    bool needFix;
-    int radius;
-    TestNode():airborn(true), needFix(false), moveDelta(0,0.02){};
-    CC_SYNTHESIZE(cocos2d::Point, _LastPos, LastPos);
-    Node* gunPoint;
-    cocos2d::Point moveDelta;
 };
 
 
