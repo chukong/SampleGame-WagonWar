@@ -7,6 +7,7 @@
 //
 
 #include "Hero.h"
+#include "Aimer.h"
 
 USING_NS_CC;
 
@@ -98,8 +99,13 @@ bool Hero::init(Side side, Body body, Wagon wagon, bool isfacetoright)
     this->addChild(drawN);
     
     gunPoint = Node::create();
-    this->addChild(gunPoint);
+    _wagonPoint->addChild(gunPoint);
     gunPoint->setPosition(43, 45);
+    
+    auto aimer = Aimer::create();
+    aimer->lowerLimit = _heroConfig.wagonConfig.lowerlimit;
+    aimer->upperLimit = _heroConfig.wagonConfig.upperlimit;
+    gunPoint->addChild(aimer);
     
     return true;
 }

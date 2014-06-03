@@ -56,6 +56,8 @@
 		50EF629917ECD46A001EB2F8 /* Icon-100.png in Resources */ = {isa = PBXBuildFile; fileRef = 50EF629517ECD46A001EB2F8 /* Icon-100.png */; };
 		50EF62A217ECD613001EB2F8 /* Icon-29.png in Resources */ = {isa = PBXBuildFile; fileRef = 50EF62A017ECD613001EB2F8 /* Icon-29.png */; };
 		50EF62A317ECD613001EB2F8 /* Icon-50.png in Resources */ = {isa = PBXBuildFile; fileRef = 50EF62A117ECD613001EB2F8 /* Icon-50.png */; };
+		68078118193E388B0013727B /* crosshair.png in Resources */ = {isa = PBXBuildFile; fileRef = 68078117193E388B0013727B /* crosshair.png */; };
+		68078119193E388B0013727B /* crosshair.png in Resources */ = {isa = PBXBuildFile; fileRef = 68078117193E388B0013727B /* crosshair.png */; };
 		688029771938A4FA008AD16F /* Wagon.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 688029751938A4FA008AD16F /* Wagon.cpp */; };
 		688029781938A4FA008AD16F /* Wagon.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 688029751938A4FA008AD16F /* Wagon.cpp */; };
 		6880297D1938AFEB008AD16F /* cnm.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6880297B1938AFEB008AD16F /* cnm.plist */; };
@@ -413,6 +415,7 @@
 		50EF629517ECD46A001EB2F8 /* Icon-100.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-100.png"; sourceTree = "<group>"; };
 		50EF62A017ECD613001EB2F8 /* Icon-29.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-29.png"; sourceTree = "<group>"; };
 		50EF62A117ECD613001EB2F8 /* Icon-50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-50.png"; sourceTree = "<group>"; };
+		68078117193E388B0013727B /* crosshair.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = crosshair.png; sourceTree = "<group>"; };
 		688029751938A4FA008AD16F /* Wagon.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Wagon.cpp; path = ../Classes/Wagon.cpp; sourceTree = "<group>"; };
 		688029761938A4FA008AD16F /* Wagon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Wagon.h; path = ../Classes/Wagon.h; sourceTree = "<group>"; };
 		6880297B1938AFEB008AD16F /* cnm.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = cnm.plist; sourceTree = "<group>"; };
@@ -768,6 +771,7 @@
 		78C7DDAA14EBA5050085D0C2 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				68078117193E388B0013727B /* crosshair.png */,
 				BBA41A26193E062700557287 /* boy.png */,
 				BBA41A27193E062700557287 /* girl.png */,
 				BBA41A1F193DCDA700557287 /* mech.plist */,
@@ -1080,6 +1084,7 @@
 				850C86D61935D1EE0040A5EE /* mainscreen_bk.jpg in Resources */,
 				BBA41A1D193DBFC900557287 /* rock.plist in Resources */,
 				85111BB4192F4E3C00C8D3C8 /* CloseSelected.png in Resources */,
+				68078118193E388B0013727B /* crosshair.png in Resources */,
 				50EF629617ECD46A001EB2F8 /* Icon-40.png in Resources */,
 				85111BA9192F4DBE00C8D3C8 /* f1.png in Resources */,
 				85E8A2F819382D0A00B0B650 /* wagon_item_0.png in Resources */,
@@ -1141,6 +1146,7 @@
 				68BBD899192462D7001F9F73 /* test2.png in Resources */,
 				68BBD8AE192462DE001F9F73 /* CloseNormal.png in Resources */,
 				503AE0F817EB97AB00D1A890 /* Icon.icns in Resources */,
+				68078119193E388B0013727B /* crosshair.png in Resources */,
 				688029831938B5C1008AD16F /* aimerback.png in Resources */,
 				850C86D51935D1EE0040A5EE /* mainscreen_logo.png in Resources */,
 				68BBD895192462D7001F9F73 /* masked.fsh in Resources */,
