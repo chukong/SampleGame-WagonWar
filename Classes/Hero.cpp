@@ -37,51 +37,58 @@ bool Hero::init(Side side, Body body, Wagon wagon, bool isfacetoright)
     
     _wagonPoint = Node::create();
     _wagonPoint->setPosition(_heroConfig.wagonConfig.offsetx, _heroConfig.wagonConfig.offsety);
-    log("_wagonPoint.x ==%f,  _wagonPoint.y ==%f",_wagonPoint->getPositionX(),_wagonPoint->getPositionY());
     this->addChild(_wagonPoint);
-    
-    if (_heroConfig.body == BOY)
-    {
-        if (_heroConfig.isfacetoright) {
-            _wagonPoint->setScaleX(-1);
-        }
-    }
-    else
-    {
-        if (_heroConfig.isfacetoright) {
-            _wagonPoint->setScaleX(-1);
-        }
-    }
     
     switch (_heroConfig.wagon) {
         case MECH:
         {
             _wagonASprite = Sprite::createWithSpriteFrameName("mechidle01.png");
             _wagonBSprite = Sprite::createWithSpriteFrameName("mechgunidle01.png");//front
-            _wagonPoint->addChild(_wagonASprite);
-            _wagonPoint->addChild(_wagonBSprite);
+            _wagonPoint->addChild(_wagonASprite,1);
+            _wagonPoint->addChild(_wagonBSprite,3);
         }
             break;
         case HORSEY:
         {
             _wagonASprite = Sprite::createWithSpriteFrameName("cnm_idle01.png");
-            _wagonPoint->addChild(_wagonASprite);
+            _wagonPoint->addChild(_wagonASprite,1);
         }
             break;
         case ROCK:
         {
             _wagonASprite = Sprite::createWithSpriteFrameName("rockidle01.png");
-            _wagonPoint->addChild(_wagonASprite);
+            _wagonPoint->addChild(_wagonASprite,3);
         }
             break;
         case TANK:
         {
             _wagonASprite = Sprite::createWithSpriteFrameName("tankidle01.png");
-            _wagonPoint->addChild(_wagonASprite);
+            _wagonPoint->addChild(_wagonASprite,3);
         }
             break;
         default:
             break;
+    }
+    
+    if (_heroConfig.body == BOY)
+    {
+        if (_heroConfig.isfacetoright) {
+            _wagonPoint->setScaleX(-1);
+        }
+        
+        _bodySprite = Sprite::create("boy.png");
+        _bodySprite->setPosition(_wagonASprite->getPosition()+ Point(30,30));
+        _wagonPoint->addChild(_bodySprite,2);
+    }
+    else
+    {
+        if (_heroConfig.isfacetoright) {
+            _wagonPoint->setScaleX(-1);
+        }
+        
+        _bodySprite = Sprite::create("girl.png");
+        _bodySprite->setPosition(_wagonASprite->getPosition()+ Point(30,30));
+        _wagonPoint->addChild(_bodySprite,2);
     }
     
     radius = 20;
