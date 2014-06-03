@@ -47,6 +47,23 @@ const int WAGONSELECTTAG = 777;
 const int MAINLAYERTAG = 888;
 const int NOTOUCHTAG = 999;
 
+typedef struct wagonConfig
+{
+    int hp;
+    float speed;
+    int attack;
+    int upperlimit;
+    int lowerlimit;
+    int expsize;
+}WagonConfig;
+
+const WagonConfig g_wagonConfig[4]=
+{
+    {1000,0.4,250,0,-90,45},//horsey
+    {1000,0.4,250,0,-90,45},//tank
+    {1000,0.4,250,0,-90,45},//rock
+    {1000,0.4,250,0,-90,45},//mech
+};
 
 class GameConfig
 {
@@ -70,7 +87,6 @@ public:
     
     std::vector<uint8_t> match_data;
     std::string match_string;
-    
 };
 
 extern GameConfig g_gameConfig;

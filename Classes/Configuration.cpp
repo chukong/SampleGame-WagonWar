@@ -18,6 +18,7 @@ void GameConfig::lazyInit()
     initAnimation();
 }
 
+
 void GameConfig::saveConfig()
 {
     
@@ -95,6 +96,7 @@ void GameConfig::initAnimation()
         sprintf(text, "tankmove0%d.png",i);
         tank_move->addSpriteFrame(SpriteFrameCache::getInstance()->getSpriteFrameByName(text));
     }
+
     AnimationCache::getInstance()->addAnimation(tank_move,g_gameAnimation.tank_move);
     
     auto tank_shoot = Animation::create();

@@ -158,7 +158,6 @@ void GameScene::endShoot()
         value.AddMember("tick",_tick,allocator);
         value.AddMember("action", "stop shoot", allocator);
         _myturn["actions"].PushBack(value, allocator);
-        GPGSManager::TakeTurn(false, false);
     }
 }
 void GameScene::randomWind()
@@ -201,24 +200,24 @@ void GameScene::movePlayer(float x)
         printMyTurn();
     }
     //TODO: replace with proper get current player
-    TestNode* p = getCurrentPlayer();
+    Hero* p = getCurrentPlayer();
     p->moveDelta.x = x;
     p->needFix = true;
 }
 
 void GameScene::initTests()
 {
-    auto p = TestNode::create();
-    p->setPosition(500,800);
-    p->setLastPos(Point(500,800));
-    getPlayerLayer()->addChild(p);
+    auto p_me = Hero::create();
+    p_me->setTag(TAG_MYSELF);
+    p_me->setPosition(500,800);
+    p_me->setLastPos(Point(500,800));
+    getPlayerLayer()->addChild(p_me);
     
-    
-    auto p2 = TestNode::create();
-    p2->setPosition(800,800);
-    p2->setLastPos(Point(800,800));
-    getPlayerLayer()->addChild(p2);
-    
+    auto p_other = Hero::create();
+    p_other->setTag(TAG_OTHER);
+    p_other->setPosition(800,800);
+    p_other->setLastPos(Point(800,800));
+    getPlayerLayer()->addChild(p_other);
 
 }
 void GameScene::initExplosionMasks()
@@ -317,10 +316,10 @@ Bullet* GameScene::addBullet(BulletTypes type, cocos2d::Point pos, cocos2d::Poin
     _bulletLayer->addChild(b);
     return b;
 }
-TestNode* GameScene::getCurrentPlayer()
+Hero* GameScene::getCurrentPlayer()
 {
-    auto player = _PlayerLayer->getChildren().front();
-    return dynamic_cast<TestNode*>(player);
+    auto player = _PlayerLayer->getChildByTag(TAG_MYSELF);
+    return dynamic_cast<Hero*>(player);
 }
 void GameScene::buildMyTurn()
 {
@@ -374,7 +373,7 @@ void GameScene::explode(Bullet *bullet)
     //check to see if player got caught in the blast
     for(Node* player : _PlayerLayer->getChildren())
     {
-        TestNode *p = dynamic_cast<TestNode*>(player);
+        Hero *p = dynamic_cast<Hero*>(player);
         Point ppos(p->getPosition());
         float dist = ppos.getDistance(pos);
         if(dist< exRad + p->radius)
@@ -390,6 +389,7 @@ void GameScene::explode(Bullet *bullet)
             p->setLastPos(mid);
             
             //TODO: player should take damage
+            
         }
     }
 }
@@ -398,7 +398,7 @@ void GameScene::playback(std::string json)
     _replay.Parse<rapidjson::kParseDefaultFlags>(json.c_str());
     _tick = 0;
     _playback = true;
-    //TODO: need to disable UI layer touch
+
     _eventDispatcher->dispatchCustomEvent("touch off");
     
 
@@ -491,7 +491,7 @@ void GameScene::update(float dt)
             //check if we are colliding with a player
             for(Node *player : _PlayerLayer->getChildren())
             {
-                TestNode* p = dynamic_cast<TestNode*>(player);
+                Hero* p = dynamic_cast<Hero*>(player);
                 if(b->getPosition().getDistance(p->getPosition()) < bulletRadius + p->radius)
                 {
                     explode(b);
@@ -544,7 +544,7 @@ void GameScene::update(float dt)
     {
         for(Node* player : _PlayerLayer->getChildren())
         {
-            TestNode* p = dynamic_cast<TestNode*>(player);
+            Hero* p = dynamic_cast<Hero*>(player);
             if(p->airborn || p->needFix || p->moveDelta.x)
             {
                 everythingSleep = false;
@@ -637,4 +637,17 @@ void GameScene::update(float dt)
         _tick = 0;
         log("play back finished");
     }
+}
+
+void GameScene::saveMatchData(bool win, bool loss)
+{
+    
+    rapidjson::StringBuffer strbuf;
+    rapidjson::Writer<rapidjson::StringBuffer> writer(strbuf);
+    _myturn.Accept(writer);
+    
+    g_gameConfig.match_string = strbuf.GetString();
+    log("setup_player2_matchdata...%s",g_gameConfig.match_string.c_str());
+
+    GPGSManager::TakeTurn(win, loss);
 }

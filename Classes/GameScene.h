@@ -13,8 +13,12 @@
 #include "Level.h"
 #include "bullet.h"
 #include "Helper.h"
+#include "Hero.h"
 #include "json/rapidjson.h"
 #include "json/document.h"
+
+const int TAG_MYSELF = 502;
+const int TAG_OTHER = 503;
 
 class GameScene : public cocos2d::ParallaxNode
 {
@@ -46,7 +50,7 @@ public:
     void initTests();
     void startShoot();
     void endShoot();
-    TestNode *getCurrentPlayer();
+    Hero *getCurrentPlayer();
     Bullet* addBullet(BulletTypes type, cocos2d::Point pos, cocos2d::Point vector);
     cocos2d::Point offset;
     
@@ -57,6 +61,7 @@ public:
     virtual void onEnter();
     void randomWind();
     void playback(std::string json);
+    void saveMatchData(bool win, bool lost);
 protected:
     void printMyTurn();
     rapidjson::Document _replay;
