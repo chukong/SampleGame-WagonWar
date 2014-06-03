@@ -181,7 +181,7 @@ void GameScene::endShoot()
         
     }
     log("angle %f", angle);
-    auto b = addBullet(defaultB, Point(gunlocation.tx, gunlocation.ty)+Point(offset/2)-getPosition(), Point(tick/60.0f*20*cosf(CC_DEGREES_TO_RADIANS(angle)), tick/60.0f*20*sinf(CC_DEGREES_TO_RADIANS(angle))));
+    auto b = addBullet(defaultB, Point(gunlocation.tx, gunlocation.ty)+Point(offset/2)-getPosition(), Point(tick/60.0f*20*cosf(CC_DEGREES_TO_RADIANS(-angle)), tick/60.0f*20*sinf(CC_DEGREES_TO_RADIANS(-angle))));
         _following = dynamic_cast<Node*>(b);
 }
 void GameScene::randomWind()
