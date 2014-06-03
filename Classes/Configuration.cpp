@@ -3,6 +3,8 @@
 #include "SimpleAudioEngine.h"
 
 GameConfig g_gameConfig;
+gameAnimation g_gameanimations;
+
 
 const std::string GameConfig::defaultFontName = "Arial";
 const int GameConfig::defaultFontSize = 30;
@@ -44,7 +46,7 @@ void GameConfig::initAnimation()
         sprintf(text, "cnm_hit0%d.png",i);
         cnm_hit->addSpriteFrame(CCSpriteFrameCache::getInstance()->getSpriteFrameByName(text));
     }
-	AnimationCache::getInstance()->addAnimation(cnm_hit,"cnm_hit");
+	AnimationCache::getInstance()->addAnimation(cnm_hit, g_gameanimations.cnm_hit);
     
     
 }

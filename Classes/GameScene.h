@@ -16,6 +16,9 @@
 #include "json/rapidjson.h"
 #include "json/document.h"
 
+#define TAG_MYSELF = 502;
+#define TAG_OTHER = 503;
+
 class GameScene : public cocos2d::ParallaxNode
 {
 public:

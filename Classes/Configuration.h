@@ -19,6 +19,7 @@ typedef struct{
     const std::string cnm_shoot = "cnm_shoot";
     
 }gameAnimation;
+extern gameAnimation g_gameanimations;
 
 const int WAGONSELECTTAG = 777;
 const int MAINLAYERTAG = 888;
@@ -47,9 +48,7 @@ public:
     
     std::vector<uint8_t> match_data;
     std::string match_string;
-    
-    gameAnimation _animation;
-    
+        
 };
 
 extern GameConfig g_gameConfig;

@@ -396,7 +396,7 @@ void GameScene::playback(std::string json)
     _replay.Parse<rapidjson::kParseDefaultFlags>(json.c_str());
     _tick = 0;
     _playback = true;
-    //TODO: need to disable UI layer touch
+
     _eventDispatcher->dispatchCustomEvent("touch off");
     
 
