@@ -233,8 +233,22 @@ void WagonSelect::setup_player1_mactchdata()
     player1.AddMember("wagon", _wagon, allocator);
     player1.AddMember("male", _isBoy, allocator);
     player1.AddMember("hp", 1000, allocator);
+    player1.AddMember("posx", 520, allocator);
+    player1.AddMember("posy", 800, allocator);
+    player1.AddMember("shootangle", "", allocator);
+    player1.AddMember("facing", "right", allocator);
     doc.AddMember("player1", player1, allocator);
     
+    srand((unsigned)time(NULL));
+    srand(rand());
+    doc.AddMember("windx", CCRANDOM_MINUS1_1()*0.025, allocator);
+    srand(rand());
+    doc.AddMember("windy", CCRANDOM_MINUS1_1()*0.025, allocator);
+    rapidjson::Value array(rapidjson::kArrayType);
+    doc.AddMember("explosions", array, allocator);
+    rapidjson::Value actions(rapidjson::kArrayType);
+    doc.AddMember("actions", actions, allocator);
+
     rapidjson::StringBuffer strbuf;
     rapidjson::Writer<rapidjson::StringBuffer> writer(strbuf);
     doc.Accept(writer);
@@ -253,6 +267,10 @@ void WagonSelect::setup_player2_mactchdata()
     player2.AddMember("wagon", _wagon, allocator);
     player2.AddMember("male", _isBoy, allocator);
     player2.AddMember("hp", 1000, allocator);
+    player2.AddMember("posx", 1000, allocator);
+    player2.AddMember("posy", 800, allocator);
+    player2.AddMember("shootangle", "", allocator);
+    player2.AddMember("facing", "left", allocator);
     doc.AddMember("player2", player2, allocator);
     
     rapidjson::StringBuffer strbuf;

@@ -71,12 +71,7 @@ bool GameScene::init()
     //layer for effects
 
     
-    srand((unsigned)time(NULL));
-    srand(rand());
-    srand(rand());
-    //default wind
-    this->setWind(Point(CCRANDOM_MINUS1_1()*0.025,CCRANDOM_MINUS1_1()*0.025));
-    log("Wind is : %f, %f", getWind().x, getWind().y);
+
     //default gravity
     this->setGravity(Point(0,-0.1));
     this->scheduleUpdate();
@@ -84,16 +79,10 @@ bool GameScene::init()
     //init explosion masks
     this->initExplosionMasks();
     
-    
-    //init tests
-    this->initTests();
-    
     //init listeners
     initListeners();
     
-    
-    //build my turn json
-    buildMyTurn();
+
     return true;
 }
 void GameScene::initListeners()
@@ -134,6 +123,10 @@ void GameScene::startShoot()
         value.AddMember("action", "start shoot", allocator);
         _myturn["actions"].PushBack(value, allocator);
     }
+    else
+    {
+        log("playback shoot start");
+    }
 }
 void GameScene::endShoot()
 {
@@ -142,11 +135,25 @@ void GameScene::endShoot()
     auto p = getCurrentPlayer();
     auto offset = getMovableSize();
     auto gunlocation = p->gunPoint->getNodeToWorldAffineTransform();
-    auto b = addBullet(defaultB, Point(gunlocation.tx, gunlocation.ty)+Point(offset/2)-getPosition(), Point(tick/60.0f*2, tick/60.0f*2));
-    _following = dynamic_cast<Node*>(b);
+    float angle;
+
     if(_playback)
     {
-        //this is the last action
+        log("playback shoot end");
+        if(p->getTag() == TAG_MYSELF)//player 1
+        {
+            angle = _replay["player1"]["shootangle"].GetDouble();
+            p->aim->setAngle(angle-p->_wagonPoint->getRotation());
+        }
+        else{
+            angle = _replay["player2"]["shootangle"].GetDouble();
+            p->aim->setAngle(angle-p->_wagonPoint->getRotation());
+        }
+        
+        _myturn["player1"]["posx"].SetDouble(_PlayerLayer->getChildByTag(TAG_MYSELF)->getPositionX());
+        _myturn["player1"]["posy"].SetDouble(_PlayerLayer->getChildByTag(TAG_MYSELF)->getPositionY());
+        _myturn["player2"]["posx"].SetDouble(_PlayerLayer->getChildByTag(TAG_OTHER)->getPositionX());
+        _myturn["player2"]["posy"].SetDouble(_PlayerLayer->getChildByTag(TAG_OTHER)->getPositionY());
         _waitToClear = true;
     }
     else
@@ -154,9 +161,28 @@ void GameScene::endShoot()
         rapidjson::Document::AllocatorType& allocator = _myturn.GetAllocator();
         rapidjson::Value value(rapidjson::kObjectType);
         value.AddMember("tick",_tick,allocator);
-        value.AddMember("action", "stop shoot", allocator);
+        value.AddMember("action", "end shoot", allocator);
+        angle = p->aim->getWorldAngle();
+        if(p->getTag() == TAG_MYSELF)//player 1
+        {
+            _myturn["player1"]["shootangle"].SetDouble(angle);
+
+            //p->aim->setAngle(angle-p->_wagonPoint->getRotation());
+        }
+        else{
+            _myturn["player2"]["shootangle"].SetDouble(angle);
+            //p->aim->setAngle(angle-p->_wagonPoint->getRotation());
+        }
+
         _myturn["actions"].PushBack(value, allocator);
+        _eventDispatcher->dispatchCustomEvent("touch off");
+        _waitToClear = true;
+        
+        
     }
+    log("angle %f", angle);
+    auto b = addBullet(defaultB, Point(gunlocation.tx, gunlocation.ty)+Point(offset/2)-getPosition(), Point(tick/60.0f*20*cosf(CC_DEGREES_TO_RADIANS(angle)), tick/60.0f*20*sinf(CC_DEGREES_TO_RADIANS(angle))));
+        _following = dynamic_cast<Node*>(b);
 }
 void GameScene::randomWind()
 {
@@ -169,10 +195,15 @@ void GameScene::onEnter()
     _eventDispatcher->dispatchCustomEvent("wind", &_wind);
     
     //here is some json
-    std::string data = "{\"wind\":{\"x\":-0.01, \"y\":-0.01},\"explosions\":[{\"x\":722.227,\"y\":479.584},{\"x\":741.922,\"y\":435.848},{\"x\":648.444,\"y\":500.432}],\"actions\":[{\"tick\":30,\"action\":\"go right\"},{\"tick\":200,\"action\":\"stop\"},{\"tick\":300,\"action\":\"start shoot\"},{\"tick\":310,\"action\":\"end shoot\"}]}";
-    //std::string data = "{\"explosions\":[{\"x\":722.227,\"y\":479.584},{\"x\":741.922,\"y\":435.848},{\"x\":648.444,\"y\":500.432},{\"x\":755.788,\"y\":394.456}],\"actions\":[{\"tick\":405,\"action\":\"go left\"},{\"tick\":439,\"action\":\"stop\"},{\"tick\":471,\"action\":\"go right\"},{\"tick\":488,\"action\":\"stop\"},{\"tick\":505,\"action\":\"go left\"},{\"tick\":541,\"action\":\"stop\"},{\"tick\":563,\"action\":\"go right\"},{\"tick\":567,\"action\":\"stop\"}]}";
-    //log("is array? %d", doc["actions"].IsArray());
-    playback(data);
+    std::string player2turn2 = "{\"turn\":1,\"player1\":{\"shootangle\":\"\",\"wagon\":0,\"male\":true,\"hp\":1000,\"posx\":520,\"posy\":800,\"facing\":\"right\"},\"player2\":{\"shootangle\":\"\",\"wagon\":1,\"male\":false,\"hp\":1000,\"posx\":1000,\"posy\":800,\"facing\":\"left\"},\"actions\":[],\"explosions\":[],\"windx\":0.01,\"windy\":0.01}";
+    std::string player1turn3 = "{\"turn\":2,\"player1\":{\"shootangle\":\"\",\"wagon\":0,\"male\":true,\"hp\":1000,\"posx\":520,\"posy\":800,\"facing\":\"right\"},\"player2\":{\"shootangle\":-179.172,\"wagon\":1,\"male\":false,\"hp\":1000,\"posx\":1000,\"posy\":800,\"facing\":\"left\"},\"actions\":[{\"tick\":139,\"action\":\"go left\"},{\"tick\":154,\"action\":\"stop\"},{\"tick\":172,\"action\":\"go right\"},{\"tick\":489,\"action\":\"stop\"},{\"tick\":511,\"action\":\"go left\"},{\"tick\":513,\"action\":\"stop\"},{\"tick\":590,\"action\":\"start shoot\"},{\"tick\":609,\"action\":\"end shoot\"}],\"explosions\":[],\"windx\":0.01,\"windy\":0.01}";
+    std::string player2turn4 = "{\"turn\":3,\"player1\":{\"shootangle\":-45,\"wagon\":0,\"male\":true,\"hp\":1000,\"posx\":546.472,\"posy\":573.07,\"facing\":\"right\"},\"player2\":{\"shootangle\":-179.172,\"wagon\":1,\"male\":false,\"hp\":1000,\"posx\":1084.18,\"posy\":592.764,\"facing\":\"left\"},\"actions\":[{\"tick\":270,\"action\":\"go right\"},{\"tick\":637,\"action\":\"stop\"},{\"tick\":670,\"action\":\"start shoot\"},{\"tick\":696,\"action\":\"end shoot\"}],\"explosions\":[{\"x\":676.935,\"y\":485.313}],\"windx\":0.01,\"windy\":0.01}";
+    std::string player1turn5 = "{\"turn\":4,\"player1\":{\"shootangle\":-45,\"wagon\":0,\"male\":true,\"hp\":600,\"posx\":677.011,\"posy\":459.464,\"facing\":\"right\"},\"player2\":{\"shootangle\":-180.601,\"wagon\":1,\"male\":false,\"hp\":500,\"posx\":1084.19,\"posy\":592.674,\"facing\":\"left\"},\"actions\":[{\"tick\":42,\"action\":\"go left\"},{\"tick\":181,\"action\":\"stop\"},{\"tick\":290,\"action\":\"start shoot\"},{\"tick\":311,\"action\":\"end shoot\"}],\"explosions\":[{\"x\":676.935,\"y\":485.313},{\"x\":806.245,\"y\":436.808}],\"windx\":0.01,\"windy\":0.01}";
+    this->initTests();
+    playback(player1turn5);
+    
+    buildMyTurn();
+
 }
 void GameScene::movePlayer(float x)
 {
@@ -217,19 +248,16 @@ void GameScene::movePlayer(float x)
 
 void GameScene::initTests()
 {
-    auto p_me = Hero::create(Myself,BOY,ROCK,false);
-    p_me->setTag(TAG_MYSELF);
-    p_me->setPosition(520,800);
-    p_me->setLastPos(Point(520,800));
-    p_me->stop();
-    getPlayerLayer()->addChild(p_me);
+    p1 = Hero::create(Myself,BOY,ROCK,false);
+    p1->setTag(TAG_MYSELF);
+    p1->stop();
+    getPlayerLayer()->addChild(p1);
     
-    auto p_other = Hero::create(Other,GIRL,MECH,false);
-    p_other->setTag(TAG_OTHER);
-    p_other->setPosition(800,800);
-    p_other->setLastPos(Point(800,800));
-    p_other->stop();
-    getPlayerLayer()->addChild(p_other);
+    p2 = Hero::create(Other,GIRL,MECH,false);
+    p2->setTag(TAG_OTHER);
+
+    p2->stop();
+    getPlayerLayer()->addChild(p2);
 
 }
 void GameScene::initExplosionMasks()
@@ -330,20 +358,23 @@ Bullet* GameScene::addBullet(BulletTypes type, cocos2d::Point pos, cocos2d::Poin
 }
 Hero* GameScene::getCurrentPlayer()
 {
-    auto player = _PlayerLayer->getChildByTag(_playback?TAG_OTHER:TAG_MYSELF);
-    return dynamic_cast<Hero*>(player);
+    auto turn = _replay["turn"].GetInt();
+    if(turn%2)
+    {
+        auto player = _PlayerLayer->getChildByTag(!_playback?TAG_OTHER:TAG_MYSELF);
+        return dynamic_cast<Hero*>(player);
+    }
+    else
+    {
+        auto player = _PlayerLayer->getChildByTag(_playback?TAG_OTHER:TAG_MYSELF);
+        return dynamic_cast<Hero*>(player);
+    }
+    
+
 }
 void GameScene::buildMyTurn()
 {
-    _myturn.SetObject();
-    rapidjson::Value array(rapidjson::kArrayType);
-    rapidjson::Document::AllocatorType& allocator = _myturn.GetAllocator();
-    _myturn.AddMember("explosions", array, allocator);
-    
-    rapidjson::Value actions(rapidjson::kArrayType);
-    _myturn.AddMember("actions", actions, allocator);
-
-    
+    _myturn.Parse<rapidjson::kParseDefaultFlags>(tempjson.c_str());
     printMyTurn();
 }
 void GameScene::printMyTurn()
@@ -358,7 +389,7 @@ void GameScene::explode(Bullet *bullet)
     _following = nullptr;
     auto pos = bullet->getPosition();
     
-    if(!_playback)
+    if(_playback)
     {
         rapidjson::Value object(rapidjson::kObjectType);
         rapidjson::Document::AllocatorType& allocator = _myturn.GetAllocator();
@@ -401,13 +432,61 @@ void GameScene::explode(Bullet *bullet)
             p->setLastPos(mid);
             
             //TODO: player should take damage
-            p->hurt(250);
+            if(_playback)
+            {
+                if(p->getTag() == TAG_MYSELF)
+                {
+                    _myturn["player1"]["hp"].SetInt(p->hurt(250));
+                }
+                else
+                {
+                    _myturn["player2"]["hp"].SetInt(p->hurt(250));
+                }
+            }
+            else
+            {
+                p->hurt(250);
+            }
         }
     }
 }
 void GameScene::playback(std::string json)
 {
+    tempjson = json;
     _replay.Parse<rapidjson::kParseDefaultFlags>(json.c_str());
+    this->setWind(Point(_replay["windx"].GetDouble(),_replay["windy"].GetDouble()));
+    _eventDispatcher->dispatchCustomEvent("wind", &_wind);
+    log("Wind is : %f, %f", getWind().x, getWind().y);
+    p2->setPosition(_replay["player2"]["posx"].GetDouble(),_replay["player2"]["posy"].GetDouble());
+    p2->setLastPos(p2->getPosition());
+    p1->setPosition(_replay["player1"]["posx"].GetDouble(),_replay["player1"]["posy"].GetDouble());
+    p1->setLastPos(p1->getPosition());
+    
+    p1->setLife(_replay["player1"]["hp"].GetInt());
+    p2->setLife(_replay["player2"]["hp"].GetInt());
+    
+    if(!strcmp(_replay["player1"]["facing"].GetString(), "left"))
+    {
+        p1->flipLeft();
+    }
+    else
+    {
+        p1->flipRight();
+    }
+    if(!strcmp(_replay["player2"]["facing"].GetString(), "left"))
+    {
+        p2->flipLeft();
+    }
+    else
+    {
+        p2->flipRight();
+    }
+    if(_replay["turn"].GetInt() == 1)
+    {
+        //player 1 chose a wagon, player2 just chose a wagon and entered the game
+        //now its player 2's turn to move
+        return;
+    }
     _tick = 0;
     _playback = true;
 
@@ -416,7 +495,7 @@ void GameScene::playback(std::string json)
 
     
     //copy all explosions to my turn
-    if(_replay.HasMember("explosions"))
+    if(_replay.HasMember("explosions") && _replay["explosions"].Size())
     {
         //recreate those explosions
         _level->getRT()->onBegin();
@@ -432,14 +511,6 @@ void GameScene::playback(std::string json)
             
         }
         _level->getRT()->onEnd();
-        _myturn["explosions"] = _replay["explosions"];
-    }
-    //set wind according to data
-    if(_replay["wind"].IsObject())
-    {
-        auto &jsonWind = _replay["wind"];
-        Point wind(jsonWind["x"].GetDouble(), jsonWind["y"].GetDouble());
-        setWind(wind);
     }
     
     
@@ -651,11 +722,20 @@ void GameScene::update(float dt)
     
     if(_waitToClear && everythingSleep)
     {
-        _eventDispatcher->dispatchCustomEvent("touch on");
-        _waitToClear = false;
-        _playback = false;
-        _tick = 0;
-        log("play back finished");
+        if(_playback)
+        {
+            _eventDispatcher->dispatchCustomEvent("touch on");
+            _waitToClear = false;
+            _playback = false;
+            _tick = 0;
+            log("play back finished");
+            //need to delete actions
+            _myturn["actions"].Clear();
+        }
+        else if(!over){
+            saveMatchData(win, lost);
+            over = true;
+        }
     }
 }
 
@@ -676,7 +756,8 @@ void GameScene::playerdead(EventCustom* event)
 
 void GameScene::saveMatchData(bool win, bool loss)
 {
-    
+    _myturn["turn"].SetInt(_myturn["turn"].GetInt()+1);
+    printMyTurn();
     rapidjson::StringBuffer strbuf;
     rapidjson::Writer<rapidjson::StringBuffer> writer(strbuf);
     _myturn.Accept(writer);
@@ -684,5 +765,5 @@ void GameScene::saveMatchData(bool win, bool loss)
     g_gameConfig.match_string = strbuf.GetString();
     log("setup_player2_matchdata...%s",g_gameConfig.match_string.c_str());
 
-    GPGSManager::TakeTurn(win, loss);
+    //GPGSManager::TakeTurn(win, loss);
 }
