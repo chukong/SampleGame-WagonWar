@@ -217,6 +217,8 @@
 		BBA41A1E193DBFC900557287 /* rock.png in Resources */ = {isa = PBXBuildFile; fileRef = BBA41A1C193DBFC900557287 /* rock.png */; };
 		BBA41A21193DCDA700557287 /* mech.plist in Resources */ = {isa = PBXBuildFile; fileRef = BBA41A1F193DCDA700557287 /* mech.plist */; };
 		BBA41A22193DCDA700557287 /* mech.png in Resources */ = {isa = PBXBuildFile; fileRef = BBA41A20193DCDA700557287 /* mech.png */; };
+		BBA41A28193E062700557287 /* boy.png in Resources */ = {isa = PBXBuildFile; fileRef = BBA41A26193E062700557287 /* boy.png */; };
+		BBA41A29193E062700557287 /* girl.png in Resources */ = {isa = PBXBuildFile; fileRef = BBA41A27193E062700557287 /* girl.png */; };
 		BF171245129291EC00B8313A /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DB012928DE900B8313A /* OpenGLES.framework */; };
 		BF1712471292920000B8313A /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DB412928DE900B8313A /* libz.dylib */; };
 		BF1C47F01293687400B63C5D /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF1C47EA1293683800B63C5D /* QuartzCore.framework */; };
@@ -518,6 +520,8 @@
 		BBA41A1C193DBFC900557287 /* rock.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = rock.png; sourceTree = "<group>"; };
 		BBA41A1F193DCDA700557287 /* mech.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = mech.plist; sourceTree = "<group>"; };
 		BBA41A20193DCDA700557287 /* mech.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mech.png; sourceTree = "<group>"; };
+		BBA41A26193E062700557287 /* boy.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = boy.png; sourceTree = "<group>"; };
+		BBA41A27193E062700557287 /* girl.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = girl.png; sourceTree = "<group>"; };
 		BF170DB012928DE900B8313A /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		BF170DB412928DE900B8313A /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		BF1C47EA1293683800B63C5D /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -764,6 +768,8 @@
 		78C7DDAA14EBA5050085D0C2 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				BBA41A26193E062700557287 /* boy.png */,
+				BBA41A27193E062700557287 /* girl.png */,
 				BBA41A1F193DCDA700557287 /* mech.plist */,
 				BBA41A20193DCDA700557287 /* mech.png */,
 				BBA41A1B193DBFC900557287 /* rock.plist */,
@@ -1012,6 +1018,7 @@
 			files = (
 				85E8A2EA19382D0A00B0B650 /* btn_start_1.png in Resources */,
 				688029821938B5C1008AD16F /* aimerback.png in Resources */,
+				BBA41A29193E062700557287 /* girl.png in Resources */,
 				85E8A2DA19382D0A00B0B650 /* btn_leaderboard_1.png in Resources */,
 				85F84670192F77BE00DAD41B /* GooglePlus.bundle in Resources */,
 				85E8A2E019382D0A00B0B650 /* btn_quickmatch_0.png in Resources */,
@@ -1046,6 +1053,7 @@
 				85E8A2F619382D0A00B0B650 /* wagon_flash.png in Resources */,
 				85E8A307193865A500B0B650 /* btn_start_2.png in Resources */,
 				85111BAF192F4DBE00C8D3C8 /* windArrow.png in Resources */,
+				BBA41A28193E062700557287 /* boy.png in Resources */,
 				6880298C1938B8B7008AD16F /* aimergreen.png in Resources */,
 				85E8A2E219382D0A00B0B650 /* btn_quickmatch_1.png in Resources */,
 				85E8A2E419382D0A00B0B650 /* btn_ready_0.png in Resources */,

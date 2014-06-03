@@ -51,10 +51,16 @@ private:
     
     cocos2d::MenuItemImage* _boy_memuitem;
     cocos2d::MenuItemImage* _girl_memuitem;
+    
     cocos2d::MenuItemImage* _wagon1_menuitem;
     cocos2d::MenuItemImage* _wagon2_menuitem;
     cocos2d::MenuItemImage* _wagon3_menuitem;
     cocos2d::MenuItemImage* _wagon4_menuitem;
+    
+    cocos2d::Sprite* _dude1;
+    cocos2d::Sprite* _dude2;
+    cocos2d::Sprite* _dude3;
+    cocos2d::Sprite* _dude4;
     
     cocos2d::Sprite* flash;
     
