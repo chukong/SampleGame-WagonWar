@@ -135,7 +135,7 @@ void GameScene::startShoot()
 void GameScene::endShoot()
 {
     int tick = _tick - _tickPre;
-    log("tick %d", tick);
+    //log("tick %d", tick);
     auto p = getCurrentPlayer();
     auto offset = getMovableSize();
     auto gunlocation = p->gunPoint->getNodeToWorldAffineTransform();
