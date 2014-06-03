@@ -45,4 +45,26 @@ protected:
     
 };
 
+class PowerIndicator : public cocos2d::Node
+{
+public:
+    CREATE_FUNC(PowerIndicator);
+    virtual bool init();
+    
+protected:
+    cocos2d::Sprite* fire;
+    cocos2d::Sprite* powerbar;
+    cocos2d::Sprite* innerpower;
+    
+    bool _powerFlag = false;
+    int _tick = 0;
+    int _tickPre;
+    //timeval _now;
+    
+    void update(float delta);
+    
+    void increasePower();
+    void dismissPower();
+};
+
 #endif /* defined(__TankMultiplayer__GameUI__) */
