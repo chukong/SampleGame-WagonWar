@@ -14,14 +14,16 @@
 class Aimer : public cocos2d::Node
 {
 public:
-    CREATE_FUNC(Aimer);
-    virtual bool init();
+    
+    static Aimer* create(bool isRight, float upper, float lower);
+
+    virtual bool init(bool isRight, float upper, float lower);
     float upperLimit;
     float lowerLimit;
     Aimer():upperLimit(-45), lowerLimit(-10){};
     void setAngle(float a);
     float getWorldAngle();
-
+    bool reversed;
 protected:
     cocos2d::Sprite* _back;
     cocos2d::Sprite* _pointer;

@@ -55,14 +55,16 @@ typedef struct wagonConfig
     int upperlimit;
     int lowerlimit;
     int expsize;
+    int offsetx;
+    int offsety;
 }WagonConfig;
 
 const WagonConfig g_wagonConfig[4]=
 {
-    {1000,0.4,250,0,-90,45},//horsey
-    {1000,0.4,250,0,-90,45},//tank
-    {1000,0.4,250,0,-90,45},//rock
-    {1000,0.4,250,0,-90,45},//mech
+    {1000,0.4,250,-90,0,45,0,22},//horsey
+    {1000,0.4,250,-90,0,45,0,22},//tank
+    {1000,0.4,250,-90,0,45,0,33},//rock
+    {1000,0.4,250,-90,0,45,0,22},//mech
 };
 
 class GameConfig
