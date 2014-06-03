@@ -340,4 +340,4 @@ void Hero::setLife(int life)
     _lasthp = life;
     log("..........%f",(float)_lasthp*100/(float)_heroConfig.wagonConfig.hp);
     hpBar->setPercent((float)_lasthp*100/(float)_heroConfig.wagonConfig.hp);
-ß}
+}

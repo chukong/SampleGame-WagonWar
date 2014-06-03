@@ -459,7 +459,9 @@ void GPGSManager::TakeTurn(const bool winning, const bool losing)
                                       response) {
                                    LOGI("Took turn");
                                    cocos2d::Director::getInstance()->getRunningScene()->getChildByTag(WAGONSELECTTAG)->removeChildByTag(NOTOUCHTAG);
-                                   cocos2d::Director::getInstance()->replaceScene(MainScreenScene::createScene());
+                                   cocos2d::Director::getInstance()->getEventDispatcher()->dispatchCustomEvent("returntoMenu");
+                                   ((NoTouchLayer*)(cocos2d::Director::getInstance()->getRunningScene()->getChildByTag(GAMESCENETAG)->getChildByTag(NOTOUCHTAG)))->setError("Success!");
+                                   //cocos2d::Director::getInstance()->replaceScene(MainScreenScene::createScene());
                                });
             break;
         case NEXT_PARTICIPANT_AUTOMATCH:
@@ -468,9 +470,11 @@ void GPGSManager::TakeTurn(const bool winning, const bool losing)
                                            [](
                                                   gpg::TurnBasedMultiplayerManager::TurnBasedMatchResponse const &
                                                   response) {
-                                               cocos2d::Director::getInstance()->getRunningScene()->getChildByTag(WAGONSELECTTAG)->removeChildByTag(NOTOUCHTAG);
                                                LOGI("Took turn");
-                                               cocos2d::Director::getInstance()->replaceScene(MainScreenScene::createScene());
+                                               cocos2d::Director::getInstance()->getRunningScene()->getChildByTag(WAGONSELECTTAG)->removeChildByTag(NOTOUCHTAG);
+                                               cocos2d::Director::getInstance()->getEventDispatcher()->dispatchCustomEvent("returntoMenu");
+                                               ((NoTouchLayer*)(cocos2d::Director::getInstance()->getRunningScene()->getChildByTag(GAMESCENETAG)->getChildByTag(NOTOUCHTAG)))->setError("Success!");
+//                                               cocos2d::Director::getInstance()->replaceScene(MainScreenScene::createScene());
                                            });
             break;
         case NEXT_PARTICIPANT_NONE:
