@@ -136,7 +136,7 @@
 		8589F77419237690009BDBCD /* Level.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8589F76919237690009BDBCD /* Level.cpp */; };
 		8589F77519237690009BDBCD /* MaskSprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8589F76B19237690009BDBCD /* MaskSprite.cpp */; };
 		8589F77619237690009BDBCD /* MaskSprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8589F76B19237690009BDBCD /* MaskSprite.cpp */; };
-		8589F77D19237DA1009BDBCD /* Player.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8589F77B19237DA1009BDBCD /* Player.cpp */; };
+		8589F77D19237DA1009BDBCD /* Hero.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8589F77B19237DA1009BDBCD /* Hero.cpp */; };
 		85AD5EDA19373BFC00E57DB2 /* WagonSelect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 85AD5ED819373BFC00E57DB2 /* WagonSelect.cpp */; };
 		85AD5EDB19373BFC00E57DB2 /* WagonSelect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 85AD5ED819373BFC00E57DB2 /* WagonSelect.cpp */; };
 		85E8A2CC19382D0A00B0B650 /* boy_0.png in Resources */ = {isa = PBXBuildFile; fileRef = 85E8A2B219382D0A00B0B650 /* boy_0.png */; };
@@ -451,8 +451,8 @@
 		8589F76A19237690009BDBCD /* Level.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Level.h; path = ../Classes/Level.h; sourceTree = "<group>"; };
 		8589F76B19237690009BDBCD /* MaskSprite.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MaskSprite.cpp; path = ../Classes/MaskSprite.cpp; sourceTree = "<group>"; };
 		8589F76C19237690009BDBCD /* MaskSprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MaskSprite.h; path = ../Classes/MaskSprite.h; sourceTree = "<group>"; };
-		8589F77B19237DA1009BDBCD /* Player.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Player.cpp; sourceTree = "<group>"; };
-		8589F77C19237DA1009BDBCD /* Player.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Player.h; sourceTree = "<group>"; };
+		8589F77B19237DA1009BDBCD /* Hero.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Hero.cpp; sourceTree = "<group>"; };
+		8589F77C19237DA1009BDBCD /* Hero.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Hero.h; sourceTree = "<group>"; };
 		85AD5ED819373BFC00E57DB2 /* WagonSelect.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = WagonSelect.cpp; path = ../Classes/WagonSelect.cpp; sourceTree = "<group>"; };
 		85AD5ED919373BFC00E57DB2 /* WagonSelect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WagonSelect.h; path = ../Classes/WagonSelect.h; sourceTree = "<group>"; };
 		85E8A2B219382D0A00B0B650 /* boy_0.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = boy_0.png; sourceTree = "<group>"; };
@@ -599,8 +599,8 @@
 				1AFAF8B416D35DE700DB1158 /* AppDelegate.h */,
 				1AFAF8B516D35DE700DB1158 /* HelloWorldScene.cpp */,
 				1AFAF8B616D35DE700DB1158 /* HelloWorldScene.h */,
-				8589F77B19237DA1009BDBCD /* Player.cpp */,
-				8589F77C19237DA1009BDBCD /* Player.h */,
+				8589F77B19237DA1009BDBCD /* Hero.cpp */,
+				8589F77C19237DA1009BDBCD /* Hero.h */,
 				85529F6E1925E55F0024FFEF /* LoadingScene.cpp */,
 				85529F6F1925E55F0024FFEF /* LoadingScene.h */,
 				85529F731925EAEA0024FFEF /* MainScreenScene.cpp */,
@@ -1123,7 +1123,7 @@
 				85529F751925EAEA0024FFEF /* MainScreenScene.cpp in Sources */,
 				857A84D319330A3C00A2041E /* LoadResourceLayer.cpp in Sources */,
 				8589F77519237690009BDBCD /* MaskSprite.cpp in Sources */,
-				8589F77D19237DA1009BDBCD /* Player.cpp in Sources */,
+				8589F77D19237DA1009BDBCD /* Hero.cpp in Sources */,
 				8589F77119237690009BDBCD /* Helper.cpp in Sources */,
 				857A84CF1932F3DE00A2041E /* Configuration.cpp in Sources */,
 				1AFAF8B716D35DE700DB1158 /* AppDelegate.cpp in Sources */,

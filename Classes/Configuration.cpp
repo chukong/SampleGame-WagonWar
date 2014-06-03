@@ -19,6 +19,7 @@ void GameConfig::lazyInit()
     initAnimation();
 }
 
+
 void GameConfig::saveConfig()
 {
     

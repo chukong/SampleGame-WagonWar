@@ -88,7 +88,7 @@ void CollisionCheckNode::checkCollision()
             //check if we are colliding with a player
             for(Node* player : _players->getChildren())
             {
-                TestNode* p = dynamic_cast<TestNode*>(player);
+                Hero* p = dynamic_cast<Hero*>(player);
                 if(b->getPosition().getDistance(p->getPosition())< b->getConfig()->radius + p->radius)
                 {
                     b->explode();
@@ -136,7 +136,7 @@ void CollisionCheckNode::checkCollision()
     
     for(Node* player : _players->getChildren())
     {
-        TestNode* p = dynamic_cast<TestNode*>(player);
+        Hero* p = dynamic_cast<Hero*>(player);
         if(p->airborn)
         {
             Point pos(p->getPosition()+offset);
@@ -157,32 +157,4 @@ void CollisionCheckNode::checkCollision()
             free(buffer);
         }
     }
-}
-
-
-TestNode* TestNode::create()
-{
-    auto sp = Sprite::create("testnode.png");
-    TestNode* ret = new TestNode;
-    if(sp)
-    {
-        ret->radius = ret->getContentSize().width/2;
-        sp->setFlippedX(true);
-        ret->addChild(sp);
-        sp->setPosition(0, 40);
-        ret->autorelease();
-        ret->radius = 20;
-        
-        auto drawN = DrawNode::create();
-        drawN ->drawDot(Point::ZERO, ret->radius, Color4F(0,1,0,0.5));
-        ret->addChild(drawN);
-        
-        ret->gunPoint = Node::create();
-        ret->addChild(ret->gunPoint);
-        ret->gunPoint->setPosition(43, 45);
-        
-        return ret;
-    }
-    CC_SAFE_DELETE(ret);
-    return nullptr;
 }
