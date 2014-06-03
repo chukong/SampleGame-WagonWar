@@ -14,7 +14,7 @@
 enum Side
 {
     Myself,
-    other
+    Other
 };
 
 enum Body
@@ -47,16 +47,23 @@ typedef struct heroConfig
     Wagon wagon;
     State state;
     WagonConfig wagonConfig;
+    bool isfacetoright;
 }HeroConfig;
 
 class Hero : public cocos2d::Node
 {
 public:
     
-    static Hero* create(Side side = Myself, Body body = BOY, Wagon wagon = HORSEY);
-    virtual bool init(Side side, Body body, Wagon wagon);
+    static Hero* create(Side side = Myself, Body body = BOY, Wagon wagon = HORSEY, bool isfacetoright = true);
+    virtual bool init(Side side, Body body, Wagon wagon, bool isfacetoright);
     
     Hero():airborn(true), needFix(false), moveDelta(0,0.02){};
+    
+    void moveleft();
+    void moveright();
+    void startshoot();
+    void hit();
+    void stop();
     
     bool airborn;
     bool needFix;
@@ -66,12 +73,13 @@ public:
     Node* bodyPoint;
     cocos2d::Point moveDelta;
     
+    
+    //by Jacky
     HeroConfig _heroConfig;
-    
+
     cocos2d::Node* _wagonPoint;
-    
     cocos2d::Sprite* _bodySprite;
-    cocos2d::Sprite* _carASprite;
-    cocos2d::Sprite* _carBSprite;
+    cocos2d::Sprite* _wagonASprite;
+    cocos2d::Sprite* _wagonBSprite;
     
 };
