@@ -68,11 +68,12 @@ protected:
     rapidjson::Document _myturn;
     void buildMyTurn();
     int _tick;
+    int _tickPre;
     bool _playback;
     bool _waitToClear;
     cocos2d::Node* _following;
     cocos2d::Point _offset;
-    timeval _now;
+    //timeval _now;
     cocos2d::Size _movableSize;
     void _movePlayer(float x);
     GameScene():_waitToClear(false),_playback(false),_click(false),_steps(2),_following(nullptr),_tick(0),_replay(nullptr),_myturn(nullptr){};

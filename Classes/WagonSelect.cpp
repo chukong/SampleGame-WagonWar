@@ -169,28 +169,31 @@ void WagonSelect::createUI()
     wagon_bk->addChild(wagon4_2, 3);
 
     //dude
-    auto offsetPoint = Point(30.0f, 55.0f);
+    auto offsetPoint1 = Point(35.0f, 55.0f);
     _dude1 = Sprite::create("boy.png");
     _dude1->setAnchorPoint(Point(Point::ANCHOR_MIDDLE));
-    _dude1->setPosition(wagon1->getPosition() + offsetPoint);
+    _dude1->setPosition(wagon1->getPosition() + offsetPoint1);
     _dude1->setScale(1.5f);
     wagon_bk->addChild(_dude1,2);
 
+    auto offsetPoint2 = Point(20.0f, 65.0f);
     _dude2 = Sprite::create("boy.png");
     _dude2->setAnchorPoint(Point(Point::ANCHOR_MIDDLE));
-    _dude2->setPosition(wagon2->getPosition() + offsetPoint);
+    _dude2->setPosition(wagon2->getPosition() + offsetPoint2);
     _dude2->setScale(1.5f);
     wagon_bk->addChild(_dude2,2);
     
+    auto offsetPoint3 = Point(30.0f, 50.0f);
     _dude3 = Sprite::create("boy.png");
     _dude3->setAnchorPoint(Point(Point::ANCHOR_MIDDLE));
-    _dude3->setPosition(wagon3->getPosition() + offsetPoint);
+    _dude3->setPosition(wagon3->getPosition() + offsetPoint3);
     _dude3->setScale(1.5f);
     wagon_bk->addChild(_dude3,2);
     
+    auto offsetPoint4 = Point(10.0f, 55.0f);
     _dude4 = Sprite::create("boy.png");
     _dude4->setAnchorPoint(Point(Point::ANCHOR_MIDDLE));
-    _dude4->setPosition(wagon4_1->getPosition() + offsetPoint);
+    _dude4->setPosition(wagon4_1->getPosition() + offsetPoint4);
     _dude4->setScale(1.5f);
     wagon_bk->addChild(_dude4,2);
     

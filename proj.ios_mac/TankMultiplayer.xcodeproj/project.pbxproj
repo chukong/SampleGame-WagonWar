@@ -56,8 +56,6 @@
 		50EF629917ECD46A001EB2F8 /* Icon-100.png in Resources */ = {isa = PBXBuildFile; fileRef = 50EF629517ECD46A001EB2F8 /* Icon-100.png */; };
 		50EF62A217ECD613001EB2F8 /* Icon-29.png in Resources */ = {isa = PBXBuildFile; fileRef = 50EF62A017ECD613001EB2F8 /* Icon-29.png */; };
 		50EF62A317ECD613001EB2F8 /* Icon-50.png in Resources */ = {isa = PBXBuildFile; fileRef = 50EF62A117ECD613001EB2F8 /* Icon-50.png */; };
-		68078118193E388B0013727B /* crosshair.png in Resources */ = {isa = PBXBuildFile; fileRef = 68078117193E388B0013727B /* crosshair.png */; };
-		68078119193E388B0013727B /* crosshair.png in Resources */ = {isa = PBXBuildFile; fileRef = 68078117193E388B0013727B /* crosshair.png */; };
 		688029771938A4FA008AD16F /* Wagon.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 688029751938A4FA008AD16F /* Wagon.cpp */; };
 		688029781938A4FA008AD16F /* Wagon.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 688029751938A4FA008AD16F /* Wagon.cpp */; };
 		6880297D1938AFEB008AD16F /* cnm.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6880297B1938AFEB008AD16F /* cnm.plist */; };
@@ -213,6 +211,7 @@
 		85F8466D192F77AA00DAD41B /* gpg.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 85F8466A192F77AA00DAD41B /* gpg.framework */; };
 		85F84670192F77BE00DAD41B /* GooglePlus.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 85F8466E192F77BD00DAD41B /* GooglePlus.bundle */; };
 		85F84671192F77BE00DAD41B /* gpg.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 85F8466F192F77BE00DAD41B /* gpg.bundle */; };
+		BB6FC4E5193E2853003BF502 /* innerpower.png in Resources */ = {isa = PBXBuildFile; fileRef = BB6FC4E4193E2853003BF502 /* innerpower.png */; };
 		BBA41A17193DB92D00557287 /* tank.plist in Resources */ = {isa = PBXBuildFile; fileRef = BBA41A15193DB92D00557287 /* tank.plist */; };
 		BBA41A18193DB92D00557287 /* tank.png in Resources */ = {isa = PBXBuildFile; fileRef = BBA41A16193DB92D00557287 /* tank.png */; };
 		BBA41A1D193DBFC900557287 /* rock.plist in Resources */ = {isa = PBXBuildFile; fileRef = BBA41A1B193DBFC900557287 /* rock.plist */; };
@@ -221,6 +220,7 @@
 		BBA41A22193DCDA700557287 /* mech.png in Resources */ = {isa = PBXBuildFile; fileRef = BBA41A20193DCDA700557287 /* mech.png */; };
 		BBA41A28193E062700557287 /* boy.png in Resources */ = {isa = PBXBuildFile; fileRef = BBA41A26193E062700557287 /* boy.png */; };
 		BBA41A29193E062700557287 /* girl.png in Resources */ = {isa = PBXBuildFile; fileRef = BBA41A27193E062700557287 /* girl.png */; };
+		BBA41A30193E16DF00557287 /* powerbar.png in Resources */ = {isa = PBXBuildFile; fileRef = BBA41A2E193E16DF00557287 /* powerbar.png */; };
 		BF171245129291EC00B8313A /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DB012928DE900B8313A /* OpenGLES.framework */; };
 		BF1712471292920000B8313A /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DB412928DE900B8313A /* libz.dylib */; };
 		BF1C47F01293687400B63C5D /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF1C47EA1293683800B63C5D /* QuartzCore.framework */; };
@@ -415,7 +415,6 @@
 		50EF629517ECD46A001EB2F8 /* Icon-100.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-100.png"; sourceTree = "<group>"; };
 		50EF62A017ECD613001EB2F8 /* Icon-29.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-29.png"; sourceTree = "<group>"; };
 		50EF62A117ECD613001EB2F8 /* Icon-50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-50.png"; sourceTree = "<group>"; };
-		68078117193E388B0013727B /* crosshair.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = crosshair.png; sourceTree = "<group>"; };
 		688029751938A4FA008AD16F /* Wagon.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Wagon.cpp; path = ../Classes/Wagon.cpp; sourceTree = "<group>"; };
 		688029761938A4FA008AD16F /* Wagon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Wagon.h; path = ../Classes/Wagon.h; sourceTree = "<group>"; };
 		6880297B1938AFEB008AD16F /* cnm.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = cnm.plist; sourceTree = "<group>"; };
@@ -517,6 +516,7 @@
 		85F8466A192F77AA00DAD41B /* gpg.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = gpg.framework; path = ../Libraries/gpg.framework; sourceTree = "<group>"; };
 		85F8466E192F77BD00DAD41B /* GooglePlus.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = GooglePlus.bundle; path = ../Libraries/GooglePlus.bundle; sourceTree = "<group>"; };
 		85F8466F192F77BE00DAD41B /* gpg.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = gpg.bundle; path = ../Libraries/gpg.bundle; sourceTree = "<group>"; };
+		BB6FC4E4193E2853003BF502 /* innerpower.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = innerpower.png; sourceTree = "<group>"; };
 		BBA41A15193DB92D00557287 /* tank.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = tank.plist; sourceTree = "<group>"; };
 		BBA41A16193DB92D00557287 /* tank.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tank.png; sourceTree = "<group>"; };
 		BBA41A1B193DBFC900557287 /* rock.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = rock.plist; sourceTree = "<group>"; };
@@ -525,6 +525,7 @@
 		BBA41A20193DCDA700557287 /* mech.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mech.png; sourceTree = "<group>"; };
 		BBA41A26193E062700557287 /* boy.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = boy.png; sourceTree = "<group>"; };
 		BBA41A27193E062700557287 /* girl.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = girl.png; sourceTree = "<group>"; };
+		BBA41A2E193E16DF00557287 /* powerbar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = powerbar.png; sourceTree = "<group>"; };
 		BF170DB012928DE900B8313A /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		BF170DB412928DE900B8313A /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		BF1C47EA1293683800B63C5D /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -771,7 +772,8 @@
 		78C7DDAA14EBA5050085D0C2 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				68078117193E388B0013727B /* crosshair.png */,
+				BB6FC4E4193E2853003BF502 /* innerpower.png */,
+				BBA41A2E193E16DF00557287 /* powerbar.png */,
 				BBA41A26193E062700557287 /* boy.png */,
 				BBA41A27193E062700557287 /* girl.png */,
 				BBA41A1F193DCDA700557287 /* mech.plist */,
@@ -1034,6 +1036,7 @@
 				85E8A2F019382D0A00B0B650 /* girl_1.png in Resources */,
 				BBA41A1E193DBFC900557287 /* rock.png in Resources */,
 				85E8A2CC19382D0A00B0B650 /* boy_0.png in Resources */,
+				BB6FC4E5193E2853003BF502 /* innerpower.png in Resources */,
 				BBA41A22193DCDA700557287 /* mech.png in Resources */,
 				5087E78117EB970100C73F5D /* Icon-120.png in Resources */,
 				85E8A2E619382D0A00B0B650 /* btn_ready_1.png in Resources */,
@@ -1059,6 +1062,7 @@
 				85111BAF192F4DBE00C8D3C8 /* windArrow.png in Resources */,
 				BBA41A28193E062700557287 /* boy.png in Resources */,
 				6880298C1938B8B7008AD16F /* aimergreen.png in Resources */,
+				BBA41A30193E16DF00557287 /* powerbar.png in Resources */,
 				85E8A2E219382D0A00B0B650 /* btn_quickmatch_1.png in Resources */,
 				85E8A2E419382D0A00B0B650 /* btn_ready_0.png in Resources */,
 				85E8A2D219382D0A00B0B650 /* btn_achievements_1.png in Resources */,
@@ -1084,7 +1088,6 @@
 				850C86D61935D1EE0040A5EE /* mainscreen_bk.jpg in Resources */,
 				BBA41A1D193DBFC900557287 /* rock.plist in Resources */,
 				85111BB4192F4E3C00C8D3C8 /* CloseSelected.png in Resources */,
-				68078118193E388B0013727B /* crosshair.png in Resources */,
 				50EF629617ECD46A001EB2F8 /* Icon-40.png in Resources */,
 				85111BA9192F4DBE00C8D3C8 /* f1.png in Resources */,
 				85E8A2F819382D0A00B0B650 /* wagon_item_0.png in Resources */,
@@ -1146,7 +1149,6 @@
 				68BBD899192462D7001F9F73 /* test2.png in Resources */,
 				68BBD8AE192462DE001F9F73 /* CloseNormal.png in Resources */,
 				503AE0F817EB97AB00D1A890 /* Icon.icns in Resources */,
-				68078119193E388B0013727B /* crosshair.png in Resources */,
 				688029831938B5C1008AD16F /* aimerback.png in Resources */,
 				850C86D51935D1EE0040A5EE /* mainscreen_logo.png in Resources */,
 				68BBD895192462D7001F9F73 /* masked.fsh in Resources */,

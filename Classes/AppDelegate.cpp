@@ -47,6 +47,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
     //  auto scene = MainScreenScene::createScene();
   //    auto scene = TestTBMP::createScene("345678");
 //    auto scene = WagonSelect::createScene(FIRST_TURN);
+
     // run
     director->runWithScene(scene);
     
