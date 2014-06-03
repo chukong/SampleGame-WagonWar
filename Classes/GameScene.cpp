@@ -119,6 +119,9 @@ void GameScene::initListeners()
     auto endShootListener = EventListenerCustom::create("end shoot", CC_CALLBACK_0(GameScene::endShoot, this));
     _eventDispatcher->addEventListenerWithSceneGraphPriority(endShootListener, this);
     
+    auto playerDeadListener = EventListenerCustom::create("playerdead", CC_CALLBACK_1(GameScene::playerdead, this));
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(playerDeadListener, this);
+    
 }
 void GameScene::startShoot()
 {
@@ -214,7 +217,7 @@ void GameScene::movePlayer(float x)
 
 void GameScene::initTests()
 {
-    auto p_me = Hero::create(Other,BOY,ROCK,false);
+    auto p_me = Hero::create(Myself,BOY,ROCK,false);
     p_me->setTag(TAG_MYSELF);
     p_me->setPosition(520,800);
     p_me->setLastPos(Point(520,800));
@@ -398,7 +401,7 @@ void GameScene::explode(Bullet *bullet)
             p->setLastPos(mid);
             
             //TODO: player should take damage
-            
+            p->hurt(250);
         }
     }
 }
@@ -653,6 +656,21 @@ void GameScene::update(float dt)
         _playback = false;
         _tick = 0;
         log("play back finished");
+    }
+}
+
+void GameScene::playerdead(EventCustom* event)
+{
+    auto hero = (Hero*)event->getUserData();
+    if (hero->_heroConfig.side == Myself)
+    {
+        //lost;
+        saveMatchData(false, true);
+    }
+    else if(hero->_heroConfig.side == Other)
+    {
+        //win;
+        saveMatchData(true, false);
     }
 }
 
