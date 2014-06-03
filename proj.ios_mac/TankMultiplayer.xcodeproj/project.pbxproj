@@ -211,6 +211,12 @@
 		85F8466D192F77AA00DAD41B /* gpg.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 85F8466A192F77AA00DAD41B /* gpg.framework */; };
 		85F84670192F77BE00DAD41B /* GooglePlus.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 85F8466E192F77BD00DAD41B /* GooglePlus.bundle */; };
 		85F84671192F77BE00DAD41B /* gpg.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 85F8466F192F77BE00DAD41B /* gpg.bundle */; };
+		BBA41A17193DB92D00557287 /* tank.plist in Resources */ = {isa = PBXBuildFile; fileRef = BBA41A15193DB92D00557287 /* tank.plist */; };
+		BBA41A18193DB92D00557287 /* tank.png in Resources */ = {isa = PBXBuildFile; fileRef = BBA41A16193DB92D00557287 /* tank.png */; };
+		BBA41A1D193DBFC900557287 /* rock.plist in Resources */ = {isa = PBXBuildFile; fileRef = BBA41A1B193DBFC900557287 /* rock.plist */; };
+		BBA41A1E193DBFC900557287 /* rock.png in Resources */ = {isa = PBXBuildFile; fileRef = BBA41A1C193DBFC900557287 /* rock.png */; };
+		BBA41A21193DCDA700557287 /* mech.plist in Resources */ = {isa = PBXBuildFile; fileRef = BBA41A1F193DCDA700557287 /* mech.plist */; };
+		BBA41A22193DCDA700557287 /* mech.png in Resources */ = {isa = PBXBuildFile; fileRef = BBA41A20193DCDA700557287 /* mech.png */; };
 		BF171245129291EC00B8313A /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DB012928DE900B8313A /* OpenGLES.framework */; };
 		BF1712471292920000B8313A /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DB412928DE900B8313A /* libz.dylib */; };
 		BF1C47F01293687400B63C5D /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF1C47EA1293683800B63C5D /* QuartzCore.framework */; };
@@ -506,6 +512,12 @@
 		85F8466A192F77AA00DAD41B /* gpg.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = gpg.framework; path = ../Libraries/gpg.framework; sourceTree = "<group>"; };
 		85F8466E192F77BD00DAD41B /* GooglePlus.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = GooglePlus.bundle; path = ../Libraries/GooglePlus.bundle; sourceTree = "<group>"; };
 		85F8466F192F77BE00DAD41B /* gpg.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = gpg.bundle; path = ../Libraries/gpg.bundle; sourceTree = "<group>"; };
+		BBA41A15193DB92D00557287 /* tank.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = tank.plist; sourceTree = "<group>"; };
+		BBA41A16193DB92D00557287 /* tank.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tank.png; sourceTree = "<group>"; };
+		BBA41A1B193DBFC900557287 /* rock.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = rock.plist; sourceTree = "<group>"; };
+		BBA41A1C193DBFC900557287 /* rock.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = rock.png; sourceTree = "<group>"; };
+		BBA41A1F193DCDA700557287 /* mech.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = mech.plist; sourceTree = "<group>"; };
+		BBA41A20193DCDA700557287 /* mech.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mech.png; sourceTree = "<group>"; };
 		BF170DB012928DE900B8313A /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		BF170DB412928DE900B8313A /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		BF1C47EA1293683800B63C5D /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -752,6 +764,12 @@
 		78C7DDAA14EBA5050085D0C2 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				BBA41A1F193DCDA700557287 /* mech.plist */,
+				BBA41A20193DCDA700557287 /* mech.png */,
+				BBA41A1B193DBFC900557287 /* rock.plist */,
+				BBA41A1C193DBFC900557287 /* rock.png */,
+				BBA41A15193DB92D00557287 /* tank.plist */,
+				BBA41A16193DB92D00557287 /* tank.png */,
 				85E8A303193865A500B0B650 /* btn_ready_2.png */,
 				85E8A304193865A500B0B650 /* btn_start_2.png */,
 				85E8A2B219382D0A00B0B650 /* boy_0.png */,
@@ -1003,7 +1021,9 @@
 				68BBD89C192462D7001F9F73 /* test4.bmp in Resources */,
 				8504EF6B1929E73E003B810B /* testnode.png in Resources */,
 				85E8A2F019382D0A00B0B650 /* girl_1.png in Resources */,
+				BBA41A1E193DBFC900557287 /* rock.png in Resources */,
 				85E8A2CC19382D0A00B0B650 /* boy_0.png in Resources */,
+				BBA41A22193DCDA700557287 /* mech.png in Resources */,
 				5087E78117EB970100C73F5D /* Icon-120.png in Resources */,
 				85E8A2E619382D0A00B0B650 /* btn_ready_1.png in Resources */,
 				85E8A2D619382D0A00B0B650 /* btn_invitefriend_1.png in Resources */,
@@ -1019,6 +1039,7 @@
 				85111BB1192F4DBE00C8D3C8 /* windDial.png in Resources */,
 				85E8A2EC19382D0A00B0B650 /* Marker Felt.ttf in Resources */,
 				85E8A2CE19382D0A00B0B650 /* boy_1.png in Resources */,
+				BBA41A21193DCDA700557287 /* mech.plist in Resources */,
 				85E8A2EE19382D0A00B0B650 /* girl_0.png in Resources */,
 				68BBD8A9192462DE001F9F73 /* burnmark.png in Resources */,
 				6880297D1938AFEB008AD16F /* cnm.plist in Resources */,
@@ -1049,6 +1070,7 @@
 				85E8A2D819382D0A00B0B650 /* btn_leaderboard_0.png in Resources */,
 				68BBD89A192462D7001F9F73 /* test3.png in Resources */,
 				850C86D61935D1EE0040A5EE /* mainscreen_bk.jpg in Resources */,
+				BBA41A1D193DBFC900557287 /* rock.plist in Resources */,
 				85111BB4192F4E3C00C8D3C8 /* CloseSelected.png in Resources */,
 				50EF629617ECD46A001EB2F8 /* Icon-40.png in Resources */,
 				85111BA9192F4DBE00C8D3C8 /* f1.png in Resources */,
@@ -1056,9 +1078,11 @@
 				68BBD894192462D7001F9F73 /* masked.fsh in Resources */,
 				85E8A305193865A500B0B650 /* btn_ready_2.png in Resources */,
 				5087E78217EB970100C73F5D /* Icon-144.png in Resources */,
+				BBA41A17193DB92D00557287 /* tank.plist in Resources */,
 				68BBD8AB192462DE001F9F73 /* circle.png in Resources */,
 				85E8A2DC19382D0A00B0B650 /* btn_mygames_0.png in Resources */,
 				50EF629817ECD46A001EB2F8 /* Icon-80.png in Resources */,
+				BBA41A18193DB92D00557287 /* tank.png in Resources */,
 				5087E78417EB970100C73F5D /* Icon-57.png in Resources */,
 				5087E77E17EB970100C73F5D /* Default.png in Resources */,
 				6880297F1938AFEB008AD16F /* cnm.png in Resources */,

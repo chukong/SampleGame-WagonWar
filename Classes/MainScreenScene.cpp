@@ -337,7 +337,7 @@ void MainScreenScene::enterWagonSelectWithDelay_1(float dt)
 {
     log("recv data is ===>%s", g_gameConfig.match_string.c_str());
     this->removeChildByTag(NOTOUCHTAG);
-    auto scene = WagonSelect::createScene(FIRSR_TURN);
+    auto scene = WagonSelect::createScene(FIRST_TURN);
     cocos2d::Director::getInstance()->replaceScene(scene);
 }
 
