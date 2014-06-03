@@ -14,6 +14,7 @@
 #include "json/stringbuffer.h"
 #include "Configuration.h"
 #include "GPGSManager.h"
+#include "Aimer.h"
 
 USING_NS_CC;
 

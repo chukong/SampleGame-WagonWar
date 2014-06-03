@@ -242,7 +242,7 @@ bool MainScreenScene::init()
     
     
     auto cnm = Sprite::createWithSpriteFrameName("cnm_idle01.png");
-    auto cnmhit = g_gameConfig.getAnimate(g_gameanimations.cnm_hit);
+    auto cnmhit = g_gameConfig.getAnimate(g_gameAnimation.cnm_hit);
     cnm->runAction(RepeatForever::create(cnmhit));
     this->addChild(cnm,100);
     cnm->setPosition(300,300);
@@ -337,7 +337,7 @@ void MainScreenScene::enterWagonSelectWithDelay_1(float dt)
 {
     log("recv data is ===>%s", g_gameConfig.match_string.c_str());
     this->removeChildByTag(NOTOUCHTAG);
-    auto scene = WagonSelect::createScene(FIRSR_TURN);
+    auto scene = WagonSelect::createScene(FIRST_TURN);
     cocos2d::Director::getInstance()->replaceScene(scene);
 }
 

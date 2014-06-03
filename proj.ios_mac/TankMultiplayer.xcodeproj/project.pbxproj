@@ -62,6 +62,14 @@
 		6880297E1938AFEB008AD16F /* cnm.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6880297B1938AFEB008AD16F /* cnm.plist */; };
 		6880297F1938AFEB008AD16F /* cnm.png in Resources */ = {isa = PBXBuildFile; fileRef = 6880297C1938AFEB008AD16F /* cnm.png */; };
 		688029801938AFEB008AD16F /* cnm.png in Resources */ = {isa = PBXBuildFile; fileRef = 6880297C1938AFEB008AD16F /* cnm.png */; };
+		688029821938B5C1008AD16F /* aimerback.png in Resources */ = {isa = PBXBuildFile; fileRef = 688029811938B5C1008AD16F /* aimerback.png */; };
+		688029831938B5C1008AD16F /* aimerback.png in Resources */ = {isa = PBXBuildFile; fileRef = 688029811938B5C1008AD16F /* aimerback.png */; };
+		688029861938B5D0008AD16F /* Aimer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 688029841938B5D0008AD16F /* Aimer.cpp */; };
+		688029871938B5D0008AD16F /* Aimer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 688029841938B5D0008AD16F /* Aimer.cpp */; };
+		688029891938B71B008AD16F /* pointer.png in Resources */ = {isa = PBXBuildFile; fileRef = 688029881938B71B008AD16F /* pointer.png */; };
+		6880298A1938B71B008AD16F /* pointer.png in Resources */ = {isa = PBXBuildFile; fileRef = 688029881938B71B008AD16F /* pointer.png */; };
+		6880298C1938B8B7008AD16F /* aimergreen.png in Resources */ = {isa = PBXBuildFile; fileRef = 6880298B1938B8B7008AD16F /* aimergreen.png */; };
+		6880298D1938B8B7008AD16F /* aimergreen.png in Resources */ = {isa = PBXBuildFile; fileRef = 6880298B1938B8B7008AD16F /* aimergreen.png */; };
 		68BBD890192462D7001F9F73 /* HelloWorld.png in Resources */ = {isa = PBXBuildFile; fileRef = 68BBD888192462D7001F9F73 /* HelloWorld.png */; };
 		68BBD891192462D7001F9F73 /* HelloWorld.png in Resources */ = {isa = PBXBuildFile; fileRef = 68BBD888192462D7001F9F73 /* HelloWorld.png */; };
 		68BBD894192462D7001F9F73 /* masked.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 68BBD88A192462D7001F9F73 /* masked.fsh */; };
@@ -203,6 +211,12 @@
 		85F8466D192F77AA00DAD41B /* gpg.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 85F8466A192F77AA00DAD41B /* gpg.framework */; };
 		85F84670192F77BE00DAD41B /* GooglePlus.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 85F8466E192F77BD00DAD41B /* GooglePlus.bundle */; };
 		85F84671192F77BE00DAD41B /* gpg.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 85F8466F192F77BE00DAD41B /* gpg.bundle */; };
+		BBA41A17193DB92D00557287 /* tank.plist in Resources */ = {isa = PBXBuildFile; fileRef = BBA41A15193DB92D00557287 /* tank.plist */; };
+		BBA41A18193DB92D00557287 /* tank.png in Resources */ = {isa = PBXBuildFile; fileRef = BBA41A16193DB92D00557287 /* tank.png */; };
+		BBA41A1D193DBFC900557287 /* rock.plist in Resources */ = {isa = PBXBuildFile; fileRef = BBA41A1B193DBFC900557287 /* rock.plist */; };
+		BBA41A1E193DBFC900557287 /* rock.png in Resources */ = {isa = PBXBuildFile; fileRef = BBA41A1C193DBFC900557287 /* rock.png */; };
+		BBA41A21193DCDA700557287 /* mech.plist in Resources */ = {isa = PBXBuildFile; fileRef = BBA41A1F193DCDA700557287 /* mech.plist */; };
+		BBA41A22193DCDA700557287 /* mech.png in Resources */ = {isa = PBXBuildFile; fileRef = BBA41A20193DCDA700557287 /* mech.png */; };
 		BF171245129291EC00B8313A /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DB012928DE900B8313A /* OpenGLES.framework */; };
 		BF1712471292920000B8313A /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DB412928DE900B8313A /* libz.dylib */; };
 		BF1C47F01293687400B63C5D /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF1C47EA1293683800B63C5D /* QuartzCore.framework */; };
@@ -401,6 +415,11 @@
 		688029761938A4FA008AD16F /* Wagon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Wagon.h; path = ../Classes/Wagon.h; sourceTree = "<group>"; };
 		6880297B1938AFEB008AD16F /* cnm.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = cnm.plist; sourceTree = "<group>"; };
 		6880297C1938AFEB008AD16F /* cnm.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cnm.png; sourceTree = "<group>"; };
+		688029811938B5C1008AD16F /* aimerback.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = aimerback.png; sourceTree = "<group>"; };
+		688029841938B5D0008AD16F /* Aimer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Aimer.cpp; path = ../Classes/Aimer.cpp; sourceTree = "<group>"; };
+		688029851938B5D0008AD16F /* Aimer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Aimer.h; path = ../Classes/Aimer.h; sourceTree = "<group>"; };
+		688029881938B71B008AD16F /* pointer.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pointer.png; sourceTree = "<group>"; };
+		6880298B1938B8B7008AD16F /* aimergreen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = aimergreen.png; sourceTree = "<group>"; };
 		68BBD888192462D7001F9F73 /* HelloWorld.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = HelloWorld.png; sourceTree = "<group>"; };
 		68BBD88A192462D7001F9F73 /* masked.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = masked.fsh; sourceTree = "<group>"; };
 		68BBD88B192462D7001F9F73 /* test.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = test.png; sourceTree = "<group>"; };
@@ -493,6 +512,12 @@
 		85F8466A192F77AA00DAD41B /* gpg.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = gpg.framework; path = ../Libraries/gpg.framework; sourceTree = "<group>"; };
 		85F8466E192F77BD00DAD41B /* GooglePlus.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = GooglePlus.bundle; path = ../Libraries/GooglePlus.bundle; sourceTree = "<group>"; };
 		85F8466F192F77BE00DAD41B /* gpg.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = gpg.bundle; path = ../Libraries/gpg.bundle; sourceTree = "<group>"; };
+		BBA41A15193DB92D00557287 /* tank.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = tank.plist; sourceTree = "<group>"; };
+		BBA41A16193DB92D00557287 /* tank.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tank.png; sourceTree = "<group>"; };
+		BBA41A1B193DBFC900557287 /* rock.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = rock.plist; sourceTree = "<group>"; };
+		BBA41A1C193DBFC900557287 /* rock.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = rock.png; sourceTree = "<group>"; };
+		BBA41A1F193DCDA700557287 /* mech.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = mech.plist; sourceTree = "<group>"; };
+		BBA41A20193DCDA700557287 /* mech.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mech.png; sourceTree = "<group>"; };
 		BF170DB012928DE900B8313A /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		BF170DB412928DE900B8313A /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		BF1C47EA1293683800B63C5D /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -613,6 +638,8 @@
 				85E8A30A193892EC00B0B650 /* NoTouchLayer.h */,
 				688029751938A4FA008AD16F /* Wagon.cpp */,
 				688029761938A4FA008AD16F /* Wagon.h */,
+				688029841938B5D0008AD16F /* Aimer.cpp */,
+				688029851938B5D0008AD16F /* Aimer.h */,
 			);
 			name = Classes;
 			path = ../classes;
@@ -737,6 +764,12 @@
 		78C7DDAA14EBA5050085D0C2 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				BBA41A1F193DCDA700557287 /* mech.plist */,
+				BBA41A20193DCDA700557287 /* mech.png */,
+				BBA41A1B193DBFC900557287 /* rock.plist */,
+				BBA41A1C193DBFC900557287 /* rock.png */,
+				BBA41A15193DB92D00557287 /* tank.plist */,
+				BBA41A16193DB92D00557287 /* tank.png */,
 				85E8A303193865A500B0B650 /* btn_ready_2.png */,
 				85E8A304193865A500B0B650 /* btn_start_2.png */,
 				85E8A2B219382D0A00B0B650 /* boy_0.png */,
@@ -766,8 +799,11 @@
 				85E8A2CA19382D0A00B0B650 /* wagon_item_1.png */,
 				85E8A2CB19382D0A00B0B650 /* wagonselect_bk.png */,
 				850C86C81935D1EE0040A5EE /* mainscreen_logo.png */,
+				688029811938B5C1008AD16F /* aimerback.png */,
+				6880298B1938B8B7008AD16F /* aimergreen.png */,
 				850C86C91935D1EE0040A5EE /* mainscreen_bk.jpg */,
 				85111BB3192F4E3C00C8D3C8 /* CloseSelected.png */,
+				688029881938B71B008AD16F /* pointer.png */,
 				85111BA0192F4DBE00C8D3C8 /* b1.png */,
 				85111BA1192F4DBE00C8D3C8 /* f1.png */,
 				85111BA2192F4DBE00C8D3C8 /* fonts */,
@@ -975,6 +1011,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				85E8A2EA19382D0A00B0B650 /* btn_start_1.png in Resources */,
+				688029821938B5C1008AD16F /* aimerback.png in Resources */,
 				85E8A2DA19382D0A00B0B650 /* btn_leaderboard_1.png in Resources */,
 				85F84670192F77BE00DAD41B /* GooglePlus.bundle in Resources */,
 				85E8A2E019382D0A00B0B650 /* btn_quickmatch_0.png in Resources */,
@@ -984,7 +1021,9 @@
 				68BBD89C192462D7001F9F73 /* test4.bmp in Resources */,
 				8504EF6B1929E73E003B810B /* testnode.png in Resources */,
 				85E8A2F019382D0A00B0B650 /* girl_1.png in Resources */,
+				BBA41A1E193DBFC900557287 /* rock.png in Resources */,
 				85E8A2CC19382D0A00B0B650 /* boy_0.png in Resources */,
+				BBA41A22193DCDA700557287 /* mech.png in Resources */,
 				5087E78117EB970100C73F5D /* Icon-120.png in Resources */,
 				85E8A2E619382D0A00B0B650 /* btn_ready_1.png in Resources */,
 				85E8A2D619382D0A00B0B650 /* btn_invitefriend_1.png in Resources */,
@@ -996,15 +1035,18 @@
 				85E8A2FA19382D0A00B0B650 /* wagon_item_1.png in Resources */,
 				68BBD8B3192462DE001F9F73 /* expMask2.png in Resources */,
 				50EF629917ECD46A001EB2F8 /* Icon-100.png in Resources */,
+				688029891938B71B008AD16F /* pointer.png in Resources */,
 				85111BB1192F4DBE00C8D3C8 /* windDial.png in Resources */,
 				85E8A2EC19382D0A00B0B650 /* Marker Felt.ttf in Resources */,
 				85E8A2CE19382D0A00B0B650 /* boy_1.png in Resources */,
+				BBA41A21193DCDA700557287 /* mech.plist in Resources */,
 				85E8A2EE19382D0A00B0B650 /* girl_0.png in Resources */,
 				68BBD8A9192462DE001F9F73 /* burnmark.png in Resources */,
 				6880297D1938AFEB008AD16F /* cnm.plist in Resources */,
 				85E8A2F619382D0A00B0B650 /* wagon_flash.png in Resources */,
 				85E8A307193865A500B0B650 /* btn_start_2.png in Resources */,
 				85111BAF192F4DBE00C8D3C8 /* windArrow.png in Resources */,
+				6880298C1938B8B7008AD16F /* aimergreen.png in Resources */,
 				85E8A2E219382D0A00B0B650 /* btn_quickmatch_1.png in Resources */,
 				85E8A2E419382D0A00B0B650 /* btn_ready_0.png in Resources */,
 				85E8A2D219382D0A00B0B650 /* btn_achievements_1.png in Resources */,
@@ -1028,6 +1070,7 @@
 				85E8A2D819382D0A00B0B650 /* btn_leaderboard_0.png in Resources */,
 				68BBD89A192462D7001F9F73 /* test3.png in Resources */,
 				850C86D61935D1EE0040A5EE /* mainscreen_bk.jpg in Resources */,
+				BBA41A1D193DBFC900557287 /* rock.plist in Resources */,
 				85111BB4192F4E3C00C8D3C8 /* CloseSelected.png in Resources */,
 				50EF629617ECD46A001EB2F8 /* Icon-40.png in Resources */,
 				85111BA9192F4DBE00C8D3C8 /* f1.png in Resources */,
@@ -1035,9 +1078,11 @@
 				68BBD894192462D7001F9F73 /* masked.fsh in Resources */,
 				85E8A305193865A500B0B650 /* btn_ready_2.png in Resources */,
 				5087E78217EB970100C73F5D /* Icon-144.png in Resources */,
+				BBA41A17193DB92D00557287 /* tank.plist in Resources */,
 				68BBD8AB192462DE001F9F73 /* circle.png in Resources */,
 				85E8A2DC19382D0A00B0B650 /* btn_mygames_0.png in Resources */,
 				50EF629817ECD46A001EB2F8 /* Icon-80.png in Resources */,
+				BBA41A18193DB92D00557287 /* tank.png in Resources */,
 				5087E78417EB970100C73F5D /* Icon-57.png in Resources */,
 				5087E77E17EB970100C73F5D /* Default.png in Resources */,
 				6880297F1938AFEB008AD16F /* cnm.png in Resources */,
@@ -1051,10 +1096,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6880298D1938B8B7008AD16F /* aimergreen.png in Resources */,
 				85111BB0192F4DBE00C8D3C8 /* windArrow.png in Resources */,
 				85E8A2DF19382D0A00B0B650 /* btn_mygames_1.png in Resources */,
 				85111BAA192F4DBE00C8D3C8 /* f1.png in Resources */,
 				85E8A306193865A500B0B650 /* btn_ready_2.png in Resources */,
+				6880298A1938B71B008AD16F /* pointer.png in Resources */,
 				68BBD8B2192462DE001F9F73 /* expMask.png in Resources */,
 				85E8A2FD19382D0A00B0B650 /* wagonselect_bk.png in Resources */,
 				85111BAE192F4DBE00C8D3C8 /* number1.png in Resources */,
@@ -1086,6 +1133,7 @@
 				68BBD899192462D7001F9F73 /* test2.png in Resources */,
 				68BBD8AE192462DE001F9F73 /* CloseNormal.png in Resources */,
 				503AE0F817EB97AB00D1A890 /* Icon.icns in Resources */,
+				688029831938B5C1008AD16F /* aimerback.png in Resources */,
 				850C86D51935D1EE0040A5EE /* mainscreen_logo.png in Resources */,
 				68BBD895192462D7001F9F73 /* masked.fsh in Resources */,
 				85E8A2D319382D0A00B0B650 /* btn_achievements_1.png in Resources */,
@@ -1122,6 +1170,7 @@
 				503AE10217EB989F00D1A890 /* RootViewController.mm in Sources */,
 				85529F751925EAEA0024FFEF /* MainScreenScene.cpp in Sources */,
 				857A84D319330A3C00A2041E /* LoadResourceLayer.cpp in Sources */,
+				688029861938B5D0008AD16F /* Aimer.cpp in Sources */,
 				8589F77519237690009BDBCD /* MaskSprite.cpp in Sources */,
 				8589F77D19237DA1009BDBCD /* Hero.cpp in Sources */,
 				8589F77119237690009BDBCD /* Helper.cpp in Sources */,
@@ -1147,6 +1196,7 @@
 				85AD5EDB19373BFC00E57DB2 /* WagonSelect.cpp in Sources */,
 				688029781938A4FA008AD16F /* Wagon.cpp in Sources */,
 				8589F77019237690009BDBCD /* GameScene.cpp in Sources */,
+				688029871938B5D0008AD16F /* Aimer.cpp in Sources */,
 				5087E75717EB910900C73F5D /* AppDelegate.cpp in Sources */,
 				857A84D01932F3DE00A2041E /* Configuration.cpp in Sources */,
 				8589F77619237690009BDBCD /* MaskSprite.cpp in Sources */,

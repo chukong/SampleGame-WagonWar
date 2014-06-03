@@ -49,8 +49,19 @@ private:
     
     TurnType _turntype;
     
+    cocos2d::MenuItemImage* _boy_memuitem;
+    cocos2d::MenuItemImage* _girl_memuitem;
+    cocos2d::MenuItemImage* _wagon1_menuitem;
+    cocos2d::MenuItemImage* _wagon2_menuitem;
+    cocos2d::MenuItemImage* _wagon3_menuitem;
+    cocos2d::MenuItemImage* _wagon4_menuitem;
+    
+    cocos2d::Sprite* flash;
+    
     bool _isBoy;
     int _wagon;
+    
+    
 };
 
 #endif /* defined(__TankMultiplayer__WagonSelect__) */

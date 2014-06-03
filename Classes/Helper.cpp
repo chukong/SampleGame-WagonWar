@@ -8,6 +8,7 @@
 
 #include "Helper.h"
 #include "bullet.h"
+#include "Aimer.h"
 USING_NS_CC;
 
 void Helper::removeAfter(Node* node, float seconds)
@@ -158,3 +159,4 @@ void CollisionCheckNode::checkCollision()
         }
     }
 }
+
