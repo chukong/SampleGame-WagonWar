@@ -145,14 +145,14 @@ void WagonSelect::createUI()
     wagon2->setAnchorPoint(Point::ANCHOR_MIDDLE);
     wagon2->setPosition(Point(310,g_visibleRect.visibleHeight/2-20));
     wagon2->setScale(1.5f);
-    wagon_bk->addChild(wagon2, 2);
+    wagon_bk->addChild(wagon2, 3);
     
     auto wagon3 = Sprite::createWithSpriteFrame(SpriteFrameCache::getInstance()->getSpriteFrameByName("rockidle01.png"));
     wagon3->runAction(RepeatForever::create(g_gameConfig.getAnimate(g_gameAnimation.rock_idle)));
     wagon3->setAnchorPoint(Point::ANCHOR_MIDDLE);
     wagon3->setPosition(Point(500,g_visibleRect.visibleHeight/2-10));
     wagon3->setScale(1.5f);
-    wagon_bk->addChild(wagon3, 2);
+    wagon_bk->addChild(wagon3, 3);
     
     auto wagon4_1 = Sprite::createWithSpriteFrame(SpriteFrameCache::getInstance()->getSpriteFrameByName("mechidle01.png"));
     wagon4_1->runAction(RepeatForever::create(g_gameConfig.getAnimate(g_gameAnimation.mech_idle)));
@@ -166,8 +166,34 @@ void WagonSelect::createUI()
     wagon4_2->setAnchorPoint(Point::ANCHOR_MIDDLE);
     wagon4_2->setPosition(Point(700,g_visibleRect.visibleHeight/2-20));
     wagon4_2->setScale(1.5f);
-    wagon_bk->addChild(wagon4_2, 2);
+    wagon_bk->addChild(wagon4_2, 3);
 
+    //dude
+    auto offsetPoint = Point(30.0f, 55.0f);
+    _dude1 = Sprite::create("boy.png");
+    _dude1->setAnchorPoint(Point(Point::ANCHOR_MIDDLE));
+    _dude1->setPosition(wagon1->getPosition() + offsetPoint);
+    _dude1->setScale(1.5f);
+    wagon_bk->addChild(_dude1,2);
+
+    _dude2 = Sprite::create("boy.png");
+    _dude2->setAnchorPoint(Point(Point::ANCHOR_MIDDLE));
+    _dude2->setPosition(wagon2->getPosition() + offsetPoint);
+    _dude2->setScale(1.5f);
+    wagon_bk->addChild(_dude2,2);
+    
+    _dude3 = Sprite::create("boy.png");
+    _dude3->setAnchorPoint(Point(Point::ANCHOR_MIDDLE));
+    _dude3->setPosition(wagon3->getPosition() + offsetPoint);
+    _dude3->setScale(1.5f);
+    wagon_bk->addChild(_dude3,2);
+    
+    _dude4 = Sprite::create("boy.png");
+    _dude4->setAnchorPoint(Point(Point::ANCHOR_MIDDLE));
+    _dude4->setPosition(wagon4_1->getPosition() + offsetPoint);
+    _dude4->setScale(1.5f);
+    wagon_bk->addChild(_dude4,2);
+    
     //flash
     flash = Sprite::create("wagon_flash.png");
     flash->setAnchorPoint(Point::ANCHOR_MIDDLE);
@@ -237,19 +263,31 @@ void WagonSelect::setup_player2_mactchdata()
 void WagonSelect::boy_selected_callback(Ref* ref)
 {
     if(!_isBoy){
-        _boy_memuitem->selected();
-        _girl_memuitem->unselected();
-        _isBoy = true;
+        _dude1->setTexture("boy.png");
+        _dude2->setTexture("boy.png");
+        _dude3->setTexture("boy.png");
+        _dude4->setTexture("boy.png");
     }
+    
+    _boy_memuitem->selected();
+    _girl_memuitem->unselected();
+    
+    _isBoy = true;
 }
 
 void WagonSelect::girl_selected_callback(Ref* ref)
 {
     if(_isBoy){
-        _boy_memuitem->unselected();
-        _girl_memuitem->selected();
-        _isBoy = false;
+        _dude1->setTexture("girl.png");
+        _dude2->setTexture("girl.png");
+        _dude3->setTexture("girl.png");
+        _dude4->setTexture("girl.png");
     }
+    
+    _boy_memuitem->unselected();
+    _girl_memuitem->selected();
+    
+    _isBoy = false;
 }
 
 void WagonSelect::wagon1_selected_callback(cocos2d::Ref* ref)
