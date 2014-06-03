@@ -36,6 +36,8 @@ bool Hero::init(Side side, Body body, Wagon wagon, bool isfacetoright)
     _heroConfig.state = IDLE;
     _heroConfig.isfacetoright = isfacetoright;
     
+    _lasthp = _heroConfig.wagonConfig.hp;
+    
     _wagonPoint = Node::create();
     _wagonPoint->setPosition(_heroConfig.wagonConfig.offsetx, _heroConfig.wagonConfig.offsety);
     this->addChild(_wagonPoint);
@@ -106,6 +108,18 @@ bool Hero::init(Side side, Body body, Wagon wagon, bool isfacetoright)
     aimer->lowerLimit = _heroConfig.wagonConfig.lowerlimit;
     aimer->upperLimit = _heroConfig.wagonConfig.upperlimit;
     gunPoint->addChild(aimer);
+    
+    if (_heroConfig.side == Myself) {
+        hpBar = ui::LoadingBar::create("life_me.png");
+    }
+    else
+    {
+        hpBar = ui::LoadingBar::create("life_other.png");
+    }
+    hpBar->setScale(0.5f);
+    hpBar->setPositionY(-50);
+    hpBar->setAnchorPoint(Point::ANCHOR_MIDDLE);
+    this->addChild(hpBar);
     
     return true;
 }
@@ -288,5 +302,21 @@ void Hero::stop()
             break;
         default:
             break;
+    }
+}
+
+void Hero::hurt(int t_hurt)
+{
+    _lasthp = _lasthp - t_hurt;
+    if (_lasthp > 0)
+    {
+        log("%f",(float)_lasthp/(float)_heroConfig.wagonConfig.hp);
+        hpBar->setPercent((float)_lasthp*100/(float)_heroConfig.wagonConfig.hp);
+    }
+    else
+    {
+        _lasthp = 0;
+        hpBar->setPercent(0);
+        _eventDispatcher->dispatchCustomEvent("playerdead", this);
     }
 }

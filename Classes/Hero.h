@@ -10,6 +10,7 @@
 
 #include "cocos2d.h"
 #include "Configuration.h"
+#include "ui/CocosGUI.h"
 
 enum Side
 {
@@ -65,6 +66,8 @@ public:
     void hit();
     void stop();
     
+    void hurt(int t_hurt);
+    
     bool airborn;
     bool needFix;
     int radius;
@@ -76,10 +79,13 @@ public:
     
     //by Jacky
     HeroConfig _heroConfig;
+    int _lasthp;
 
     cocos2d::Node* _wagonPoint;
     cocos2d::Sprite* _bodySprite;
     cocos2d::Sprite* _wagonASprite;
     cocos2d::Sprite* _wagonBSprite;
+    
+    cocos2d::ui::LoadingBar* hpBar;
     
 };
