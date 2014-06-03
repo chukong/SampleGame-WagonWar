@@ -9,7 +9,23 @@
 #include "Aimer.h"
 USING_NS_CC;
 
-bool Aimer::init()
+Aimer* Aimer::create(bool isRight, float upper, float lower)
+{
+    Aimer *pRet = new Aimer();
+    if (pRet && pRet->init(isRight, upper, lower))
+    {
+        pRet->autorelease();
+        return pRet;
+    }
+    else
+    {
+        delete pRet;
+        pRet = NULL;
+        return NULL;
+    }
+}
+
+bool Aimer::init(bool isRight, float upper, float lower)
 {
     _back = Sprite::create("aimerback.png");
     addChild(_back);
@@ -35,11 +51,17 @@ bool Aimer::init()
     addChild(_pointer);
     
     
-    
+    upperLimit = upper;
+    lowerLimit = lower;
+    reversed = !isRight;
     //find out the percentage
-    setAngle((upperLimit+lowerLimit)/2);
+    if(!isRight)
+        setAngle((upperLimit+lowerLimit)/2);
+    else{
+        setAngle(-180-((upperLimit+lowerLimit)/2));
+    }
     _green->setPercentage((lowerLimit-upperLimit)/3.6);
-    _green->setRotation(-upperLimit);
+    //_green->setRotation(-upperLimit);
     
     
     auto listener = EventListenerTouchOneByOne::create();
@@ -50,6 +72,7 @@ bool Aimer::init()
     listener->setSwallowTouches(true);
     
         _back->setRotation((upperLimit+lowerLimit)/2);
+    
     return true;
 
 }
@@ -72,7 +95,7 @@ void Aimer::onTouchEnded(cocos2d::Touch *touch, cocos2d::Event *event)
     _pointer->stopAllActions();
     _pointer->runAction(ScaleTo::create(0.1, 1.0, _pointer->getScaleY()));
     _pointer->runAction(FadeTo::create(0.1, 200));
-    log("%f", getParent()->getParent()->getRotation());
+    log("aaaa %f", getWorldAngle());
 }
 
 void Aimer::onTouchMoved(cocos2d::Touch *touch, cocos2d::Event *event)
@@ -88,9 +111,20 @@ float Aimer::getWorldAngle()
 }
 void Aimer::setAngle(float a)
 {
-    _angle = clampf(a, upperLimit, lowerLimit);
-    _pointer->setRotation(_angle);
-   // _back->setRotation(_angle);
-    _crosshair->setRotation(_angle);
-    _crosshair->setPosition(Point(200,0).rotateByAngle(Point(0,0), CC_DEGREES_TO_RADIANS(-_angle)));
+    if(!reversed)
+    {
+        a = a>0? a-360: a;
+        _angle = clampf(a, -180-upperLimit ,-180-lowerLimit);
+        log("%f,, %f,, %f",a, -180-upperLimit, -180-lowerLimit);
+        _crosshair->setPosition(Point(-200,0).rotateByAngle(Point(0,0), CC_DEGREES_TO_RADIANS(_angle)));
+        _pointer->setRotation(-180-_angle);
+        _crosshair->setRotation(-_angle);
+    }
+    else
+    {
+        _angle = clampf(a, upperLimit, lowerLimit);
+        _pointer->setRotation(_angle);
+        _crosshair->setRotation(_angle);
+        _crosshair->setPosition(Point(200,0).rotateByAngle(Point(0,0), CC_DEGREES_TO_RADIANS(-_angle)));
+    }
 }

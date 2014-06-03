@@ -10,6 +10,7 @@
 
 #include "cocos2d.h"
 #include "Configuration.h"
+#include "Aimer.h"
 
 enum Side
 {
@@ -61,6 +62,9 @@ public:
     
     void moveleft();
     void moveright();
+    
+    void flipLeft();
+    void flipRight();
     void startshoot();
     void hit();
     void stop();
@@ -82,4 +86,5 @@ public:
     cocos2d::Sprite* _wagonASprite;
     cocos2d::Sprite* _wagonBSprite;
     
+    Aimer* aim;
 };

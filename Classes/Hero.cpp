@@ -7,7 +7,6 @@
 //
 
 #include "Hero.h"
-#include "Aimer.h"
 
 USING_NS_CC;
 
@@ -71,26 +70,7 @@ bool Hero::init(Side side, Body body, Wagon wagon, bool isfacetoright)
             break;
     }
     
-    if (_heroConfig.body == BOY)
-    {
-        if (_heroConfig.isfacetoright) {
-            _wagonPoint->setScaleX(-1);
-        }
-        
-        _bodySprite = Sprite::create("boy.png");
-        _bodySprite->setPosition(_wagonASprite->getPosition()+ Point(30,30));
-        _wagonPoint->addChild(_bodySprite,2);
-    }
-    else
-    {
-        if (_heroConfig.isfacetoright) {
-            _wagonPoint->setScaleX(-1);
-        }
-        
-        _bodySprite = Sprite::create("girl.png");
-        _bodySprite->setPosition(_wagonASprite->getPosition()+ Point(30,30));
-        _wagonPoint->addChild(_bodySprite,2);
-    }
+
     
     radius = 20;
     
@@ -100,23 +80,59 @@ bool Hero::init(Side side, Body body, Wagon wagon, bool isfacetoright)
     
     gunPoint = Node::create();
     _wagonPoint->addChild(gunPoint);
-    gunPoint->setPosition(43, 45);
+    gunPoint->setPosition(-43, 45);
     
-    auto aimer = Aimer::create();
-    aimer->lowerLimit = _heroConfig.wagonConfig.lowerlimit;
-    aimer->upperLimit = _heroConfig.wagonConfig.upperlimit;
-    gunPoint->addChild(aimer);
+    aim = Aimer::create(isfacetoright, _heroConfig.wagonConfig.upperlimit,_heroConfig.wagonConfig.lowerlimit);
+    aim->lowerLimit = _heroConfig.wagonConfig.lowerlimit;
+    aim->upperLimit = _heroConfig.wagonConfig.upperlimit;
+    gunPoint->addChild(aim);
+    aim->setScaleX(-1);
+    
+    if (_heroConfig.body == BOY)
+    {
+        if (_heroConfig.isfacetoright) {
+            flipRight();
+        }
+        else{
+            flipLeft();
+        }
+        
+        _bodySprite = Sprite::create("boy.png");
+        _bodySprite->setPosition(_wagonASprite->getPosition()+ Point(30,30));
+        _wagonPoint->addChild(_bodySprite,2);
+    }
+    else// girl
+    {
+        if (_heroConfig.isfacetoright) {
+            //_wagonPoint->setScaleX(-1);
+        }
+        
+        _bodySprite = Sprite::create("girl.png");
+        _bodySprite->setPosition(_wagonASprite->getPosition()+ Point(30,30));
+        _wagonPoint->addChild(_bodySprite,2);
+    }
     
     return true;
+}
+
+void Hero::flipLeft()
+{
+        _wagonPoint->setScaleX(1);
+        aim->reversed = false;
+        _heroConfig.isfacetoright = false;
+}
+void Hero::flipRight()
+{
+    _wagonPoint->setScaleX(-1);
+    aim->reversed = true;
+    _heroConfig.isfacetoright = true;
 }
 
 void Hero::moveleft()
 {
 
-    if(!_heroConfig.isfacetoright )
-    {
-        _wagonPoint->setScaleX(-1);
-    }
+    flipLeft();
+
     
     switch (_heroConfig.wagon) {
         case MECH:
@@ -152,10 +168,7 @@ void Hero::moveleft()
 }
 void Hero::moveright()
 {
-    if(!_heroConfig.isfacetoright )
-    {
-        _wagonPoint->setScaleX(-1);
-    }
+    flipRight();
     switch (_heroConfig.wagon) {
         case MECH:
         {

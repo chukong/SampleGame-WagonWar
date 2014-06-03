@@ -216,8 +216,8 @@ void GameScene::initTests()
 {
     auto p_me = Hero::create(Other,BOY,ROCK,false);
     p_me->setTag(TAG_MYSELF);
-    p_me->setPosition(500,800);
-    p_me->setLastPos(Point(500,800));
+    p_me->setPosition(520,800);
+    p_me->setLastPos(Point(520,800));
     p_me->stop();
     getPlayerLayer()->addChild(p_me);
     
@@ -596,12 +596,17 @@ void GameScene::update(float dt)
                     float deg =CC_RADIANS_TO_DEGREES(angleTotal/angleCount);
                     if(abs(deg) > 80)//TODO: each vehicle has a climbing angle limit
                     {
-                        p->setRotation((deg>0)? 80:-80);
+                        deg = (deg>0)? 80: -80;
+                        p->_wagonPoint->setRotation(deg);
+
                         p->airborn = true;
                     }
                     else
                     {
-                        p->setRotation(deg);
+                        log("%f", deg);
+
+                            p->_wagonPoint->setRotation(deg);
+
                     }
                     if(angleCount > 8)
                     {
@@ -626,10 +631,13 @@ void GameScene::update(float dt)
                 if(p->moveDelta.x>0)
                 {
                     //TODO: replace with proper flip code
-                    p->setScaleX(1);
+                    //p->setScaleX(1);
+                    p->flipRight();
                 }
                 else{
-                    p->setScaleX(-1);
+                    //p->_heroConfig.isfacetoright = false;
+                    //p->setScaleX(-1);
+                    p->flipLeft();
                 }
             }
             //kmGLPopMatrix();
