@@ -36,7 +36,6 @@ bool Hero::init(Side side, Body body, Wagon wagon, bool isfacetoright, std::stri
     _heroConfig.isfacetoright = isfacetoright;
     
     _lasthp = _heroConfig.wagonConfig.hp;
-    
     _wagonPoint = Node::create();
     _wagonPoint->setPosition(_heroConfig.wagonConfig.offsetx, _heroConfig.wagonConfig.offsety);
     this->addChild(_wagonPoint);
@@ -127,7 +126,7 @@ bool Hero::init(Side side, Body body, Wagon wagon, bool isfacetoright, std::stri
     this->addChild(hpBarOuter);
     
     hpBar = ui::LoadingBar::create("hpinner.png");
-    //hpBar->setScale(0.5f);
+    hpBar->setPercent((float)_lasthp*100/(float)_heroConfig.wagonConfig.hp);
     hpBar->setPositionY(-50);
     hpBar->setAnchorPoint(Point::ANCHOR_MIDDLE);
     this->addChild(hpBar);
@@ -329,7 +328,7 @@ void Hero::stop()
     }
 }
 
-void Hero::hurt(int t_hurt)
+int Hero::hurt(int t_hurt)
 {
     _lasthp = _lasthp - t_hurt;
     if (_lasthp > 0)
@@ -343,4 +342,12 @@ void Hero::hurt(int t_hurt)
         hpBar->setPercent(0);
         _eventDispatcher->dispatchCustomEvent("playerdead", this);
     }
+    return _lasthp;
+}
+
+void Hero::setLife(int life)
+{
+    _lasthp = life;
+    log("..........%f",(float)_lasthp*100/(float)_heroConfig.wagonConfig.hp);
+    hpBar->setPercent((float)_lasthp*100/(float)_heroConfig.wagonConfig.hp);
 }

@@ -63,6 +63,11 @@ public:
     void randomWind();
     void playback(std::string json);
     void saveMatchData(bool win, bool lost);
+    Hero* p1;
+    Hero* p2;
+    
+    
+    std::string tempjson;
 protected:
     void printMyTurn();
     rapidjson::Document _replay;
@@ -77,11 +82,15 @@ protected:
     //timeval _now;
     cocos2d::Size _movableSize;
     void _movePlayer(float x);
-    GameScene():_waitToClear(false),_playback(false),_click(false),_steps(2),_following(nullptr),_tick(0),_replay(nullptr),_myturn(nullptr){};
+    GameScene():_waitToClear(false),_playback(false),_click(false),_steps(2),_following(nullptr),_tick(0),_replay(nullptr),_myturn(nullptr),win(false), lost(false), over(false){};
     bool _click;
     int _steps;
     cocos2d::Sprite* _ex;
     cocos2d::Sprite* _burn;
+    
+    bool win;
+    bool lost;
+    bool over;
 };
 
 #endif /* defined(__TankMultiplayer__GameScene__) */

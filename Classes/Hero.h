@@ -70,7 +70,9 @@ public:
     void hit();
     void stop();
     
-    void hurt(int t_hurt);
+    int hurt(int t_hurt);
+    
+    void setLife(int life);
     
     bool airborn;
     bool needFix;
