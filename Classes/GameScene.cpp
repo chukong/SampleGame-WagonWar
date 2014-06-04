@@ -96,9 +96,9 @@ void GameScene::initListeners()
     _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
     
     //event to move left right
-    auto moveListener = EventListenerCustom::create("go left", CC_CALLBACK_0(GameScene::movePlayer, this, -0.3));
+    auto moveListener = EventListenerCustom::create("go left", CC_CALLBACK_0(GameScene::movePlayer, this, -1));
     _eventDispatcher->addEventListenerWithSceneGraphPriority(moveListener, this);
-    auto moveListener2 = EventListenerCustom::create("go right", CC_CALLBACK_0(GameScene::movePlayer, this, 0.3));
+    auto moveListener2 = EventListenerCustom::create("go right", CC_CALLBACK_0(GameScene::movePlayer, this, 1));
     _eventDispatcher->addEventListenerWithSceneGraphPriority(moveListener2, this);
     auto stopListener = EventListenerCustom::create("stop", CC_CALLBACK_0(GameScene::movePlayer, this, 0));
     _eventDispatcher->addEventListenerWithSceneGraphPriority(stopListener, this);
@@ -181,7 +181,7 @@ void GameScene::endShoot()
         
         
     }
-    log("angle %f", angle);
+    //log("angle %f", angle);
     auto b = addBullet(defaultB, Point(gunlocation.tx, gunlocation.ty)+Point(offset/2)-getPosition(), Point(tick/60.0f*20*cosf(CC_DEGREES_TO_RADIANS(-angle)), tick/60.0f*20*sinf(CC_DEGREES_TO_RADIANS(-angle))));
         _following = dynamic_cast<Node*>(b);
 }
@@ -679,7 +679,7 @@ void GameScene::update(float dt)
                     }
                     else
                     {
-                        log("%f", deg);
+                        //log("%f", deg);
 
                             p->_wagonPoint->setRotation(deg);
 
@@ -688,7 +688,7 @@ void GameScene::update(float dt)
                     {
                         //we are colliding with too many pixels
                         
-                        float pushForce = 0.4;
+                        float pushForce = 0.05 * angleCount;
                         Point mid(pos.x-pushForce*sinf(angleTotal/angleCount), pos.y-pushForce*cosf(angleTotal/angleCount));
                         p->setLastPos(mid);
                         p->needFix = true;
