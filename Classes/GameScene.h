@@ -66,6 +66,8 @@ public:
     Hero* p1;
     Hero* p2;
     
+    void returntoMenu();
+    void entertoMenu(float dt);
     
     std::string tempjson;
 protected:

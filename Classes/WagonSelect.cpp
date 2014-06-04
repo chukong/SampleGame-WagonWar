@@ -13,6 +13,7 @@
 #include "NoTouchLayer.h"
 #include "json/writer.h"
 #include "json/stringbuffer.h"
+#include "MainScreenScene.h"
 
 USING_NS_CC;
 
@@ -38,7 +39,6 @@ Scene* WagonSelect::createScene(TurnType turntype)
 {
     auto scene = Scene::create();
     auto layer = WagonSelect::create(turntype);
-    layer->setTag(WAGONSELECTTAG);
     scene->addChild(layer);
     return scene;
 }
@@ -203,13 +203,16 @@ void WagonSelect::createUI()
     flash->setPosition(Point(120,g_visibleRect.visibleHeight/2-80));
     flash->runAction(RepeatForever::create(Blink::create(1,1)));
     wagon_bk->addChild(flash,3);
+    
+    auto returnMenuListener = EventListenerCustom::create("returntoMenu", CC_CALLBACK_0(WagonSelect::returntoMenu, this));
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(returnMenuListener, this);
 }
 
 void WagonSelect::ready_callback(Ref* ref)
 {
     auto notouchlayer = NoTouchLayer::create();
     notouchlayer->setTag(NOTOUCHTAG);
-    this->addChild(notouchlayer,100);
+    Director::getInstance()->getRunningScene()->addChild(notouchlayer,100);
     
     if (_turntype == FIRST_TURN) {
         setup_player1_mactchdata();
@@ -353,4 +356,17 @@ void WagonSelect::wagon4_selected_callback(cocos2d::Ref* ref)
     
     flash->setPosition(_wagon4_menuitem->getPosition());
     _wagon = 3;
+}
+
+void WagonSelect::returntoMenu()
+{
+    log("call...return to menu");
+    scheduleOnce(schedule_selector(GameScene::entertoMenu), 1.0f);
+}
+
+void WagonSelect::entertoMenu(float dt)
+{
+    log("call...entertomenu");
+    auto scene = MainScreenScene::createScene();
+    cocos2d::Director::getInstance()->replaceScene(scene);
 }
