@@ -10,10 +10,10 @@
 
 USING_NS_CC;
 
-Hero* Hero::create(Side side /*= Myself*/,Body body/* = BOY*/, Wagon wagon/* = HORSEY*/, bool isfacetoright/* = true*/)
+Hero* Hero::create(Side side /*= Myself*/,Body body/* = BOY*/, Wagon wagon/* = HORSEY*/, bool isfacetoright/* = true*/ ,std::string name)
 {
     Hero *pRet = new Hero();
-    if (pRet && pRet->init(side, body, wagon, isfacetoright))
+    if (pRet && pRet->init(side, body, wagon, isfacetoright,name))
     {
         pRet->autorelease();
         return pRet;
@@ -26,7 +26,7 @@ Hero* Hero::create(Side side /*= Myself*/,Body body/* = BOY*/, Wagon wagon/* = H
     }
 }
 
-bool Hero::init(Side side, Body body, Wagon wagon, bool isfacetoright)
+bool Hero::init(Side side, Body body, Wagon wagon, bool isfacetoright, std::string name)
 {
     _heroConfig.wagonConfig = g_wagonConfig[(int)wagon];
     _heroConfig.side = side;
@@ -114,17 +114,28 @@ bool Hero::init(Side side, Body body, Wagon wagon, bool isfacetoright)
         _wagonPoint->addChild(_bodySprite,2);
     }
     
-    if (_heroConfig.side == Myself) {
-        hpBar = ui::LoadingBar::create("life_me.png");
-    }
-    else
-    {
-        hpBar = ui::LoadingBar::create("life_other.png");
-    }
-    hpBar->setScale(0.5f);
+//    if (_heroConfig.side == Myself) {
+//        hpBar = ui::LoadingBar::create("life_me.png");
+//    }
+//    else
+//    {
+//        hpBar = ui::LoadingBar::create("life_other.png");
+//    }
+    auto hpBarOuter = Sprite::create("hpouter.png");
+    hpBarOuter->setAnchorPoint(Point::ANCHOR_MIDDLE);
+    hpBarOuter->setPositionY(-50);
+    this->addChild(hpBarOuter);
+    
+    hpBar = ui::LoadingBar::create("hpinner.png");
+    //hpBar->setScale(0.5f);
     hpBar->setPositionY(-50);
     hpBar->setAnchorPoint(Point::ANCHOR_MIDDLE);
     this->addChild(hpBar);
+    
+    auto nameLabel = Label::create(name.c_str(), "Arial", 25);
+    nameLabel->setPosition(Point(90,-50));
+    nameLabel->setAnchorPoint(Point::ANCHOR_MIDDLE);
+    this->addChild(nameLabel);
     
     return true;
 }

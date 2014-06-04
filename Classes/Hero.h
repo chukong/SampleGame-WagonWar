@@ -56,8 +56,8 @@ class Hero : public cocos2d::Node
 {
 public:
     
-    static Hero* create(Side side = Myself, Body body = BOY, Wagon wagon = HORSEY, bool isfacetoright = true);
-    virtual bool init(Side side, Body body, Wagon wagon, bool isfacetoright);
+    static Hero* create(Side side = Myself, Body body = BOY, Wagon wagon = HORSEY, bool isfacetoright = true, std::string name = "Player");
+    virtual bool init(Side side, Body body, Wagon wagon, bool isfacetoright, std::string name);
     
     Hero():airborn(true), needFix(false), moveDelta(0,0.02){};
     
