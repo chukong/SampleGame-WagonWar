@@ -56,6 +56,12 @@
 		50EF629917ECD46A001EB2F8 /* Icon-100.png in Resources */ = {isa = PBXBuildFile; fileRef = 50EF629517ECD46A001EB2F8 /* Icon-100.png */; };
 		50EF62A217ECD613001EB2F8 /* Icon-29.png in Resources */ = {isa = PBXBuildFile; fileRef = 50EF62A017ECD613001EB2F8 /* Icon-29.png */; };
 		50EF62A317ECD613001EB2F8 /* Icon-50.png in Resources */ = {isa = PBXBuildFile; fileRef = 50EF62A117ECD613001EB2F8 /* Icon-50.png */; };
+		68078175193F41450013727B /* Giant Insectoid Battle.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 68078174193F41450013727B /* Giant Insectoid Battle.mp3 */; };
+		68078176193F41450013727B /* Giant Insectoid Battle.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 68078174193F41450013727B /* Giant Insectoid Battle.mp3 */; };
+		68078178193F42280013727B /* Celestial Motive m.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 68078177193F42280013727B /* Celestial Motive m.mp3 */; };
+		68078179193F42280013727B /* Celestial Motive m.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 68078177193F42280013727B /* Celestial Motive m.mp3 */; };
+		6807817B193F431F0013727B /* Stepping Stones m.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 6807817A193F431F0013727B /* Stepping Stones m.mp3 */; };
+		6807817C193F431F0013727B /* Stepping Stones m.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 6807817A193F431F0013727B /* Stepping Stones m.mp3 */; };
 		688029771938A4FA008AD16F /* Wagon.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 688029751938A4FA008AD16F /* Wagon.cpp */; };
 		688029781938A4FA008AD16F /* Wagon.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 688029751938A4FA008AD16F /* Wagon.cpp */; };
 		6880297D1938AFEB008AD16F /* cnm.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6880297B1938AFEB008AD16F /* cnm.plist */; };
@@ -421,6 +427,9 @@
 		50EF629517ECD46A001EB2F8 /* Icon-100.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-100.png"; sourceTree = "<group>"; };
 		50EF62A017ECD613001EB2F8 /* Icon-29.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-29.png"; sourceTree = "<group>"; };
 		50EF62A117ECD613001EB2F8 /* Icon-50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-50.png"; sourceTree = "<group>"; };
+		68078174193F41450013727B /* Giant Insectoid Battle.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "Giant Insectoid Battle.mp3"; sourceTree = "<group>"; };
+		68078177193F42280013727B /* Celestial Motive m.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "Celestial Motive m.mp3"; sourceTree = "<group>"; };
+		6807817A193F431F0013727B /* Stepping Stones m.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "Stepping Stones m.mp3"; sourceTree = "<group>"; };
 		688029751938A4FA008AD16F /* Wagon.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Wagon.cpp; path = ../Classes/Wagon.cpp; sourceTree = "<group>"; };
 		688029761938A4FA008AD16F /* Wagon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Wagon.h; path = ../Classes/Wagon.h; sourceTree = "<group>"; };
 		6880297B1938AFEB008AD16F /* cnm.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = cnm.plist; sourceTree = "<group>"; };
@@ -785,6 +794,9 @@
 				85B0EB5E193E4EF100021830 /* life_me.png */,
 				85B0EB5F193E4EF100021830 /* life_other.png */,
 				BB6FC4E4193E2853003BF502 /* innerpower.png */,
+				68078174193F41450013727B /* Giant Insectoid Battle.mp3 */,
+				68078177193F42280013727B /* Celestial Motive m.mp3 */,
+				6807817A193F431F0013727B /* Stepping Stones m.mp3 */,
 				BBA41A2E193E16DF00557287 /* powerbar.png */,
 				BBA41A26193E062700557287 /* boy.png */,
 				BBA41A27193E062700557287 /* girl.png */,
@@ -1046,6 +1058,7 @@
 				85E8A2D019382D0A00B0B650 /* btn_achievements_0.png in Resources */,
 				68BBD89C192462D7001F9F73 /* test4.bmp in Resources */,
 				8504EF6B1929E73E003B810B /* testnode.png in Resources */,
+				6807817B193F431F0013727B /* Stepping Stones m.mp3 in Resources */,
 				85E8A2F019382D0A00B0B650 /* girl_1.png in Resources */,
 				BBA41A1E193DBFC900557287 /* rock.png in Resources */,
 				85E8A2CC19382D0A00B0B650 /* boy_0.png in Resources */,
@@ -1085,6 +1098,7 @@
 				68BBD8B9192495E4001F9F73 /* map.png in Resources */,
 				68BBD89E192462D7001F9F73 /* test4.png in Resources */,
 				85111BAB192F4DBE00C8D3C8 /* Marker Felt.ttf in Resources */,
+				68078178193F42280013727B /* Celestial Motive m.mp3 in Resources */,
 				5087E77D17EB970100C73F5D /* Default-568h@2x.png in Resources */,
 				5087E78517EB970100C73F5D /* Icon-72.png in Resources */,
 				850C86D41935D1EE0040A5EE /* mainscreen_logo.png in Resources */,
@@ -1106,6 +1120,7 @@
 				85111BA9192F4DBE00C8D3C8 /* f1.png in Resources */,
 				85E8A2F819382D0A00B0B650 /* wagon_item_0.png in Resources */,
 				68BBD894192462D7001F9F73 /* masked.fsh in Resources */,
+				68078175193F41450013727B /* Giant Insectoid Battle.mp3 in Resources */,
 				85E8A305193865A500B0B650 /* btn_ready_2.png in Resources */,
 				5087E78217EB970100C73F5D /* Icon-144.png in Resources */,
 				BBA41A17193DB92D00557287 /* tank.plist in Resources */,
@@ -1136,6 +1151,7 @@
 				68BBD8B2192462DE001F9F73 /* expMask.png in Resources */,
 				85E8A2FD19382D0A00B0B650 /* wagonselect_bk.png in Resources */,
 				85111BAE192F4DBE00C8D3C8 /* number1.png in Resources */,
+				68078176193F41450013727B /* Giant Insectoid Battle.mp3 in Resources */,
 				85111BA8192F4DBE00C8D3C8 /* b1.png in Resources */,
 				85E8A2EB19382D0A00B0B650 /* btn_start_1.png in Resources */,
 				85E8A2F119382D0A00B0B650 /* girl_1.png in Resources */,
@@ -1146,6 +1162,7 @@
 				85B0EB63193E4EF100021830 /* life_me.png in Resources */,
 				85E8A2E719382D0A00B0B650 /* btn_ready_1.png in Resources */,
 				85E8A2D719382D0A00B0B650 /* btn_invitefriend_1.png in Resources */,
+				6807817C193F431F0013727B /* Stepping Stones m.mp3 in Resources */,
 				68BBD897192462D7001F9F73 /* test.png in Resources */,
 				85E8A2F519382D0A00B0B650 /* wagon_bk.png in Resources */,
 				6880297E1938AFEB008AD16F /* cnm.plist in Resources */,
@@ -1177,6 +1194,7 @@
 				68BBD8B4192462DE001F9F73 /* expMask2.png in Resources */,
 				85E8A2E119382D0A00B0B650 /* btn_quickmatch_0.png in Resources */,
 				85E8A2CD19382D0A00B0B650 /* boy_0.png in Resources */,
+				68078179193F42280013727B /* Celestial Motive m.mp3 in Resources */,
 				68BBD8AA192462DE001F9F73 /* burnmark.png in Resources */,
 				85E8A2F919382D0A00B0B650 /* wagon_item_0.png in Resources */,
 				68BBD89B192462D7001F9F73 /* test3.png in Resources */,

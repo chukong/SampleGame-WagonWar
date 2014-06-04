@@ -15,6 +15,7 @@
 #include "Configuration.h"
 #include "GPGSManager.h"
 #include "Aimer.h"
+#include "SimpleAudioEngine.h"
 
 USING_NS_CC;
 
@@ -452,6 +453,7 @@ void GameScene::explode(Bullet *bullet)
 }
 void GameScene::playback(std::string json)
 {
+    CocosDenshion::SimpleAudioEngine::getInstance()->playBackgroundMusic("Giant Insectoid Battle.mp3");
     tempjson = json;
     _replay.Parse<rapidjson::kParseDefaultFlags>(json.c_str());
     this->setWind(Point(_replay["windx"].GetDouble(),_replay["windy"].GetDouble()));
@@ -729,6 +731,7 @@ void GameScene::update(float dt)
             _playback = false;
             _tick = 0;
             log("play back finished");
+            CocosDenshion::SimpleAudioEngine::getInstance()->playBackgroundMusic("Celestial Motive m.mp3");
             //need to delete actions
             _myturn["actions"].Clear();
         }
