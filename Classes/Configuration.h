@@ -43,8 +43,6 @@ typedef struct{
     
 }gameAnimation;
 
-const int WAGONSELECTTAG = 777;
-const int MAINLAYERTAG = 888;
 const int NOTOUCHTAG = 999;
 
 typedef struct wagonConfig
