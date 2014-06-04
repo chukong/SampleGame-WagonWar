@@ -29,7 +29,6 @@ Scene* GameScene::createScene()
     scene->addChild(uiLayer, 2);
     // 'layer' is an autorelease object
     auto layer = GameScene::create();
-    layer->setTag(GAMESCENETAG);
     
     // add layer as a child to scene
     scene->addChild(layer);
@@ -773,19 +772,20 @@ void GameScene::saveMatchData(bool win, bool loss)
     
     auto notouchlayer = NoTouchLayer::create();
     notouchlayer->setTag(NOTOUCHTAG);
-    this->addChild(notouchlayer);
+    Director::getInstance()->getRunningScene()->addChild(notouchlayer,100);
 
     GPGSManager::TakeTurn(win, loss);
 }
 
 void GameScene::returntoMenu()
 {
+    log("call...return to menu");
     scheduleOnce(schedule_selector(GameScene::entertoMenu), 1.0f);
-
 }
 
 void GameScene::entertoMenu(float dt)
 {
+    log("call...entertomenu");
     auto scene = MainScreenScene::createScene();
     cocos2d::Director::getInstance()->replaceScene(scene);
 }
