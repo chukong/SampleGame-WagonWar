@@ -256,11 +256,13 @@ void GameScene::movePlayer(float x)
 void GameScene::initPlayers()
 {
     p1 = Hero::create(Myself,BOY,ROCK,false);
+    p1->setName("player1");
     p1->setTag(TAG_MYSELF);
     p1->stop();
     getPlayerLayer()->addChild(p1);
     
     p2 = Hero::create(Other,GIRL,MECH,false);
+    p2->setName("player2");
     p2->setTag(TAG_OTHER);
 
     p2->stop();
@@ -356,6 +358,7 @@ Point GameScene::getActualPos(cocos2d::Touch * touch)
 
 void GameScene::onTouchEnded(Touch* touch, Event* event)
 {
+    
 }
 Bullet* GameScene::addBullet(BulletTypes type, cocos2d::Point pos, cocos2d::Point vector)
 {
@@ -526,7 +529,9 @@ void GameScene::playback(std::string json)
         p2->airborn = true;
     }
     _tick = 0;
-
+    _playback = true;
+    getCurrentPlayer()->showAimer();
+    getCurrentPlayer()->showTurnSymbol();
     _eventDispatcher->dispatchCustomEvent("touch off");
     _eventDispatcher->dispatchCustomEvent("enemy's turn");
     //copy all explosions to my turn
@@ -549,7 +554,7 @@ void GameScene::playback(std::string json)
     }
     
     //get enemy name
-     _eventDispatcher->dispatchCustomEvent("enemy", (void*)"ddd");
+     _eventDispatcher->dispatchCustomEvent("enemy", (void*)"PLAYER2");
     
     // get tick sum
     rapidjson::Value &array = _replay["actions"];
@@ -776,6 +781,17 @@ void GameScene::update(float dt)
             _eventDispatcher->dispatchCustomEvent("my turn");
             _waitToClear = false;
             _tick = 0;
+            if(p1 == getCurrentPlayer()){
+                p1->showAimer();
+                p1->showTurnSymbol();
+                p2->hideAimer();
+                p2->hideTurnSymbol();
+            } else {
+                p2->showAimer();
+                p2->showTurnSymbol();
+                p1->hideAimer();
+                p1->hideTurnSymbol();
+            }
             log("play back finished");
             //need to delete actions
             _myturn["actions"].Clear();

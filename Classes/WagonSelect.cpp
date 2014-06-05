@@ -68,14 +68,14 @@ void WagonSelect::createUI()
     bk->setPosition(g_visibleRect.center);
     this->addChild(bk);
     
-    auto wagon_bk = Sprite::create("wagon_bk.png");
+    _wagon_bk = Sprite::create("wagon_bk.png");
     if(g_visibleRect.visibleWidth>960)
     {
-        wagon_bk->setScaleX(g_visibleRect.visibleWidth/960);
+        _wagon_bk->setScaleX(g_visibleRect.visibleWidth/960);
     }
-    wagon_bk->setAnchorPoint(Point::ANCHOR_MIDDLE_LEFT);
-    wagon_bk->setPosition(Point(130,280));
-    this->addChild(wagon_bk,1);
+    _wagon_bk->setAnchorPoint(Point::ANCHOR_MIDDLE_LEFT);
+    _wagon_bk->setPosition(Point(130,280));
+    this->addChild(_wagon_bk,1);
     
     //boy or girl
     _boy_memuitem = MenuItemImage::create("boy_0.png","boy_1.png",
@@ -130,100 +130,152 @@ void WagonSelect::createUI()
     
     auto menu_wagon = Menu::create(_wagon1_menuitem, _wagon2_menuitem, _wagon3_menuitem, _wagon4_menuitem, nullptr);
     menu_wagon->setPosition(Point::ZERO);
-    wagon_bk->addChild(menu_wagon,1);
+    _wagon_bk->addChild(menu_wagon,1);
     
     //
     auto wagon1 = Sprite::createWithSpriteFrame(SpriteFrameCache::getInstance()->getSpriteFrameByName("cnm_idle01.png"));
     wagon1->runAction(RepeatForever::create(g_gameConfig.getAnimate(g_gameAnimation.cnm_idle)));
     wagon1->setAnchorPoint(Point::ANCHOR_MIDDLE);
-    wagon1->setPosition(Point(120,g_visibleRect.visibleHeight/2-20));
-    wagon1->setScale(1.5f);
-    wagon_bk->addChild(wagon1, 2);
+    wagon1->setPosition(Point(120,g_visibleRect.visibleHeight/2-10));
+    wagon1->setScale(1.3f);
+    _wagon_bk->addChild(wagon1, 2);
     
     auto wagon2 = Sprite::createWithSpriteFrame(SpriteFrameCache::getInstance()->getSpriteFrameByName("tankidle01.png"));
     wagon2->runAction(RepeatForever::create(g_gameConfig.getAnimate(g_gameAnimation.tank_idle)));
     wagon2->setAnchorPoint(Point::ANCHOR_MIDDLE);
-    wagon2->setPosition(Point(310,g_visibleRect.visibleHeight/2-20));
-    wagon2->setScale(1.5f);
-    wagon_bk->addChild(wagon2, 3);
+    wagon2->setPosition(Point(310,g_visibleRect.visibleHeight/2-15));
+    wagon2->setScale(1.3f);
+    _wagon_bk->addChild(wagon2, 3);
     
     auto wagon3 = Sprite::createWithSpriteFrame(SpriteFrameCache::getInstance()->getSpriteFrameByName("rockidle01.png"));
     wagon3->runAction(RepeatForever::create(g_gameConfig.getAnimate(g_gameAnimation.rock_idle)));
     wagon3->setAnchorPoint(Point::ANCHOR_MIDDLE);
-    wagon3->setPosition(Point(500,g_visibleRect.visibleHeight/2-10));
-    wagon3->setScale(1.5f);
-    wagon_bk->addChild(wagon3, 3);
+    wagon3->setPosition(Point(500,g_visibleRect.visibleHeight/2));
+    wagon3->setScale(1.3f);
+    _wagon_bk->addChild(wagon3, 3);
     
     auto wagon4_1 = Sprite::createWithSpriteFrame(SpriteFrameCache::getInstance()->getSpriteFrameByName("mechidle01.png"));
     wagon4_1->runAction(RepeatForever::create(g_gameConfig.getAnimate(g_gameAnimation.mech_idle)));
     wagon4_1->setAnchorPoint(Point::ANCHOR_MIDDLE);
-    wagon4_1->setPosition(Point(700,g_visibleRect.visibleHeight/2-20));
-    wagon4_1->setScale(1.5f);
-    wagon_bk->addChild(wagon4_1, 2);
+    wagon4_1->setPosition(Point(700,g_visibleRect.visibleHeight/2-5));
+    wagon4_1->setScale(1.3f);
+    _wagon_bk->addChild(wagon4_1, 2);
     
     auto wagon4_2 = Sprite::createWithSpriteFrame(SpriteFrameCache::getInstance()->getSpriteFrameByName("mechgunidle01.png"));
     wagon4_2->runAction(RepeatForever::create(g_gameConfig.getAnimate(g_gameAnimation.mechgun_idle)));
     wagon4_2->setAnchorPoint(Point::ANCHOR_MIDDLE);
     wagon4_2->setPosition(Point(700,g_visibleRect.visibleHeight/2-20));
-    wagon4_2->setScale(1.5f);
-    wagon_bk->addChild(wagon4_2, 3);
+    wagon4_2->setScale(1.3f);
+    _wagon_bk->addChild(wagon4_2, 3);
 
     //dude
-    auto offsetPoint1 = Point(35.0f, 55.0f);
+    auto offsetPoint1 = Point(30.0f, 55.0f);
     _dude1 = Sprite::create("boy.png");
     _dude1->setAnchorPoint(Point(Point::ANCHOR_MIDDLE));
     _dude1->setPosition(wagon1->getPosition() + offsetPoint1);
-    _dude1->setScale(1.5f);
-    wagon_bk->addChild(_dude1,2);
+    _dude1->setScale(1.3f);
+    _wagon_bk->addChild(_dude1,2);
 
     auto offsetPoint2 = Point(20.0f, 65.0f);
     _dude2 = Sprite::create("boy.png");
     _dude2->setAnchorPoint(Point(Point::ANCHOR_MIDDLE));
     _dude2->setPosition(wagon2->getPosition() + offsetPoint2);
-    _dude2->setScale(1.5f);
-    wagon_bk->addChild(_dude2,2);
+    _dude2->setScale(1.3f);
+    _wagon_bk->addChild(_dude2,2);
     
     auto offsetPoint3 = Point(30.0f, 50.0f);
     _dude3 = Sprite::create("boy.png");
     _dude3->setAnchorPoint(Point(Point::ANCHOR_MIDDLE));
     _dude3->setPosition(wagon3->getPosition() + offsetPoint3);
-    _dude3->setScale(1.5f);
-    wagon_bk->addChild(_dude3,2);
+    _dude3->setScale(1.3f);
+    _wagon_bk->addChild(_dude3,2);
     
     auto offsetPoint4 = Point(10.0f, 55.0f);
     _dude4 = Sprite::create("boy.png");
     _dude4->setAnchorPoint(Point(Point::ANCHOR_MIDDLE));
     _dude4->setPosition(wagon4_1->getPosition() + offsetPoint4);
-    _dude4->setScale(1.5f);
-    wagon_bk->addChild(_dude4,2);
+    _dude4->setScale(1.3f);
+    _wagon_bk->addChild(_dude4,2);
     
     //shawdow
     auto shawdow1 = Sprite::create("shawdow.png");
     shawdow1->setAnchorPoint(Point::ANCHOR_MIDDLE);
-    shawdow1->setPosition(Point(120,g_visibleRect.visibleHeight/2-120));
-    wagon_bk->addChild(shawdow1,2);
+    shawdow1->setPosition(Point(120,g_visibleRect.visibleHeight/2-70));
+    shawdow1->setOpacity(200);
+    _wagon_bk->addChild(shawdow1,2);
 
     auto shawdow2 = Sprite::create("shawdow.png");
     shawdow2->setAnchorPoint(Point::ANCHOR_MIDDLE);
-    shawdow2->setPosition(Point(310,g_visibleRect.visibleHeight/2-120));
-    wagon_bk->addChild(shawdow2,2);
+    shawdow2->setPosition(Point(310,g_visibleRect.visibleHeight/2-70));
+    shawdow2->setOpacity(200);
+    _wagon_bk->addChild(shawdow2,2);
 
     auto shawdow3 = Sprite::create("shawdow.png");
     shawdow3->setAnchorPoint(Point::ANCHOR_MIDDLE);
-    shawdow3->setPosition(Point(500,g_visibleRect.visibleHeight/2-120));
-    wagon_bk->addChild(shawdow3,2);
+    shawdow3->setPosition(Point(500,g_visibleRect.visibleHeight/2-70));
+    shawdow3->setOpacity(200);
+    _wagon_bk->addChild(shawdow3,2);
 
     auto shawdow4 = Sprite::create("shawdow.png");
     shawdow4->setAnchorPoint(Point::ANCHOR_MIDDLE);
-    shawdow4->setPosition(Point(700,g_visibleRect.visibleHeight/2-120));
-    wagon_bk->addChild(shawdow4,2);
+    shawdow4->setPosition(Point(690,g_visibleRect.visibleHeight/2-70));
+    shawdow4->setOpacity(200);
+    _wagon_bk->addChild(shawdow4,2);
 
-    //flash
+    // params
+    initWagonParams();
+    
+    // name
+    TTFConfig horseyTTFConfig;
+    horseyTTFConfig.outlineSize = 3;
+    horseyTTFConfig.fontSize = 30;
+    horseyTTFConfig.fontFilePath = "fonts/britanic bold.ttf";
+    auto horseyLabel = Label::createWithTTF(horseyTTFConfig, "HORSEY", TextHAlignment::CENTER, 20);
+    horseyLabel->setPosition(120,g_visibleRect.visibleHeight/2-110);
+    horseyLabel->setSpacing(-5);
+    horseyLabel->setAnchorPoint(Point::ANCHOR_MIDDLE);
+    horseyLabel->enableOutline(Color4B::BLACK);
+    _wagon_bk->addChild(horseyLabel,2);
+    
+    TTFConfig tankTTFConfig;
+    tankTTFConfig.outlineSize = 3;
+    tankTTFConfig.fontSize = 30;
+    tankTTFConfig.fontFilePath = "fonts/britanic bold.ttf";
+    auto tankLabel = Label::createWithTTF(horseyTTFConfig, "TANK", TextHAlignment::CENTER, 20);
+    tankLabel->setPosition(310,g_visibleRect.visibleHeight/2-110);
+    tankLabel->setSpacing(-5);
+    tankLabel->setAnchorPoint(Point::ANCHOR_MIDDLE);
+    tankLabel->enableOutline(Color4B::BLACK);
+    _wagon_bk->addChild(tankLabel,2);
+    
+    TTFConfig rockTTFConfig;
+    rockTTFConfig.outlineSize = 3;
+    rockTTFConfig.fontSize = 30;
+    rockTTFConfig.fontFilePath = "fonts/britanic bold.ttf";
+    auto rockLabel = Label::createWithTTF(horseyTTFConfig, "ROCK", TextHAlignment::CENTER, 20);
+    rockLabel->setPosition(500,g_visibleRect.visibleHeight/2-110);
+    rockLabel->setSpacing(-5);
+    rockLabel->setAnchorPoint(Point::ANCHOR_MIDDLE);
+    rockLabel->enableOutline(Color4B::BLACK);
+    _wagon_bk->addChild(rockLabel,2);
+    
+    TTFConfig mechTTFConfig;
+    mechTTFConfig.outlineSize = 3;
+    mechTTFConfig.fontSize = 30;
+    mechTTFConfig.fontFilePath = "fonts/britanic bold.ttf";
+    auto mechLabel = Label::createWithTTF(horseyTTFConfig, "MECH", TextHAlignment::CENTER, 20);
+    mechLabel->setPosition(690,g_visibleRect.visibleHeight/2-110);
+    mechLabel->setSpacing(-5);
+    mechLabel->setAnchorPoint(Point::ANCHOR_MIDDLE);
+    mechLabel->enableOutline(Color4B::BLACK);
+    _wagon_bk->addChild(mechLabel,2);
+    
+    // flash
     flash = Sprite::create("wagon_flash.png");
     flash->setAnchorPoint(Point::ANCHOR_MIDDLE);
     flash->setPosition(Point(120,g_visibleRect.visibleHeight/2-80));
     flash->runAction(RepeatForever::create(Blink::create(1,1)));
-    wagon_bk->addChild(flash,3);
+    _wagon_bk->addChild(flash,3);
     
     auto returnMenuListener = EventListenerCustom::create("returntoMenu", CC_CALLBACK_0(WagonSelect::returntoMenu, this));
     _eventDispatcher->addEventListenerWithSceneGraphPriority(returnMenuListener, this);
@@ -392,4 +444,136 @@ void WagonSelect::entertoMenu(float dt)
     log("call...entertomenu");
     auto scene = MainScreenScene::createScene();
     cocos2d::Director::getInstance()->replaceScene(scene);
+}
+
+void WagonSelect::initWagonParams(){
+    
+    auto attack1 = Sprite::create("attack.png");
+    auto attack2 = Sprite::create("attack.png");
+    auto attack3 = Sprite::create("attack.png");
+    auto attack4 = Sprite::create("attack.png");
+    
+    attack1->setPosition(70, g_visibleRect.visibleHeight/2-185);
+    _wagon_bk->addChild(attack1,2);
+    attack2->setPosition(260, g_visibleRect.visibleHeight/2-185);
+    _wagon_bk->addChild(attack2,2);
+    attack3->setPosition(450, g_visibleRect.visibleHeight/2-185);
+    _wagon_bk->addChild(attack3,2);
+    attack4->setPosition(640, g_visibleRect.visibleHeight/2-185);
+    _wagon_bk->addChild(attack4,2);
+    
+    auto attackBar1 = ui::LoadingBar::create("attackBar.png");
+    auto attackBar2 = ui::LoadingBar::create("attackBar.png");
+    auto attackBar3 = ui::LoadingBar::create("attackBar.png");
+    auto attackBar4 = ui::LoadingBar::create("attackBar.png");
+    
+    attackBar1->setPosition(Point(135, g_visibleRect.visibleHeight/2-185));
+    attackBar1->setPercent(100);
+    _wagon_bk->addChild(attackBar1,4);
+    attackBar2->setPosition(Point(325, g_visibleRect.visibleHeight/2-185));
+    attackBar2->setPercent(100);
+    _wagon_bk->addChild(attackBar2,4);
+    attackBar3->setPosition(Point(515, g_visibleRect.visibleHeight/2-185));
+    attackBar3->setPercent(100);
+    _wagon_bk->addChild(attackBar3,4);
+    attackBar4->setPosition(Point(705, g_visibleRect.visibleHeight/2-185));
+    attackBar4->setPercent(100);
+    _wagon_bk->addChild(attackBar4,4);
+    
+    auto explosion1 = Sprite::create("explosion.png");
+    auto explosion2 = Sprite::create("explosion.png");
+    auto explosion3 = Sprite::create("explosion.png");
+    auto explosion4 = Sprite::create("explosion.png");
+    
+    explosion1->setPosition(70, g_visibleRect.visibleHeight/2-255);
+    _wagon_bk->addChild(explosion1,2);
+    explosion2->setPosition(260, g_visibleRect.visibleHeight/2-255);
+    _wagon_bk->addChild(explosion2,2);
+    explosion3->setPosition(450, g_visibleRect.visibleHeight/2-255);
+    _wagon_bk->addChild(explosion3,2);
+    explosion4->setPosition(640, g_visibleRect.visibleHeight/2-255);
+    _wagon_bk->addChild(explosion4,2);
+
+    
+    auto explosionBar1 = ui::LoadingBar::create("explosionBar.png");
+    auto explosionBar2 = ui::LoadingBar::create("explosionBar.png");
+    auto explosionBar3 = ui::LoadingBar::create("explosionBar.png");
+    auto explosionBar4 = ui::LoadingBar::create("explosionBar.png");
+    
+    explosionBar1->setPosition(Point(135, g_visibleRect.visibleHeight/2-255));
+    explosionBar1->setPercent(100);
+    _wagon_bk->addChild(explosionBar1,4);
+    explosionBar2->setPosition(Point(325, g_visibleRect.visibleHeight/2-255));
+    explosionBar2->setPercent(100);
+    _wagon_bk->addChild(explosionBar2,4);
+    explosionBar3->setPosition(Point(515, g_visibleRect.visibleHeight/2-255));
+    explosionBar3->setPercent(100);
+    _wagon_bk->addChild(explosionBar3,4);
+    explosionBar4->setPosition(Point(705, g_visibleRect.visibleHeight/2-255));
+    explosionBar4->setPercent(100);
+    _wagon_bk->addChild(explosionBar4,4);
+    
+    auto hp1 = Sprite::create("hp.png");
+    auto hp2 = Sprite::create("hp.png");
+    auto hp3 = Sprite::create("hp.png");
+    auto hp4 = Sprite::create("hp.png");
+    
+    hp1->setPosition(70, g_visibleRect.visibleHeight/2-150);
+    _wagon_bk->addChild(hp1,2);
+    hp2->setPosition(260, g_visibleRect.visibleHeight/2-150);
+    _wagon_bk->addChild(hp2,2);
+    hp3->setPosition(450, g_visibleRect.visibleHeight/2-150);
+    _wagon_bk->addChild(hp3,2);
+    hp4->setPosition(640, g_visibleRect.visibleHeight/2-150);
+    _wagon_bk->addChild(hp4,2);
+    
+    auto hpBar1 = ui::LoadingBar::create("hpBar.png");
+    auto hpBar2 = ui::LoadingBar::create("hpBar.png");
+    auto hpBar3 = ui::LoadingBar::create("hpBar.png");
+    auto hpBar4 = ui::LoadingBar::create("hpBar.png");
+    
+    hpBar1->setPosition(Point(135, g_visibleRect.visibleHeight/2-150));
+    hpBar1->setPercent(100);
+    _wagon_bk->addChild(hpBar1,4);
+    hpBar2->setPosition(Point(325, g_visibleRect.visibleHeight/2-150));
+    hpBar2->setPercent(100);
+    _wagon_bk->addChild(hpBar2,4);
+    hpBar3->setPosition(Point(515, g_visibleRect.visibleHeight/2-150));
+    hpBar3->setPercent(100);
+    _wagon_bk->addChild(hpBar3,4);
+    hpBar4->setPosition(Point(705, g_visibleRect.visibleHeight/2-150));
+    hpBar4->setPercent(100);
+    _wagon_bk->addChild(hpBar4,4);
+    
+    auto speed1 = Sprite::create("speed.png");
+    auto speed2 = Sprite::create("speed.png");
+    auto speed3 = Sprite::create("speed.png");
+    auto speed4 = Sprite::create("speed.png");
+    
+    speed1->setPosition(70, g_visibleRect.visibleHeight/2-220);
+    _wagon_bk->addChild(speed1,2);
+    speed2->setPosition(260, g_visibleRect.visibleHeight/2-220);
+    _wagon_bk->addChild(speed2,2);
+    speed3->setPosition(450, g_visibleRect.visibleHeight/2-220);
+    _wagon_bk->addChild(speed3,2);
+    speed4->setPosition(640, g_visibleRect.visibleHeight/2-220);
+    _wagon_bk->addChild(speed4,2);
+    
+    auto speedBar1 = ui::LoadingBar::create("speedBar.png");
+    auto speedBar2 = ui::LoadingBar::create("speedBar.png");
+    auto speedBar3 = ui::LoadingBar::create("speedBar.png");
+    auto speedBar4 = ui::LoadingBar::create("speedBar.png");
+    
+    speedBar1->setPosition(Point(135, g_visibleRect.visibleHeight/2-220));
+    speedBar1->setPercent(100);
+    _wagon_bk->addChild(speedBar1,4);
+    speedBar2->setPosition(Point(325, g_visibleRect.visibleHeight/2-220));
+    speedBar2->setPercent(100);
+    _wagon_bk->addChild(speedBar2,4);
+    speedBar3->setPosition(Point(515, g_visibleRect.visibleHeight/2-220));
+    speedBar3->setPercent(100);
+    _wagon_bk->addChild(speedBar3,4);
+    speedBar4->setPosition(Point(705, g_visibleRect.visibleHeight/2-220));
+    speedBar4->setPercent(100);
+    _wagon_bk->addChild(speedBar4,4);
 }
