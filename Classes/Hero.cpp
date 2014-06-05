@@ -394,6 +394,10 @@ int Hero::hurt(int t_hurt)
         log("nowHPpe %f", nowHPPercent);
         _hpInnerBar->setPercent(nowHPPercent);
         _hpBarBack->runAction(ProgressTo::create(1,nowHPPercent));
+        _nameLabel->runAction(Sequence::create(MoveBy::create(0.1, Point(0, 5)),
+                                                            MoveBy::create(0.1, Point(0, -10)),
+                                                            MoveBy::create(0.1, Point(0, 5)),
+                                                            NULL));
         _hpInnerBar->runAction(Sequence::create(MoveBy::create(0.1, Point(0, 5)),
                                                 MoveBy::create(0.1, Point(0, -10)),
                                                 MoveBy::create(0.1, Point(0, 5)),
