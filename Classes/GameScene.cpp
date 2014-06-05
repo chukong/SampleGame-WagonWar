@@ -498,7 +498,7 @@ void GameScene::playback(std::string json)
     _playback = true;
 
     _eventDispatcher->dispatchCustomEvent("touch off");
-    
+    _eventDispatcher->dispatchCustomEvent("enemy's turn");
     //copy all explosions to my turn
     if(_replay.HasMember("explosions") && _replay["explosions"].Size())
     {
@@ -744,6 +744,7 @@ void GameScene::update(float dt)
         if(_playback)
         {
             _eventDispatcher->dispatchCustomEvent("touch on");
+            _eventDispatcher->dispatchCustomEvent("my turn");
             _waitToClear = false;
             _playback = false;
             _tick = 0;
