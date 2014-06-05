@@ -17,6 +17,7 @@
 #include "Configuration.h"
 #include "WagonSelect.h"
 #include "NoTouchLayer.h"
+#include "SimpleAudioEngine.h"
 
 USING_NS_CC;
 
@@ -172,6 +173,9 @@ bool MainScreenScene::init()
 //    menu->setPosition(Point::ZERO);
 //    this->addChild(menu);
     
+    CocosDenshion::SimpleAudioEngine::getInstance()->stopBackgroundMusic();
+    CocosDenshion::SimpleAudioEngine::getInstance()->playBackgroundMusic("Stepping Stones m.mp3");
+
     auto mainscreen_bk = Sprite::create("mainscreen_bk.jpg");
     if(g_visibleRect.visibleWidth>960)
     {

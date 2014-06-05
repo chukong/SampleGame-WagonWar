@@ -47,7 +47,7 @@ public:
     CC_SYNTHESIZE(cocos2d::Point, _gravity, Gravity);
     void initExplosionMasks();
     void initListeners();
-    void initTests();
+    void initPlayers();
     void startShoot();
     void endShoot();
     void playerdead(cocos2d::EventCustom* event);
@@ -56,7 +56,7 @@ public:
     cocos2d::Point offset;
     
     //virtual void draw(cocos2d::Renderer* renderer, const kmMat4 &transform, bool transformUpdated);
-    void explode(Bullet* bullet);
+    void explode(Bullet* bullet, Hero* hero);
     
     void movePlayer(float x);
     virtual void onEnter();

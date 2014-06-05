@@ -19,7 +19,7 @@ USING_NS_CC;
 //    Sprite::draw(renderer, transform, transformUpdated);
 //}
 
-BulletConfig Bullet::defaultBullet={
+BulletConfig defaultBullet={
     "circle.png",
     100,
     3,
@@ -39,10 +39,10 @@ Bullet* Bullet::create(BulletTypes type, cocos2d::Point pos, cocos2d::Point vect
     {
         default:
         case defaultB:
-            b->setConfig(&defaultBullet);
+            b->setConfig(defaultBullet);
             break;
     }
-    if(b->initWithFile(b->getConfig()->filename))
+    if(b->initWithFile(b->getConfig().filename))
     {
         b->autorelease();
         b->setPosition(pos);
