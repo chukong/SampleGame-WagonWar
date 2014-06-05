@@ -113,28 +113,48 @@ bool Hero::init(Side side, Body body, Wagon wagon, bool isfacetoright, std::stri
         _wagonPoint->addChild(_bodySprite,2);
     }
     
-//    if (_heroConfig.side == Myself) {
-//        hpBar = ui::LoadingBar::create("life_me.png");
-//    }
-//    else
-//    {
-//        hpBar = ui::LoadingBar::create("life_other.png");
-//    }
+    //hp
     auto hpBarOuter = Sprite::create("hpouter.png");
     hpBarOuter->setAnchorPoint(Point::ANCHOR_MIDDLE);
-    hpBarOuter->setPositionY(-50);
+    hpBarOuter->setPositionY(-75);
     this->addChild(hpBarOuter);
     
     hpBar = ui::LoadingBar::create("hpinner.png");
     hpBar->setPercent((float)_lasthp*100/(float)_heroConfig.wagonConfig.hp);
-    hpBar->setPositionY(-50);
+    hpBar->setPositionY(-75);
     hpBar->setAnchorPoint(Point::ANCHOR_MIDDLE);
     this->addChild(hpBar);
     
-    auto nameLabel = Label::create(name.c_str(), "Arial", 25);
-    nameLabel->setPosition(Point(90,-50));
+    // name
+    TTFConfig ttfConfig;
+    ttfConfig.outlineSize = 5;
+    ttfConfig.fontSize = 20;
+    ttfConfig.fontFilePath = "fonts/arial.ttf";
+    auto nameLabel = Label::createWithTTF(ttfConfig, name.c_str(), TextHAlignment::CENTER, 20);
+    nameLabel->setPositionY(-50);
+    nameLabel->setSpacing(-5);
     nameLabel->setAnchorPoint(Point::ANCHOR_MIDDLE);
+    nameLabel->enableOutline(Color4B::BLACK);
+    if(_heroConfig.side == Myself){
+        nameLabel->setTextColor(Color4B(99, 253, 253, 255));
+    } else {
+        nameLabel->setTextColor(Color4B(255, 99, 99, 255));
+    }
     this->addChild(nameLabel);
+    
+    // angle
+    TTFConfig angleTTFConfig;
+    angleTTFConfig.outlineSize = 4;
+    angleTTFConfig.fontSize = 18;
+    angleTTFConfig.fontFilePath = "fonts/arial.ttf";
+    _angleLabel = Label::createWithTTF(angleTTFConfig, "0", TextHAlignment::CENTER, 20);
+    _angleLabel->setPosition(75, -30);
+    _angleLabel->setSpacing(-5);
+    _angleLabel->enableOutline(Color4B::BLACK);
+    _angleLabel->setAnchorPoint(Point::ANCHOR_MIDDLE);
+    this->addChild(_angleLabel,2);
+    
+    this->scheduleUpdate();
     
     return true;
 }
@@ -350,4 +370,23 @@ void Hero::setLife(int life)
     _lasthp = life;
     log("..........%f",(float)_lasthp*100/(float)_heroConfig.wagonConfig.hp);
     hpBar->setPercent((float)_lasthp*100/(float)_heroConfig.wagonConfig.hp);
+}
+
+void Hero::updateAngle(int angle){
+    char angleChars[10];
+    sprintf(angleChars, "%d",angle);
+    _angleLabel->setString(angleChars);
+}
+
+void Hero::update(float delta){
+    int angle = abs(aim->getWorldAngle());
+    if(angle >= 270){
+        angle -= 360;
+    } else if(angle >= 180){
+        angle = -1 * (angle - 180);
+    } else if(angle > 90){
+        angle = 180 - angle;
+    }
+    
+    this->updateAngle(angle);
 }

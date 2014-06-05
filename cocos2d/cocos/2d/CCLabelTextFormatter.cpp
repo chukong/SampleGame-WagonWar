@@ -271,12 +271,12 @@ bool LabelTextFormatter::alignText(Label *theLabel)
     return true;
 }
 
-bool LabelTextFormatter::createStringSprites(Label *theLabel)
+bool LabelTextFormatter::createStringSprites(Label *theLabel, int spacing)
 {
     // check for string
     unsigned int stringLen = theLabel->getStringLength();
     theLabel->_limitShowCount = 0;
-
+    
     // no string
     if (stringLen == 0)
         return false;
@@ -392,7 +392,7 @@ bool LabelTextFormatter::createStringSprites(Label *theLabel)
             continue;
         }
 
-        nextFontPositionX += charAdvance + kernings[i];
+        nextFontPositionX += charAdvance + kernings[i] + spacing;
         
         if (longestLine < nextFontPositionX)
         {
