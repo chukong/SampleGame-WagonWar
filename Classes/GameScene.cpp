@@ -391,7 +391,7 @@ void GameScene::printMyTurn()
     _myturn.Accept(writer);
     log("--\n%s\n--\n", strbuf.GetString());
 }
-void GameScene::explode(Bullet *bullet)
+void GameScene::explode(Bullet *bullet, Hero* hero)
 {
     _following = nullptr;
     auto pos = bullet->getPosition();
@@ -424,35 +424,45 @@ void GameScene::explode(Bullet *bullet)
     for(Node* player : _PlayerLayer->getChildren())
     {
         Hero *p = dynamic_cast<Hero*>(player);
+        
+
+        
         Point ppos(p->getPosition());
         float dist = ppos.getDistance(pos);
         if(dist< exRad + p->radius)
         {
-            p->airborn = true;
-            //TODO: bullet might have push force
-            //get angle from player to bullet
-
-            float rad = (ppos-pos).getAngle();
-            float pushForce = (exRad - dist)*0.05;
-            Point mid(ppos.x-pushForce*cosf(rad), ppos.y-pushForce*sinf(rad));
-            log("b pos %f, %f | m pos %f, %f", (pos-ppos).x, (pos-ppos).y, (mid-ppos).x, (mid-ppos).y);
-            p->setLastPos(mid);
-            
-            //TODO: player should take damage
-            if(_playback)
+            if(p == hero)
             {
-                if(p->getTag() == TAG_MYSELF)
-                {
-                    _myturn["player1"]["hp"].SetInt(p->hurt(250));
-                }
-                else
-                {
-                    _myturn["player2"]["hp"].SetInt(p->hurt(250));
-                }
+                p->hurt(getCurrentPlayer()->_heroConfig.wagonConfig.attack);
             }
             else
             {
-                p->hurt(250);
+                p->airborn = true;
+                //TODO: bullet might have push force
+                //get angle from player to bullet
+                
+                float rad = (ppos-pos).getAngle();
+                float pushForce = (exRad - dist)*0.05;
+                Point mid(ppos.x-pushForce*cosf(rad), ppos.y-pushForce*sinf(rad));
+                log("b pos %f, %f | m pos %f, %f", (pos-ppos).x, (pos-ppos).y, (mid-ppos).x, (mid-ppos).y);
+                p->setLastPos(mid);
+                
+                //TODO: player should take damage
+                if(_playback)
+                {
+                    if(p->getTag() == TAG_MYSELF)
+                    {
+                        _myturn["player1"]["hp"].SetInt(p->hurt(getCurrentPlayer()->_heroConfig.wagonConfig.attack*((float)(getCurrentPlayer()->_heroConfig.wagonConfig.expsize-dist)/(float)getCurrentPlayer()->_heroConfig.wagonConfig.expsize)));
+                    }
+                    else
+                    {
+                        _myturn["player2"]["hp"].SetInt(p->hurt(getCurrentPlayer()->_heroConfig.wagonConfig.attack*((float)(getCurrentPlayer()->_heroConfig.wagonConfig.expsize-dist)/(float)getCurrentPlayer()->_heroConfig.wagonConfig.expsize)));
+                    }
+                }
+                else
+                {
+                    p->hurt(getCurrentPlayer()->_heroConfig.wagonConfig.attack);
+                }
             }
         }
     }
@@ -474,14 +484,9 @@ void GameScene::playback(std::string json)
     p1->setLife(_replay["player1"]["hp"].GetInt());
     p2->setLife(_replay["player2"]["hp"].GetInt());
     
-    //p1->setName(_replay["player1"]["name"].GetString());
-    //p2->setName(_replay["player2"]["name"].GetString());
+    p1->setName(_replay["player1"]["name"].GetString());
+    p2->setName(_replay["player2"]["name"].GetString());
     
-    if(_replay["trun"].GetInt() == 1)
-    {
-        p1->airborn = true;
-        p2->airborn =true;
-    }
     if(!strcmp(_replay["player1"]["facing"].GetString(), "left"))
     {
         p1->flipLeft();
@@ -498,14 +503,25 @@ void GameScene::playback(std::string json)
     {
         p2->flipRight();
     }
+    
+    _playback = true;
+
     if(_replay["turn"].GetInt() == 1)
     {
         //player 1 chose a wagon, player2 just chose a wagon and entered the game
         //now its player 2's turn to move
+        p1->airborn = true;
+        p2->airborn = true;
+        _waitToClear = true;
+//        over =true;
         return;
     }
+    else if(_replay["turn"].GetInt() ==2)
+    {
+        p1->airborn = true;
+        p2->airborn = true;
+    }
     _tick = 0;
-    _playback = true;
 
     _eventDispatcher->dispatchCustomEvent("touch off");
     
@@ -594,7 +610,7 @@ void GameScene::update(float dt)
                 Hero* p = dynamic_cast<Hero*>(player);
                 if(b->getPosition().getDistance(p->getPosition()) < bulletRadius + p->radius)
                 {
-                    explode(b);
+                    explode(b, p);
                     coll = true;
                     log("collide with player");
                     break;
@@ -613,7 +629,7 @@ void GameScene::update(float dt)
                     //for accuracy, we only want the pixels in the circle
                     if(buffer[i].a>0 && Helper::isInCircle(i, bulletRadius))
                     {
-                        explode(b);
+                        explode(b,nullptr);
                         coll = true;
                         break;
                     }
@@ -735,6 +751,7 @@ void GameScene::update(float dt)
     _level->getRT()->onEnd();
     _tick++;
     
+//    log("everythingSleep is %d",everythingSleep);
     if(_waitToClear && everythingSleep)
     {
         if(_playback)
@@ -763,11 +780,13 @@ void GameScene::playerdead(EventCustom* event)
     {
         //lost;
         saveMatchData(false, true);
+        log("win..........");
     }
     else if(hero->_heroConfig.side == Other)
     {
         //win;
         saveMatchData(true, false);
+        log("loss.........");
     }
 }
 

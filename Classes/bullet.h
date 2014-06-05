@@ -23,6 +23,21 @@ struct BulletConfig{
     int expRadius;
 };
 
+const BulletConfig defaultBullet={
+    "circle.png",
+    100,
+    3,
+    90
+};
+
+const BulletConfig horseyBullet =
+{
+    "circle.png",
+    100,
+    3,
+    90
+};
+
 class Bullet : public cocos2d::Sprite
 {
 public:

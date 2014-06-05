@@ -56,7 +56,7 @@ public:
     cocos2d::Point offset;
     
     //virtual void draw(cocos2d::Renderer* renderer, const kmMat4 &transform, bool transformUpdated);
-    void explode(Bullet* bullet);
+    void explode(Bullet* bullet, Hero* hero);
     
     void movePlayer(float x);
     virtual void onEnter();

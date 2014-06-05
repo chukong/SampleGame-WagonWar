@@ -446,21 +446,38 @@ void GPGSManager::TakeTurn(const bool winning, const bool losing)
     //By default, passing through existing participatntResults
     gpg::ParticipantResults results = current_match_.ParticipantResults();
     
-    if (winning) {
-        //Create winning participants result
-        results = current_match_.ParticipantResults()
-        .WithResult(localParticipant.Id(),  // local player ID
-                    0,                      // placing
-                    gpg::MatchResult::WIN   // status
-                    );
-    } else if (losing) {
-        //Create losing participants result
-        results = current_match_.ParticipantResults()
-        .WithResult(localParticipant.Id(),  // local player ID
-                    0,                      // placing
-                    gpg::MatchResult::LOSS  // status
-                    );
+    if(winning || losing)
+    {
+        if (winning) {
+            //Create winning participants result
+            results = current_match_.ParticipantResults()
+            .WithResult(localParticipant.Id(),  // local player ID
+                        0,                      // placing
+                        gpg::MatchResult::WIN   // status
+                        );
+        } else if (losing) {
+            //Create losing participants result
+            results = current_match_.ParticipantResults()
+            .WithResult(localParticipant.Id(),  // local player ID
+                        0,                      // placing
+                        gpg::MatchResult::LOSS  // status
+                        );
+        }
+        
+        manager.FinishMatchDuringMyTurn(
+                           current_match_, g_gameConfig.match_data, results,
+                           [](
+                              gpg::TurnBasedMultiplayerManager::TurnBasedMatchResponse const &
+                              response) {
+                               LOGI("Took turn");
+                               NoTouchLayer* notouchLayer =((NoTouchLayer*)(cocos2d::Director::getInstance()->getRunningScene()->getChildByTag(NOTOUCHTAG)));
+                               if(notouchLayer)
+                                   notouchLayer->setError("Success!");
+                               cocos2d::Director::getInstance()->getEventDispatcher()->dispatchCustomEvent("returntoMenu");
+                           });
+        return ;
     }
+
     
     LOGI("StarTakeTurn...3");
     LOGI("current_match_ is %d",current_match_.Valid());
@@ -476,12 +493,10 @@ void GPGSManager::TakeTurn(const bool winning, const bool losing)
                                       gpg::TurnBasedMultiplayerManager::TurnBasedMatchResponse const &
                                       response) {
                                    LOGI("Took turn");
-//                                   cocos2d::Director::getInstance()->getRunningScene()->getChildByTag(WAGONSELECTTAG)->removeChildByTag(NOTOUCHTAG);
                                    NoTouchLayer* notouchLayer =((NoTouchLayer*)(cocos2d::Director::getInstance()->getRunningScene()->getChildByTag(NOTOUCHTAG)));
                                    if(notouchLayer)
                                        notouchLayer->setError("Success!");
                                    cocos2d::Director::getInstance()->getEventDispatcher()->dispatchCustomEvent("returntoMenu");
-                                   //cocos2d::Director::getInstance()->replaceScene(MainScreenScene::createScene());
                                });
             break;
         case NEXT_PARTICIPANT_AUTOMATCH:
@@ -491,12 +506,10 @@ void GPGSManager::TakeTurn(const bool winning, const bool losing)
                                                   gpg::TurnBasedMultiplayerManager::TurnBasedMatchResponse const &
                                                   response) {
                                                LOGI("Took turn");
-//                                               cocos2d::Director::getInstance()->getRunningScene()->getChildByTag(WAGONSELECTTAG)->removeChildByTag(NOTOUCHTAG);
                                                NoTouchLayer* notouchLayer =((NoTouchLayer*)(cocos2d::Director::getInstance()->getRunningScene()->getChildByTag(NOTOUCHTAG)));
                                                if(notouchLayer)
                                                    notouchLayer->setError("Success!");
                                                cocos2d::Director::getInstance()->getEventDispatcher()->dispatchCustomEvent("returntoMenu");
-//                                               cocos2d::Director::getInstance()->replaceScene(MainScreenScene::createScene());
                                            });
             break;
         case NEXT_PARTICIPANT_NONE:

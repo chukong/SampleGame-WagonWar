@@ -19,13 +19,6 @@ USING_NS_CC;
 //    Sprite::draw(renderer, transform, transformUpdated);
 //}
 
-BulletConfig Bullet::defaultBullet={
-    "circle.png",
-    100,
-    3,
-    90
-};
-
 void Bullet::drawFinished()
 {
     //_world->checkCollision(this);
