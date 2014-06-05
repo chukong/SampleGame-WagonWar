@@ -71,8 +71,6 @@ bool Hero::init(Side side, Body body, Wagon wagon, bool isfacetoright, std::stri
             break;
     }
     
-
-    
     radius = 20;
     
     auto drawN = DrawNode::create();
@@ -120,7 +118,7 @@ bool Hero::init(Side side, Body body, Wagon wagon, bool isfacetoright, std::stri
     this->addChild(hpBarOuter);
     
     hpBar = ui::LoadingBar::create("hpinner.png");
-    hpBar->setPercent((float)_lasthp*100/(float)_heroConfig.wagonConfig.hp);
+    //hpBar->setPercent((float)_lasthp*100/(float)_heroConfig.wagonConfig.hp);
     hpBar->setPositionY(-75);
     hpBar->setAnchorPoint(Point::ANCHOR_MIDDLE);
     this->addChild(hpBar);
@@ -147,12 +145,32 @@ bool Hero::init(Side side, Body body, Wagon wagon, bool isfacetoright, std::stri
     angleTTFConfig.outlineSize = 4;
     angleTTFConfig.fontSize = 18;
     angleTTFConfig.fontFilePath = "fonts/arial.ttf";
-    _angleLabel = Label::createWithTTF(angleTTFConfig, "0", TextHAlignment::CENTER, 20);
+    _angleLabel = Label::createWithTTF(angleTTFConfig, "0", TextHAlignment::CENTER, 30);
     _angleLabel->setPosition(75, -30);
     _angleLabel->setSpacing(-5);
     _angleLabel->enableOutline(Color4B::BLACK);
     _angleLabel->setAnchorPoint(Point::ANCHOR_MIDDLE);
     this->addChild(_angleLabel,2);
+    
+    
+    auto sideSymbol = Sprite::create();
+    if(_heroConfig.side == Myself){
+        sideSymbol->setTexture("you.png");
+    } else {
+        sideSymbol->setTexture("enemy.png");
+    }
+    sideSymbol->setPosition(0,180);
+    sideSymbol->runAction(RepeatForever::create(Sequence::create(MoveBy::create(1, Point(0,20)),
+                                                               MoveBy::create(1, Point(0,-20)),
+                                                               NULL)));
+    this->addChild(sideSymbol,2);
+    
+    auto triangleSymbol = Sprite::create("triangle.png");
+    triangleSymbol->setPosition(0,140);
+    triangleSymbol->runAction(RepeatForever::create(Sequence::create(MoveBy::create(1, Point(0,20)),
+                                                               MoveBy::create(1, Point(0,-20)),
+                                                               NULL)));
+    this->addChild(triangleSymbol,2);
     
     this->scheduleUpdate();
     
@@ -368,7 +386,9 @@ int Hero::hurt(int t_hurt)
 void Hero::setLife(int life)
 {
     _lasthp = life;
-    log("..........%f",(float)_lasthp*100/(float)_heroConfig.wagonConfig.hp);
+    log("life %d", _lasthp);
+    log("life %d", _heroConfig.wagonConfig.hp);
+    log("life..........%f",(float)_lasthp*100/(float)_heroConfig.wagonConfig.hp);
     hpBar->setPercent((float)_lasthp*100/(float)_heroConfig.wagonConfig.hp);
 }
 
