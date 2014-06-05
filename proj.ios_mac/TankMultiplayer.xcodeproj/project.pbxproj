@@ -235,6 +235,14 @@
 		BBA41A28193E062700557287 /* boy.png in Resources */ = {isa = PBXBuildFile; fileRef = BBA41A26193E062700557287 /* boy.png */; };
 		BBA41A29193E062700557287 /* girl.png in Resources */ = {isa = PBXBuildFile; fileRef = BBA41A27193E062700557287 /* girl.png */; };
 		BBA41A30193E16DF00557287 /* powerbar.png in Resources */ = {isa = PBXBuildFile; fileRef = BBA41A2E193E16DF00557287 /* powerbar.png */; };
+		BBFFBBD219407F74004CAF28 /* attack.png in Resources */ = {isa = PBXBuildFile; fileRef = BBFFBBCA19407F74004CAF28 /* attack.png */; };
+		BBFFBBD319407F74004CAF28 /* attackBar.png in Resources */ = {isa = PBXBuildFile; fileRef = BBFFBBCB19407F74004CAF28 /* attackBar.png */; };
+		BBFFBBD419407F74004CAF28 /* explosion.png in Resources */ = {isa = PBXBuildFile; fileRef = BBFFBBCC19407F74004CAF28 /* explosion.png */; };
+		BBFFBBD519407F74004CAF28 /* explosionBar.png in Resources */ = {isa = PBXBuildFile; fileRef = BBFFBBCD19407F74004CAF28 /* explosionBar.png */; };
+		BBFFBBD619407F74004CAF28 /* hp.png in Resources */ = {isa = PBXBuildFile; fileRef = BBFFBBCE19407F74004CAF28 /* hp.png */; };
+		BBFFBBD719407F74004CAF28 /* hpBar.png in Resources */ = {isa = PBXBuildFile; fileRef = BBFFBBCF19407F74004CAF28 /* hpBar.png */; };
+		BBFFBBD819407F74004CAF28 /* speed.png in Resources */ = {isa = PBXBuildFile; fileRef = BBFFBBD019407F74004CAF28 /* speed.png */; };
+		BBFFBBD919407F74004CAF28 /* speedBar.png in Resources */ = {isa = PBXBuildFile; fileRef = BBFFBBD119407F74004CAF28 /* speedBar.png */; };
 		BF171245129291EC00B8313A /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DB012928DE900B8313A /* OpenGLES.framework */; };
 		BF1712471292920000B8313A /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DB412928DE900B8313A /* libz.dylib */; };
 		BF1C47F01293687400B63C5D /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF1C47EA1293683800B63C5D /* QuartzCore.framework */; };
@@ -557,6 +565,14 @@
 		BBA41A26193E062700557287 /* boy.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = boy.png; sourceTree = "<group>"; };
 		BBA41A27193E062700557287 /* girl.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = girl.png; sourceTree = "<group>"; };
 		BBA41A2E193E16DF00557287 /* powerbar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = powerbar.png; sourceTree = "<group>"; };
+		BBFFBBCA19407F74004CAF28 /* attack.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = attack.png; sourceTree = "<group>"; };
+		BBFFBBCB19407F74004CAF28 /* attackBar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = attackBar.png; sourceTree = "<group>"; };
+		BBFFBBCC19407F74004CAF28 /* explosion.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = explosion.png; sourceTree = "<group>"; };
+		BBFFBBCD19407F74004CAF28 /* explosionBar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = explosionBar.png; sourceTree = "<group>"; };
+		BBFFBBCE19407F74004CAF28 /* hp.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hp.png; sourceTree = "<group>"; };
+		BBFFBBCF19407F74004CAF28 /* hpBar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hpBar.png; sourceTree = "<group>"; };
+		BBFFBBD019407F74004CAF28 /* speed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = speed.png; sourceTree = "<group>"; };
+		BBFFBBD119407F74004CAF28 /* speedBar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = speedBar.png; sourceTree = "<group>"; };
 		BF170DB012928DE900B8313A /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		BF170DB412928DE900B8313A /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		BF1C47EA1293683800B63C5D /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -803,6 +819,14 @@
 		78C7DDAA14EBA5050085D0C2 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				BBFFBBCA19407F74004CAF28 /* attack.png */,
+				BBFFBBCB19407F74004CAF28 /* attackBar.png */,
+				BBFFBBCC19407F74004CAF28 /* explosion.png */,
+				BBFFBBCD19407F74004CAF28 /* explosionBar.png */,
+				BBFFBBCE19407F74004CAF28 /* hp.png */,
+				BBFFBBCF19407F74004CAF28 /* hpBar.png */,
+				BBFFBBD019407F74004CAF28 /* speed.png */,
+				BBFFBBD119407F74004CAF28 /* speedBar.png */,
 				BB96B9A219404F9E005BF369 /* enemy_turn_1.png */,
 				BB96B9A319404F9E005BF369 /* enemy_turn_2.png */,
 				BB96B9A419404F9E005BF369 /* enemy.png */,
@@ -1057,9 +1081,11 @@
 				85E8A2EA19382D0A00B0B650 /* btn_start_1.png in Resources */,
 				688029821938B5C1008AD16F /* aimerback.png in Resources */,
 				BBA41A29193E062700557287 /* girl.png in Resources */,
+				BBFFBBD819407F74004CAF28 /* speed.png in Resources */,
 				85E8A2DA19382D0A00B0B650 /* btn_leaderboard_1.png in Resources */,
 				85F84670192F77BE00DAD41B /* GooglePlus.bundle in Resources */,
 				BB96B994193F41B8005BF369 /* board.png in Resources */,
+				BBFFBBD219407F74004CAF28 /* attack.png in Resources */,
 				85E8A2E019382D0A00B0B650 /* btn_quickmatch_0.png in Resources */,
 				85E8A2FC19382D0A00B0B650 /* wagonselect_bk.png in Resources */,
 				85F84671192F77BE00DAD41B /* gpg.bundle in Resources */,
@@ -1073,6 +1099,7 @@
 				BB6FC4E5193E2853003BF502 /* innerpower.png in Resources */,
 				BBA41A22193DCDA700557287 /* mech.png in Resources */,
 				5087E78117EB970100C73F5D /* Icon-120.png in Resources */,
+				BBFFBBD619407F74004CAF28 /* hp.png in Resources */,
 				85E8A2E619382D0A00B0B650 /* btn_ready_1.png in Resources */,
 				85E8A2D619382D0A00B0B650 /* btn_invitefriend_1.png in Resources */,
 				BB96B9B519404F9E005BF369 /* you.png in Resources */,
@@ -1092,6 +1119,7 @@
 				85111BB1192F4DBE00C8D3C8 /* windDial.png in Resources */,
 				85E8A2CE19382D0A00B0B650 /* boy_1.png in Resources */,
 				BBA41A21193DCDA700557287 /* mech.plist in Resources */,
+				BBFFBBD919407F74004CAF28 /* speedBar.png in Resources */,
 				BB6FC4ED193F0798003BF502 /* shawdow.png in Resources */,
 				85E8A2EE19382D0A00B0B650 /* girl_0.png in Resources */,
 				68BBD8A9192462DE001F9F73 /* burnmark.png in Resources */,
@@ -1110,6 +1138,7 @@
 				BB96B9B119404F9E005BF369 /* playbackinnerbar.png in Resources */,
 				5087E78317EB970100C73F5D /* Icon-152.png in Resources */,
 				85E8A2D419382D0A00B0B650 /* btn_invitefriend_0.png in Resources */,
+				BBFFBBD319407F74004CAF28 /* attackBar.png in Resources */,
 				68BBD8B9192495E4001F9F73 /* map.png in Resources */,
 				68BBD89E192462D7001F9F73 /* test4.png in Resources */,
 				5087E77D17EB970100C73F5D /* Default-568h@2x.png in Resources */,
@@ -1122,6 +1151,7 @@
 				5087E78017EB970100C73F5D /* Icon-114.png in Resources */,
 				BB96B97E193F0A35005BF369 /* hpinner.png in Resources */,
 				68BBD8B1192462DE001F9F73 /* expMask.png in Resources */,
+				BBFFBBD719407F74004CAF28 /* hpBar.png in Resources */,
 				50EF62A217ECD613001EB2F8 /* Icon-29.png in Resources */,
 				68BBD8A7192462DE001F9F73 /* bluryBack.png in Resources */,
 				85111BAD192F4DBE00C8D3C8 /* number1.png in Resources */,
@@ -1146,8 +1176,10 @@
 				BB96B97F193F0A35005BF369 /* hpouter.png in Resources */,
 				50EF629817ECD46A001EB2F8 /* Icon-80.png in Resources */,
 				BBA41A18193DB92D00557287 /* tank.png in Resources */,
+				BBFFBBD419407F74004CAF28 /* explosion.png in Resources */,
 				5087E78417EB970100C73F5D /* Icon-57.png in Resources */,
 				5087E77E17EB970100C73F5D /* Default.png in Resources */,
+				BBFFBBD519407F74004CAF28 /* explosionBar.png in Resources */,
 				6880297F1938AFEB008AD16F /* cnm.png in Resources */,
 				68BBD890192462D7001F9F73 /* HelloWorld.png in Resources */,
 				BB96B998193F41B8005BF369 /* button_normal.png in Resources */,

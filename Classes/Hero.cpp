@@ -7,6 +7,7 @@
 //
 
 #include "Hero.h"
+#include <algorithm>
 
 USING_NS_CC;
 
@@ -112,23 +113,34 @@ bool Hero::init(Side side, Body body, Wagon wagon, bool isfacetoright, std::stri
     }
     
     //hp
-    auto hpBarOuter = Sprite::create("hpouter.png");
-    hpBarOuter->setAnchorPoint(Point::ANCHOR_MIDDLE);
-    hpBarOuter->setPositionY(-75);
-    this->addChild(hpBarOuter);
+    _hpBarOuter = Sprite::create("hpouter.png");
+    _hpBarOuter->setAnchorPoint(Point::ANCHOR_MIDDLE);
+    _hpBarOuter->setPositionY(-75);
+    this->addChild(_hpBarOuter);
     
-    hpBar = ui::LoadingBar::create("hpinner.png");
+    auto hpSprite = Sprite::create("hpinner.png");
+    hpSprite->setColor(Color3B(255,231, 33));
+    _hpBarBack = ProgressTimer::create(hpSprite);
+    _hpBarBack->setType(ProgressTimer::Type::BAR);
+    _hpBarBack->setBarChangeRate(Point(1,0));
+    _hpBarBack->setMidpoint(Point(0,0));
+    //pt->runAction(ProgressFromTo::create(5,0,100));
+    _hpBarBack->setPositionY(-75);
+    this->addChild(_hpBarBack);
+    
+    _hpInnerBar = ui::LoadingBar::create("hpinner.png");
     //hpBar->setPercent((float)_lasthp*100/(float)_heroConfig.wagonConfig.hp);
-    hpBar->setPositionY(-75);
-    hpBar->setAnchorPoint(Point::ANCHOR_MIDDLE);
-    this->addChild(hpBar);
+    _hpInnerBar->setPositionY(-75);
+    _hpInnerBar->setAnchorPoint(Point::ANCHOR_MIDDLE);
+    _hpInnerBar->setColor(Color3B(87, 227, 0));
+    this->addChild(_hpInnerBar);
     
     // name
     TTFConfig ttfConfig;
     ttfConfig.outlineSize = 5;
     ttfConfig.fontSize = 20;
     ttfConfig.fontFilePath = "fonts/arial.ttf";
-    _nameLabel = Label::createWithTTF(ttfConfig, name.c_str(), TextHAlignment::CENTER, 20);
+    _nameLabel = Label::createWithTTF(ttfConfig, name.c_str(), TextHAlignment::CENTER, 200);
     _nameLabel->setPositionY(-50);
     _nameLabel->setSpacing(-5);
     _nameLabel->setAnchorPoint(Point::ANCHOR_MIDDLE);
@@ -153,24 +165,27 @@ bool Hero::init(Side side, Body body, Wagon wagon, bool isfacetoright, std::stri
     this->addChild(_angleLabel,2);
     
     
-    auto sideSymbol = Sprite::create();
+    _sideSymbol = Sprite::create();
     if(_heroConfig.side == Myself){
-        sideSymbol->setTexture("you.png");
+        _sideSymbol->setTexture("you.png");
     } else {
-        sideSymbol->setTexture("enemy.png");
+        _sideSymbol->setTexture("enemy.png");
     }
-    sideSymbol->setPosition(0,180);
-    sideSymbol->runAction(RepeatForever::create(Sequence::create(MoveBy::create(1, Point(0,20)),
+    _sideSymbol->setPosition(0,180);
+    _sideSymbol->runAction(RepeatForever::create(Sequence::create(MoveBy::create(1, Point(0,20)),
                                                                MoveBy::create(1, Point(0,-20)),
                                                                NULL)));
-    this->addChild(sideSymbol,2);
+    this->addChild(_sideSymbol,2);
     
-    auto triangleSymbol = Sprite::create("triangle.png");
-    triangleSymbol->setPosition(0,140);
-    triangleSymbol->runAction(RepeatForever::create(Sequence::create(MoveBy::create(1, Point(0,20)),
+    _triangleSymbol = Sprite::create("triangle.png");
+    _triangleSymbol->setPosition(0,140);
+    _triangleSymbol->runAction(RepeatForever::create(Sequence::create(MoveBy::create(1, Point(0,20)),
                                                                MoveBy::create(1, Point(0,-20)),
                                                                NULL)));
-    this->addChild(triangleSymbol,2);
+    this->addChild(_triangleSymbol,2);
+    
+    hideAimer();
+    hideTurnSymbol();
     
     this->scheduleUpdate();
     
@@ -228,6 +243,7 @@ void Hero::moveleft()
             break;
     }
 }
+
 void Hero::moveright()
 {
     flipRight();
@@ -263,6 +279,7 @@ void Hero::moveright()
             break;
     }
 }
+
 void Hero::startshoot()
 {
     switch (_heroConfig.wagon) {
@@ -297,6 +314,7 @@ void Hero::startshoot()
             break;
     }
 }
+
 void Hero::hit()
 {
     switch (_heroConfig.wagon) {
@@ -331,6 +349,7 @@ void Hero::hit()
             break;
     }
 }
+
 void Hero::stop()
 {
     switch (_heroConfig.wagon) {
@@ -371,13 +390,31 @@ int Hero::hurt(int t_hurt)
     _lasthp = _lasthp - t_hurt;
     if (_lasthp > 0)
     {
-        log("%f",(float)_lasthp/(float)_heroConfig.wagonConfig.hp);
-        hpBar->setPercent((float)_lasthp*100/(float)_heroConfig.wagonConfig.hp);
+        float nowHPPercent = (float)_lasthp*100/(float)_heroConfig.wagonConfig.hp;
+        log("nowHPpe %f", nowHPPercent);
+        _hpInnerBar->setPercent(nowHPPercent);
+        _hpBarBack->runAction(ProgressTo::create(1,nowHPPercent));
+        _hpInnerBar->runAction(Sequence::create(MoveBy::create(0.1, Point(0, 5)),
+                                                MoveBy::create(0.1, Point(0, -10)),
+                                                MoveBy::create(0.1, Point(0, 5)),
+                                                NULL));
+        _hpBarBack->runAction(Sequence::create(MoveBy::create(0.1, Point(0, 5)),
+                                                MoveBy::create(0.1, Point(0, -10)),
+                                                MoveBy::create(0.1, Point(0, 5)),
+                                                NULL));
+
+        _hpBarOuter->runAction(Sequence::create(MoveBy::create(0.1, Point(0, 5)),
+                                                MoveBy::create(0.1, Point(0, -10)),
+                                                MoveBy::create(0.1, Point(0, 5)),
+                                                NULL));
+
     }
     else
     {
+        log("dddddd");
         _lasthp = 0;
-        hpBar->setPercent(0);
+        _hpInnerBar->setPercent(0);
+        _hpBarBack->runAction(ProgressTo::create(1,_lasthp));
         _eventDispatcher->dispatchCustomEvent("playerdead", this);
     }
     return _lasthp;
@@ -386,10 +423,12 @@ int Hero::hurt(int t_hurt)
 void Hero::setLife(int life)
 {
     _lasthp = life;
-    log("life %d", _lasthp);
-    log("life %d", _heroConfig.wagonConfig.hp);
-    log("life..........%f",(float)_lasthp*100/(float)_heroConfig.wagonConfig.hp);
-    hpBar->setPercent((float)_lasthp*100/(float)_heroConfig.wagonConfig.hp);
+    float nowHPPercent = (float)_lasthp*100/(float)_heroConfig.wagonConfig.hp;
+    if(nowHPPercent <= 20){
+        _hpInnerBar->setColor(Color3B(227,96,0));
+    }
+    _hpBarBack->setPercentage(nowHPPercent);
+    _hpInnerBar->setPercent(nowHPPercent);
 }
 
 void Hero::updateAngle(int angle){
@@ -412,5 +451,28 @@ void Hero::update(float delta){
 }
 
 void Hero::setName(std::string name){
+    
+    for (int i = 0; i < name.length(); i++)
+        name[i] = toupper((int)name[i]);
     _nameLabel->setString(name);
+}
+
+void Hero::hideAimer(){
+    aim->setVisible(false);
+    _angleLabel->setVisible(false);
+}
+
+void Hero::showAimer(){
+    aim->setVisible(true);
+    _angleLabel->setVisible(true);
+}
+
+void Hero::hideTurnSymbol(){
+    _sideSymbol->setVisible(false);
+    _triangleSymbol->setVisible(false);
+}
+
+void Hero::showTurnSymbol(){
+    _sideSymbol->setVisible(true);
+    _triangleSymbol->setVisible(true);
 }

@@ -92,12 +92,21 @@ public:
     cocos2d::Sprite* _wagonASprite;
     cocos2d::Sprite* _wagonBSprite;
     
-    cocos2d::ui::LoadingBar* hpBar;
+    cocos2d::Sprite* _hpBarOuter;
+    cocos2d::ui::LoadingBar* _hpInnerBar;
+    cocos2d::ProgressTimer* _hpBarBack;
     cocos2d::Label* _nameLabel;
     
     void setName(std::string name);
     
     Aimer* aim;
+    void showAimer();
+    void hideAimer();
+    
+    cocos2d::Sprite* _sideSymbol;
+    cocos2d::Sprite* _triangleSymbol;
+    void showTurnSymbol();
+    void hideTurnSymbol();
     
     cocos2d::Label* _angleLabel;
     void updateAngle(int angle);
