@@ -59,7 +59,7 @@ public:
     static Hero* create(Side side = Myself, Body body = BOY, Wagon wagon = HORSEY, bool isfacetoright = true, std::string name = "");
     virtual bool init(Side side, Body body, Wagon wagon, bool isfacetoright, std::string name);
     
-    Hero():airborn(true), needFix(false), moveDelta(0,0.02){};
+    Hero():airborn(false), needFix(false), moveDelta(0,0.02){};
     
     void moveleft();
     void moveright();
@@ -85,7 +85,7 @@ public:
     
     //by Jacky
     HeroConfig _heroConfig;
-    int _lasthp = 0;
+    int _lasthp ;
 
     cocos2d::Node* _wagonPoint;
     cocos2d::Sprite* _bodySprite;

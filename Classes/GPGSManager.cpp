@@ -169,10 +169,12 @@ void GPGSManager::QuickMatch()
                                          ParseMatchData();
                                          if (current_match_.HasData() == false && current_match_.Data().size() == 0)
                                          {
+                                             setPlayer1Name();
                                              cocos2d::Director::getInstance()->getEventDispatcher()->dispatchCustomEvent("enterWagonSelect_1");
                                          }
                                          else
                                          {
+                                             setPlayer2Name();
                                              cocos2d::Director::getInstance()->getEventDispatcher()->dispatchCustomEvent("enterWagonSelect_2");
                                          }
                                      }
@@ -215,6 +217,7 @@ void GPGSManager::InviteFriend()
                                                                         LOGI("InviteFriend Game Begin...By Jacky");
                                                                       //PlayGame(matchResponse.match);
                                                                         current_match_ = matchResponse.match;
+                                                                        setPlayer1Name();
                                                                         cocos2d::Director::getInstance()->getEventDispatcher()->dispatchCustomEvent("enterWagonSelect_1");
                                                                     }
                                                                     else
@@ -263,9 +266,11 @@ void GPGSManager::ShowMatchInbox()
                     int cur_match_turn = GetMatchTurn();//no found, must return 0;
                     cur_match_turn++;
                     if(cur_match_turn == 1){
+                        setPlayer1Name();
                         cocos2d::Director::getInstance()->getEventDispatcher()->dispatchCustomEvent("enterWagonSelect_1");
                     }
                     else if(cur_match_turn ==2){
+                        setPlayer2Name();
                         cocos2d::Director::getInstance()->getEventDispatcher()->dispatchCustomEvent("enterWagonSelect_2");
                     }
                     else if(cur_match_turn >=3){
@@ -410,6 +415,8 @@ void GPGSManager::TakeTurn(const bool winning, const bool losing)
     LOGI("StarTakeTurn...0");
     gpg::TurnBasedMultiplayerManager& manager = gameServices->TurnBasedMultiplayer();
     gpg::PlayerManager::FetchSelfResponse localPlayer = gameServices->Players().FetchSelfBlocking();
+    LOGI("Taking my turnxxxxxxx. local participant name:%s", localPlayer.data.Name().c_str());
+    
     
     LOGI("StarTakeTurn...1");
     //Find the participant for the local player.
@@ -421,8 +428,9 @@ void GPGSManager::TakeTurn(const bool winning, const bool losing)
         }
     }
     
-    LOGI("Taking my turn. local participant id:%s",
-         localParticipant.Id().c_str());
+    LOGI("Taking my turn. local participant id:%s", localParticipant.Id().c_str());
+    LOGI("Taking my turn. local participant name:%s", localParticipant.DisplayName().c_str());
+    
     
     std::vector<gpg::MultiplayerParticipant> participants = current_match_.Participants();
     int32_t nextPlayerIndex = GetNextParticipant();
@@ -438,21 +446,38 @@ void GPGSManager::TakeTurn(const bool winning, const bool losing)
     //By default, passing through existing participatntResults
     gpg::ParticipantResults results = current_match_.ParticipantResults();
     
-    if (winning) {
-        //Create winning participants result
-        results = current_match_.ParticipantResults()
-        .WithResult(localParticipant.Id(),  // local player ID
-                    0,                      // placing
-                    gpg::MatchResult::WIN   // status
-                    );
-    } else if (losing) {
-        //Create losing participants result
-        results = current_match_.ParticipantResults()
-        .WithResult(localParticipant.Id(),  // local player ID
-                    0,                      // placing
-                    gpg::MatchResult::LOSS  // status
-                    );
+    if(winning || losing)
+    {
+        if (winning) {
+            //Create winning participants result
+            results = current_match_.ParticipantResults()
+            .WithResult(localParticipant.Id(),  // local player ID
+                        0,                      // placing
+                        gpg::MatchResult::WIN   // status
+                        );
+        } else if (losing) {
+            //Create losing participants result
+            results = current_match_.ParticipantResults()
+            .WithResult(localParticipant.Id(),  // local player ID
+                        0,                      // placing
+                        gpg::MatchResult::LOSS  // status
+                        );
+        }
+        
+        manager.FinishMatchDuringMyTurn(
+                           current_match_, g_gameConfig.match_data, results,
+                           [](
+                              gpg::TurnBasedMultiplayerManager::TurnBasedMatchResponse const &
+                              response) {
+                               LOGI("Took turn");
+                               NoTouchLayer* notouchLayer =((NoTouchLayer*)(cocos2d::Director::getInstance()->getRunningScene()->getChildByTag(NOTOUCHTAG)));
+                               if(notouchLayer)
+                                   notouchLayer->setError("Success!");
+                               cocos2d::Director::getInstance()->getEventDispatcher()->dispatchCustomEvent("returntoMenu");
+                           });
+        return ;
     }
+
     
     LOGI("StarTakeTurn...3");
     LOGI("current_match_ is %d",current_match_.Valid());
@@ -468,12 +493,10 @@ void GPGSManager::TakeTurn(const bool winning, const bool losing)
                                       gpg::TurnBasedMultiplayerManager::TurnBasedMatchResponse const &
                                       response) {
                                    LOGI("Took turn");
-//                                   cocos2d::Director::getInstance()->getRunningScene()->getChildByTag(WAGONSELECTTAG)->removeChildByTag(NOTOUCHTAG);
                                    NoTouchLayer* notouchLayer =((NoTouchLayer*)(cocos2d::Director::getInstance()->getRunningScene()->getChildByTag(NOTOUCHTAG)));
                                    if(notouchLayer)
                                        notouchLayer->setError("Success!");
                                    cocos2d::Director::getInstance()->getEventDispatcher()->dispatchCustomEvent("returntoMenu");
-                                   //cocos2d::Director::getInstance()->replaceScene(MainScreenScene::createScene());
                                });
             break;
         case NEXT_PARTICIPANT_AUTOMATCH:
@@ -483,12 +506,10 @@ void GPGSManager::TakeTurn(const bool winning, const bool losing)
                                                   gpg::TurnBasedMultiplayerManager::TurnBasedMatchResponse const &
                                                   response) {
                                                LOGI("Took turn");
-//                                               cocos2d::Director::getInstance()->getRunningScene()->getChildByTag(WAGONSELECTTAG)->removeChildByTag(NOTOUCHTAG);
                                                NoTouchLayer* notouchLayer =((NoTouchLayer*)(cocos2d::Director::getInstance()->getRunningScene()->getChildByTag(NOTOUCHTAG)));
                                                if(notouchLayer)
                                                    notouchLayer->setError("Success!");
                                                cocos2d::Director::getInstance()->getEventDispatcher()->dispatchCustomEvent("returntoMenu");
-//                                               cocos2d::Director::getInstance()->replaceScene(MainScreenScene::createScene());
                                            });
             break;
         case NEXT_PARTICIPANT_NONE:
@@ -521,4 +542,18 @@ int GPGSManager::GetMatchTurn()
     }
     else
         return 0;
+}
+
+void GPGSManager::setPlayer1Name()
+{
+    gpg::PlayerManager::FetchSelfResponse localPlayer = gameServices->Players().FetchSelfBlocking();
+    g_gameConfig.player1Name = localPlayer.data.Name();
+    LOGI("player1 name:%s", localPlayer.data.Name().c_str());
+}
+
+void GPGSManager::setPlayer2Name()
+{
+    gpg::PlayerManager::FetchSelfResponse localPlayer = gameServices->Players().FetchSelfBlocking();
+    g_gameConfig.player2Name = localPlayer.data.Name();
+    LOGI("player2 name:%s", localPlayer.data.Name().c_str());
 }

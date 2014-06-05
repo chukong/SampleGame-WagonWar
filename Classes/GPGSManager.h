@@ -44,6 +44,8 @@ public:
     static void ParseMatchData();
     
     static int GetMatchTurn();
+    static void setPlayer1Name();
+    static void setPlayer2Name();
 
 private:
     static bool isSignedIn;
