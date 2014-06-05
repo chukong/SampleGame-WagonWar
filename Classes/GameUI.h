@@ -88,6 +88,14 @@ protected:
     cocos2d::ui::LoadingBar* _playBackInnerBar;
     cocos2d::Label* _turnInfoLabel;
     cocos2d::Label* _timeLabel;
+    
+    int _tick = 0;
+    int _playBackTickSum;
+    std::string _enemyName;
+    
+    void update(float delta);
+    void setPlayBackTickSum(int tickSum){ _playBackTickSum = tickSum;};
+    void setEnemyName(std::string enemyName){ _enemyName = enemyName;};
 };
 
 #endif /* defined(__TankMultiplayer__GameUI__) */
