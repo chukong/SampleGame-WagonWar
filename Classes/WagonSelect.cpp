@@ -197,6 +197,27 @@ void WagonSelect::createUI()
     _dude4->setScale(1.5f);
     wagon_bk->addChild(_dude4,2);
     
+    //shawdow
+    auto shawdow1 = Sprite::create("shawdow.png");
+    shawdow1->setAnchorPoint(Point::ANCHOR_MIDDLE);
+    shawdow1->setPosition(Point(120,g_visibleRect.visibleHeight/2-120));
+    wagon_bk->addChild(shawdow1,2);
+
+    auto shawdow2 = Sprite::create("shawdow.png");
+    shawdow2->setAnchorPoint(Point::ANCHOR_MIDDLE);
+    shawdow2->setPosition(Point(310,g_visibleRect.visibleHeight/2-120));
+    wagon_bk->addChild(shawdow2,2);
+
+    auto shawdow3 = Sprite::create("shawdow.png");
+    shawdow3->setAnchorPoint(Point::ANCHOR_MIDDLE);
+    shawdow3->setPosition(Point(500,g_visibleRect.visibleHeight/2-120));
+    wagon_bk->addChild(shawdow3,2);
+
+    auto shawdow4 = Sprite::create("shawdow.png");
+    shawdow4->setAnchorPoint(Point::ANCHOR_MIDDLE);
+    shawdow4->setPosition(Point(700,g_visibleRect.visibleHeight/2-120));
+    wagon_bk->addChild(shawdow4,2);
+
     //flash
     flash = Sprite::create("wagon_flash.png");
     flash->setAnchorPoint(Point::ANCHOR_MIDDLE);

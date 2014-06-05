@@ -137,6 +137,7 @@ void GameScene::startShoot()
 void GameScene::endShoot()
 {
     int tick = _tick - _tickPre;
+    tick = tick>180?180:tick;
     //log("tick %d", tick);
     auto p = getCurrentPlayer();
     auto offset = getMovableSize();

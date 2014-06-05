@@ -36,7 +36,8 @@ public:
     
     static bool multilineText(Label *theLabel);
     static bool alignText(Label *theLabel);
-    static bool createStringSprites(Label *theLabel);
+    // Rye
+    static bool createStringSprites(Label *theLabel, int spacing);
 
 };
 
