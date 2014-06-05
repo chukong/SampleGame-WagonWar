@@ -87,6 +87,9 @@ public:
     
     std::vector<uint8_t> match_data;
     std::string match_string;
+    
+    std::string player1Name;
+    std::string player2Name;
 };
 
 extern GameConfig g_gameConfig;

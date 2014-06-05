@@ -341,7 +341,7 @@ bool PlayBackIndictaor::init(){
     addChild(_timeLabel);
     
     auto tickSumListener = EventListenerCustom::create("tickSum", [=](EventCustom* event){
-        int tickSum = (int)(event->getUserData());
+        int tickSum = (intptr_t)(event->getUserData());
         _playBackTickSum = tickSum;
     });
     
