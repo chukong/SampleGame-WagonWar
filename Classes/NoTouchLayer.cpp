@@ -28,7 +28,7 @@ bool NoTouchLayer::init()
     listener->onTouchMoved = [](Touch* touch, Event* event){};
     _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
     
-    label = Label::create("Connecting to Google Service...", "Arial", 40);
+    label = Label::create("Connecting to Google Service...", "Arial", 30);
     label->setAnchorPoint(Point::ANCHOR_MIDDLE);
     label->setPosition(g_visibleRect.center);
     this->addChild(label);

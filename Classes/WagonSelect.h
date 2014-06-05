@@ -42,6 +42,9 @@ public:
     void setup_player1_mactchdata();
     
     void setup_player2_mactchdata();
+    
+    void returntoMenu();
+    void entertoMenu(float dt);
 
 private:
     

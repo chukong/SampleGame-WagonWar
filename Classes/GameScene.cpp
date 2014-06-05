@@ -15,6 +15,9 @@
 #include "Configuration.h"
 #include "GPGSManager.h"
 #include "Aimer.h"
+#include "NoTouchLayer.h"
+#include "MainScreenScene.h"
+#include "SimpleAudioEngine.h"
 
 USING_NS_CC;
 
@@ -111,6 +114,9 @@ void GameScene::initListeners()
     auto playerDeadListener = EventListenerCustom::create("playerdead", CC_CALLBACK_1(GameScene::playerdead, this));
     _eventDispatcher->addEventListenerWithSceneGraphPriority(playerDeadListener, this);
     
+    auto returnMenuListener = EventListenerCustom::create("returntoMenu", CC_CALLBACK_0(GameScene::returntoMenu, this));
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(returnMenuListener, this);
+    
 }
 void GameScene::startShoot()
 {
@@ -201,7 +207,7 @@ void GameScene::onEnter()
     std::string player2turn4 = "{\"turn\":3,\"player1\":{\"shootangle\":-45,\"wagon\":0,\"male\":true,\"hp\":1000,\"posx\":546.472,\"posy\":573.07,\"facing\":\"right\"},\"player2\":{\"shootangle\":-179.172,\"wagon\":1,\"male\":false,\"hp\":1000,\"posx\":1084.18,\"posy\":592.764,\"facing\":\"left\"},\"actions\":[{\"tick\":270,\"action\":\"go right\"},{\"tick\":637,\"action\":\"stop\"},{\"tick\":670,\"action\":\"start shoot\"},{\"tick\":696,\"action\":\"end shoot\"}],\"explosions\":[{\"x\":676.935,\"y\":485.313}],\"windx\":0.01,\"windy\":0.01}";
     std::string player1turn5 = "{\"turn\":4,\"player1\":{\"shootangle\":-45,\"wagon\":0,\"male\":true,\"hp\":600,\"posx\":677.011,\"posy\":459.464,\"facing\":\"right\"},\"player2\":{\"shootangle\":-180.601,\"wagon\":1,\"male\":false,\"hp\":500,\"posx\":1084.19,\"posy\":592.674,\"facing\":\"left\"},\"actions\":[{\"tick\":42,\"action\":\"go left\"},{\"tick\":181,\"action\":\"stop\"},{\"tick\":290,\"action\":\"start shoot\"},{\"tick\":311,\"action\":\"end shoot\"}],\"explosions\":[{\"x\":676.935,\"y\":485.313},{\"x\":806.245,\"y\":436.808}],\"windx\":0.01,\"windy\":0.01}";
     this->initTests();
-    playback(player1turn5);
+    playback(g_gameConfig.match_string);
     
     buildMyTurn();
 
@@ -453,6 +459,7 @@ void GameScene::explode(Bullet *bullet)
 }
 void GameScene::playback(std::string json)
 {
+    CocosDenshion::SimpleAudioEngine::getInstance()->playBackgroundMusic("Giant Insectoid Battle.mp3");
     tempjson = json;
     _replay.Parse<rapidjson::kParseDefaultFlags>(json.c_str());
     this->setWind(Point(_replay["windx"].GetDouble(),_replay["windy"].GetDouble()));
@@ -730,6 +737,7 @@ void GameScene::update(float dt)
             _playback = false;
             _tick = 0;
             log("play back finished");
+            CocosDenshion::SimpleAudioEngine::getInstance()->playBackgroundMusic("Celestial Motive m.mp3");
             //need to delete actions
             _myturn["actions"].Clear();
         }
@@ -765,6 +773,23 @@ void GameScene::saveMatchData(bool win, bool loss)
     
     g_gameConfig.match_string = strbuf.GetString();
     log("setup_player2_matchdata...%s",g_gameConfig.match_string.c_str());
+    
+    auto notouchlayer = NoTouchLayer::create();
+    notouchlayer->setTag(NOTOUCHTAG);
+    Director::getInstance()->getRunningScene()->addChild(notouchlayer,100);
 
-    //GPGSManager::TakeTurn(win, loss);
+    GPGSManager::TakeTurn(win, loss);
+}
+
+void GameScene::returntoMenu()
+{
+    log("call...return to menu");
+    scheduleOnce(schedule_selector(GameScene::entertoMenu), 1.0f);
+}
+
+void GameScene::entertoMenu(float dt)
+{
+    log("call...entertomenu");
+    auto scene = MainScreenScene::createScene();
+    cocos2d::Director::getInstance()->replaceScene(scene);
 }

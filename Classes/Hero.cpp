@@ -130,17 +130,17 @@ bool Hero::init(Side side, Body body, Wagon wagon, bool isfacetoright, std::stri
     ttfConfig.outlineSize = 5;
     ttfConfig.fontSize = 20;
     ttfConfig.fontFilePath = "fonts/arial.ttf";
-    auto nameLabel = Label::createWithTTF(ttfConfig, name.c_str(), TextHAlignment::CENTER, 20);
-    nameLabel->setPositionY(-50);
-    nameLabel->setSpacing(-5);
-    nameLabel->setAnchorPoint(Point::ANCHOR_MIDDLE);
-    nameLabel->enableOutline(Color4B::BLACK);
+    _nameLabel = Label::createWithTTF(ttfConfig, name.c_str(), TextHAlignment::CENTER, 20);
+    _nameLabel->setPositionY(-50);
+    _nameLabel->setSpacing(-5);
+    _nameLabel->setAnchorPoint(Point::ANCHOR_MIDDLE);
+    _nameLabel->enableOutline(Color4B::BLACK);
     if(_heroConfig.side == Myself){
-        nameLabel->setTextColor(Color4B(99, 253, 253, 255));
+        _nameLabel->setTextColor(Color4B(99, 253, 253, 255));
     } else {
-        nameLabel->setTextColor(Color4B(255, 99, 99, 255));
+        _nameLabel->setTextColor(Color4B(255, 99, 99, 255));
     }
-    this->addChild(nameLabel);
+    this->addChild(_nameLabel);
     
     // angle
     TTFConfig angleTTFConfig;
@@ -389,4 +389,8 @@ void Hero::update(float delta){
     }
     
     this->updateAngle(angle);
+}
+
+void Hero::setName(std::string name){
+    _nameLabel->setString(name);
 }

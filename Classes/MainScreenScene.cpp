@@ -30,8 +30,6 @@ Scene* MainScreenScene::createScene()
     
     auto layer = MainScreenScene::create();
     
-    layer->setTag(MAINLAYERTAG);
-    
     scene->addChild(layer);
     
     return scene;
@@ -257,10 +255,9 @@ void MainScreenScene::quickmatch_callback(cocos2d::Ref* pSender)
         
         auto notouchlayer = NoTouchLayer::create();
         notouchlayer->setTag(NOTOUCHTAG);
-        this->addChild(notouchlayer,100);
+        Director::getInstance()->getRunningScene()->addChild(notouchlayer,100);
         
         GPGSManager::QuickMatch();
-        //Director::getInstance()->replaceScene(WagonSelect::createScene(SECOND_TURN));
     }
     else{
         GPGSManager::BeginUserInitiatedSignIn();
@@ -336,7 +333,7 @@ void MainScreenScene::enterWagonSelect_1()
 void MainScreenScene::enterWagonSelectWithDelay_1(float dt)
 {
     log("recv data is ===>%s", g_gameConfig.match_string.c_str());
-    this->removeChildByTag(NOTOUCHTAG);
+    Director::getInstance()->getRunningScene()->removeChildByTag(NOTOUCHTAG);
     auto scene = WagonSelect::createScene(FIRST_TURN);
     cocos2d::Director::getInstance()->replaceScene(scene);
 }
@@ -349,7 +346,7 @@ void MainScreenScene::enterWagonSelect_2()
 void MainScreenScene::enterWagonSelectWithDelay_2(float dt)
 {
     log("recv data is ===>%s", g_gameConfig.match_string.c_str());
-    this->removeChildByTag(NOTOUCHTAG);
+    Director::getInstance()->getRunningScene()->removeChildByTag(NOTOUCHTAG);
     auto scene = WagonSelect::createScene(SECOND_TURN);
     cocos2d::Director::getInstance()->replaceScene(scene);
 }
