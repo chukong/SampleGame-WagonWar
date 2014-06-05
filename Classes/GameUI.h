@@ -30,6 +30,7 @@ protected:
     GameUI(){};
     cocos2d::EventListenerTouchOneByOne *_mytouchListener;
     void _toggleTouchEnable(bool onoff);
+    void switchTurn(bool isMyTurn);
 };
 
 class WindIndicator : public cocos2d::Node

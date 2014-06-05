@@ -44,45 +44,26 @@ bool GameUI::init()
     auto touchOnListener = EventListenerCustom::create("touch on", CC_CALLBACK_0(GameUI::_toggleTouchEnable, this, true));
     _eventDispatcher->addEventListenerWithSceneGraphPriority(touchOnListener, this);
     
+    auto enemyTurnListener = EventListenerCustom::create("enemy's turn", CC_CALLBACK_0(GameUI::switchTurn, this, false));
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(enemyTurnListener, this);
+    
+    auto myTurnListener = EventListenerCustom::create("my turn", CC_CALLBACK_0(GameUI::switchTurn, this, true));
+    
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(myTurnListener, this);
+    
     return true;
 }
 
 void GameUI::_toggleTouchEnable(bool onoff)
 {
+    _mytouchListener->setEnabled(onoff);
+}
+
+void GameUI::switchTurn(bool isMyTurn){
     auto vsize = Director::getInstance()->getVisibleSize();
     auto vorigin = Director::getInstance()->getVisibleOrigin();
     
-    //_mytouchListener->setEnabled(onoff);
-    if(onoff){
-        _playback->setVisible(false);
-        _playback->unscheduleUpdate();
-        _power->setVisible(true);
-        _power->runAction(MoveTo::create(0.8, Point(vsize.width/2+vorigin.x, 0)));
-        auto turnSprite1 = Sprite::create("your_turn_1.png");
-        auto turnSprite2 = Sprite::create("your_turn_2.png");
-        turnSprite1->setPosition(Point(vorigin.x - 120, vsize.height/2 + vorigin.y));
-        turnSprite2->setPosition(Point(vorigin.x +vsize.width + 120, vsize.height/2 + vorigin.y));
-        turnSprite1->runAction(Sequence::create(
-                                                MoveTo::create(0.3f, Point(vorigin.x + 500,vsize.height/2 + vorigin.y)),
-                                                MoveBy::create(0.1f, Point(-90,0)),
-                                                MoveBy::create(0.1f, Point(20,0)),
-                                                DelayTime::create(1),
-                                                MoveTo::create(0.1f, Point(vorigin.x - 120, vsize.height/2 + vorigin.y)),
-                                                RemoveSelf::create(),
-                                                NULL));
-        turnSprite2->runAction(Sequence::create(
-                                                MoveTo::create(0.3f, Point(vorigin.x + vsize.width - 500,vsize.height/2 + vorigin.y)),
-                                                MoveBy::create(0.1f, Point(90,0)),
-                                                MoveBy::create(0.1f, Point(-20,0)),
-                                                DelayTime::create(1),
-                                                MoveTo::create(0.1f, Point(vorigin.x +vsize.width + 120, vsize.height/2 + vorigin.y)),
-                                                RemoveSelf::create(),
-                                                NULL));
-        this->addChild(turnSprite1);
-        this->addChild(turnSprite2);
-        
-    } else {
-        
+    if(!isMyTurn){
         auto turnSprite1 = Sprite::create("enemy_turn_1.png");
         auto turnSprite2 = Sprite::create("enemy_turn_2.png");
         turnSprite1->setPosition(Point(vorigin.x - 120, vsize.height/2 + vorigin.y + 70));
@@ -109,9 +90,37 @@ void GameUI::_toggleTouchEnable(bool onoff)
         
         _power->runAction(MoveTo::create(0.5, Point(vsize.width/2+vorigin.x, -120)));
         _power->setVisible(false);
+    } else {
+        _playback->setVisible(false);
+        _playback->unscheduleUpdate();
+        _power->setVisible(true);
+        _power->runAction(Sequence::create(DelayTime::create(1),MoveTo::create(0.8, Point(vsize.width/2+vorigin.x, 0)), NULL));
+        auto turnSprite1 = Sprite::create("your_turn_1.png");
+        auto turnSprite2 = Sprite::create("your_turn_2.png");
+        turnSprite1->setPosition(Point(vorigin.x - 120, vsize.height/2 + vorigin.y));
+        turnSprite2->setPosition(Point(vorigin.x +vsize.width + 120, vsize.height/2 + vorigin.y));
+        turnSprite1->runAction(Sequence::create(DelayTime::create(0.8),
+                                                MoveTo::create(0.3f, Point(vorigin.x + 500,vsize.height/2 + vorigin.y)),
+                                                MoveBy::create(0.1f, Point(-90,0)),
+                                                MoveBy::create(0.1f, Point(20,0)),
+                                                DelayTime::create(1),
+                                                MoveTo::create(0.1f, Point(vorigin.x - 120, vsize.height/2 + vorigin.y)),
+                                                RemoveSelf::create(),
+                                                NULL));
+        turnSprite2->runAction(Sequence::create(DelayTime::create(0.8),
+                                                MoveTo::create(0.3f, Point(vorigin.x + vsize.width - 500,vsize.height/2 + vorigin.y)),
+                                                MoveBy::create(0.1f, Point(90,0)),
+                                                MoveBy::create(0.1f, Point(-20,0)),
+                                                DelayTime::create(1),
+                                                MoveTo::create(0.1f, Point(vorigin.x +vsize.width + 120, vsize.height/2 + vorigin.y)),
+                                                RemoveSelf::create(),
+                                                NULL));
+        this->addChild(turnSprite1);
+        this->addChild(turnSprite2);
         
     }
 }
+
 bool GameUI::onTouchBegan(Touch *touch, Event *event)
 {
 
