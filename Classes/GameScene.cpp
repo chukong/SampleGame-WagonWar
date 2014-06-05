@@ -311,6 +311,7 @@ bool GameScene::onTouchBegan(Touch* touch, Event* event)
 void GameScene::onTouchMoved(Touch* touch, Event* event)
 {
     _click = false;
+    _following = nullptr;
     setPosition(getActualPos(touch));
 }
 Size GameScene::getMovableSize()
