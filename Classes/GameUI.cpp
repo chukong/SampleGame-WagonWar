@@ -88,13 +88,13 @@ void GameUI::switchTurn(bool isMyTurn){
         this->addChild(turnSprite1);
         this->addChild(turnSprite2);
         
-        _power->runAction(MoveTo::create(0.5, Point(vsize.width/2+vorigin.x, -120)));
+        _power->runAction(EaseBackIn::create(MoveTo::create(0.5, Point(vsize.width/2+vorigin.x, -120))));
         _power->setVisible(false);
     } else {
         _playback->setVisible(false);
         _playback->unscheduleUpdate();
         _power->setVisible(true);
-        _power->runAction(Sequence::create(DelayTime::create(1),MoveTo::create(0.8, Point(vsize.width/2+vorigin.x, 0)), NULL));
+        _power->runAction(Sequence::create(DelayTime::create(1),EaseBackIn::create(MoveTo::create(0.5, Point(vsize.width/2+vorigin.x, 0))), NULL));
         auto turnSprite1 = Sprite::create("your_turn_1.png");
         auto turnSprite2 = Sprite::create("your_turn_2.png");
         turnSprite1->setPosition(Point(vorigin.x - 120, vsize.height/2 + vorigin.y));
