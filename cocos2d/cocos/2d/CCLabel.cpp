@@ -594,9 +594,9 @@ void Label::alignText()
             _batchNodes.push_back(batchNode);
         }
     }
-    LabelTextFormatter::createStringSprites(this);    
+    LabelTextFormatter::createStringSprites(this,_spacing);
     if(_maxLineWidth > 0 && _contentSize.width > _maxLineWidth && LabelTextFormatter::multilineText(this) )      
-        LabelTextFormatter::createStringSprites(this);
+        LabelTextFormatter::createStringSprites(this,_spacing);
 
     if(_labelWidth > 0 || (_currNumLines > 1 && _hAlignment != TextHAlignment::LEFT))
         LabelTextFormatter::alignText(this);
@@ -1345,6 +1345,11 @@ void Label::setBlendFunc(const BlendFunc &blendFunc)
             _shadowNode->setBlendFunc(blendFunc);
         }
     }
+}
+
+void Label::setSpacing(int spacing){
+    _spacing = spacing;
+    updateContent();
 }
 
 NS_CC_END
