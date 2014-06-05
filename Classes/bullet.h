@@ -23,30 +23,26 @@ struct BulletConfig{
     int expRadius;
 };
 
-const BulletConfig defaultBullet={
-    "circle.png",
-    100,
-    3,
-    90
-};
+extern BulletConfig defaultBullet;
 
-const BulletConfig horseyBullet =
-{
-    "circle.png",
-    100,
-    3,
-    90
-};
+
+//const BulletConfig horseyBullet =
+//{
+//    "circle.png",
+//    100,
+//    3,
+//    90
+//};
 
 class Bullet : public cocos2d::Sprite
 {
 public:
     CC_SYNTHESIZE(HelloWorld*, _world, World);
     static Bullet* create(BulletTypes type, cocos2d::Point pos, cocos2d::Point vector);
-    CC_SYNTHESIZE(BulletConfig*, _config, Config);
+    CC_SYNTHESIZE(BulletConfig, _config, Config);
     CC_SYNTHESIZE(cocos2d::Point, _LastPos, LastPos);
     void explode();
-    static BulletConfig defaultBullet;
+    //static BulletConfig defaultBullet;
     bool willExplode();
 protected:
     Bullet():_willExplode(false){};

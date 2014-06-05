@@ -43,9 +43,9 @@ bool AppDelegate::applicationDidFinishLaunching() {
     g_gameConfig.lazyInit();
     
     // create a scene. it's an autorelease object
-   //  auto scene = GameScene::createScene();
+//     auto scene = GameScene::createScene();
       auto scene = MainScreenScene::createScene();
-  //    auto scene = TestTBMP::createScene("345678");
+      //auto scene = TestTBMP::createScene("345678");
     //auto scene = WagonSelect::createScene(FIRST_TURN);
 
     // run

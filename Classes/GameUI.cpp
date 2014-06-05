@@ -9,7 +9,6 @@
 #include "GameUI.h"
 USING_NS_CC;
 
-
 bool GameUI::init()
 {
     if(!Layer::init())
@@ -45,28 +44,83 @@ bool GameUI::init()
     auto touchOnListener = EventListenerCustom::create("touch on", CC_CALLBACK_0(GameUI::_toggleTouchEnable, this, true));
     _eventDispatcher->addEventListenerWithSceneGraphPriority(touchOnListener, this);
     
+    auto enemyTurnListener = EventListenerCustom::create("enemy's turn", CC_CALLBACK_0(GameUI::switchTurn, this, false));
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(enemyTurnListener, this);
+    
+    auto myTurnListener = EventListenerCustom::create("my turn", CC_CALLBACK_0(GameUI::switchTurn, this, true));
+    
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(myTurnListener, this);
+    
     return true;
 }
 
 void GameUI::_toggleTouchEnable(bool onoff)
 {
+    _mytouchListener->setEnabled(onoff);
+}
+
+void GameUI::switchTurn(bool isMyTurn){
     auto vsize = Director::getInstance()->getVisibleSize();
     auto vorigin = Director::getInstance()->getVisibleOrigin();
     
-    //_mytouchListener->setEnabled(onoff);
-    if(onoff){
-        _playback->setVisible(false);
+    if(!isMyTurn){
+        auto turnSprite1 = Sprite::create("enemy_turn_1.png");
+        auto turnSprite2 = Sprite::create("enemy_turn_2.png");
+        turnSprite1->setPosition(Point(vorigin.x - 120, vsize.height/2 + vorigin.y + 70));
+        turnSprite2->setPosition(Point(vorigin.x +vsize.width + 120, vsize.height/2 + vorigin.y - 30));
+        turnSprite1->runAction(Sequence::create(
+                                                MoveTo::create(0.3f, Point(vorigin.x + 600,vsize.height/2 + vorigin.y + 70)),
+                                                MoveBy::create(0.1f, Point(-90,0)),
+                                                MoveBy::create(0.1f, Point(20,0)),
+                                                DelayTime::create(1),
+                                                MoveTo::create(0.1f, Point(vorigin.x - 120, vsize.height/2 + vorigin.y + 70)),
+                                                RemoveSelf::create(),
+                                                NULL));
+        turnSprite2->runAction(Sequence::create(
+                                                MoveTo::create(0.3f, Point(vorigin.x + vsize.width - 600,vsize.height/2 + vorigin.y - 30)),
+                                                MoveBy::create(0.1f, Point(90,0)),
+                                                MoveBy::create(0.1f, Point(-20,0)),
+                                                DelayTime::create(1),
+                                                MoveTo::create(0.1f, Point(vorigin.x +vsize.width + 120, vsize.height/2 + vorigin.y - 30)),
+                                                RemoveSelf::create(),
+                                                NULL));
         
-        _power->setVisible(true);
-        _power->runAction(MoveTo::create(0.8, Point(vsize.width/2+vorigin.x, 0)));
+        this->addChild(turnSprite1);
+        this->addChild(turnSprite2);
         
-    } else {
-        
-        _power->runAction(MoveTo::create(0.5, Point(vsize.width/2+vorigin.x, -120)));
+        _power->runAction(EaseBackIn::create(MoveTo::create(0.5, Point(vsize.width/2+vorigin.x, -120))));
         _power->setVisible(false);
+    } else {
+        _playback->setVisible(false);
+        _playback->unscheduleUpdate();
+        _power->setVisible(true);
+        _power->runAction(Sequence::create(DelayTime::create(1),EaseBackIn::create(MoveTo::create(0.5, Point(vsize.width/2+vorigin.x, 0))), NULL));
+        auto turnSprite1 = Sprite::create("your_turn_1.png");
+        auto turnSprite2 = Sprite::create("your_turn_2.png");
+        turnSprite1->setPosition(Point(vorigin.x - 120, vsize.height/2 + vorigin.y));
+        turnSprite2->setPosition(Point(vorigin.x +vsize.width + 120, vsize.height/2 + vorigin.y));
+        turnSprite1->runAction(Sequence::create(DelayTime::create(0.8),
+                                                MoveTo::create(0.3f, Point(vorigin.x + 500,vsize.height/2 + vorigin.y)),
+                                                MoveBy::create(0.1f, Point(-90,0)),
+                                                MoveBy::create(0.1f, Point(20,0)),
+                                                DelayTime::create(1),
+                                                MoveTo::create(0.1f, Point(vorigin.x - 120, vsize.height/2 + vorigin.y)),
+                                                RemoveSelf::create(),
+                                                NULL));
+        turnSprite2->runAction(Sequence::create(DelayTime::create(0.8),
+                                                MoveTo::create(0.3f, Point(vorigin.x + vsize.width - 500,vsize.height/2 + vorigin.y)),
+                                                MoveBy::create(0.1f, Point(90,0)),
+                                                MoveBy::create(0.1f, Point(-20,0)),
+                                                DelayTime::create(1),
+                                                MoveTo::create(0.1f, Point(vorigin.x +vsize.width + 120, vsize.height/2 + vorigin.y)),
+                                                RemoveSelf::create(),
+                                                NULL));
+        this->addChild(turnSprite1);
+        this->addChild(turnSprite2);
         
     }
 }
+
 bool GameUI::onTouchBegan(Touch *touch, Event *event)
 {
 
@@ -103,7 +157,6 @@ bool WindIndicator::init()
     });
     _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
 
-    
     return true;
 }
 
@@ -161,7 +214,7 @@ bool PowerIndicator::init(){
     auto dismissPowerListener = EventListenerCustom::create("dismissPower",CC_CALLBACK_0(PowerIndicator::dismissPower, this));
     _eventDispatcher->addEventListenerWithSceneGraphPriority(increasePowerListener, this);
     _eventDispatcher->addEventListenerWithSceneGraphPriority(dismissPowerListener, this);
-    
+
     this->scheduleUpdate();
     
     return true;
@@ -254,26 +307,70 @@ bool PlayBackIndictaor::init(){
     playBackBar->setPosition(Point(0,60));
     addChild(playBackBar);
     
-    _playBackInnerBar = ui::LoadingBar::create("playbackinnerbar.png");
-    _playBackInnerBar->setPosition(Point(0 ,60));
+    _playBackInnerBar = ui::LoadingBar::create("playbackinnerbar.png",0);
+    _playBackInnerBar->setPosition(Point(3 ,60));
+    _playBackInnerBar->setScaleX(700.0f/417.0f);
+    _playBackInnerBar->setPercent(0);
     addChild(_playBackInnerBar);
     
     auto playTriangle = Sprite::create("playtriangle.png");
-    playTriangle->setPosition(-305, 90);
+    playTriangle->setPosition(-335, 105);
     playTriangle->runAction(RepeatForever::create(Blink::create(1,1)));
     addChild(playTriangle);
     
-    _turnInfoLabel = Label::createWithTTF("PLAYBACK JACKY‘S TURN", "fonts/arial.ttf", 15);
+    TTFConfig turnTTFConfig;
+    turnTTFConfig.outlineSize = 3;
+    turnTTFConfig.fontSize = 25;
+    turnTTFConfig.fontFilePath = "fonts/britanic bold.ttf";
+    _turnInfoLabel = Label::createWithTTF(turnTTFConfig, "PLAYBACK ENEMY‘S TURN", TextHAlignment::CENTER, 400);
     _turnInfoLabel->setAnchorPoint(Point::ANCHOR_MIDDLE_LEFT);
-    _turnInfoLabel->setPosition(-290, 90);
-    //turnInfoLabel->setSpacing(-5);
+    _turnInfoLabel->setPosition(-310, 105);
+    _turnInfoLabel->setSpacing(-5);
+    _turnInfoLabel->enableOutline(Color4B::BLACK);
     addChild(_turnInfoLabel);
     
-    _timeLabel = Label::createWithTTF("0'13:200", "fonts/arial.ttf", 15);
+    TTFConfig timeTTFConfig;
+    timeTTFConfig.outlineSize = 3;
+    timeTTFConfig.fontSize = 25;
+    timeTTFConfig.fontFilePath = "fonts/britanic bold.ttf";
+    _timeLabel = Label::createWithTTF(timeTTFConfig, "0'13:200", TextHAlignment::CENTER, 150);
     _timeLabel->setAnchorPoint(Point::ANCHOR_MIDDLE_RIGHT);
-    _timeLabel->setPosition(300, 90);
-    //timeLabel->setSpacing(-5);
+    _timeLabel->setPosition(350, 105);
+    _timeLabel->setSpacing(-5);
+    _timeLabel->enableOutline(Color4B::BLACK);
     addChild(_timeLabel);
     
+    auto tickSumListener = EventListenerCustom::create("tickSum", [=](EventCustom* event){
+        int tickSum = (intptr_t)(event->getUserData());
+        _playBackTickSum = tickSum;
+    });
+    
+    auto nameSumListener = EventListenerCustom::create("enemy", [=](EventCustom* event){
+        char* enemy = static_cast<char*>(event->getUserData());
+        std::string tmp(enemy);
+        _turnInfoLabel->setString(std::string("PLAYBACK   " + tmp + "‘S   TURN"));
+    });
+
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(tickSumListener, this);
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(nameSumListener, this);
+    
+    this->scheduleUpdate();
+    
     return true;
+}
+
+void PlayBackIndictaor::update(float delta){
+    int tickSum = _playBackTickSum;
+    int tmpTick = (tickSum - _tick)<0?0:tickSum - _tick;
+    float timeSum = tmpTick * 0.016;
+    int min = timeSum / 60;
+    int second = timeSum;
+    int msecond = (timeSum - (int)timeSum) * 1000;
+    char time [15];
+    sprintf(time, "%d ' %d : %d",min,second,msecond);
+    //log("time %s",time);
+    _tick ++;
+    _playBackInnerBar->setPercent(_tick/(float)tickSum * 100);
+    _timeLabel->setString(std::string(time));
+    //log("percentage....%d",_playBackInnerBar->getPercent());
 }

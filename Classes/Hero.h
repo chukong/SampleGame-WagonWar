@@ -85,7 +85,7 @@ public:
     
     //by Jacky
     HeroConfig _heroConfig;
-    int _lasthp;
+    int _lasthp ;
 
     cocos2d::Node* _wagonPoint;
     cocos2d::Sprite* _bodySprite;

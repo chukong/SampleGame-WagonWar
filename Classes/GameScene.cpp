@@ -185,7 +185,6 @@ void GameScene::endShoot()
         _eventDispatcher->dispatchCustomEvent("touch off");
         _waitToClear = true;
         
-        
     }
     log("angle %f", angle);
     auto b = addBullet(defaultB, Point(gunlocation.tx, gunlocation.ty)+Point(offset/2)-getPosition(), Point(tick/60.0f*20*cosf(CC_DEGREES_TO_RADIANS(-angle)), tick/60.0f*20*sinf(CC_DEGREES_TO_RADIANS(-angle))));
@@ -205,8 +204,9 @@ void GameScene::onEnter()
     std::string player2turn2 = "{\"turn\":1,\"player1\":{\"shootangle\":\"\",\"wagon\":0,\"male\":true,\"hp\":1000,\"posx\":520,\"posy\":800,\"facing\":\"right\"},\"player2\":{\"shootangle\":\"\",\"wagon\":1,\"male\":false,\"hp\":1000,\"posx\":1000,\"posy\":800,\"facing\":\"left\"},\"actions\":[],\"explosions\":[],\"windx\":0.01,\"windy\":0.01}";
     std::string player1turn3 = "{\"turn\":2,\"player1\":{\"shootangle\":\"\",\"wagon\":0,\"male\":true,\"hp\":1000,\"posx\":520,\"posy\":800,\"facing\":\"right\"},\"player2\":{\"shootangle\":-179.172,\"wagon\":1,\"male\":false,\"hp\":1000,\"posx\":1000,\"posy\":800,\"facing\":\"left\"},\"actions\":[{\"tick\":139,\"action\":\"go left\"},{\"tick\":154,\"action\":\"stop\"},{\"tick\":172,\"action\":\"go right\"},{\"tick\":489,\"action\":\"stop\"},{\"tick\":511,\"action\":\"go left\"},{\"tick\":513,\"action\":\"stop\"},{\"tick\":590,\"action\":\"start shoot\"},{\"tick\":609,\"action\":\"end shoot\"}],\"explosions\":[],\"windx\":0.01,\"windy\":0.01}";
     std::string player2turn4 = "{\"turn\":3,\"player1\":{\"shootangle\":-45,\"wagon\":0,\"male\":true,\"hp\":1000,\"posx\":546.472,\"posy\":573.07,\"facing\":\"right\"},\"player2\":{\"shootangle\":-179.172,\"wagon\":1,\"male\":false,\"hp\":1000,\"posx\":1084.18,\"posy\":592.764,\"facing\":\"left\"},\"actions\":[{\"tick\":270,\"action\":\"go right\"},{\"tick\":637,\"action\":\"stop\"},{\"tick\":670,\"action\":\"start shoot\"},{\"tick\":696,\"action\":\"end shoot\"}],\"explosions\":[{\"x\":676.935,\"y\":485.313}],\"windx\":0.01,\"windy\":0.01}";
-    std::string player1turn5 = "{\"turn\":4,\"player1\":{\"shootangle\":-45,\"wagon\":0,\"male\":true,\"hp\":600,\"posx\":677.011,\"posy\":459.464,\"facing\":\"right\"},\"player2\":{\"shootangle\":-180.601,\"wagon\":1,\"male\":false,\"hp\":500,\"posx\":1084.19,\"posy\":592.674,\"facing\":\"left\"},\"actions\":[{\"tick\":42,\"action\":\"go left\"},{\"tick\":181,\"action\":\"stop\"},{\"tick\":290,\"action\":\"start shoot\"},{\"tick\":311,\"action\":\"end shoot\"}],\"explosions\":[{\"x\":676.935,\"y\":485.313},{\"x\":806.245,\"y\":436.808}],\"windx\":0.01,\"windy\":0.01}";
+    std::string player1turn5 = "{\"turn\":20,\"player1\":{\"name\":\"Hao Wu\",\"wagon\":3,\"male\":true,\"hp\":580,\"posx\":473.658,\"posy\":284.735,\"shootangle\":-31.1497,\"facing\":\"right\"},\"windx\":-0.00829815,\"windy\":-0.00761271,\"explosions\":[{\"x\":560.848,\"y\":545.339},{\"x\":1605.65,\"y\":647.186},{\"x\":469.664,\"y\":565.777},{\"x\":883.879,\"y\":482.913},{\"x\":504.41,\"y\":533.904},{\"x\":442.529,\"y\":525.837},{\"x\":1079.57,\"y\":572.658},{\"x\":1151.67,\"y\":580.816},{\"x\":620.525,\"y\":515.031},{\"x\":938.869,\"y\":478.232},{\"x\":348.725,\"y\":547.389},{\"x\":479.785,\"y\":308.971},{\"x\":554.495,\"y\":542.633},{\"x\":540.459,\"y\":522.691},{\"x\":182.593,\"y\":225.413},{\"x\":526.409,\"y\":351.889}],\"actions\":[{\"tick\":200,\"action\":\"go right\"},{\"tick\":304,\"action\":\"stop\"},{\"tick\":330,\"action\":\"go left\"},{\"tick\":335,\"action\":\"stop\"},{\"tick\":467,\"action\":\"start shoot\"},{\"tick\":470,\"action\":\"end shoot\"}],\"player2\":{\"name\":\"Chenhui Lin\",\"wagon\":3,\"male\":false,\"hp\":250,\"posx\":532.925,\"posy\":354.995,\"shootangle\":-176.795,\"facing\":\"left\"}}";
     this->initPlayers();
+//    playback(player1turn5);
     playback(g_gameConfig.match_string);
     
     buildMyTurn();
@@ -417,15 +417,14 @@ void GameScene::explode(Bullet *bullet, Hero* hero)
     _ex->ManualDraw();
     _burn->setPosition(pos);
     _burn->ManualDraw();
-    float exRad =bullet->getConfig()->expRadius;
+    float exRad =bullet->getConfig().expRadius;
+    float damage = bullet->getConfig().damage;
     bullet->runAction(RemoveSelf::create());
     
     //check to see if player got caught in the blast
     for(Node* player : _PlayerLayer->getChildren())
     {
         Hero *p = dynamic_cast<Hero*>(player);
-        
-
         
         Point ppos(p->getPosition());
         float dist = ppos.getDistance(pos);
@@ -434,12 +433,17 @@ void GameScene::explode(Bullet *bullet, Hero* hero)
             if(p == hero)
             {
                 p->hurt(getCurrentPlayer()->_heroConfig.wagonConfig.attack);
+                p->airborn = true;
+                
+                float rad = (ppos-pos).getAngle();
+                float pushForce = (exRad - dist)*0.05;
+                Point mid(ppos.x-pushForce*cosf(rad), ppos.y-pushForce*sinf(rad));
+                log("b pos %f, %f | m pos %f, %f", (pos-ppos).x, (pos-ppos).y, (mid-ppos).x, (mid-ppos).y);
+                p->setLastPos(mid);
             }
             else
             {
                 p->airborn = true;
-                //TODO: bullet might have push force
-                //get angle from player to bullet
                 
                 float rad = (ppos-pos).getAngle();
                 float pushForce = (exRad - dist)*0.05;
@@ -452,11 +456,11 @@ void GameScene::explode(Bullet *bullet, Hero* hero)
                 {
                     if(p->getTag() == TAG_MYSELF)
                     {
-                        _myturn["player1"]["hp"].SetInt(p->hurt(getCurrentPlayer()->_heroConfig.wagonConfig.attack*((float)(getCurrentPlayer()->_heroConfig.wagonConfig.expsize-dist)/(float)getCurrentPlayer()->_heroConfig.wagonConfig.expsize)));
+                        _myturn["player1"]["hp"].SetInt(p->hurt(damage*((float)(exRad-dist)/(float)exRad)));
                     }
                     else
                     {
-                        _myturn["player2"]["hp"].SetInt(p->hurt(getCurrentPlayer()->_heroConfig.wagonConfig.attack*((float)(getCurrentPlayer()->_heroConfig.wagonConfig.expsize-dist)/(float)getCurrentPlayer()->_heroConfig.wagonConfig.expsize)));
+                        _myturn["player2"]["hp"].SetInt(p->hurt(damage*((float)(exRad-dist)/(float)exRad)));
                     }
                 }
                 else
@@ -524,9 +528,7 @@ void GameScene::playback(std::string json)
     _tick = 0;
 
     _eventDispatcher->dispatchCustomEvent("touch off");
-    
-
-    
+    _eventDispatcher->dispatchCustomEvent("enemy's turn");
     //copy all explosions to my turn
     if(_replay.HasMember("explosions") && _replay["explosions"].Size())
     {
@@ -546,6 +548,20 @@ void GameScene::playback(std::string json)
         _level->getRT()->onEnd();
     }
     
+    //get enemy name
+     _eventDispatcher->dispatchCustomEvent("enemy", (void*)"ddd");
+    
+    // get tick sum
+    rapidjson::Value &array = _replay["actions"];
+    if(array.IsArray())
+    {
+        for(int i=0; i < array.Size(); i++)
+        {
+            if(i == array.Size()-1){
+                _eventDispatcher->dispatchCustomEvent("tickSum", (void*)array[i]["tick"].GetInt());
+            }
+        }
+    }
     
 }
 
@@ -593,7 +609,7 @@ void GameScene::update(float dt)
         Bullet *b = dynamic_cast<Bullet*>(bullet);
         auto pos = b->getPosition();
         bool coll = false;
-        int bulletRadius =b->getConfig()->radius;
+        int bulletRadius =b->getConfig().radius;
         
         //check bounding box to see if the bullet is in the world
         auto aabb1 = b->getBoundingBox();
@@ -757,6 +773,7 @@ void GameScene::update(float dt)
         if(_playback)
         {
             _eventDispatcher->dispatchCustomEvent("touch on");
+            _eventDispatcher->dispatchCustomEvent("my turn");
             _waitToClear = false;
             _playback = false;
             _tick = 0;

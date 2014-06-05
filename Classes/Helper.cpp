@@ -90,7 +90,7 @@ void CollisionCheckNode::checkCollision()
             for(Node* player : _players->getChildren())
             {
                 Hero* p = dynamic_cast<Hero*>(player);
-                if(b->getPosition().getDistance(p->getPosition())< b->getConfig()->radius + p->radius)
+                if(b->getPosition().getDistance(p->getPosition())< b->getConfig().radius + p->radius)
                 {
                     b->explode();
                     log("collided with player");
@@ -104,7 +104,7 @@ void CollisionCheckNode::checkCollision()
             
             //Point pos(Director::getInstance()->convertToGL(b->getPosition()));
             Point pos(b->getPosition()+offset);
-            int radius =b->getConfig()->radius;
+            int radius =b->getConfig().radius;
             int bufferSize =pow(radius*2,2);
             
             Color4B *buffer = (Color4B*)malloc(sizeof(Color4B)*bufferSize);
