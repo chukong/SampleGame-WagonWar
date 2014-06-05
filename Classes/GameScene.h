@@ -47,7 +47,7 @@ public:
     CC_SYNTHESIZE(cocos2d::Point, _gravity, Gravity);
     void initExplosionMasks();
     void initListeners();
-    void initTests();
+    void initPlayers();
     void startShoot();
     void endShoot();
     void playerdead(cocos2d::EventCustom* event);

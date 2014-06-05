@@ -98,9 +98,9 @@ void GameScene::initListeners()
     _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
     
     //event to move left right
-    auto moveListener = EventListenerCustom::create("go left", CC_CALLBACK_0(GameScene::movePlayer, this, -0.3));
+    auto moveListener = EventListenerCustom::create("go left", CC_CALLBACK_0(GameScene::movePlayer, this, -1));
     _eventDispatcher->addEventListenerWithSceneGraphPriority(moveListener, this);
-    auto moveListener2 = EventListenerCustom::create("go right", CC_CALLBACK_0(GameScene::movePlayer, this, 0.3));
+    auto moveListener2 = EventListenerCustom::create("go right", CC_CALLBACK_0(GameScene::movePlayer, this, 1));
     _eventDispatcher->addEventListenerWithSceneGraphPriority(moveListener2, this);
     auto stopListener = EventListenerCustom::create("stop", CC_CALLBACK_0(GameScene::movePlayer, this, 0));
     _eventDispatcher->addEventListenerWithSceneGraphPriority(stopListener, this);
@@ -205,7 +205,7 @@ void GameScene::onEnter()
     std::string player1turn3 = "{\"turn\":2,\"player1\":{\"shootangle\":\"\",\"wagon\":0,\"male\":true,\"hp\":1000,\"posx\":520,\"posy\":800,\"facing\":\"right\"},\"player2\":{\"shootangle\":-179.172,\"wagon\":1,\"male\":false,\"hp\":1000,\"posx\":1000,\"posy\":800,\"facing\":\"left\"},\"actions\":[{\"tick\":139,\"action\":\"go left\"},{\"tick\":154,\"action\":\"stop\"},{\"tick\":172,\"action\":\"go right\"},{\"tick\":489,\"action\":\"stop\"},{\"tick\":511,\"action\":\"go left\"},{\"tick\":513,\"action\":\"stop\"},{\"tick\":590,\"action\":\"start shoot\"},{\"tick\":609,\"action\":\"end shoot\"}],\"explosions\":[],\"windx\":0.01,\"windy\":0.01}";
     std::string player2turn4 = "{\"turn\":3,\"player1\":{\"shootangle\":-45,\"wagon\":0,\"male\":true,\"hp\":1000,\"posx\":546.472,\"posy\":573.07,\"facing\":\"right\"},\"player2\":{\"shootangle\":-179.172,\"wagon\":1,\"male\":false,\"hp\":1000,\"posx\":1084.18,\"posy\":592.764,\"facing\":\"left\"},\"actions\":[{\"tick\":270,\"action\":\"go right\"},{\"tick\":637,\"action\":\"stop\"},{\"tick\":670,\"action\":\"start shoot\"},{\"tick\":696,\"action\":\"end shoot\"}],\"explosions\":[{\"x\":676.935,\"y\":485.313}],\"windx\":0.01,\"windy\":0.01}";
     std::string player1turn5 = "{\"turn\":4,\"player1\":{\"shootangle\":-45,\"wagon\":0,\"male\":true,\"hp\":600,\"posx\":677.011,\"posy\":459.464,\"facing\":\"right\"},\"player2\":{\"shootangle\":-180.601,\"wagon\":1,\"male\":false,\"hp\":500,\"posx\":1084.19,\"posy\":592.674,\"facing\":\"left\"},\"actions\":[{\"tick\":42,\"action\":\"go left\"},{\"tick\":181,\"action\":\"stop\"},{\"tick\":290,\"action\":\"start shoot\"},{\"tick\":311,\"action\":\"end shoot\"}],\"explosions\":[{\"x\":676.935,\"y\":485.313},{\"x\":806.245,\"y\":436.808}],\"windx\":0.01,\"windy\":0.01}";
-    this->initTests();
+    this->initPlayers();
     playback(g_gameConfig.match_string);
     
     buildMyTurn();
@@ -252,7 +252,7 @@ void GameScene::movePlayer(float x)
     }
 }
 
-void GameScene::initTests()
+void GameScene::initPlayers()
 {
     p1 = Hero::create(Myself,BOY,ROCK,false);
     p1->setTag(TAG_MYSELF);
@@ -458,6 +458,7 @@ void GameScene::explode(Bullet *bullet)
 }
 void GameScene::playback(std::string json)
 {
+    CocosDenshion::SimpleAudioEngine::getInstance()->stopBackgroundMusic();
     CocosDenshion::SimpleAudioEngine::getInstance()->playBackgroundMusic("Giant Insectoid Battle.mp3");
     tempjson = json;
     _replay.Parse<rapidjson::kParseDefaultFlags>(json.c_str());
@@ -472,6 +473,14 @@ void GameScene::playback(std::string json)
     p1->setLife(_replay["player1"]["hp"].GetInt());
     p2->setLife(_replay["player2"]["hp"].GetInt());
     
+    //p1->setName(_replay["player1"]["name"].GetString());
+    //p2->setName(_replay["player2"]["name"].GetString());
+    
+    if(_replay["trun"].GetInt() == 1)
+    {
+        p1->airborn = true;
+        p2->airborn =true;
+    }
     if(!strcmp(_replay["player1"]["facing"].GetString(), "left"))
     {
         p1->flipLeft();
@@ -684,8 +693,6 @@ void GameScene::update(float dt)
                     }
                     else
                     {
-                        log("%f", deg);
-
                             p->_wagonPoint->setRotation(deg);
 
                     }
@@ -693,7 +700,7 @@ void GameScene::update(float dt)
                     {
                         //we are colliding with too many pixels
                         
-                        float pushForce = 0.4;
+                        float pushForce = 0.05 * angleCount;
                         Point mid(pos.x-pushForce*sinf(angleTotal/angleCount), pos.y-pushForce*cosf(angleTotal/angleCount));
                         p->setLastPos(mid);
                         p->needFix = true;
@@ -736,6 +743,7 @@ void GameScene::update(float dt)
             _playback = false;
             _tick = 0;
             log("play back finished");
+            CocosDenshion::SimpleAudioEngine::getInstance()->stopBackgroundMusic();
             CocosDenshion::SimpleAudioEngine::getInstance()->playBackgroundMusic("Celestial Motive m.mp3");
             //need to delete actions
             _myturn["actions"].Clear();

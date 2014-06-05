@@ -233,6 +233,7 @@ void WagonSelect::setup_player1_mactchdata()
     doc.AddMember("turn", 1, allocator);
     
     rapidjson::Value player1(rapidjson::kObjectType);
+    player1.AddMember("name", g_gameConfig.player1Name.c_str(), allocator);
     player1.AddMember("wagon", _wagon, allocator);
     player1.AddMember("male", _isBoy, allocator);
     player1.AddMember("hp", 1000, allocator);
@@ -267,6 +268,7 @@ void WagonSelect::setup_player2_mactchdata()
     
     rapidjson::Document::AllocatorType& allocator = doc.GetAllocator();
     rapidjson::Value player2(rapidjson::kObjectType);
+    player2.AddMember("name", g_gameConfig.player2Name.c_str(), allocator);
     player2.AddMember("wagon", _wagon, allocator);
     player2.AddMember("male", _isBoy, allocator);
     player2.AddMember("hp", 1000, allocator);
