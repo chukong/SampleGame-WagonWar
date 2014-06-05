@@ -204,9 +204,9 @@ void GameScene::onEnter()
     std::string player2turn2 = "{\"turn\":1,\"player1\":{\"shootangle\":\"\",\"wagon\":0,\"male\":true,\"hp\":1000,\"posx\":520,\"posy\":800,\"facing\":\"right\"},\"player2\":{\"shootangle\":\"\",\"wagon\":1,\"male\":false,\"hp\":1000,\"posx\":1000,\"posy\":800,\"facing\":\"left\"},\"actions\":[],\"explosions\":[],\"windx\":0.01,\"windy\":0.01}";
     std::string player1turn3 = "{\"turn\":2,\"player1\":{\"shootangle\":\"\",\"wagon\":0,\"male\":true,\"hp\":1000,\"posx\":520,\"posy\":800,\"facing\":\"right\"},\"player2\":{\"shootangle\":-179.172,\"wagon\":1,\"male\":false,\"hp\":1000,\"posx\":1000,\"posy\":800,\"facing\":\"left\"},\"actions\":[{\"tick\":139,\"action\":\"go left\"},{\"tick\":154,\"action\":\"stop\"},{\"tick\":172,\"action\":\"go right\"},{\"tick\":489,\"action\":\"stop\"},{\"tick\":511,\"action\":\"go left\"},{\"tick\":513,\"action\":\"stop\"},{\"tick\":590,\"action\":\"start shoot\"},{\"tick\":609,\"action\":\"end shoot\"}],\"explosions\":[],\"windx\":0.01,\"windy\":0.01}";
     std::string player2turn4 = "{\"turn\":3,\"player1\":{\"shootangle\":-45,\"wagon\":0,\"male\":true,\"hp\":1000,\"posx\":546.472,\"posy\":573.07,\"facing\":\"right\"},\"player2\":{\"shootangle\":-179.172,\"wagon\":1,\"male\":false,\"hp\":1000,\"posx\":1084.18,\"posy\":592.764,\"facing\":\"left\"},\"actions\":[{\"tick\":270,\"action\":\"go right\"},{\"tick\":637,\"action\":\"stop\"},{\"tick\":670,\"action\":\"start shoot\"},{\"tick\":696,\"action\":\"end shoot\"}],\"explosions\":[{\"x\":676.935,\"y\":485.313}],\"windx\":0.01,\"windy\":0.01}";
-    std::string player1turn5 = "{\"turn\":20,\"player1\":{\"name\":\"Hao Wu\",\"wagon\":3,\"male\":true,\"hp\":580,\"posx\":473.658,\"posy\":284.735,\"shootangle\":-31.1497,\"facing\":\"right\"},\"windx\":-0.00829815,\"windy\":-0.00761271,\"explosions\":[{\"x\":560.848,\"y\":545.339},{\"x\":1605.65,\"y\":647.186},{\"x\":469.664,\"y\":565.777},{\"x\":883.879,\"y\":482.913},{\"x\":504.41,\"y\":533.904},{\"x\":442.529,\"y\":525.837},{\"x\":1079.57,\"y\":572.658},{\"x\":1151.67,\"y\":580.816},{\"x\":620.525,\"y\":515.031},{\"x\":938.869,\"y\":478.232},{\"x\":348.725,\"y\":547.389},{\"x\":479.785,\"y\":308.971},{\"x\":554.495,\"y\":542.633},{\"x\":540.459,\"y\":522.691},{\"x\":182.593,\"y\":225.413},{\"x\":526.409,\"y\":351.889}],\"actions\":[{\"tick\":200,\"action\":\"go right\"},{\"tick\":304,\"action\":\"stop\"},{\"tick\":330,\"action\":\"go left\"},{\"tick\":335,\"action\":\"stop\"},{\"tick\":467,\"action\":\"start shoot\"},{\"tick\":470,\"action\":\"end shoot\"}],\"player2\":{\"name\":\"Chenhui Lin\",\"wagon\":3,\"male\":false,\"hp\":250,\"posx\":532.925,\"posy\":354.995,\"shootangle\":-176.795,\"facing\":\"left\"}}";
+    std::string player1turn5 = "{\"turn\":20,\"player1\":{\"name\":\"Hao Wu\",\"wagon\":3,\"male\":true,\"hp\":580,\"posx\":473.658,\"posy\":284.735,\"shootangle\":-31.1497,\"facing\":\"right\"},\"windx\":-0.00829815,\"windy\":-0.00761271,\"explosions\":[{\"x\":560.848,\"y\":545.339},{\"x\":1605.65,\"y\":647.186},{\"x\":469.664,\"y\":565.777},{\"x\":883.879,\"y\":482.913},{\"x\":504.41,\"y\":533.904},{\"x\":442.529,\"y\":525.837},{\"x\":1079.57,\"y\":572.658},{\"x\":1151.67,\"y\":580.816},{\"x\":620.525,\"y\":515.031},{\"x\":938.869,\"y\":478.232},{\"x\":348.725,\"y\":547.389},{\"x\":479.785,\"y\":308.971},{\"x\":554.495,\"y\":542.633},{\"x\":540.459,\"y\":522.691},{\"x\":182.593,\"y\":225.413},{\"x\":526.409,\"y\":351.889}],\"actions\":[{\"tick\":200,\"action\":\"go right\"},{\"tick\":304,\"action\":\"stop\"},{\"tick\":330,\"action\":\"go left\"},{\"tick\":335,\"action\":\"stop\"},{\"tick\":467,\"action\":\"start shoot\"},{\"tick\":468,\"action\":\"end shoot\"}],\"player2\":{\"name\":\"Chenhui Lin\",\"wagon\":3,\"male\":false,\"hp\":250,\"posx\":532.925,\"posy\":354.995,\"shootangle\":-176.795,\"facing\":\"left\"}}";
     this->initPlayers();
-//    playback(player1turn5);
+    //playback(player1turn5);
     playback(g_gameConfig.match_string);
     
     buildMyTurn();
@@ -376,8 +376,6 @@ Hero* GameScene::getCurrentPlayer()
         auto player = _PlayerLayer->getChildByTag(_playback?TAG_OTHER:TAG_MYSELF);
         return dynamic_cast<Hero*>(player);
     }
-    
-
 }
 void GameScene::buildMyTurn()
 {
@@ -456,7 +454,8 @@ void GameScene::explode(Bullet *bullet, Hero* hero)
                 {
                     if(p->getTag() == TAG_MYSELF)
                     {
-                        _myturn["player1"]["hp"].SetInt(p->hurt(damage*((float)(exRad-dist)/(float)exRad)));
+                        auto v =damage*((float)(exRad-dist)/(float)exRad);
+                        _myturn["player1"]["hp"].SetInt(p->hurt(v));
                     }
                     else
                     {
@@ -477,6 +476,7 @@ void GameScene::playback(std::string json)
     CocosDenshion::SimpleAudioEngine::getInstance()->playBackgroundMusic("Giant Insectoid Battle.mp3");
     tempjson = json;
     _replay.Parse<rapidjson::kParseDefaultFlags>(json.c_str());
+
     this->setWind(Point(_replay["windx"].GetDouble(),_replay["windy"].GetDouble()));
     _eventDispatcher->dispatchCustomEvent("wind", &_wind);
     log("Wind is : %f, %f", getWind().x, getWind().y);
@@ -509,7 +509,7 @@ void GameScene::playback(std::string json)
     }
     
     _playback = true;
-
+    _following = dynamic_cast<Node*>(getCurrentPlayer());
     if(_replay["turn"].GetInt() == 1)
     {
         //player 1 chose a wagon, player2 just chose a wagon and entered the game
@@ -587,10 +587,10 @@ void GameScene::update(float dt)
     //if we have a following target, then follow it
     if(_following)
     {
-        auto fp = _following->getPosition();
-        auto tp =-fp + Point(_PlayerLayer->getContentSize()/2);
-        auto cp = getPosition();
-        setPosition(cp+(tp-cp)*0.02);
+            auto fp = _following->getPosition();
+            auto tp =-fp + Point(_PlayerLayer->getContentSize()/2);
+            auto cp = getPosition();
+            setPosition(cp+(tp-cp)*0.04);
     }
     
     
@@ -775,13 +775,19 @@ void GameScene::update(float dt)
             _eventDispatcher->dispatchCustomEvent("touch on");
             _eventDispatcher->dispatchCustomEvent("my turn");
             _waitToClear = false;
-            _playback = false;
             _tick = 0;
             log("play back finished");
-            CocosDenshion::SimpleAudioEngine::getInstance()->stopBackgroundMusic();
-            CocosDenshion::SimpleAudioEngine::getInstance()->playBackgroundMusic("Celestial Motive m.mp3");
             //need to delete actions
             _myturn["actions"].Clear();
+            runAction(Sequence::create(
+                                       DelayTime::create(1),
+                                       CallFunc::create([this](){
+                _playback=false;
+                CocosDenshion::SimpleAudioEngine::getInstance()->stopBackgroundMusic();
+                CocosDenshion::SimpleAudioEngine::getInstance()->playBackgroundMusic("Celestial Motive m.mp3");
+            }),
+                                       nullptr
+                                       ));
         }
         else if(!over){
             saveMatchData(win, lost);
