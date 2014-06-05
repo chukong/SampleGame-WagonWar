@@ -86,7 +86,7 @@ public:
     virtual bool init();
     
 protected:
-    cocos2d::ui::LoadingBar* _playBackInnerBar;
+    cocos2d::ProgressTimer* _playBackInnerBar;
     cocos2d::Label* _turnInfoLabel;
     cocos2d::Label* _timeLabel;
     

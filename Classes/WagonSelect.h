@@ -65,11 +65,14 @@ private:
     cocos2d::Sprite* _dude3;
     cocos2d::Sprite* _dude4;
     
+    cocos2d::Sprite* _wagon_bk;
+    
     cocos2d::Sprite* flash;
     
     bool _isBoy;
     int _wagon;
     
+    void initWagonParams();
     
 };
 
