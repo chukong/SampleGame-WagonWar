@@ -40,6 +40,7 @@ Scene* GameScene::createScene()
 
 bool GameScene::init()
 {
+    
     auto visibleSize = Director::getInstance()->getVisibleSize();
     auto offset = Point(visibleSize/2);
     
@@ -206,8 +207,8 @@ void GameScene::onEnter()
     std::string player2turn4 = "{\"turn\":3,\"player1\":{\"shootangle\":-45,\"wagon\":0,\"male\":true,\"hp\":1000,\"posx\":546.472,\"posy\":573.07,\"facing\":\"right\"},\"player2\":{\"shootangle\":-179.172,\"wagon\":1,\"male\":false,\"hp\":1000,\"posx\":1084.18,\"posy\":592.764,\"facing\":\"left\"},\"actions\":[{\"tick\":270,\"action\":\"go right\"},{\"tick\":637,\"action\":\"stop\"},{\"tick\":670,\"action\":\"start shoot\"},{\"tick\":696,\"action\":\"end shoot\"}],\"explosions\":[{\"x\":676.935,\"y\":485.313}],\"windx\":0.01,\"windy\":0.01}";
     std::string player1turn5 = "{\"turn\":20,\"player1\":{\"name\":\"Hao Wu\",\"wagon\":3,\"male\":true,\"hp\":580,\"posx\":473.658,\"posy\":284.735,\"shootangle\":-31.1497,\"facing\":\"right\"},\"windx\":-0.00829815,\"windy\":-0.00761271,\"explosions\":[{\"x\":560.848,\"y\":545.339},{\"x\":1605.65,\"y\":647.186},{\"x\":469.664,\"y\":565.777},{\"x\":883.879,\"y\":482.913},{\"x\":504.41,\"y\":533.904},{\"x\":442.529,\"y\":525.837},{\"x\":1079.57,\"y\":572.658},{\"x\":1151.67,\"y\":580.816},{\"x\":620.525,\"y\":515.031},{\"x\":938.869,\"y\":478.232},{\"x\":348.725,\"y\":547.389},{\"x\":479.785,\"y\":308.971},{\"x\":554.495,\"y\":542.633},{\"x\":540.459,\"y\":522.691},{\"x\":182.593,\"y\":225.413},{\"x\":526.409,\"y\":351.889}],\"actions\":[{\"tick\":200,\"action\":\"go right\"},{\"tick\":304,\"action\":\"stop\"},{\"tick\":330,\"action\":\"go left\"},{\"tick\":335,\"action\":\"stop\"},{\"tick\":467,\"action\":\"start shoot\"},{\"tick\":470,\"action\":\"end shoot\"}],\"player2\":{\"name\":\"Chenhui Lin\",\"wagon\":3,\"male\":false,\"hp\":250,\"posx\":532.925,\"posy\":354.995,\"shootangle\":-176.795,\"facing\":\"left\"}}";
     this->initPlayers();
-//    playback(player1turn5);
-    playback(g_gameConfig.match_string);
+  //   playback(player1turn5);
+   playback(g_gameConfig.match_string);
     
     buildMyTurn();
 
@@ -433,6 +434,7 @@ void GameScene::explode(Bullet *bullet, Hero* hero)
             if(p == hero)
             {
                 p->hurt(getCurrentPlayer()->_heroConfig.wagonConfig.attack);
+                showBloodLossNum(p, getCurrentPlayer()->_heroConfig.wagonConfig.attack);
                 p->airborn = true;
                 
                 float rad = (ppos-pos).getAngle();
@@ -457,10 +459,12 @@ void GameScene::explode(Bullet *bullet, Hero* hero)
                     if(p->getTag() == TAG_MYSELF)
                     {
                         _myturn["player1"]["hp"].SetInt(p->hurt(damage*((float)(exRad-dist)/(float)exRad)));
+                        showBloodLossNum(p, damage*((float)(exRad-dist)/(float)exRad));
                     }
                     else
                     {
                         _myturn["player2"]["hp"].SetInt(p->hurt(damage*((float)(exRad-dist)/(float)exRad)));
+                        showBloodLossNum(p, damage*((float)(exRad-dist)/(float)exRad));
                     }
                 }
                 else
@@ -836,4 +840,41 @@ void GameScene::entertoMenu(float dt)
     log("call...entertomenu");
     auto scene = MainScreenScene::createScene();
     cocos2d::Director::getInstance()->replaceScene(scene);
+}
+
+void GameScene::showBloodLossNum(Hero* hero, int num)
+{
+    TTFConfig turnTTFConfig;
+    turnTTFConfig.outlineSize = 3;
+    turnTTFConfig.fontSize = 30;
+    turnTTFConfig.fontFilePath = "fonts/britanic bold.ttf";
+    auto  label = Label::createWithTTF(turnTTFConfig, Value(num).asString(), TextHAlignment::CENTER, 400);
+    label->setAnchorPoint(Point::ANCHOR_MIDDLE_LEFT);
+    label->setSpacing(-5);
+    label->enableOutline(Color4B::BLACK);
+    label->setOpacity(0);
+    label->setScale(0.01f);
+    label->setColor(Color3B::RED);
+    hero->addChild(label);
+    
+    
+    if (num<100) {
+        label->setScale(0.7f);
+    }
+    else if(num<200){
+        label->setScale(1.0f);
+    }
+    else{
+        label->setScale(1.3f);
+    }
+    
+    
+    label->runAction(Sequence::create(Spawn::create(FadeIn::create(0.5f),
+                                                    EaseBackOut::create(ScaleTo::create(1.0f,1.0f)),
+                                                    nullptr),
+                                      DelayTime::create(1.0f),
+                                      FadeOut::create(0.5f),
+                                      RemoveSelf::create(),
+                                      nullptr));
+
 }
