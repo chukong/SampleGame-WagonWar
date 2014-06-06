@@ -7,6 +7,7 @@
 //
 
 #include "GameUI.h"
+#include "SimpleAudioEngine.h"
 USING_NS_CC;
 
 bool GameUI::init()
@@ -99,7 +100,7 @@ void GameUI::switchTurn(bool isMyTurn){
         _controlBoard->setVisible(false);
         
     } else {
-        
+        CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("yourturn.mp3");
         _playback->setVisible(false);
         _playback->unscheduleUpdate();
         _controlBoard->setVisible(true);
@@ -209,7 +210,8 @@ void PowerIndicator::increasePower(){
     _innerpower->setVisible(true);
     _innerpower->runAction(FadeIn::create(0.1));
     _powerbar->runAction(FadeIn::create(0.1));
-
+    //CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("firebuttondown.mp3");
+    _increaseEffect = CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("power.mp3");
     _tickPre = _tick;
 }
 
@@ -217,6 +219,8 @@ void PowerIndicator::dismissPower(){
     _powerFlag = false;
     _innerpower->runAction(FadeOut::create(0.4));
     _powerbar->runAction(FadeOut::create(0.4));
+    //CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("firebuttonup.mp3");
+    CocosDenshion::SimpleAudioEngine::getInstance()->stopEffect(_increaseEffect);
 }
 
 void PowerIndicator::update(float delta){
@@ -346,6 +350,7 @@ bool ControlBoard::onTouchBegan(Touch *touch, Event *event)
     log("touch %f, %f",touch->getLocation().x,touch->getLocation().y);
     if(_left->getBoundingBox().containsPoint(this->convertTouchToNodeSpace(touch)))
     {
+        CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("movebuttondown.mp3");
         _eventDispatcher->dispatchCustomEvent("go left");
         _left->setTexture("button_pressed.png");
         _leftFlag=true;
@@ -353,6 +358,7 @@ bool ControlBoard::onTouchBegan(Touch *touch, Event *event)
     }
     if(_right->getBoundingBox().containsPoint(this->convertTouchToNodeSpace(touch)))
     {
+        CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("movebuttondown.mp3");
         _eventDispatcher->dispatchCustomEvent("go right");
         _right->setTexture("button_pressed.png");
         _rightFlag=true;
@@ -360,6 +366,7 @@ bool ControlBoard::onTouchBegan(Touch *touch, Event *event)
     }
     if(_fire->getBoundingBox().containsPoint(this->convertTouchToNodeSpace(touch)))
     {
+        CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("firebuttondown.mp3");
         _fire->setTexture("kaboom_pressed.png");
         _eventDispatcher->dispatchCustomEvent("start shoot");
         _eventDispatcher->dispatchCustomEvent("increasePower");
@@ -373,16 +380,19 @@ void ControlBoard::onTouchEnded(Touch *touch, Event *event)
 {
     if(_leftFlag)
     {
+        CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("movebuttonup.mp3");
         _left->setTexture("button_normal.png");
         _eventDispatcher->dispatchCustomEvent("stop");
     }
     else if(_rightFlag)
     {
+        CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("movebuttonup.mp3");
         _right->setTexture("button_normal.png");
         _eventDispatcher->dispatchCustomEvent("stop");
     }
     else if(_startShootFlag)
     {
+        CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("firebuttonup.mp3");
         _fire->setTexture("kaboom_normal.png");
         _eventDispatcher->dispatchCustomEvent("end shoot");
         _eventDispatcher->dispatchCustomEvent("dismissPower");

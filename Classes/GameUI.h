@@ -61,7 +61,7 @@ protected:
     bool _powerFlag = false;
     int _tick = 0;
     int _tickPre;
-    
+    int _increaseEffect;
     void update(float delta);
     
     void increasePower();
