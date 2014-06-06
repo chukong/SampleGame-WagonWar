@@ -45,7 +45,7 @@ bool Aimer::init(bool isRight, float upper, float lower)
     _green->setOpacity(150);
     
     _crosshair=Sprite::create("crosshair.png");
-    
+    _crosshair->setVisible(false);
     addChild(_crosshair);
     
     addChild(_green);
