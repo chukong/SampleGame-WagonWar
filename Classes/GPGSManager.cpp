@@ -252,7 +252,7 @@ void GPGSManager::ShowMatchInbox()
                     break;
                 case gpg::MatchStatus::MY_TURN:
                 {//Play selected game
-                    LOGI("My turn...By Jacky");
+                    LOGI("My turn...By Jacky...");
                     
                     //add notouch layer.
                     auto notouchlayer = NoTouchLayer::create();
@@ -264,6 +264,7 @@ void GPGSManager::ShowMatchInbox()
                     ParseMatchData();
                     //todo:is second turn?
                     int cur_match_turn = GetMatchTurn();//no found, must return 0;
+                    LOGI("Oh My God.....cur_match_turn is %d",cur_match_turn);
                     cur_match_turn++;
                     if(cur_match_turn == 1){
                         setPlayer1Name();
@@ -379,7 +380,8 @@ int32_t GPGSManager::GetNextParticipant() {
     for (int32_t i = 1; i < size; ++i) {
         int32_t index = (localPlayerIndex + i) % size;
         if (participants[index].Status() == gpg::ParticipantStatus::INVITED ||
-            participants[index].Status() == gpg::ParticipantStatus::JOINED) {
+            participants[index].Status() == gpg::ParticipantStatus::JOINED ||
+            participants[index].Status() == gpg::ParticipantStatus::NOT_INVITED_YET) {
             LOGI("Found next participant");
             nextPlayerIndex = index;
         }

@@ -14,6 +14,7 @@
 #include "json/writer.h"
 #include "json/stringbuffer.h"
 #include "MainScreenScene.h"
+#include "SimpleAudioEngine.h"
 
 USING_NS_CC;
 
@@ -283,6 +284,7 @@ void WagonSelect::createUI()
 
 void WagonSelect::ready_callback(Ref* ref)
 {
+    CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("readystart.mp3");
     auto notouchlayer = NoTouchLayer::create();
     notouchlayer->setTag(NOTOUCHTAG);
     Director::getInstance()->getRunningScene()->addChild(notouchlayer,100);
@@ -395,7 +397,7 @@ void WagonSelect::wagon1_selected_callback(cocos2d::Ref* ref)
     _wagon2_menuitem->unselected();
     _wagon3_menuitem->unselected();
     _wagon4_menuitem->unselected();
-    
+    CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("selectwagon.mp3");
     flash->setPosition(_wagon1_menuitem->getPosition());
     _wagon = 0;
 }

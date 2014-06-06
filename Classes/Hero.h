@@ -67,6 +67,7 @@ public:
     void flipLeft();
     void flipRight();
     void startshoot();
+    void endshoot();
     void hit();
     void stop();
     
@@ -93,7 +94,7 @@ public:
     cocos2d::Sprite* _wagonBSprite;
     
     cocos2d::Sprite* _hpBarOuter;
-    cocos2d::ui::LoadingBar* _hpInnerBar;
+    cocos2d::ProgressTimer* _hpInnerBar;
     cocos2d::ProgressTimer* _hpBarBack;
     cocos2d::Label* _nameLabel;
     
@@ -112,4 +113,14 @@ public:
     void updateAngle(int angle);
     
     void update(float delta);
+    
+protected:
+    int _tankMoveEffect;
+    int _tankShootEffect;
+    int _horseyMoveEffect;
+    int _horseyShootEffect;
+    int _rockMoveEffect;
+    int _rockShootEffect;
+    int _mechMoveEffect;
+    int _mechShootEffect;
 };

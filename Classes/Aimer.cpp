@@ -82,6 +82,7 @@ bool Aimer::onTouchBegan(Touch* touch, Event* event)
     {
         _pointer->runAction(ScaleTo::create(0.1, 2, _pointer->getScaleY()));
         _pointer->runAction(FadeTo::create(0.1, 255));
+        _eventDispatcher->dispatchCustomEvent("start angle",(void*)(int)(getWorldAngle()));
         return true;
     }
     else
@@ -95,7 +96,7 @@ void Aimer::onTouchEnded(cocos2d::Touch *touch, cocos2d::Event *event)
     _pointer->stopAllActions();
     _pointer->runAction(ScaleTo::create(0.1, 1.0, _pointer->getScaleY()));
     _pointer->runAction(FadeTo::create(0.1, 200));
-    log("aaaa %f", getWorldAngle());
+    _eventDispatcher->dispatchCustomEvent("end angle", (void*)(int)(getWorldAngle()));
 }
 
 void Aimer::onTouchMoved(cocos2d::Touch *touch, cocos2d::Event *event)
@@ -127,4 +128,29 @@ void Aimer::setAngle(float a)
         _crosshair->setRotation(_angle);
         _crosshair->setPosition(Point(200,0).rotateByAngle(Point(0,0), CC_DEGREES_TO_RADIANS(-_angle)));
     }
+}
+
+void Aimer::runRotation(float duration, int endAngle){
+    endAngle = endAngle - getParent()->getParent()->getRotation();
+    
+    if(!reversed)
+    {
+        _angle = endAngle>0? endAngle-360: endAngle;
+        _angle = clampf(endAngle, -180-upperLimit ,-180-lowerLimit);
+        _pointer->runAction(RotateTo::create(duration, -180-_angle));
+    }
+    else
+    {
+        _angle = clampf(endAngle, upperLimit, lowerLimit);
+        _pointer->runAction(RotateTo::create(duration, _angle));
+    }
+    
+}
+
+void Aimer::hideCrossHair(){
+    _crosshair->setVisible(false);
+}
+
+void Aimer::showCrossHair(){
+    _crosshair->setVisible(true);
 }

@@ -8,6 +8,7 @@
 
 #include "Hero.h"
 #include <algorithm>
+#include "SimpleAudioEngine.h"
 
 USING_NS_CC;
 
@@ -128,11 +129,13 @@ bool Hero::init(Side side, Body body, Wagon wagon, bool isfacetoright, std::stri
     _hpBarBack->setPositionY(-75);
     this->addChild(_hpBarBack);
     
-    _hpInnerBar = ui::LoadingBar::create("hpinner.png");
-    //hpBar->setPercent((float)_lasthp*100/(float)_heroConfig.wagonConfig.hp);
+    auto hpInnerSprite = Sprite::create("hpinner.png");
+    hpInnerSprite->setColor(Color3B(87, 227, 0));
+    _hpInnerBar = ProgressTimer::create(hpInnerSprite);
+    _hpInnerBar->setType(ProgressTimer::Type::BAR);
+    _hpInnerBar->setBarChangeRate(Point(1,0));
+    _hpInnerBar->setMidpoint(Point(0,0));
     _hpInnerBar->setPositionY(-75);
-    _hpInnerBar->setAnchorPoint(Point::ANCHOR_MIDDLE);
-    _hpInnerBar->setColor(Color3B(87, 227, 0));
     this->addChild(_hpInnerBar);
     
     // name
@@ -172,15 +175,15 @@ bool Hero::init(Side side, Body body, Wagon wagon, bool isfacetoright, std::stri
         _sideSymbol->setTexture("enemy.png");
     }
     _sideSymbol->setPosition(0,180);
-    _sideSymbol->runAction(RepeatForever::create(Sequence::create(MoveBy::create(1, Point(0,20)),
-                                                               MoveBy::create(1, Point(0,-20)),
+    _sideSymbol->runAction(RepeatForever::create(Sequence::create(EaseSineInOut::create(MoveBy::create(0.58, Point(0,25))),
+                                                               EaseSineInOut::create(MoveBy::create(0.58, Point(0,-25))),
                                                                NULL)));
     this->addChild(_sideSymbol,2);
     
     _triangleSymbol = Sprite::create("triangle.png");
     _triangleSymbol->setPosition(0,140);
-    _triangleSymbol->runAction(RepeatForever::create(Sequence::create(MoveBy::create(1, Point(0,20)),
-                                                               MoveBy::create(1, Point(0,-20)),
+    _triangleSymbol->runAction(RepeatForever::create(Sequence::create(EaseSineInOut::create(MoveBy::create(0.58, Point(0,25))),
+                                                               EaseSineInOut::create(MoveBy::create(0.58, Point(0,-25))),
                                                                NULL)));
     this->addChild(_triangleSymbol,2);
     
@@ -218,18 +221,21 @@ void Hero::moveleft()
             _wagonBSprite->stopAllActions();
             _wagonASprite->runAction(RepeatForever::create(g_gameConfig.getAnimate(g_gameAnimation.mech_move)));
             _wagonBSprite->runAction(RepeatForever::create(g_gameConfig.getAnimate(g_gameAnimation.mechgun_move)));
+            _mechMoveEffect = CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("mechmove.mp3",true);
         }
             break;
         case HORSEY:
         {
             _wagonASprite->stopAllActions();
             _wagonASprite->runAction(RepeatForever::create(g_gameConfig.getAnimate(g_gameAnimation.cnm_move)));
+            _horseyMoveEffect = CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("horseymove.mp3",true);
         }
             break;
         case ROCK:
         {
             _wagonASprite->stopAllActions();
             _wagonASprite->runAction(RepeatForever::create(g_gameConfig.getAnimate(g_gameAnimation.rock_move)));
+            _rockMoveEffect = CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("rockmove.mp3",true);
             
         }
             break;
@@ -237,6 +243,7 @@ void Hero::moveleft()
         {
             _wagonASprite->stopAllActions();
             _wagonASprite->runAction(RepeatForever::create(g_gameConfig.getAnimate(g_gameAnimation.tank_move)));
+            _tankMoveEffect = CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("tankmove.mp3",true);
         }
             break;
         default:
@@ -254,25 +261,28 @@ void Hero::moveright()
             _wagonBSprite->stopAllActions();
             _wagonASprite->runAction(RepeatForever::create(g_gameConfig.getAnimate(g_gameAnimation.mech_move)));
             _wagonBSprite->runAction(RepeatForever::create(g_gameConfig.getAnimate(g_gameAnimation.mechgun_move)));
+            _mechMoveEffect = CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("mechmove.mp3",true);
         }
             break;
         case HORSEY:
         {
             _wagonASprite->stopAllActions();
             _wagonASprite->runAction(RepeatForever::create(g_gameConfig.getAnimate(g_gameAnimation.cnm_move)));
+            _horseyMoveEffect = CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("horseymove.mp3",true);
         }
             break;
         case ROCK:
         {
             _wagonASprite->stopAllActions();
             _wagonASprite->runAction(RepeatForever::create(g_gameConfig.getAnimate(g_gameAnimation.rock_move)));
-            
+            _rockMoveEffect = CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("rockmove.mp3",true);
         }
             break;
         case TANK:
         {
             _wagonASprite->stopAllActions();
             _wagonASprite->runAction(RepeatForever::create(g_gameConfig.getAnimate(g_gameAnimation.tank_move)));
+            _tankMoveEffect = CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("tankmove.mp3",true);
         }
             break;
         default:
@@ -289,18 +299,21 @@ void Hero::startshoot()
             _wagonBSprite->stopAllActions();
             _wagonASprite->runAction(RepeatForever::create(g_gameConfig.getAnimate(g_gameAnimation.mech_shoot)));
             _wagonBSprite->runAction(RepeatForever::create(g_gameConfig.getAnimate(g_gameAnimation.mechgun_shoot)));
+            //_mechShootEffect = CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("mechshoot.mp3");
         }
             break;
         case HORSEY:
         {
             _wagonASprite->stopAllActions();
             _wagonASprite->runAction(RepeatForever::create(g_gameConfig.getAnimate(g_gameAnimation.cnm_shoot)));
+            //_horseyShootEffect = CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("horseyshoot.mp3");
         }
             break;
         case ROCK:
         {
             _wagonASprite->stopAllActions();
             _wagonASprite->runAction(RepeatForever::create(g_gameConfig.getAnimate(g_gameAnimation.rock_shoot)));
+            //_rockShootEffect = CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("rockshoot.mp3");
 
         }
             break;
@@ -308,6 +321,7 @@ void Hero::startshoot()
         {
             _wagonASprite->stopAllActions();
             _wagonASprite->runAction(RepeatForever::create(g_gameConfig.getAnimate(g_gameAnimation.tank_shoot)));
+            //_tankShootEffect = CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("tankshoot.mp3");
         }
             break;
         default:
@@ -350,6 +364,33 @@ void Hero::hit()
     }
 }
 
+void Hero::endshoot(){
+    switch (_heroConfig.wagon) {
+        case MECH:
+        {
+            _mechShootEffect = CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("mechshoot.mp3");
+        }
+            break;
+        case HORSEY:
+        {
+            _horseyShootEffect = CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("horseyshoot.mp3");
+        }
+            break;
+        case ROCK:
+        {
+            _rockShootEffect = CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("rockshoot.mp3");
+        }
+            break;
+        case TANK:
+        {
+            _tankShootEffect = CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("tankshoot.mp3");
+        }
+            break;
+        default:
+            break;
+    }
+}
+
 void Hero::stop()
 {
     switch (_heroConfig.wagon) {
@@ -359,25 +400,28 @@ void Hero::stop()
             _wagonBSprite->stopAllActions();
             _wagonASprite->runAction(RepeatForever::create(g_gameConfig.getAnimate(g_gameAnimation.mech_idle)));
             _wagonBSprite->runAction(RepeatForever::create(g_gameConfig.getAnimate(g_gameAnimation.mechgun_idle)));
+            CocosDenshion::SimpleAudioEngine::getInstance()->stopEffect(_mechMoveEffect);
         }
             break;
         case HORSEY:
         {
             _wagonASprite->stopAllActions();
             _wagonASprite->runAction(RepeatForever::create(g_gameConfig.getAnimate(g_gameAnimation.cnm_idle)));
+            CocosDenshion::SimpleAudioEngine::getInstance()->stopEffect(_horseyMoveEffect);
         }
             break;
         case ROCK:
         {
             _wagonASprite->stopAllActions();
             _wagonASprite->runAction(RepeatForever::create(g_gameConfig.getAnimate(g_gameAnimation.rock_idle)));
-            
+            CocosDenshion::SimpleAudioEngine::getInstance()->stopEffect(_rockMoveEffect);
         }
             break;
         case TANK:
         {
             _wagonASprite->stopAllActions();
             _wagonASprite->runAction(RepeatForever::create(g_gameConfig.getAnimate(g_gameAnimation.tank_idle)));
+            CocosDenshion::SimpleAudioEngine::getInstance()->stopEffect(_tankMoveEffect);
         }
             break;
         default:
@@ -392,7 +436,7 @@ int Hero::hurt(int t_hurt)
     {
         float nowHPPercent = (float)_lasthp*100/(float)_heroConfig.wagonConfig.hp;
         log("nowHPpe %f", nowHPPercent);
-        _hpInnerBar->setPercent(nowHPPercent);
+        _hpInnerBar->setPercentage(nowHPPercent);
         _hpBarBack->runAction(ProgressTo::create(1,nowHPPercent));
         _nameLabel->runAction(Sequence::create(MoveBy::create(0.1, Point(0, 5)),
                                                             MoveBy::create(0.1, Point(0, -10)),
@@ -417,7 +461,7 @@ int Hero::hurt(int t_hurt)
     {
         log("dddddd");
         _lasthp = 0;
-        _hpInnerBar->setPercent(0);
+        _hpInnerBar->setPercentage(0);
         _hpBarBack->runAction(ProgressTo::create(1,_lasthp));
         _eventDispatcher->dispatchCustomEvent("playerdead", this);
     }
@@ -432,7 +476,7 @@ void Hero::setLife(int life)
         _hpInnerBar->setColor(Color3B(227,96,0));
     }
     _hpBarBack->setPercentage(nowHPPercent);
-    _hpInnerBar->setPercent(nowHPPercent);
+    _hpInnerBar->setPercentage(nowHPPercent);
 }
 
 void Hero::updateAngle(int angle){
@@ -442,6 +486,7 @@ void Hero::updateAngle(int angle){
 }
 
 void Hero::update(float delta){
+    log("angle dddd:%f",aim->getWorldAngle());
     int angle = abs(aim->getWorldAngle());
     if(angle >= 270){
         angle -= 360;

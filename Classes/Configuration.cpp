@@ -67,7 +67,12 @@ void GameConfig::initAnimation()
     auto cnm_shoot = Animation::create();
     cnm_shoot->setDelayPerUnit(0.14f);
     for (int i=1; i<=10 ; i++) {
-        sprintf(text, "cnm_shoot0%d.png",i);
+        if(i >= 10){
+            sprintf(text, "cnm_shoot%d.png",i);
+        } else {
+            sprintf(text, "cnm_shoot0%d.png",i);
+        }
+        
         cnm_shoot->addSpriteFrame(SpriteFrameCache::getInstance()->getSpriteFrameByName(text));
     }
     AnimationCache::getInstance()->addAnimation(cnm_shoot,g_gameAnimation.cnm_shoot);
@@ -136,7 +141,12 @@ void GameConfig::initAnimation()
     auto rock_shoot = Animation::create();
     rock_shoot->setDelayPerUnit(0.14f);
     for (int i=1; i<=10 ; i++) {
-        sprintf(text, "rockshoot0%d.png",i);
+        if(i >= 10){
+            sprintf(text, "rockshoot%d.png",i);
+        } else {
+            sprintf(text, "rockshoot0%d.png",i);
+        }
+        
         rock_shoot->addSpriteFrame(SpriteFrameCache::getInstance()->getSpriteFrameByName(text));
     }
     AnimationCache::getInstance()->addAnimation(rock_shoot,g_gameAnimation.rock_shoot);
@@ -194,7 +204,12 @@ void GameConfig::initAnimation()
     auto mech_shoot = Animation::create();
     mech_shoot->setDelayPerUnit(0.14f);
     for (int i=1; i<=10 ; i++) {
-        sprintf(text, "mechshoot0%d.png",i);
+        if(i >= 10){
+            sprintf(text, "mechshoot%d.png",i);
+        } else {
+            sprintf(text, "mechshoot0%d.png",i);
+        }
+        
         mech_shoot->addSpriteFrame(SpriteFrameCache::getInstance()->getSpriteFrameByName(text));
     }
     AnimationCache::getInstance()->addAnimation(mech_shoot,g_gameAnimation.mech_shoot);
@@ -202,7 +217,12 @@ void GameConfig::initAnimation()
     auto mechgun_shoot = Animation::create();
     mechgun_shoot->setDelayPerUnit(0.14f);
     for (int i=1; i<=10 ; i++) {
-        sprintf(text, "mechgunshoot0%d.png",i);
+        if(i >= 10){
+            sprintf(text, "mechgunshoot%d.png",i);
+        } else {
+            sprintf(text, "mechgunshoot0%d.png",i);
+        }
+        
         mechgun_shoot->addSpriteFrame(SpriteFrameCache::getInstance()->getSpriteFrameByName(text));
     }
     AnimationCache::getInstance()->addAnimation(mechgun_shoot,g_gameAnimation.mechgun_shoot);

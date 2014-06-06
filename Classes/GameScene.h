@@ -43,6 +43,7 @@ public:
     CC_SYNTHESIZE(Level*, _level, Level);
     CC_SYNTHESIZE(cocos2d::Layer*, _PlayerLayer, PlayerLayer);
     CC_SYNTHESIZE(cocos2d::Layer*, _bulletLayer, BulletLayer);
+    CC_SYNTHESIZE(cocos2d::Layer*, _effectLayer, EffectLayer);
     CC_SYNTHESIZE(cocos2d::Point, _wind, Wind);
     CC_SYNTHESIZE(cocos2d::Point, _gravity, Gravity);
     void initExplosionMasks();
@@ -50,6 +51,8 @@ public:
     void initPlayers();
     void startShoot();
     void endShoot();
+    void startAngle(cocos2d::EventCustom* event);
+    void endAngle(cocos2d::EventCustom* event);
     void playerdead(cocos2d::EventCustom* event);
     Hero *getCurrentPlayer();
     Bullet* addBullet(BulletTypes type, cocos2d::Point pos, cocos2d::Point vector);

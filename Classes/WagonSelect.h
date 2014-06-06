@@ -69,6 +69,8 @@ private:
     
     cocos2d::Sprite* flash;
     
+    int _selectWagonIndex = 0;
+    
     bool _isBoy;
     int _wagon;
     

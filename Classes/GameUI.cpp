@@ -7,6 +7,7 @@
 //
 
 #include "GameUI.h"
+#include "SimpleAudioEngine.h"
 USING_NS_CC;
 
 bool GameUI::init()
@@ -28,11 +29,17 @@ bool GameUI::init()
     wind->setPosition(vsize.width/2+vorigin.x, vsize.height- vorigin.y - 50);
     
     _power = PowerIndicator::create();
-    _power->setPosition(vsize.width/2+vorigin.x, -120);
+    _power->setPosition(vsize.width/2+vorigin.x, 0);
     _power->setAnchorPoint(Point(0.5f, 0.0f));
-    _power->setVisible(false);
+    //_power->setVisible(false);
     //_power->runAction(MoveTo::create(0.5, Point(vsize.width/2+vorigin.x, 0)));
     addChild(_power);
+    
+    _controlBoard = ControlBoard::create();
+    _controlBoard->setPosition(vsize.width/2+vorigin.x, -120);
+    _controlBoard->setAnchorPoint(Point(0.5f, 0.0f));
+    _controlBoard->setVisible(false);
+    addChild(_controlBoard);
     
     _playback = PlayBackIndictaor::create();
     _playback->setPosition(vsize.width/2+vorigin.x, 30);
@@ -70,7 +77,7 @@ void GameUI::switchTurn(bool isMyTurn){
         turnSprite1->setPosition(Point(vorigin.x - 120, vsize.height/2 + vorigin.y + 70));
         turnSprite2->setPosition(Point(vorigin.x +vsize.width + 120, vsize.height/2 + vorigin.y - 30));
         turnSprite1->runAction(Sequence::create(
-                                                MoveTo::create(0.3f, Point(vorigin.x + 500,vsize.height/2 + vorigin.y + 70)),
+                                                MoveTo::create(0.3f, Point(vorigin.x + vsize.width/2 - 50,vsize.height/2 + vorigin.y + 70)),
                                                 MoveBy::create(0.1f, Point(-90,0)),
                                                 MoveBy::create(0.1f, Point(20,0)),
                                                 DelayTime::create(1),
@@ -78,7 +85,7 @@ void GameUI::switchTurn(bool isMyTurn){
                                                 RemoveSelf::create(),
                                                 NULL));
         turnSprite2->runAction(Sequence::create(
-                                                MoveTo::create(0.3f, Point(vorigin.x + vsize.width - 500,vsize.height/2 + vorigin.y - 30)),
+                                                MoveTo::create(0.3f, Point(vorigin.x + vsize.width/2 + 50,vsize.height/2 + vorigin.y - 30)),
                                                 MoveBy::create(0.1f, Point(90,0)),
                                                 MoveBy::create(0.1f, Point(-20,0)),
                                                 DelayTime::create(1),
@@ -89,21 +96,21 @@ void GameUI::switchTurn(bool isMyTurn){
         this->addChild(turnSprite1);
         this->addChild(turnSprite2);
         
-        _power->runAction(EaseBackIn::create(MoveTo::create(0.5, Point(vsize.width/2+vorigin.x, -120))));
-        _power->setVisible(false);
+        _controlBoard->runAction(EaseBackIn::create(MoveTo::create(0.5, Point(vsize.width/2+vorigin.x, -120))));
+        _controlBoard->setVisible(false);
         
     } else {
-        
+        CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("yourturn.mp3");
         _playback->setVisible(false);
         _playback->unscheduleUpdate();
-        _power->setVisible(true);
-        _power->runAction(Sequence::create(DelayTime::create(1),EaseBackIn::create(MoveTo::create(0.5, Point(vsize.width/2+vorigin.x, 0))), NULL));
+        _controlBoard->setVisible(true);
+        _controlBoard->runAction(Sequence::create(DelayTime::create(1),EaseBackIn::create(MoveTo::create(0.5, Point(vsize.width/2+vorigin.x, 0))), NULL));
         auto turnSprite1 = Sprite::create("your_turn_1.png");
         auto turnSprite2 = Sprite::create("your_turn_2.png");
         turnSprite1->setPosition(Point(vorigin.x - 120, vsize.height/2 + vorigin.y));
         turnSprite2->setPosition(Point(vorigin.x +vsize.width + 120, vsize.height/2 + vorigin.y));
         turnSprite1->runAction(Sequence::create(DelayTime::create(0.8),
-                                                MoveTo::create(0.3f, Point(vorigin.x + 400,vsize.height/2 + vorigin.y)),
+                                                MoveTo::create(0.3f, Point(vorigin.x + vsize.width/2 - 100,vsize.height/2 + vorigin.y)),
                                                 MoveBy::create(0.1f, Point(-90,0)),
                                                 MoveBy::create(0.1f, Point(20,0)),
                                                 DelayTime::create(1),
@@ -111,7 +118,7 @@ void GameUI::switchTurn(bool isMyTurn){
                                                 RemoveSelf::create(),
                                                 NULL));
         turnSprite2->runAction(Sequence::create(DelayTime::create(0.8),
-                                                MoveTo::create(0.3f, Point(vorigin.x + vsize.width - 400,vsize.height/2 + vorigin.y)),
+                                                MoveTo::create(0.3f, Point(vorigin.x + vsize.width/2 + 100,vsize.height/2 + vorigin.y)),
                                                 MoveBy::create(0.1f, Point(90,0)),
                                                 MoveBy::create(0.1f, Point(-20,0)),
                                                 DelayTime::create(1),
@@ -173,15 +180,6 @@ void WindIndicator::setWind(Point pos)
 
 
 bool PowerIndicator::init(){
-    _left = Sprite::create("button_normal.png");
-    //left->setAnchorPoint(Point::ANCHOR_BOTTOM_LEFT);
-    _left->setPosition(Point(- 170,60));
-    addChild(_left,2);
-    
-    _right = Sprite::create("button_normal.png");
-    _right->setScaleX(-1);
-    _right->setPosition(Point(170,60));
-    addChild(_right,2);
     
     _powerbar = Sprite::create("powerbar.png");
     _powerbar->setAnchorPoint(Point(0.5f, 0.30713f));
@@ -195,23 +193,6 @@ bool PowerIndicator::init(){
     _innerpower->setPosition(0,191);
     _innerpower->setVisible(false);
     addChild(_innerpower);
-    
-    auto board = Sprite::create("board.png");
-    board->setAnchorPoint(Point::ANCHOR_MIDDLE_BOTTOM);
-    //board->setPosition(vsize.width/2+vorigin.x,0);
-    addChild(board);
-    
-    _fire = Sprite::create("kaboom_normal.png");
-    _fire->setAnchorPoint(Point::ANCHOR_MIDDLE_BOTTOM);
-    //fire->setScale(2.0f);
-    addChild(_fire);
-    //fire->setPosition(Point(vsize.width/2, 0));
-    
-    auto _mytouchListener = EventListenerTouchOneByOne::create();
-    _mytouchListener->onTouchBegan = CC_CALLBACK_2(PowerIndicator::onTouchBegan, this);
-    _mytouchListener->onTouchEnded = CC_CALLBACK_2(PowerIndicator::onTouchEnded, this);
-    _mytouchListener->setSwallowTouches(true);
-    _eventDispatcher->addEventListenerWithSceneGraphPriority(_mytouchListener, this);
     
     auto increasePowerListener = EventListenerCustom::create("increasePower",CC_CALLBACK_0(PowerIndicator::increasePower, this));
     auto dismissPowerListener = EventListenerCustom::create("dismissPower",CC_CALLBACK_0(PowerIndicator::dismissPower, this));
@@ -229,7 +210,8 @@ void PowerIndicator::increasePower(){
     _innerpower->setVisible(true);
     _innerpower->runAction(FadeIn::create(0.1));
     _powerbar->runAction(FadeIn::create(0.1));
-
+    //CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("firebuttondown.mp3");
+    _increaseEffect = CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("power.mp3");
     _tickPre = _tick;
 }
 
@@ -237,6 +219,8 @@ void PowerIndicator::dismissPower(){
     _powerFlag = false;
     _innerpower->runAction(FadeOut::create(0.4));
     _powerbar->runAction(FadeOut::create(0.4));
+    //CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("firebuttonup.mp3");
+    CocosDenshion::SimpleAudioEngine::getInstance()->stopEffect(_increaseEffect);
 }
 
 void PowerIndicator::update(float delta){
@@ -248,60 +232,6 @@ void PowerIndicator::update(float delta){
         tick = tick>180?180:tick;
         _innerpower->setScale(tick/180.0f);
     }
-}
-
-bool PowerIndicator::onTouchBegan(Touch *touch, Event *event)
-{
-    log("powertouchbegan");
-    log("touch %f, %f",touch->getLocation().x,touch->getLocation().y);
-    if(_left->getBoundingBox().containsPoint(this->convertTouchToNodeSpace(touch)))
-    {
-        _eventDispatcher->dispatchCustomEvent("go left");
-        _left->setTexture("button_pressed.png");
-        _leftFlag=true;
-        return true;
-    }
-    if(_right->getBoundingBox().containsPoint(this->convertTouchToNodeSpace(touch)))
-    {
-        _eventDispatcher->dispatchCustomEvent("go right");
-        _right->setTexture("button_pressed.png");
-        _rightFlag=true;
-        return true;
-    }
-    if(_fire->getBoundingBox().containsPoint(this->convertTouchToNodeSpace(touch)))
-    {
-        _fire->setTexture("kaboom_pressed.png");
-        _eventDispatcher->dispatchCustomEvent("start shoot");
-        _eventDispatcher->dispatchCustomEvent("increasePower");
-        _startShootFlag = true;
-        return true;
-    }
-    return false;
-}
-
-void PowerIndicator::onTouchEnded(Touch *touch, Event *event)
-{
-    if(_leftFlag)
-    {
-        _left->setTexture("button_normal.png");
-        _eventDispatcher->dispatchCustomEvent("stop");
-    }
-    else if(_rightFlag)
-    {
-        _right->setTexture("button_normal.png");
-        _eventDispatcher->dispatchCustomEvent("stop");
-    }
-    else if(_startShootFlag)
-    {
-        _fire->setTexture("kaboom_normal.png");
-        _eventDispatcher->dispatchCustomEvent("end shoot");
-        _eventDispatcher->dispatchCustomEvent("dismissPower");
-    }
-    
-    _startShootFlag = false;
-    _leftFlag = false;
-    _rightFlag = false;
-    
 }
 
 bool PlayBackIndictaor::init(){
@@ -382,16 +312,94 @@ void PlayBackIndictaor::update(float delta){
     //log("percentage....%d",_playBackInnerBar->getPercent());
 }
 
+bool ControlBoard::init(){
+    
+    _left = Sprite::create("button_normal.png");
+    //left->setAnchorPoint(Point::ANCHOR_BOTTOM_LEFT);
+    _left->setPosition(Point(- 170,60));
+    addChild(_left,2);
+    
+    _right = Sprite::create("button_normal.png");
+    _right->setScaleX(-1);
+    _right->setPosition(Point(170,60));
+    addChild(_right,2);
+    
+    auto board = Sprite::create("board.png");
+    board->setAnchorPoint(Point::ANCHOR_MIDDLE_BOTTOM);
+    //board->setPosition(vsize.width/2+vorigin.x,0);
+    addChild(board);
+    
+    _fire = Sprite::create("kaboom_normal.png");
+    _fire->setAnchorPoint(Point::ANCHOR_MIDDLE_BOTTOM);
+    //fire->setScale(2.0f);
+    addChild(_fire);
+    //fire->setPosition(Point(vsize.width/2, 0));
+    
+    auto _mytouchListener = EventListenerTouchOneByOne::create();
+    _mytouchListener->onTouchBegan = CC_CALLBACK_2(ControlBoard::onTouchBegan, this);
+    _mytouchListener->onTouchEnded = CC_CALLBACK_2(ControlBoard::onTouchEnded, this);
+    _mytouchListener->setSwallowTouches(true);
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(_mytouchListener, this);
+    
+    return true;
+}
 
+bool ControlBoard::onTouchBegan(Touch *touch, Event *event)
+{
+    log("powertouchbegan");
+    log("touch %f, %f",touch->getLocation().x,touch->getLocation().y);
+    if(_left->getBoundingBox().containsPoint(this->convertTouchToNodeSpace(touch)))
+    {
+        CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("movebuttondown.mp3");
+        _eventDispatcher->dispatchCustomEvent("go left");
+        _left->setTexture("button_pressed.png");
+        _leftFlag=true;
+        return true;
+    }
+    if(_right->getBoundingBox().containsPoint(this->convertTouchToNodeSpace(touch)))
+    {
+        CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("movebuttondown.mp3");
+        _eventDispatcher->dispatchCustomEvent("go right");
+        _right->setTexture("button_pressed.png");
+        _rightFlag=true;
+        return true;
+    }
+    if(_fire->getBoundingBox().containsPoint(this->convertTouchToNodeSpace(touch)))
+    {
+        CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("firebuttondown.mp3");
+        _fire->setTexture("kaboom_pressed.png");
+        _eventDispatcher->dispatchCustomEvent("start shoot");
+        _eventDispatcher->dispatchCustomEvent("increasePower");
+        _startShootFlag = true;
+        return true;
+    }
+    return false;
+}
 
-
-
-
-
-
-
-
-
-
-
-
+void ControlBoard::onTouchEnded(Touch *touch, Event *event)
+{
+    if(_leftFlag)
+    {
+        CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("movebuttonup.mp3");
+        _left->setTexture("button_normal.png");
+        _eventDispatcher->dispatchCustomEvent("stop");
+    }
+    else if(_rightFlag)
+    {
+        CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("movebuttonup.mp3");
+        _right->setTexture("button_normal.png");
+        _eventDispatcher->dispatchCustomEvent("stop");
+    }
+    else if(_startShootFlag)
+    {
+        CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("firebuttonup.mp3");
+        _fire->setTexture("kaboom_normal.png");
+        _eventDispatcher->dispatchCustomEvent("end shoot");
+        _eventDispatcher->dispatchCustomEvent("dismissPower");
+    }
+    
+    _startShootFlag = false;
+    _leftFlag = false;
+    _rightFlag = false;
+    
+}
