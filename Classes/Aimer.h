@@ -21,6 +21,9 @@ public:
     float upperLimit;
     float lowerLimit;
     Aimer():upperLimit(-45), lowerLimit(-10){};
+    void runRotation(float duration,int endAngle);
+    void hideCrossHair();
+    void showCrossHair();
     void setAngle(float a);
     float getWorldAngle();
     bool reversed;
@@ -30,6 +33,7 @@ protected:
     cocos2d::ProgressTimer* _green;
     cocos2d::Sprite* _crosshair;
     float _angle;
+    float _backAnglePre;
     
     bool onTouchBegan(cocos2d::Touch* touch, cocos2d::Event* event);
     void onTouchMoved(cocos2d::Touch* touch, cocos2d::Event* event);

@@ -173,9 +173,9 @@ bool MainScreenScene::init()
 //    menu->setPosition(Point::ZERO);
 //    this->addChild(menu);
     
+    CocosDenshion::SimpleAudioEngine::getInstance()->setBackgroundMusicVolume(0.5);
     CocosDenshion::SimpleAudioEngine::getInstance()->stopBackgroundMusic();
-    CocosDenshion::SimpleAudioEngine::getInstance()->playBackgroundMusic("Stepping Stones m.mp3");
-
+    //CocosDenshion::SimpleAudioEngine::getInstance()->playBackgroundMusic("Stepping Stones m.mp3");
     auto mainscreen_bk = Sprite::create("mainscreen_bk.jpg");
     if(g_visibleRect.visibleWidth>960)
     {
@@ -255,6 +255,7 @@ bool MainScreenScene::init()
 
 void MainScreenScene::quickmatch_callback(cocos2d::Ref* pSender)
 {
+    CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("menuclick.mp3");
     log("QuickMatch");
     if (GPGSManager::IsSignedIn()) {
         
@@ -270,6 +271,7 @@ void MainScreenScene::quickmatch_callback(cocos2d::Ref* pSender)
 }
 void MainScreenScene::invitefriend_callback(cocos2d::Ref* pSender)
 {
+    CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("menuclick.mp3");
     log("InviteFriend");
     if (GPGSManager::IsSignedIn()) {
         GPGSManager::InviteFriend();
@@ -280,6 +282,7 @@ void MainScreenScene::invitefriend_callback(cocos2d::Ref* pSender)
 }
 void MainScreenScene::mygames_callback(cocos2d::Ref* pSender)
 {
+    CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("menuclick.mp3");
     log("MyGames");
     if (GPGSManager::IsSignedIn()) {
         GPGSManager::ShowMatchInbox();
@@ -290,6 +293,7 @@ void MainScreenScene::mygames_callback(cocos2d::Ref* pSender)
 }
 void MainScreenScene::achievements_callback(cocos2d::Ref* pSender)
 {
+    CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("menuclick.mp3");
     log("Achievements");
     if (GPGSManager::IsSignedIn()) {
         GPGSManager::ShowAchievements();
@@ -300,6 +304,7 @@ void MainScreenScene::achievements_callback(cocos2d::Ref* pSender)
 }
 void MainScreenScene::leaderboard_callback(cocos2d::Ref* pSender)
 {
+    CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("menuclick.mp3");
     log("LeaderBoard");
     if (GPGSManager::IsSignedIn()) {
         GPGSManager::ShowLeaderboard(LEAD_LEADERBOARD);
