@@ -30,9 +30,15 @@ bool GameUI::init()
     _power = PowerIndicator::create();
     _power->setPosition(vsize.width/2+vorigin.x, -120);
     _power->setAnchorPoint(Point(0.5f, 0.0f));
-    _power->setVisible(false);
+    //_power->setVisible(false);
     //_power->runAction(MoveTo::create(0.5, Point(vsize.width/2+vorigin.x, 0)));
     addChild(_power);
+    
+    _controlBoard = ControlBoard::create();
+    _controlBoard->setPosition(vsize.width/2+vorigin.x, -120);
+    _controlBoard->setAnchorPoint(Point(0.5f, 0.0f));
+    _controlBoard->setVisible(false);
+    addChild(_controlBoard);
     
     _playback = PlayBackIndictaor::create();
     _playback->setPosition(vsize.width/2+vorigin.x, 30);
@@ -89,15 +95,15 @@ void GameUI::switchTurn(bool isMyTurn){
         this->addChild(turnSprite1);
         this->addChild(turnSprite2);
         
-        _power->runAction(EaseBackIn::create(MoveTo::create(0.5, Point(vsize.width/2+vorigin.x, -120))));
-        _power->setVisible(false);
+        _controlBoard->runAction(EaseBackIn::create(MoveTo::create(0.5, Point(vsize.width/2+vorigin.x, -120))));
+        _controlBoard->setVisible(false);
         
     } else {
         
         _playback->setVisible(false);
         _playback->unscheduleUpdate();
-        _power->setVisible(true);
-        _power->runAction(Sequence::create(DelayTime::create(1),EaseBackIn::create(MoveTo::create(0.5, Point(vsize.width/2+vorigin.x, 0))), NULL));
+        _controlBoard->setVisible(true);
+        _controlBoard->runAction(Sequence::create(DelayTime::create(1),EaseBackIn::create(MoveTo::create(0.5, Point(vsize.width/2+vorigin.x, 0))), NULL));
         auto turnSprite1 = Sprite::create("your_turn_1.png");
         auto turnSprite2 = Sprite::create("your_turn_2.png");
         turnSprite1->setPosition(Point(vorigin.x - 120, vsize.height/2 + vorigin.y));
@@ -173,15 +179,6 @@ void WindIndicator::setWind(Point pos)
 
 
 bool PowerIndicator::init(){
-    _left = Sprite::create("button_normal.png");
-    //left->setAnchorPoint(Point::ANCHOR_BOTTOM_LEFT);
-    _left->setPosition(Point(- 170,60));
-    addChild(_left,2);
-    
-    _right = Sprite::create("button_normal.png");
-    _right->setScaleX(-1);
-    _right->setPosition(Point(170,60));
-    addChild(_right,2);
     
     _powerbar = Sprite::create("powerbar.png");
     _powerbar->setAnchorPoint(Point(0.5f, 0.30713f));
@@ -195,23 +192,6 @@ bool PowerIndicator::init(){
     _innerpower->setPosition(0,191);
     _innerpower->setVisible(false);
     addChild(_innerpower);
-    
-    auto board = Sprite::create("board.png");
-    board->setAnchorPoint(Point::ANCHOR_MIDDLE_BOTTOM);
-    //board->setPosition(vsize.width/2+vorigin.x,0);
-    addChild(board);
-    
-    _fire = Sprite::create("kaboom_normal.png");
-    _fire->setAnchorPoint(Point::ANCHOR_MIDDLE_BOTTOM);
-    //fire->setScale(2.0f);
-    addChild(_fire);
-    //fire->setPosition(Point(vsize.width/2, 0));
-    
-    auto _mytouchListener = EventListenerTouchOneByOne::create();
-    _mytouchListener->onTouchBegan = CC_CALLBACK_2(PowerIndicator::onTouchBegan, this);
-    _mytouchListener->onTouchEnded = CC_CALLBACK_2(PowerIndicator::onTouchEnded, this);
-    _mytouchListener->setSwallowTouches(true);
-    _eventDispatcher->addEventListenerWithSceneGraphPriority(_mytouchListener, this);
     
     auto increasePowerListener = EventListenerCustom::create("increasePower",CC_CALLBACK_0(PowerIndicator::increasePower, this));
     auto dismissPowerListener = EventListenerCustom::create("dismissPower",CC_CALLBACK_0(PowerIndicator::dismissPower, this));
@@ -248,60 +228,6 @@ void PowerIndicator::update(float delta){
         tick = tick>180?180:tick;
         _innerpower->setScale(tick/180.0f);
     }
-}
-
-bool PowerIndicator::onTouchBegan(Touch *touch, Event *event)
-{
-    log("powertouchbegan");
-    log("touch %f, %f",touch->getLocation().x,touch->getLocation().y);
-    if(_left->getBoundingBox().containsPoint(this->convertTouchToNodeSpace(touch)))
-    {
-        _eventDispatcher->dispatchCustomEvent("go left");
-        _left->setTexture("button_pressed.png");
-        _leftFlag=true;
-        return true;
-    }
-    if(_right->getBoundingBox().containsPoint(this->convertTouchToNodeSpace(touch)))
-    {
-        _eventDispatcher->dispatchCustomEvent("go right");
-        _right->setTexture("button_pressed.png");
-        _rightFlag=true;
-        return true;
-    }
-    if(_fire->getBoundingBox().containsPoint(this->convertTouchToNodeSpace(touch)))
-    {
-        _fire->setTexture("kaboom_pressed.png");
-        _eventDispatcher->dispatchCustomEvent("start shoot");
-        _eventDispatcher->dispatchCustomEvent("increasePower");
-        _startShootFlag = true;
-        return true;
-    }
-    return false;
-}
-
-void PowerIndicator::onTouchEnded(Touch *touch, Event *event)
-{
-    if(_leftFlag)
-    {
-        _left->setTexture("button_normal.png");
-        _eventDispatcher->dispatchCustomEvent("stop");
-    }
-    else if(_rightFlag)
-    {
-        _right->setTexture("button_normal.png");
-        _eventDispatcher->dispatchCustomEvent("stop");
-    }
-    else if(_startShootFlag)
-    {
-        _fire->setTexture("kaboom_normal.png");
-        _eventDispatcher->dispatchCustomEvent("end shoot");
-        _eventDispatcher->dispatchCustomEvent("dismissPower");
-    }
-    
-    _startShootFlag = false;
-    _leftFlag = false;
-    _rightFlag = false;
-    
 }
 
 bool PlayBackIndictaor::init(){
@@ -380,4 +306,90 @@ void PlayBackIndictaor::update(float delta){
     _playBackInnerBar->setPercentage(_tick/(float)tickSum * 100);
     _timeLabel->setString(std::string(time));
     //log("percentage....%d",_playBackInnerBar->getPercent());
+}
+
+bool ControlBoard::init(){
+    
+    _left = Sprite::create("button_normal.png");
+    //left->setAnchorPoint(Point::ANCHOR_BOTTOM_LEFT);
+    _left->setPosition(Point(- 170,60));
+    addChild(_left,2);
+    
+    _right = Sprite::create("button_normal.png");
+    _right->setScaleX(-1);
+    _right->setPosition(Point(170,60));
+    addChild(_right,2);
+    
+    auto board = Sprite::create("board.png");
+    board->setAnchorPoint(Point::ANCHOR_MIDDLE_BOTTOM);
+    //board->setPosition(vsize.width/2+vorigin.x,0);
+    addChild(board);
+    
+    _fire = Sprite::create("kaboom_normal.png");
+    _fire->setAnchorPoint(Point::ANCHOR_MIDDLE_BOTTOM);
+    //fire->setScale(2.0f);
+    addChild(_fire);
+    //fire->setPosition(Point(vsize.width/2, 0));
+    
+    auto _mytouchListener = EventListenerTouchOneByOne::create();
+    _mytouchListener->onTouchBegan = CC_CALLBACK_2(ControlBoard::onTouchBegan, this);
+    _mytouchListener->onTouchEnded = CC_CALLBACK_2(ControlBoard::onTouchEnded, this);
+    _mytouchListener->setSwallowTouches(true);
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(_mytouchListener, this);
+    
+    return true;
+}
+
+bool ControlBoard::onTouchBegan(Touch *touch, Event *event)
+{
+    log("powertouchbegan");
+    log("touch %f, %f",touch->getLocation().x,touch->getLocation().y);
+    if(_left->getBoundingBox().containsPoint(this->convertTouchToNodeSpace(touch)))
+    {
+        _eventDispatcher->dispatchCustomEvent("go left");
+        _left->setTexture("button_pressed.png");
+        _leftFlag=true;
+        return true;
+    }
+    if(_right->getBoundingBox().containsPoint(this->convertTouchToNodeSpace(touch)))
+    {
+        _eventDispatcher->dispatchCustomEvent("go right");
+        _right->setTexture("button_pressed.png");
+        _rightFlag=true;
+        return true;
+    }
+    if(_fire->getBoundingBox().containsPoint(this->convertTouchToNodeSpace(touch)))
+    {
+        _fire->setTexture("kaboom_pressed.png");
+        _eventDispatcher->dispatchCustomEvent("start shoot");
+        _eventDispatcher->dispatchCustomEvent("increasePower");
+        _startShootFlag = true;
+        return true;
+    }
+    return false;
+}
+
+void ControlBoard::onTouchEnded(Touch *touch, Event *event)
+{
+    if(_leftFlag)
+    {
+        _left->setTexture("button_normal.png");
+        _eventDispatcher->dispatchCustomEvent("stop");
+    }
+    else if(_rightFlag)
+    {
+        _right->setTexture("button_normal.png");
+        _eventDispatcher->dispatchCustomEvent("stop");
+    }
+    else if(_startShootFlag)
+    {
+        _fire->setTexture("kaboom_normal.png");
+        _eventDispatcher->dispatchCustomEvent("end shoot");
+        _eventDispatcher->dispatchCustomEvent("dismissPower");
+    }
+    
+    _startShootFlag = false;
+    _leftFlag = false;
+    _rightFlag = false;
+    
 }

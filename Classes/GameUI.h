@@ -14,6 +14,7 @@
 
 class PowerIndicator;
 class PlayBackIndictaor;
+class ControlBoard;
 
 class GameUI : public cocos2d::Layer
 {
@@ -27,6 +28,7 @@ public:
 protected:
     PowerIndicator* _power;
     PlayBackIndictaor* _playback;
+    ControlBoard* _controlBoard;
     GameUI(){};
     cocos2d::EventListenerTouchOneByOne *_mytouchListener;
     void _toggleTouchEnable(bool onoff);
@@ -52,26 +54,13 @@ public:
     CREATE_FUNC(PowerIndicator);
     virtual bool init();
     
-    PowerIndicator():_leftFlag(false), _rightFlag(false),_startShootFlag(false){};
-    
 protected:
-    cocos2d::Sprite* _left;
-    cocos2d::Sprite* _right;
-    cocos2d::Sprite* _fire;
     cocos2d::Sprite* _powerbar;
     cocos2d::Sprite* _innerpower;
-    
-    bool _leftFlag;
-    bool _rightFlag;
-    bool _startShootFlag;
-    
-    bool onTouchBegan(cocos2d::Touch *touch, cocos2d::Event *event);
-    void onTouchEnded(cocos2d::Touch *touch, cocos2d::Event *event);
     
     bool _powerFlag = false;
     int _tick = 0;
     int _tickPre;
-    //timeval _now;
     
     void update(float delta);
     
@@ -97,6 +86,24 @@ protected:
     void update(float delta);
     void setPlayBackTickSum(int tickSum){ _playBackTickSum = tickSum;};
     void setEnemyName(std::string enemyName){ _enemyName = enemyName;};
+};
+
+class ControlBoard : public cocos2d::Node{
+public:
+    CREATE_FUNC(ControlBoard);
+    virtual bool init();
+    ControlBoard():_leftFlag(false), _rightFlag(false),_startShootFlag(false){};
+protected:
+    cocos2d::Sprite* _left;
+    cocos2d::Sprite* _right;
+    cocos2d::Sprite* _fire;
+    
+    bool _leftFlag;
+    bool _rightFlag;
+    bool _startShootFlag;
+    
+    bool onTouchBegan(cocos2d::Touch *touch, cocos2d::Event *event);
+    void onTouchEnded(cocos2d::Touch *touch, cocos2d::Event *event);
 };
 
 #endif /* defined(__TankMultiplayer__GameUI__) */
