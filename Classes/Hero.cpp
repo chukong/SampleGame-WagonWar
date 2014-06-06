@@ -486,7 +486,7 @@ void Hero::updateAngle(int angle){
 }
 
 void Hero::update(float delta){
-    log("angle dddd:%f",aim->getWorldAngle());
+    //log("angle dddd:%f",aim->getWorldAngle());
     int angle = abs(aim->getWorldAngle());
     if(angle >= 270){
         angle -= 360;
