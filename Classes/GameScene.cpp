@@ -188,7 +188,7 @@ void GameScene::endShoot()
         
     }
     //log("angle %f", angle);
-    auto b = addBullet(defaultB, Point(gunlocation.tx, gunlocation.ty)+Point(offset/2)-getPosition(), Point(tick/60.0f*20*cosf(CC_DEGREES_TO_RADIANS(-angle)), tick/60.0f*20*sinf(CC_DEGREES_TO_RADIANS(-angle))));
+    auto b = addBullet(defaultB, Point(gunlocation.tx, gunlocation.ty)+Point(offset/2)-getPosition(), Point(tick/60.0f*8*cosf(CC_DEGREES_TO_RADIANS(-angle)), tick/60.0f*8*sinf(CC_DEGREES_TO_RADIANS(-angle))));
         _following = dynamic_cast<Node*>(b);
 }
 void GameScene::randomWind()
@@ -694,6 +694,7 @@ void GameScene::update(float dt)
             {
                 _following = nullptr;
             }
+            
         }
     }
     
@@ -792,6 +793,9 @@ void GameScene::update(float dt)
             //kmGLPopMatrix();
         }
     }
+    
+    
+    
     _level->getRT()->onEnd();
     _tick++;
     
@@ -914,4 +918,18 @@ void GameScene::showBloodLossNum(Hero* hero, int num)
                                       RemoveSelf::create(),
                                       nullptr));
 
+}
+
+void GameScene::showWinOrLoss(bool isWin)
+{
+    if(isWin)
+    {
+        auto node = Node::create();
+        
+        
+    }
+    else
+    {
+        
+    }
 }

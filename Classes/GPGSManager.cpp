@@ -141,13 +141,13 @@ void GPGSManager::InitServices(gpg::PlatformConfiguration &pc)
                                        gpg::TurnBasedMatch match) {
                                     LOGI("TurnBasedMultiplayerEvent callback");
                                     //Show default inbox
-//                                    ShowMatchInbox();
+                                    ShowMatchInbox();
       })
       .SetOnMultiplayerInvitationEvent([](gpg::TurnBasedMultiplayerEvent event, std::string match_id,
                                               gpg::MultiplayerInvitation invitation) {
                                            LOGI("MultiplayerInvitationEvent callback");
                                            //Show default inbox
-//                                           ShowMatchInbox();
+                                           ShowMatchInbox();
       }).Create(pc);
   }
   LOGI("Created");

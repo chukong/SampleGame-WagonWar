@@ -70,7 +70,7 @@ public:
     void entertoMenu(float dt);
     
     void showBloodLossNum(Hero* hero, int num);
-
+    void showWinOrLoss(bool isWin);
     
     std::string tempjson;
 protected:
