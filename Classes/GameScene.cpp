@@ -434,8 +434,25 @@ void GameScene::explode(Bullet *bullet, Hero* hero)
         {
             if(p == hero)
             {
-                p->hurt(getCurrentPlayer()->_heroConfig.wagonConfig.attack);
-                showBloodLossNum(p, getCurrentPlayer()->_heroConfig.wagonConfig.attack);
+                {
+                    if(_playback)
+                    {
+                        if(p->getTag() == TAG_MYSELF)
+                        {
+                            _myturn["player1"]["hp"].SetInt(p->hurt(damage));
+                        }
+                        else
+                        {
+                            _myturn["player2"]["hp"].SetInt(p->hurt(damage));
+                        }
+                    }
+                    else
+                    {
+                        p->hurt(damage);
+                    }
+                    showBloodLossNum(p, damage);
+                }
+                
                 p->airborn = true;
                 
                 float rad = (ppos-pos).getAngle();
@@ -454,23 +471,26 @@ void GameScene::explode(Bullet *bullet, Hero* hero)
                 log("b pos %f, %f | m pos %f, %f", (pos-ppos).x, (pos-ppos).y, (mid-ppos).x, (mid-ppos).y);
                 p->setLastPos(mid);
                 
-                //TODO: player should take damage
-                if(_playback)
                 {
-                    if(p->getTag() == TAG_MYSELF)
+                    if(_playback)
                     {
-                        _myturn["player1"]["hp"].SetInt(p->hurt(damage*((float)(exRad-dist)/(float)exRad)));
-                        showBloodLossNum(p, damage*((float)(exRad-dist)/(float)exRad));
+                        if(p->getTag() == TAG_MYSELF)
+                        {
+                            _myturn["player1"]["hp"].SetInt(p->hurt(damage*((float)(exRad-dist)/(float)exRad)));
+                            log("wtf.....123");
+                        }
+                        else
+                        {
+                            _myturn["player2"]["hp"].SetInt(p->hurt(damage*((float)(exRad-dist)/(float)exRad)));
+                            log("wtf.....456");
+                        }
                     }
                     else
                     {
-                        _myturn["player2"]["hp"].SetInt(p->hurt(damage*((float)(exRad-dist)/(float)exRad)));
-                        showBloodLossNum(p, damage*((float)(exRad-dist)/(float)exRad));
+                        p->hurt(damage*((float)(exRad-dist)/(float)exRad));
+                        log("wtf......789");
                     }
-                }
-                else
-                {
-                    p->hurt(getCurrentPlayer()->_heroConfig.wagonConfig.attack);
+                    showBloodLossNum(p, damage*((float)(exRad-dist)/(float)exRad));
                 }
             }
         }
@@ -805,7 +825,7 @@ void GameScene::update(float dt)
                                        ));
         }
         else if(!over){
-            saveMatchData(win, lost);
+            saveMatchData(false, false);
             over = true;
         }
     }
