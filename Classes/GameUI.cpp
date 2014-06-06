@@ -64,12 +64,13 @@ void GameUI::switchTurn(bool isMyTurn){
     auto vorigin = Director::getInstance()->getVisibleOrigin();
     
     if(!isMyTurn){
+        
         auto turnSprite1 = Sprite::create("enemy_turn_1.png");
         auto turnSprite2 = Sprite::create("enemy_turn_2.png");
         turnSprite1->setPosition(Point(vorigin.x - 120, vsize.height/2 + vorigin.y + 70));
         turnSprite2->setPosition(Point(vorigin.x +vsize.width + 120, vsize.height/2 + vorigin.y - 30));
         turnSprite1->runAction(Sequence::create(
-                                                MoveTo::create(0.3f, Point(vorigin.x + 600,vsize.height/2 + vorigin.y + 70)),
+                                                MoveTo::create(0.3f, Point(vorigin.x + 500,vsize.height/2 + vorigin.y + 70)),
                                                 MoveBy::create(0.1f, Point(-90,0)),
                                                 MoveBy::create(0.1f, Point(20,0)),
                                                 DelayTime::create(1),
@@ -77,7 +78,7 @@ void GameUI::switchTurn(bool isMyTurn){
                                                 RemoveSelf::create(),
                                                 NULL));
         turnSprite2->runAction(Sequence::create(
-                                                MoveTo::create(0.3f, Point(vorigin.x + vsize.width - 600,vsize.height/2 + vorigin.y - 30)),
+                                                MoveTo::create(0.3f, Point(vorigin.x + vsize.width - 500,vsize.height/2 + vorigin.y - 30)),
                                                 MoveBy::create(0.1f, Point(90,0)),
                                                 MoveBy::create(0.1f, Point(-20,0)),
                                                 DelayTime::create(1),
@@ -90,7 +91,9 @@ void GameUI::switchTurn(bool isMyTurn){
         
         _power->runAction(EaseBackIn::create(MoveTo::create(0.5, Point(vsize.width/2+vorigin.x, -120))));
         _power->setVisible(false);
+        
     } else {
+        
         _playback->setVisible(false);
         _playback->unscheduleUpdate();
         _power->setVisible(true);
@@ -100,7 +103,7 @@ void GameUI::switchTurn(bool isMyTurn){
         turnSprite1->setPosition(Point(vorigin.x - 120, vsize.height/2 + vorigin.y));
         turnSprite2->setPosition(Point(vorigin.x +vsize.width + 120, vsize.height/2 + vorigin.y));
         turnSprite1->runAction(Sequence::create(DelayTime::create(0.8),
-                                                MoveTo::create(0.3f, Point(vorigin.x + 500,vsize.height/2 + vorigin.y)),
+                                                MoveTo::create(0.3f, Point(vorigin.x + 400,vsize.height/2 + vorigin.y)),
                                                 MoveBy::create(0.1f, Point(-90,0)),
                                                 MoveBy::create(0.1f, Point(20,0)),
                                                 DelayTime::create(1),
@@ -108,7 +111,7 @@ void GameUI::switchTurn(bool isMyTurn){
                                                 RemoveSelf::create(),
                                                 NULL));
         turnSprite2->runAction(Sequence::create(DelayTime::create(0.8),
-                                                MoveTo::create(0.3f, Point(vorigin.x + vsize.width - 500,vsize.height/2 + vorigin.y)),
+                                                MoveTo::create(0.3f, Point(vorigin.x + vsize.width - 400,vsize.height/2 + vorigin.y)),
                                                 MoveBy::create(0.1f, Point(90,0)),
                                                 MoveBy::create(0.1f, Point(-20,0)),
                                                 DelayTime::create(1),
@@ -307,10 +310,14 @@ bool PlayBackIndictaor::init(){
     playBackBar->setPosition(Point(0,60));
     addChild(playBackBar);
     
-    _playBackInnerBar = ui::LoadingBar::create("playbackinnerbar.png",0);
+    auto innerBarSprite = Sprite::create("playbackinnerbar.png");
+    _playBackInnerBar = ProgressTimer::create(innerBarSprite);
     _playBackInnerBar->setPosition(Point(3 ,60));
     _playBackInnerBar->setScaleX(700.0f/417.0f);
-    _playBackInnerBar->setPercent(0);
+    _playBackInnerBar->setPercentage(0);
+    _playBackInnerBar->setType(ProgressTimer::Type::BAR);
+    _playBackInnerBar->setMidpoint(Point(0.0f,0.0f));
+    _playBackInnerBar->setBarChangeRate(Point(1, 0));
     addChild(_playBackInnerBar);
     
     auto playTriangle = Sprite::create("playtriangle.png");
@@ -370,7 +377,21 @@ void PlayBackIndictaor::update(float delta){
     sprintf(time, "%d ' %d : %d",min,second,msecond);
     //log("time %s",time);
     _tick ++;
-    _playBackInnerBar->setPercent(_tick/(float)tickSum * 100);
+    _playBackInnerBar->setPercentage(_tick/(float)tickSum * 100);
     _timeLabel->setString(std::string(time));
     //log("percentage....%d",_playBackInnerBar->getPercent());
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+

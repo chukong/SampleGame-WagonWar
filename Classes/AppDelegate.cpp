@@ -44,7 +44,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
     
     // create a scene. it's an autorelease object
 //     auto scene = GameScene::createScene();
-      auto scene = MainScreenScene::createScene();
+    auto scene = MainScreenScene::createScene();
       //auto scene = TestTBMP::createScene("345678");
     //auto scene = WagonSelect::createScene(FIRST_TURN);
 
