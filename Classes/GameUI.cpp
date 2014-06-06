@@ -208,6 +208,7 @@ void PowerIndicator::increasePower(){
     _powerFlag = true;
     _powerbar->setVisible(true);
     _innerpower->setVisible(true);
+    _innerpower->setScale(0);
     _innerpower->runAction(FadeIn::create(0.1));
     _powerbar->runAction(FadeIn::create(0.1));
     //CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("firebuttondown.mp3");
