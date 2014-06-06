@@ -27,6 +27,7 @@ Aimer* Aimer::create(bool isRight, float upper, float lower)
 
 bool Aimer::init(bool isRight, float upper, float lower)
 {
+    _isRight = isRight;
     _back = Sprite::create("aimerback.png");
     addChild(_back);
     
@@ -71,7 +72,19 @@ bool Aimer::init(bool isRight, float upper, float lower)
     _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
     listener->setSwallowTouches(true);
     
-        _back->setRotation((upperLimit+lowerLimit)/2);
+    auto angleCheckListener = EventListenerCustom::create("angle check", [=](EventCustom* event){
+//        Touch* touch = (Touch*)event->getUserData();
+//        float a = CC_RADIANS_TO_DEGREES((touch->getLocation()-convertToWorldSpace(getPosition())).getAngle());
+//        setAngle(-a-getParent()->getParent()->getRotation());
+//        if(!isRight)
+//            setAngle((upperLimit+lowerLimit)/2);
+//        else{
+//            setAngle(180-((upperLimit+lowerLimit)/2));
+//        }
+    });
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(angleCheckListener, this);
+    
+    _back->setRotation((upperLimit+lowerLimit)/2);
     
     return true;
 

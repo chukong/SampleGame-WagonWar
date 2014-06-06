@@ -41,7 +41,6 @@ Scene* GameScene::createScene()
 
 bool GameScene::init()
 {
-    
     auto visibleSize = Director::getInstance()->getVisibleSize();
     auto offset = Point(visibleSize/2);
     
@@ -222,7 +221,7 @@ void GameScene::endShoot()
     float angle;
     
     getCurrentPlayer()->endshoot();
-    getCurrentPlayer()->stop();
+    //getCurrentPlayer()->stop();
     if(_playback)
     {
         log("playback shoot end");
@@ -286,11 +285,11 @@ void GameScene::onEnter()
     std::string player2turn4 = "{\"turn\":3,\"player1\":{\"shootangle\":-45,\"wagon\":0,\"male\":true,\"hp\":1000,\"posx\":546.472,\"posy\":573.07,\"facing\":\"right\"},\"player2\":{\"shootangle\":-179.172,\"wagon\":1,\"male\":false,\"hp\":1000,\"posx\":1084.18,\"posy\":592.764,\"facing\":\"left\"},\"actions\":[{\"tick\":270,\"action\":\"go right\"},{\"tick\":637,\"action\":\"stop\"},{\"tick\":670,\"action\":\"start shoot\"},{\"tick\":696,\"action\":\"end shoot\"}],\"explosions\":[{\"x\":676.935,\"y\":485.313}],\"windx\":0.01,\"windy\":0.01}";
     std::string player1turn5 = "{\"turn\":20,\"player1\":{\"name\":\"Hao Wu\",\"wagon\":3,\"male\":true,\"hp\":580,\"posx\":473.658,\"posy\":284.735,\"shootangle\":-31.1497,\"facing\":\"right\"},\"windx\":-0.00829815,\"windy\":-0.00761271,\"explosions\":[{\"x\":560.848,\"y\":545.339},{\"x\":1605.65,\"y\":647.186},{\"x\":469.664,\"y\":565.777},{\"x\":883.879,\"y\":482.913},{\"x\":504.41,\"y\":533.904},{\"x\":442.529,\"y\":525.837},{\"x\":1079.57,\"y\":572.658},{\"x\":1151.67,\"y\":580.816},{\"x\":620.525,\"y\":515.031},{\"x\":938.869,\"y\":478.232},{\"x\":348.725,\"y\":547.389},{\"x\":479.785,\"y\":308.971},{\"x\":554.495,\"y\":542.633},{\"x\":540.459,\"y\":522.691},{\"x\":182.593,\"y\":225.413},{\"x\":526.409,\"y\":351.889}],\"actions\":[{\"tick\":200,\"action\":\"go right\"},{\"tick\":304,\"action\":\"stop\"},{\"tick\":330,\"action\":\"go left\"},{\"tick\":335,\"action\":\"stop\"},{\"tick\":467,\"action\":\"start shoot\"},{\"tick\":468,\"action\":\"end shoot\"}],\"player2\":{\"name\":\"Chenhui Lin\",\"wagon\":3,\"male\":false,\"hp\":250,\"posx\":100,\"posy\":354.995,\"shootangle\":-176.795,\"facing\":\"left\"}}";
     
-    std::string playerTurn6 = "{\"turn\":26,\"player1\":{\"name\":\"Hao Wu\",\"wagon\":3,\"male\":true,\"hp\":556,\"posx\":337.664,\"posy\":281.804,\"shootangle\":-183.097,\"facing\":\"right\"},\"windx\":-0.00829815,\"windy\":-0.00761271,\"explosions\":[{\"x\":560.848,\"y\":545.339},{\"x\":1605.65,\"y\":647.186},{\"x\":469.664,\"y\":565.777},{\"x\":883.879,\"y\":482.913},{\"x\":504.41,\"y\":533.904},{\"x\":442.529,\"y\":525.837},{\"x\":1079.57,\"y\":572.658},{\"x\":1151.67,\"y\":580.816},{\"x\":620.525,\"y\":515.031},{\"x\":938.869,\"y\":478.232},{\"x\":348.725,\"y\":547.389},{\"x\":479.785,\"y\":308.971},{\"x\":554.495,\"y\":542.633},{\"x\":540.459,\"y\":522.691},{\"x\":182.593,\"y\":225.413},{\"x\":526.409,\"y\":351.889},{\"x\":-16.6328,\"y\":400.182},{\"x\":652.978,\"y\":347.295},{\"x\":-5.36085,\"y\":227.626},{\"x\":621.179,\"y\":445.675},{\"x\":441.825,\"y\":279.371},{\"x\":0.294666,\"y\":4.641}],\"actions\":[{\"tick\":69,\"action\":\"go left\"},{\"tick\":105,\"action\":\"stop\"},{\"tick\":118,\"action\":\"start angle\",\"value\":-80},{\"tick\":139,\"action\":\"end angle\",\"value\":-209},{\"tick\":155,\"action\":\"start shoot\"},{\"tick\":162,\"action\":\"end shoot\"}],\"player2\":{\"name\":\"Chenhui Lin\",\"wagon\":3,\"male\":false,\"hp\":210,\"posx\":584.347,\"posy\":355.929,\"shootangle\":-209.891,\"facing\":\"left\"}}";
+    std::string playerTurn6 = "{\"turn\":26,\"player1\":{\"name\":\"Hao Wu\",\"wagon\":3,\"male\":true,\"hp\":556,\"posx\":337.664,\"posy\":281.804,\"shootangle\":-183.097,\"facing\":\"left\"},\"windx\":-0.00829815,\"windy\":-0.00761271,\"explosions\":[{\"x\":560.848,\"y\":545.339},{\"x\":1605.65,\"y\":647.186},{\"x\":469.664,\"y\":565.777},{\"x\":883.879,\"y\":482.913},{\"x\":504.41,\"y\":533.904},{\"x\":442.529,\"y\":525.837},{\"x\":1079.57,\"y\":572.658},{\"x\":1151.67,\"y\":580.816},{\"x\":620.525,\"y\":515.031},{\"x\":938.869,\"y\":478.232},{\"x\":348.725,\"y\":547.389},{\"x\":479.785,\"y\":308.971},{\"x\":554.495,\"y\":542.633},{\"x\":540.459,\"y\":522.691},{\"x\":182.593,\"y\":225.413},{\"x\":526.409,\"y\":351.889},{\"x\":-16.6328,\"y\":400.182},{\"x\":652.978,\"y\":347.295},{\"x\":-5.36085,\"y\":227.626},{\"x\":621.179,\"y\":445.675},{\"x\":441.825,\"y\":279.371},{\"x\":0.294666,\"y\":4.641}],\"actions\":[{\"tick\":69,\"action\":\"go left\"},{\"tick\":105,\"action\":\"stop\"},{\"tick\":118,\"action\":\"start angle\",\"value\":-80},{\"tick\":139,\"action\":\"end angle\",\"value\":-209},{\"tick\":155,\"action\":\"start shoot\"},{\"tick\":162,\"action\":\"end shoot\"}],\"player2\":{\"name\":\"Chenhui Lin\",\"wagon\":3,\"male\":false,\"hp\":210,\"posx\":584.347,\"posy\":355.929,\"shootangle\":-209.891,\"facing\":\"left\"}}";
 
     this->initPlayers();
-    //playback(playerTurn6);
-    playback(g_gameConfig.match_string);
+    playback(playerTurn6);
+    //playback(g_gameConfig.match_string);
     
     buildMyTurn();
 }
@@ -677,7 +676,7 @@ void GameScene::playback(std::string json)
     }
     
     //get enemy name
-    _eventDispatcher->dispatchCustomEvent("enemy", (void*)"PLAYER2");
+    _eventDispatcher->dispatchCustomEvent("enemy", (void*)(getCurrentPlayer()->_nameLabel->getString().c_str()));
     
     // get tick sum
     rapidjson::Value &array = _replay["actions"];
