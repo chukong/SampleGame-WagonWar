@@ -289,8 +289,11 @@ void GameScene::onEnter()
     std::string playerTurn6 = "{\"turn\":3,\"player1\":{\"name\":\"Hao Wu\",\"wagon\":0,\"male\":true,\"hp\":300,\"posx\":575.099,\"posy\":559.174,\"shootangle\":-2.08812,\"facing\":\"right\"},\"windx\":0.0212713,\"windy\":0.00225526,\"explosions\":[{\"x\":1003.26,\"y\":536.647}],\"actions\":[{\"tick\":174,\"action\":\"start angle\",\"value\":4},{\"tick\":220,\"action\":\"end angle\",\"value\":-2},{\"tick\":409,\"action\":\"start shoot\"},{\"tick\":481,\"action\":\"end shoot\"}],\"player2\":{\"name\":\"Chenhui Lin\",\"wagon\":0,\"male\":false,\"hp\":259,\"posx\":1047.09,\"posy\":583.947,\"shootangle\":-81.2836,\"facing\":\"left\"}}";
 
     this->initPlayers();
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+    playback(g_gameConfig.match_string);
+#else
     playback(playerTurn6);
-    //playback(g_gameConfig.match_string);
+#endif
     
     buildMyTurn();
 }
@@ -677,8 +680,7 @@ void GameScene::playback(std::string json)
     }
     
     //get enemy name
-    _eventDispatcher->dispatchCustomEvent("enemy", (void*)"PLAYER2");
-    
+    _eventDispatcher->dispatchCustomEvent("enemy", (void*)(getCurrentPlayer()->_nameLabel->getString().c_str()));
     // get tick sum
     rapidjson::Value &array = _replay["actions"];
     if(array.IsArray())
