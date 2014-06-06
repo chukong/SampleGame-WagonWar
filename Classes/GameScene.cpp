@@ -655,6 +655,7 @@ void GameScene::playback(std::string json)
     _playback = true;
     getCurrentPlayer()->showAimer();
     getCurrentPlayer()->showTurnSymbol();
+    getCurrentPlayer()->setSideSymbol(false);
     _eventDispatcher->dispatchCustomEvent("touch off");
     _eventDispatcher->dispatchCustomEvent("enemy's turn");
     //copy all explosions to my turn
@@ -958,6 +959,7 @@ void GameScene::update(float dt)
                 getCurrentPlayer()->showAimer();
                 getCurrentPlayer()->showTurnSymbol();
                 getCurrentPlayer()->aim->showCrossHair();
+                getCurrentPlayer()->setSideSymbol(true);
                 CocosDenshion::SimpleAudioEngine::getInstance()->stopBackgroundMusic();
                 CocosDenshion::SimpleAudioEngine::getInstance()->playBackgroundMusic("Celestial Motive m.mp3");
             }),
@@ -973,20 +975,6 @@ void GameScene::update(float dt)
 
 void GameScene::playerdead(EventCustom* event)
 {
-//    auto hero = (Hero*)event->getUserData();
-//    if (hero->_heroConfig.side == Myself)
-//    {
-//        //lost;
-//        saveMatchData(true, false);
-//        
-//        log("win..........");
-//    }
-//    else if(hero->_heroConfig.side == Other)
-//    {
-//        //win;
-//        saveMatchData(false, true);
-//        log("loss.........");
-//    }
     auto hero = (Hero*)event->getUserData();
     if (!_playback) {
         if (hero == getCurrentPlayer()) {
