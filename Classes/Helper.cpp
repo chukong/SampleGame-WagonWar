@@ -38,7 +38,7 @@ float Helper::getAngleFromIndex(int index, int radius)
 }
 Point Helper::getPointFromIndex(int index, int radius)
 {
-    return Point(index/(radius*2),index%(radius*2));
+    return Point(int(index/(radius*2)),index%(radius*2));
 }
 
 void DepthOn::onDraw()
