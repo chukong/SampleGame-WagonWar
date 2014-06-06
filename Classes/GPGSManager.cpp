@@ -295,6 +295,16 @@ void GPGSManager::ShowMatchInbox()
                 default:
                     //Manage match with dismiss option
                     LOGI("Expired & default...By Jacky");
+                    
+                    //add notouch layer.
+                    auto notouchlayer = NoTouchLayer::create();
+                    notouchlayer->setTag(NOTOUCHTAG);
+                    cocos2d::Director::getInstance()->getRunningScene()->addChild(notouchlayer,100);
+                    //enter game
+                    current_match_ = response.match;
+                    ParseMatchData();
+                    cocos2d::Director::getInstance()->getEventDispatcher()->dispatchCustomEvent("enterGame");
+                    
                     break;
             }
         } else {

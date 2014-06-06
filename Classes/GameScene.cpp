@@ -920,14 +920,6 @@ void GameScene::update(float dt)
                 if (!_isWentOut) {
                     _isWentOut = true;
                     p->hurt(p->_lasthp);
-//                    if(_playback && p == getCurrentPlayer())
-//                        saveMatchData(true, false);
-//                    else if (_playback && p != getCurrentPlayer())
-//                        saveMatchData(false, true);
-//                    else if(!_playback && p == getCurrentPlayer())
-//                        saveMatchData(false, true);
-//                    else if(!_playback && p != getCurrentPlayer())
-//                        saveMatchData(true, false);
                     p->setVisible(false);
                 }
             }
@@ -981,19 +973,39 @@ void GameScene::update(float dt)
 
 void GameScene::playerdead(EventCustom* event)
 {
+//    auto hero = (Hero*)event->getUserData();
+//    if (hero->_heroConfig.side == Myself)
+//    {
+//        //lost;
+//        saveMatchData(true, false);
+//        
+//        log("win..........");
+//    }
+//    else if(hero->_heroConfig.side == Other)
+//    {
+//        //win;
+//        saveMatchData(false, true);
+//        log("loss.........");
+//    }
     auto hero = (Hero*)event->getUserData();
-    if (hero->_heroConfig.side == Myself)
-    {
-        //lost;
-        saveMatchData(false, true);
-        
-        log("win..........");
+    if (!_playback) {
+        if (hero == getCurrentPlayer()) {
+            saveMatchData(false, true);
+        }
+        else
+        {
+            saveMatchData(true, false);
+        }
     }
-    else if(hero->_heroConfig.side == Other)
+    else
     {
-        //win;
-        saveMatchData(true, false);
-        log("loss.........");
+        if (hero == getCurrentPlayer()) {
+            showWinOrLose(true);
+        }
+        else
+        {
+            showWinOrLose(false);
+        }
     }
 }
 
