@@ -69,6 +69,9 @@ public:
     void returntoMenu();
     void entertoMenu(float dt);
     
+    void showBloodLossNum(Hero* hero, int num);
+
+    
     std::string tempjson;
 protected:
     void printMyTurn();
