@@ -173,7 +173,7 @@ bool MainScreenScene::init()
 //    menu->setPosition(Point::ZERO);
 //    this->addChild(menu);
     
-    CocosDenshion::SimpleAudioEngine::getInstance()->setBackgroundMusicVolume(0.5);
+    CocosDenshion::SimpleAudioEngine::getInstance()->setBackgroundMusicVolume(0.3);
     CocosDenshion::SimpleAudioEngine::getInstance()->stopBackgroundMusic();
     CocosDenshion::SimpleAudioEngine::getInstance()->playBackgroundMusic("Stepping Stones m.mp3");
 
