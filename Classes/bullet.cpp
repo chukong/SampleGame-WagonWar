@@ -25,6 +25,30 @@ BulletConfig defaultBullet={
     3,
     90
 };
+BulletConfig tankBullet={
+    "tankbullet.png",
+    150,
+    3,
+    50
+};
+BulletConfig mechBullet={
+    "mechbullet.png",
+    175,
+    3,
+    45
+};
+BulletConfig horseyBullet={
+    "cnmbullet.png",
+    135,
+    3,
+    60
+};
+BulletConfig rockBullet={
+    "rockbullet1.png",
+    125,
+    3,
+    110
+};
 
 void Bullet::drawFinished()
 {
@@ -37,9 +61,17 @@ Bullet* Bullet::create(BulletTypes type, cocos2d::Point pos, cocos2d::Point vect
     Bullet *b = new Bullet();
     switch(type)
     {
+        case mechB:
+            b->setConfig(mechBullet);
+            break;
+        case horseyB:
+            b->setConfig(horseyBullet);
+            break;
+        case rockB:
+            b->setConfig(rockBullet);
+            break;
         default:
-        case defaultB:
-            b->setConfig(defaultBullet);
+            b->setConfig(tankBullet);
             break;
     }
     if(b->initWithFile(b->getConfig().filename))

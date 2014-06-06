@@ -19,7 +19,7 @@ Level* Level::create(const std::string &filename)
     //ret->setDefaultSprite(sp);
     Size size = sp->getContentSize();
     //Size winSize = Director::getInstance()->getVisibleSize();
-    auto ret = RenderTexture::create(size.width, size.height, Texture2D::PixelFormat::RGBA4444);
+    auto ret = RenderTexture::create(size.width, size.height, Texture2D::PixelFormat::RGB5A1);
     lvl->addChild(ret);
     lvl->setRT(ret);
     

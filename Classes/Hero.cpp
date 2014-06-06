@@ -80,9 +80,9 @@ bool Hero::init(Side side, Body body, Wagon wagon, bool isfacetoright, std::stri
     
     radius = 20;
     
-    auto drawN = DrawNode::create();
-    drawN ->drawDot(Point::ZERO, radius, Color4F(0,1,0,0.5));
-    this->addChild(drawN);
+//    auto drawN = DrawNode::create();
+//    drawN ->drawDot(Point::ZERO, radius, Color4F(0,1,0,0.5));
+//    this->addChild(drawN);
     
     gunPoint = Node::create();
     _wagonPoint->addChild(gunPoint);
