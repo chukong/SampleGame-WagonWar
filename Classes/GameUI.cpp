@@ -28,7 +28,7 @@ bool GameUI::init()
     wind->setPosition(vsize.width/2+vorigin.x, vsize.height- vorigin.y - 50);
     
     _power = PowerIndicator::create();
-    _power->setPosition(vsize.width/2+vorigin.x, -120);
+    _power->setPosition(vsize.width/2+vorigin.x, 0);
     _power->setAnchorPoint(Point(0.5f, 0.0f));
     //_power->setVisible(false);
     //_power->runAction(MoveTo::create(0.5, Point(vsize.width/2+vorigin.x, 0)));
@@ -76,7 +76,7 @@ void GameUI::switchTurn(bool isMyTurn){
         turnSprite1->setPosition(Point(vorigin.x - 120, vsize.height/2 + vorigin.y + 70));
         turnSprite2->setPosition(Point(vorigin.x +vsize.width + 120, vsize.height/2 + vorigin.y - 30));
         turnSprite1->runAction(Sequence::create(
-                                                MoveTo::create(0.3f, Point(vorigin.x + 500,vsize.height/2 + vorigin.y + 70)),
+                                                MoveTo::create(0.3f, Point(vorigin.x + vsize.width/2 - 50,vsize.height/2 + vorigin.y + 70)),
                                                 MoveBy::create(0.1f, Point(-90,0)),
                                                 MoveBy::create(0.1f, Point(20,0)),
                                                 DelayTime::create(1),
@@ -84,7 +84,7 @@ void GameUI::switchTurn(bool isMyTurn){
                                                 RemoveSelf::create(),
                                                 NULL));
         turnSprite2->runAction(Sequence::create(
-                                                MoveTo::create(0.3f, Point(vorigin.x + vsize.width - 500,vsize.height/2 + vorigin.y - 30)),
+                                                MoveTo::create(0.3f, Point(vorigin.x + vsize.width/2 + 50,vsize.height/2 + vorigin.y - 30)),
                                                 MoveBy::create(0.1f, Point(90,0)),
                                                 MoveBy::create(0.1f, Point(-20,0)),
                                                 DelayTime::create(1),
@@ -109,7 +109,7 @@ void GameUI::switchTurn(bool isMyTurn){
         turnSprite1->setPosition(Point(vorigin.x - 120, vsize.height/2 + vorigin.y));
         turnSprite2->setPosition(Point(vorigin.x +vsize.width + 120, vsize.height/2 + vorigin.y));
         turnSprite1->runAction(Sequence::create(DelayTime::create(0.8),
-                                                MoveTo::create(0.3f, Point(vorigin.x + 400,vsize.height/2 + vorigin.y)),
+                                                MoveTo::create(0.3f, Point(vorigin.x + vsize.width/2 - 100,vsize.height/2 + vorigin.y)),
                                                 MoveBy::create(0.1f, Point(-90,0)),
                                                 MoveBy::create(0.1f, Point(20,0)),
                                                 DelayTime::create(1),
@@ -117,7 +117,7 @@ void GameUI::switchTurn(bool isMyTurn){
                                                 RemoveSelf::create(),
                                                 NULL));
         turnSprite2->runAction(Sequence::create(DelayTime::create(0.8),
-                                                MoveTo::create(0.3f, Point(vorigin.x + vsize.width - 400,vsize.height/2 + vorigin.y)),
+                                                MoveTo::create(0.3f, Point(vorigin.x + vsize.width/2 + 100,vsize.height/2 + vorigin.y)),
                                                 MoveBy::create(0.1f, Point(90,0)),
                                                 MoveBy::create(0.1f, Point(-20,0)),
                                                 DelayTime::create(1),

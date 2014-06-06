@@ -50,6 +50,8 @@ public:
     void initPlayers();
     void startShoot();
     void endShoot();
+    void startAngle(cocos2d::EventCustom* event);
+    void endAngle(cocos2d::EventCustom* event);
     void playerdead(cocos2d::EventCustom* event);
     Hero *getCurrentPlayer();
     Bullet* addBullet(BulletTypes type, cocos2d::Point pos, cocos2d::Point vector);
