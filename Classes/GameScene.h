@@ -62,7 +62,7 @@ public:
     virtual void onEnter();
     void randomWind();
     void playback(std::string json);
-    void saveMatchData(bool win, bool lost);
+    void saveMatchData(bool win, bool lose);
     Hero* p1;
     Hero* p2;
     
@@ -70,7 +70,7 @@ public:
     void entertoMenu(float dt);
     
     void showBloodLossNum(Hero* hero, int num);
-    void showWinOrLoss(bool isWin);
+    void showWinOrLose(bool isWin);
     
     std::string tempjson;
 protected:

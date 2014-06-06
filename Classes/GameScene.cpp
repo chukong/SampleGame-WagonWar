@@ -23,7 +23,7 @@ USING_NS_CC;
 
 Scene* GameScene::createScene()
 {
-
+    
     // 'scene' is an autorelease object
     auto scene = Scene::create();
     auto uiLayer = GameUI::create();
@@ -53,7 +53,7 @@ bool GameScene::init()
     this->addChild(lvl, 2, Point(1, 1), offset);
     this->setLevel(lvl);
     
-
+    
     //layer for players
     auto playerLayer = Layer::create();
     this->addChild(playerLayer, 3, Point(1, 1), offset);
@@ -73,9 +73,9 @@ bool GameScene::init()
     this->addChild(bulletLayer, 4, Point(1, 1), offset);
     
     //layer for effects
-
     
-
+    
+    
     //default gravity
     this->setGravity(Point(0,-0.1));
     this->scheduleUpdate();
@@ -86,7 +86,7 @@ bool GameScene::init()
     //init listeners
     initListeners();
     
-
+    
     return true;
 }
 void GameScene::initListeners()
@@ -144,7 +144,7 @@ void GameScene::endShoot()
     auto offset = getMovableSize();
     auto gunlocation = p->gunPoint->getNodeToWorldAffineTransform();
     float angle;
-
+    
     if(_playback)
     {
         log("playback shoot end");
@@ -174,14 +174,14 @@ void GameScene::endShoot()
         if(p->getTag() == TAG_MYSELF)//player 1
         {
             _myturn["player1"]["shootangle"].SetDouble(angle);
-
+            
             //p->aim->setAngle(angle-p->_wagonPoint->getRotation());
         }
         else{
             _myturn["player2"]["shootangle"].SetDouble(angle);
             //p->aim->setAngle(angle-p->_wagonPoint->getRotation());
         }
-
+        
         _myturn["actions"].PushBack(value, allocator);
         _eventDispatcher->dispatchCustomEvent("touch off");
         _waitToClear = true;
@@ -189,7 +189,7 @@ void GameScene::endShoot()
     }
     //log("angle %f", angle);
     auto b = addBullet(defaultB, Point(gunlocation.tx, gunlocation.ty)+Point(offset/2)-getPosition(), Point(tick/60.0f*8*cosf(CC_DEGREES_TO_RADIANS(-angle)), tick/60.0f*8*sinf(CC_DEGREES_TO_RADIANS(-angle))));
-        _following = dynamic_cast<Node*>(b);
+    _following = dynamic_cast<Node*>(b);
 }
 void GameScene::randomWind()
 {
@@ -207,10 +207,10 @@ void GameScene::onEnter()
     std::string player2turn4 = "{\"turn\":3,\"player1\":{\"shootangle\":-45,\"wagon\":0,\"male\":true,\"hp\":1000,\"posx\":546.472,\"posy\":573.07,\"facing\":\"right\"},\"player2\":{\"shootangle\":-179.172,\"wagon\":1,\"male\":false,\"hp\":1000,\"posx\":1084.18,\"posy\":592.764,\"facing\":\"left\"},\"actions\":[{\"tick\":270,\"action\":\"go right\"},{\"tick\":637,\"action\":\"stop\"},{\"tick\":670,\"action\":\"start shoot\"},{\"tick\":696,\"action\":\"end shoot\"}],\"explosions\":[{\"x\":676.935,\"y\":485.313}],\"windx\":0.01,\"windy\":0.01}";
     std::string player1turn5 = "{\"turn\":20,\"player1\":{\"name\":\"Hao Wu\",\"wagon\":3,\"male\":true,\"hp\":580,\"posx\":473.658,\"posy\":284.735,\"shootangle\":-31.1497,\"facing\":\"right\"},\"windx\":-0.00829815,\"windy\":-0.00761271,\"explosions\":[{\"x\":560.848,\"y\":545.339},{\"x\":1605.65,\"y\":647.186},{\"x\":469.664,\"y\":565.777},{\"x\":883.879,\"y\":482.913},{\"x\":504.41,\"y\":533.904},{\"x\":442.529,\"y\":525.837},{\"x\":1079.57,\"y\":572.658},{\"x\":1151.67,\"y\":580.816},{\"x\":620.525,\"y\":515.031},{\"x\":938.869,\"y\":478.232},{\"x\":348.725,\"y\":547.389},{\"x\":479.785,\"y\":308.971},{\"x\":554.495,\"y\":542.633},{\"x\":540.459,\"y\":522.691},{\"x\":182.593,\"y\":225.413},{\"x\":526.409,\"y\":351.889}],\"actions\":[{\"tick\":200,\"action\":\"go right\"},{\"tick\":304,\"action\":\"stop\"},{\"tick\":330,\"action\":\"go left\"},{\"tick\":335,\"action\":\"stop\"},{\"tick\":467,\"action\":\"start shoot\"},{\"tick\":468,\"action\":\"end shoot\"}],\"player2\":{\"name\":\"Chenhui Lin\",\"wagon\":3,\"male\":false,\"hp\":250,\"posx\":532.925,\"posy\":354.995,\"shootangle\":-176.795,\"facing\":\"left\"}}";
     this->initPlayers();
-  //   playback(player1turn5);
+//       playback(player1turn5);
     playback(g_gameConfig.match_string);
     buildMyTurn();
-
+    
 }
 void GameScene::movePlayer(float x)
 {
@@ -230,7 +230,7 @@ void GameScene::movePlayer(float x)
         }
         else
         {
-           value.AddMember("action", "stop", allocator);
+            value.AddMember("action", "stop", allocator);
         }
         _myturn["actions"].PushBack(value, allocator);
         printMyTurn();
@@ -264,10 +264,10 @@ void GameScene::initPlayers()
     p2 = Hero::create(Other,GIRL,MECH,false);
     p2->setName("player2");
     p2->setTag(TAG_OTHER);
-
+    
     p2->stop();
     getPlayerLayer()->addChild(p2);
-
+    
 }
 void GameScene::initExplosionMasks()
 {
@@ -276,7 +276,7 @@ void GameScene::initExplosionMasks()
     _ex->setShaderProgram(ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));
     _burn = Sprite::create("expMask2.png");
     _burn->setShaderProgram(ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));
-
+    
     BlendFunc cut;
     cut ={
         GL_ZERO,
@@ -307,7 +307,7 @@ void GameScene::initExplosionMasks()
 bool GameScene::onTouchBegan(Touch* touch, Event* event)
 {
     _click = true;
-
+    
     return true;
 }
 void GameScene::onTouchMoved(Touch* touch, Event* event)
@@ -411,7 +411,7 @@ void GameScene::explode(Bullet *bullet, Hero* hero)
         _myturn.Accept(writer);
         log("--\n%s\n--\n", strbuf.GetString());
     }
-
+    
     
     
     _ex->setPosition(pos);
@@ -477,18 +477,15 @@ void GameScene::explode(Bullet *bullet, Hero* hero)
                         if(p->getTag() == TAG_MYSELF)
                         {
                             _myturn["player1"]["hp"].SetInt(p->hurt(damage*((float)(exRad-dist)/(float)exRad)));
-                            log("wtf.....123");
                         }
                         else
                         {
                             _myturn["player2"]["hp"].SetInt(p->hurt(damage*((float)(exRad-dist)/(float)exRad)));
-                            log("wtf.....456");
                         }
                     }
                     else
                     {
                         p->hurt(damage*((float)(exRad-dist)/(float)exRad));
-                        log("wtf......789");
                     }
                     showBloodLossNum(p, damage*((float)(exRad-dist)/(float)exRad));
                 }
@@ -502,7 +499,7 @@ void GameScene::playback(std::string json)
     CocosDenshion::SimpleAudioEngine::getInstance()->playBackgroundMusic("Giant Insectoid Battle.mp3");
     tempjson = json;
     _replay.Parse<rapidjson::kParseDefaultFlags>(json.c_str());
-
+    
     this->setWind(Point(_replay["windx"].GetDouble(),_replay["windy"].GetDouble()));
     _eventDispatcher->dispatchCustomEvent("wind", &_wind);
     log("Wind is : %f, %f", getWind().x, getWind().y);
@@ -543,7 +540,7 @@ void GameScene::playback(std::string json)
         p1->airborn = true;
         p2->airborn = true;
         _waitToClear = true;
-//        over =true;
+        //        over =true;
         return;
     }
     else if(_replay["turn"].GetInt() ==2)
@@ -577,7 +574,7 @@ void GameScene::playback(std::string json)
     }
     
     //get enemy name
-     _eventDispatcher->dispatchCustomEvent("enemy", (void*)"PLAYER2");
+    _eventDispatcher->dispatchCustomEvent("enemy", (void*)"PLAYER2");
     
     // get tick sum
     rapidjson::Value &array = _replay["actions"];
@@ -615,10 +612,10 @@ void GameScene::update(float dt)
     //if we have a following target, then follow it
     if(_following)
     {
-            auto fp = _following->getPosition();
-            auto tp =-fp + Point(_PlayerLayer->getContentSize()/2);
-            auto cp = getPosition();
-            setPosition(cp+(tp-cp)*0.04);
+        auto fp = _following->getPosition();
+        auto tp =-fp + Point(_PlayerLayer->getContentSize()/2);
+        auto cp = getPosition();
+        setPosition(cp+(tp-cp)*0.04);
     }
     
     
@@ -750,13 +747,13 @@ void GameScene::update(float dt)
                     {
                         deg = (deg>0)? 80: -80;
                         p->_wagonPoint->setRotation(deg);
-
+                        
                         p->airborn = true;
                     }
                     else
                     {
-                            p->_wagonPoint->setRotation(deg);
-
+                        p->_wagonPoint->setRotation(deg);
+                        
                     }
                     if(angleCount > 8)
                     {
@@ -799,7 +796,7 @@ void GameScene::update(float dt)
     _level->getRT()->onEnd();
     _tick++;
     
-//    log("everythingSleep is %d",everythingSleep);
+    //    log("everythingSleep is %d",everythingSleep);
     if(_waitToClear && everythingSleep)
     {
         if(_playback)
@@ -808,7 +805,7 @@ void GameScene::update(float dt)
             _eventDispatcher->dispatchCustomEvent("my turn");
             _waitToClear = false;
             _tick = 0;
-
+            
             log("play back finished");
             //need to delete actions
             _myturn["actions"].Clear();
@@ -842,6 +839,7 @@ void GameScene::playerdead(EventCustom* event)
     {
         //lost;
         saveMatchData(false, true);
+        
         log("win..........");
     }
     else if(hero->_heroConfig.side == Other)
@@ -852,7 +850,7 @@ void GameScene::playerdead(EventCustom* event)
     }
 }
 
-void GameScene::saveMatchData(bool win, bool loss)
+void GameScene::saveMatchData(bool win, bool lose)
 {
     _myturn["turn"].SetInt(_myturn["turn"].GetInt()+1);
     printMyTurn();
@@ -863,11 +861,19 @@ void GameScene::saveMatchData(bool win, bool loss)
     g_gameConfig.match_string = strbuf.GetString();
     log("setup_player2_matchdata...%s",g_gameConfig.match_string.c_str());
     
+    if (win) {
+        showWinOrLose(true);
+    }
+    else if(lose)
+    {
+        showWinOrLose(false);
+    }
+    
     auto notouchlayer = NoTouchLayer::create();
     notouchlayer->setTag(NOTOUCHTAG);
     Director::getInstance()->getRunningScene()->addChild(notouchlayer,100);
-
-    GPGSManager::TakeTurn(win, loss);
+    
+    GPGSManager::TakeTurn(win, lose);
 }
 
 void GameScene::returntoMenu()
@@ -917,19 +923,54 @@ void GameScene::showBloodLossNum(Hero* hero, int num)
                                       FadeOut::create(0.5f),
                                       RemoveSelf::create(),
                                       nullptr));
-
+    
 }
 
-void GameScene::showWinOrLoss(bool isWin)
+void GameScene::showWinOrLose(bool isWin)
 {
     if(isWin)
     {
         auto node = Node::create();
+        auto you = Sprite::create("youwin_1.png");
+        you->setPosition(Point(-20,0));
+        you->setAnchorPoint(Point::ANCHOR_MIDDLE);
         
+        auto win = Sprite::create("youwin_2.png");
+        win->setPosition(Point(20,0));
+        win->setAnchorPoint(Point::ANCHOR_MIDDLE);
         
+        node->addChild(you);
+        node->addChild(win);
+        
+        node->setScale(0.0001f);
+        
+        node->runAction(Sequence::create(Spawn::create(FadeIn::create(0.5f),
+                                                       EaseBackOut::create(ScaleTo::create(1.0f,1.0f)),
+                                                       nullptr),
+                                         DelayTime::create(3.0f),
+                                         FadeOut::create(0.5f),
+                                         nullptr));
     }
     else
     {
+        auto node = Node::create();
+        auto you = Sprite::create("youwlose_1.png");
+        you->setPosition(Point(-20,0));
+        you->setAnchorPoint(Point::ANCHOR_MIDDLE);
+        
+        auto lose = Sprite::create("youlose_2.png");
+        lose->setPosition(Point(20,0));
+        lose->setAnchorPoint(Point::ANCHOR_MIDDLE);
+        
+        node->addChild(you);
+        node->addChild(lose);
+        
+        node->runAction(Sequence::create(Spawn::create(FadeIn::create(0.5f),
+                                                       EaseBackOut::create(MoveBy::create(1.0f,Point(0, -10))),
+                                                       nullptr),
+                                         DelayTime::create(3.0f),
+                                         FadeOut::create(0.5f),
+                                         nullptr));
         
     }
 }
