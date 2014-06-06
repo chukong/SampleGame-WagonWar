@@ -352,6 +352,7 @@ void GameScene::movePlayer(float x)
     Hero* p = getCurrentPlayer();
     
     p->moveDelta.x = x;
+    p->needFix = true;
     if (x>0)
     {
         p->moveright();
@@ -368,7 +369,7 @@ void GameScene::movePlayer(float x)
 
 void GameScene::initPlayers()
 {
-    p1 = Hero::create(Myself,BOY,ROCK,false);
+    p1 = Hero::create(Myself,BOY,HORSEY,false);
     p1->setName("player1");
     p1->setTag(TAG_MYSELF);
     p1->stop();
@@ -857,7 +858,7 @@ void GameScene::update(float dt)
             auto paabb = p->getBoundingBox();
             if(aabb2.intersectsRect(paabb))
             {
-                if(p->airborn || p->moveDelta.x)
+                if(p->airborn || p->needFix || p->moveDelta.x)
                 {
                     everythingSleep = false;
                     //move this
@@ -905,12 +906,17 @@ void GameScene::update(float dt)
                             p->_wagonPoint->setRotation(deg);
                             
                         }
-                        if(angleCount > 2)
+                        if(angleCount > 8)
                         {
                             //we are colliding with too many pixels
-                            float pushForce = 0.05 * angleCount;
+                            float pushForce = 0.03 * angleCount;
                             Point mid(pos.x-pushForce*sinf(angleTotal/angleCount), pos.y-pushForce*cosf(angleTotal/angleCount));
                             p->setLastPos(mid);
+                            p->needFix = true;
+                        }
+                        else
+                        {
+                            p->needFix = false;
                         }
                     }
                     

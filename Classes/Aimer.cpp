@@ -72,14 +72,14 @@ bool Aimer::init(bool isRight, float upper, float lower)
     _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
     listener->setSwallowTouches(true);
     
-    auto angleCheckListener = EventListenerCustom::create("angle check", [this](EventCustom* event){
-        if(reversed)
-            setAngle((upperLimit+lowerLimit)/2);
-        else{
-            setAngle(180-((upperLimit+lowerLimit)/2));
-        }
-    });
-    _eventDispatcher->addEventListenerWithSceneGraphPriority(angleCheckListener, this);
+//    auto angleCheckListener = EventListenerCustom::create("angle check", [this](EventCustom* event){
+//        if(reversed)
+//            setAngle((upperLimit+lowerLimit)/2);
+//        else{
+//            setAngle(180-((upperLimit+lowerLimit)/2));
+//        }
+//    });
+//    _eventDispatcher->addEventListenerWithSceneGraphPriority(angleCheckListener, this);
     
     _back->setRotation((upperLimit+lowerLimit)/2);
     
@@ -118,7 +118,14 @@ void Aimer::onTouchMoved(cocos2d::Touch *touch, cocos2d::Event *event)
 }
 float Aimer::getWorldAngle()
 {
-    return _angle + getParent()->getParent()->getRotation();
+    if(!reversed)
+    {
+        return 180- (_angle - getParent()->getParent()->getRotation());
+    }
+    else
+    {
+        return _angle + getParent()->getParent()->getRotation();
+    }
 }
 void Aimer::setAngle(float a)
 {
