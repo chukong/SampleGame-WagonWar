@@ -172,15 +172,15 @@ bool Hero::init(Side side, Body body, Wagon wagon, bool isfacetoright, std::stri
         _sideSymbol->setTexture("enemy.png");
     }
     _sideSymbol->setPosition(0,180);
-    _sideSymbol->runAction(RepeatForever::create(Sequence::create(MoveBy::create(1, Point(0,20)),
-                                                               MoveBy::create(1, Point(0,-20)),
+    _sideSymbol->runAction(RepeatForever::create(Sequence::create(EaseSineInOut::create(MoveBy::create(0.58, Point(0,25))),
+                                                               EaseSineInOut::create(MoveBy::create(0.58, Point(0,-25))),
                                                                NULL)));
     this->addChild(_sideSymbol,2);
     
     _triangleSymbol = Sprite::create("triangle.png");
     _triangleSymbol->setPosition(0,140);
-    _triangleSymbol->runAction(RepeatForever::create(Sequence::create(MoveBy::create(1, Point(0,20)),
-                                                               MoveBy::create(1, Point(0,-20)),
+    _triangleSymbol->runAction(RepeatForever::create(Sequence::create(EaseSineInOut::create(MoveBy::create(0.58, Point(0,25))),
+                                                               EaseSineInOut::create(MoveBy::create(0.58, Point(0,-25))),
                                                                NULL)));
     this->addChild(_triangleSymbol,2);
     

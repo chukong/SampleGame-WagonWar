@@ -73,7 +73,12 @@ bool GameScene::init()
     this->addChild(bulletLayer, 4, Point(1, 1), offset);
     
     //layer for effects
-
+    auto effectLayer =Layer::create();
+    effectLayer->setContentSize(lvl->getRT()->getContentSize());
+    this->setEffectLayer(effectLayer);
+    effectLayer->setAnchorPoint(Point::ANCHOR_MIDDLE);
+    effectLayer->ignoreAnchorPointForPosition(false);
+    this->addChild(effectLayer, 5, Point(1, 1), offset);
     
 
     //default gravity
@@ -205,10 +210,10 @@ void GameScene::onEnter()
     std::string player2turn2 = "{\"turn\":1,\"player1\":{\"shootangle\":\"\",\"wagon\":0,\"male\":true,\"hp\":1000,\"posx\":520,\"posy\":800,\"facing\":\"right\"},\"player2\":{\"shootangle\":\"\",\"wagon\":1,\"male\":false,\"hp\":1000,\"posx\":1000,\"posy\":800,\"facing\":\"left\"},\"actions\":[],\"explosions\":[],\"windx\":0.01,\"windy\":0.01}";
     std::string player1turn3 = "{\"turn\":2,\"player1\":{\"shootangle\":\"\",\"wagon\":0,\"male\":true,\"hp\":1000,\"posx\":520,\"posy\":800,\"facing\":\"right\"},\"player2\":{\"shootangle\":-179.172,\"wagon\":1,\"male\":false,\"hp\":1000,\"posx\":1000,\"posy\":800,\"facing\":\"left\"},\"actions\":[{\"tick\":139,\"action\":\"go left\"},{\"tick\":154,\"action\":\"stop\"},{\"tick\":172,\"action\":\"go right\"},{\"tick\":489,\"action\":\"stop\"},{\"tick\":511,\"action\":\"go left\"},{\"tick\":513,\"action\":\"stop\"},{\"tick\":590,\"action\":\"start shoot\"},{\"tick\":609,\"action\":\"end shoot\"}],\"explosions\":[],\"windx\":0.01,\"windy\":0.01}";
     std::string player2turn4 = "{\"turn\":3,\"player1\":{\"shootangle\":-45,\"wagon\":0,\"male\":true,\"hp\":1000,\"posx\":546.472,\"posy\":573.07,\"facing\":\"right\"},\"player2\":{\"shootangle\":-179.172,\"wagon\":1,\"male\":false,\"hp\":1000,\"posx\":1084.18,\"posy\":592.764,\"facing\":\"left\"},\"actions\":[{\"tick\":270,\"action\":\"go right\"},{\"tick\":637,\"action\":\"stop\"},{\"tick\":670,\"action\":\"start shoot\"},{\"tick\":696,\"action\":\"end shoot\"}],\"explosions\":[{\"x\":676.935,\"y\":485.313}],\"windx\":0.01,\"windy\":0.01}";
-    std::string player1turn5 = "{\"turn\":20,\"player1\":{\"name\":\"Hao Wu\",\"wagon\":3,\"male\":true,\"hp\":580,\"posx\":473.658,\"posy\":284.735,\"shootangle\":-31.1497,\"facing\":\"right\"},\"windx\":-0.00829815,\"windy\":-0.00761271,\"explosions\":[{\"x\":560.848,\"y\":545.339},{\"x\":1605.65,\"y\":647.186},{\"x\":469.664,\"y\":565.777},{\"x\":883.879,\"y\":482.913},{\"x\":504.41,\"y\":533.904},{\"x\":442.529,\"y\":525.837},{\"x\":1079.57,\"y\":572.658},{\"x\":1151.67,\"y\":580.816},{\"x\":620.525,\"y\":515.031},{\"x\":938.869,\"y\":478.232},{\"x\":348.725,\"y\":547.389},{\"x\":479.785,\"y\":308.971},{\"x\":554.495,\"y\":542.633},{\"x\":540.459,\"y\":522.691},{\"x\":182.593,\"y\":225.413},{\"x\":526.409,\"y\":351.889}],\"actions\":[{\"tick\":200,\"action\":\"go right\"},{\"tick\":304,\"action\":\"stop\"},{\"tick\":330,\"action\":\"go left\"},{\"tick\":335,\"action\":\"stop\"},{\"tick\":467,\"action\":\"start shoot\"},{\"tick\":468,\"action\":\"end shoot\"}],\"player2\":{\"name\":\"Chenhui Lin\",\"wagon\":3,\"male\":false,\"hp\":250,\"posx\":100,\"posy\":354.995,\"shootangle\":-176.795,\"facing\":\"left\"}}";
+    std::string player1turn5 = "{\"turn\":20,\"player1\":{\"name\":\"Hao Wu\",\"wagon\":3,\"male\":true,\"hp\":580,\"posx\":543.658,\"posy\":294.735,\"shootangle\":-31.1497,\"facing\":\"right\"},\"windx\":-0.00829815,\"windy\":-0.00761271,\"explosions\":[{\"x\":560.848,\"y\":545.339},{\"x\":1605.65,\"y\":647.186},{\"x\":469.664,\"y\":565.777},{\"x\":883.879,\"y\":482.913},{\"x\":504.41,\"y\":533.904},{\"x\":442.529,\"y\":525.837},{\"x\":1079.57,\"y\":572.658},{\"x\":1151.67,\"y\":580.816},{\"x\":620.525,\"y\":515.031},{\"x\":938.869,\"y\":478.232},{\"x\":348.725,\"y\":547.389},{\"x\":479.785,\"y\":308.971},{\"x\":554.495,\"y\":542.633},{\"x\":540.459,\"y\":522.691},{\"x\":182.593,\"y\":225.413},{\"x\":526.409,\"y\":351.889}],\"actions\":[{\"tick\":200,\"action\":\"go right\"},{\"tick\":304,\"action\":\"stop\"},{\"tick\":330,\"action\":\"go left\"},{\"tick\":335,\"action\":\"stop\"},{\"tick\":467,\"action\":\"start shoot\"},{\"tick\":468,\"action\":\"end shoot\"}],\"player2\":{\"name\":\"Chenhui Lin\",\"wagon\":3,\"male\":false,\"hp\":250,\"posx\":600,\"posy\":354.995,\"shootangle\":-176.795,\"facing\":\"left\"}}";
     this->initPlayers();
-    //playback(player1turn5);
-    playback(g_gameConfig.match_string);
+    playback(player1turn5);
+    //playback(g_gameConfig.match_string);
     buildMyTurn();
 
 }
@@ -397,6 +402,27 @@ void GameScene::explode(Bullet *bullet, Hero* hero)
 {
     _following = nullptr;
     auto pos = bullet->getPosition();
+    
+    //spawn dirts
+    auto dirt1 = ParticleSystemQuad::create("DirtExplosion1.plist");
+    _effectLayer->addChild(dirt1);
+    dirt1->setPosition(pos);
+    dirt1->setTotalParticles(10);
+    dirt1->setEmissionRate(99999999);
+    dirt1->setAutoRemoveOnFinish(true);
+    auto dirt2 = ParticleSystemQuad::create("DirtExplosion2.plist");
+    _effectLayer->addChild(dirt2);
+    dirt2->setPosition(pos);
+    dirt2->setTotalParticles(7);
+    dirt2->setEmissionRate(99999999);
+    dirt2->setAutoRemoveOnFinish(true);
+    auto dirt3 = ParticleSystemQuad::create("DirtExplosion3.plist");
+    _effectLayer->addChild(dirt3);
+    dirt3->setPosition(pos);
+    dirt3->setTotalParticles(5);
+    dirt3->setEmissionRate(99999999);
+    dirt3->setAutoRemoveOnFinish(true);
+    
     
     if(_playback)
     {
@@ -824,6 +850,7 @@ void GameScene::update(float dt)
                                        DelayTime::create(1),
                                        CallFunc::create([this](){
                 _playback=false;
+                _following = getCurrentPlayer();
                 p1->hideAimer();
                 p1->hideTurnSymbol();
                 p2->hideAimer();
@@ -841,6 +868,7 @@ void GameScene::update(float dt)
             over = true;
         }
     }
+    
 }
 
 void GameScene::playerdead(EventCustom* event)
@@ -894,36 +922,42 @@ void GameScene::entertoMenu(float dt)
 void GameScene::showBloodLossNum(Hero* hero, int num)
 {
     TTFConfig turnTTFConfig;
-    turnTTFConfig.outlineSize = 3;
-    turnTTFConfig.fontSize = 30;
+    turnTTFConfig.outlineSize = 7;
+    turnTTFConfig.fontSize = 50;
     turnTTFConfig.fontFilePath = "fonts/britanic bold.ttf";
     auto  label = Label::createWithTTF(turnTTFConfig, Value(num).asString(), TextHAlignment::CENTER, 400);
-    label->setAnchorPoint(Point::ANCHOR_MIDDLE_LEFT);
+    label->setAnchorPoint(Point::ANCHOR_MIDDLE);
     label->setSpacing(-5);
     label->enableOutline(Color4B::BLACK);
-    label->setOpacity(0);
-    label->setScale(0.01f);
-    label->setColor(Color3B::RED);
+    label->setOpacity(50);
+    label->setScale(-10.01f);
     hero->addChild(label);
+    label->setPosition(0, 70);
+    label->setRotation(CCRANDOM_MINUS1_1()*20);
     
-    
-    if (num<100) {
-        label->setScale(0.7f);
+    auto targetScale = 1.0f;
+    if(num > 200)
+    {
+        label->setColor(Color3B::RED);
     }
-    else if(num<200){
-        label->setScale(1.0f);
+    else if(num > 100)
+    {
+        label->setColor(Color3B(250,121,65));
+        targetScale = 0.75f;
     }
-    else{
-        label->setScale(1.3f);
+    else
+    {
+        label->setColor(Color3B(250,191,65));
+        targetScale = 0.5f;
     }
     
-    
-    label->runAction(Sequence::create(Spawn::create(FadeIn::create(0.5f),
-                                                    EaseBackOut::create(ScaleTo::create(1.0f,1.0f)),
-                                                    nullptr),
-                                      DelayTime::create(1.0f),
+    label->runAction(FadeIn::create(0.3));
+    label->runAction(Sequence::create(
+                                    EaseElasticOut::create(ScaleTo::create(1.3f,targetScale)),
+                                      DelayTime::create(2.0f),
                                       FadeOut::create(0.5f),
                                       RemoveSelf::create(),
                                       nullptr));
-
+    label->runAction(MoveBy::create(3.8, Point(0, 50)));
+    label->runAction(RotateBy::create(3.8, CCRANDOM_MINUS1_1()*40));
 }

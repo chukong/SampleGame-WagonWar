@@ -43,6 +43,7 @@ public:
     CC_SYNTHESIZE(Level*, _level, Level);
     CC_SYNTHESIZE(cocos2d::Layer*, _PlayerLayer, PlayerLayer);
     CC_SYNTHESIZE(cocos2d::Layer*, _bulletLayer, BulletLayer);
+    CC_SYNTHESIZE(cocos2d::Layer*, _effectLayer, EffectLayer);
     CC_SYNTHESIZE(cocos2d::Point, _wind, Wind);
     CC_SYNTHESIZE(cocos2d::Point, _gravity, Gravity);
     void initExplosionMasks();

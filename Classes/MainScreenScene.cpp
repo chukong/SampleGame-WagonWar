@@ -248,6 +248,7 @@ bool MainScreenScene::init()
     cnm->runAction(RepeatForever::create(cnmhit));
     this->addChild(cnm,100);
     cnm->setPosition(300,300);
+
     
     return true;
 }
