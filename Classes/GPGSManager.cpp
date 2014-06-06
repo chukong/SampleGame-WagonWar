@@ -364,6 +364,20 @@ void GPGSManager::Rematch()
                     });
 }
 
+void GPGSManager::ConfirmPendingCompletion()
+{
+    gameServices->TurnBasedMultiplayer().ConfirmPendingCompletion(current_match_, [](gpg::TurnBasedMultiplayerManager::TurnBasedMatchResponse matchResponse)
+                                                 {
+                                                     LOGI("Remathing the game...By Jacky");
+                                                     if (matchResponse.status == gpg::MultiplayerStatus::VALID) {
+                                                         LOGI("ReMatch the game...By Jacky");
+                                                         //ConfirmPendingCompletion...
+                                                         //PlayGame(matchResponse.match);
+                                                         LOGI("ConfirmPendingCompletion success................xxxxxxxx");
+                                                     }
+                                                 });
+}
+
 int32_t GPGSManager::GetNextParticipant() {
     gpg::PlayerManager::FetchSelfResponse localPlayer =
     gameServices->Players().FetchSelfBlocking();

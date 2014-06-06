@@ -48,8 +48,12 @@ bool AppDelegate::applicationDidFinishLaunching() {
 
     
     // create a scene. it's an autorelease object
-     // auto scene = GameScene::createScene();
+    
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
    auto scene = MainScreenScene::createScene();
+#else
+   auto scene = GameScene::createScene();
+#endif
       //auto scene = TestTBMP::createScene("345678");
     //auto scene = WagonSelect::createScene(FIRST_TURN);
 
