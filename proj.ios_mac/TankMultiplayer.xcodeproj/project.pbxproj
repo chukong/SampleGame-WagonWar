@@ -56,6 +56,14 @@
 		50EF629917ECD46A001EB2F8 /* Icon-100.png in Resources */ = {isa = PBXBuildFile; fileRef = 50EF629517ECD46A001EB2F8 /* Icon-100.png */; };
 		50EF62A217ECD613001EB2F8 /* Icon-29.png in Resources */ = {isa = PBXBuildFile; fileRef = 50EF62A017ECD613001EB2F8 /* Icon-29.png */; };
 		50EF62A317ECD613001EB2F8 /* Icon-50.png in Resources */ = {isa = PBXBuildFile; fileRef = 50EF62A117ECD613001EB2F8 /* Icon-50.png */; };
+		68237B151941D04F00F7C7DC /* youlose_1.png in Resources */ = {isa = PBXBuildFile; fileRef = 68237B111941D04F00F7C7DC /* youlose_1.png */; };
+		68237B161941D04F00F7C7DC /* youlose_1.png in Resources */ = {isa = PBXBuildFile; fileRef = 68237B111941D04F00F7C7DC /* youlose_1.png */; };
+		68237B171941D04F00F7C7DC /* youlose_2.png in Resources */ = {isa = PBXBuildFile; fileRef = 68237B121941D04F00F7C7DC /* youlose_2.png */; };
+		68237B181941D04F00F7C7DC /* youlose_2.png in Resources */ = {isa = PBXBuildFile; fileRef = 68237B121941D04F00F7C7DC /* youlose_2.png */; };
+		68237B191941D04F00F7C7DC /* youwin_1.png in Resources */ = {isa = PBXBuildFile; fileRef = 68237B131941D04F00F7C7DC /* youwin_1.png */; };
+		68237B1A1941D04F00F7C7DC /* youwin_1.png in Resources */ = {isa = PBXBuildFile; fileRef = 68237B131941D04F00F7C7DC /* youwin_1.png */; };
+		68237B1B1941D04F00F7C7DC /* youwin_2.png in Resources */ = {isa = PBXBuildFile; fileRef = 68237B141941D04F00F7C7DC /* youwin_2.png */; };
+		68237B1C1941D04F00F7C7DC /* youwin_2.png in Resources */ = {isa = PBXBuildFile; fileRef = 68237B141941D04F00F7C7DC /* youwin_2.png */; };
 		68323AFA1941C91400AC6E7E /* achievement.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 68323AE61941C91400AC6E7E /* achievement.mp3 */; };
 		68323AFB1941C91400AC6E7E /* achievement.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 68323AE61941C91400AC6E7E /* achievement.mp3 */; };
 		68323AFC1941C91400AC6E7E /* explosion.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 68323AE71941C91400AC6E7E /* explosion.mp3 */; };
@@ -494,6 +502,10 @@
 		50EF629517ECD46A001EB2F8 /* Icon-100.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-100.png"; sourceTree = "<group>"; };
 		50EF62A017ECD613001EB2F8 /* Icon-29.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-29.png"; sourceTree = "<group>"; };
 		50EF62A117ECD613001EB2F8 /* Icon-50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-50.png"; sourceTree = "<group>"; };
+		68237B111941D04F00F7C7DC /* youlose_1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = youlose_1.png; sourceTree = "<group>"; };
+		68237B121941D04F00F7C7DC /* youlose_2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = youlose_2.png; sourceTree = "<group>"; };
+		68237B131941D04F00F7C7DC /* youwin_1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = youwin_1.png; sourceTree = "<group>"; };
+		68237B141941D04F00F7C7DC /* youwin_2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = youwin_2.png; sourceTree = "<group>"; };
 		68323AE61941C91400AC6E7E /* achievement.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = achievement.mp3; sourceTree = "<group>"; };
 		68323AE71941C91400AC6E7E /* explosion.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = explosion.mp3; sourceTree = "<group>"; };
 		68323AE81941C91400AC6E7E /* firebuttondown.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = firebuttondown.mp3; sourceTree = "<group>"; };
@@ -942,6 +954,10 @@
 				BBFFBBCA19407F74004CAF28 /* attack.png */,
 				BBFFBBCB19407F74004CAF28 /* attackBar.png */,
 				BBFFBBCC19407F74004CAF28 /* explosion.png */,
+				68237B111941D04F00F7C7DC /* youlose_1.png */,
+				68237B121941D04F00F7C7DC /* youlose_2.png */,
+				68237B131941D04F00F7C7DC /* youwin_1.png */,
+				68237B141941D04F00F7C7DC /* youwin_2.png */,
 				BBFFBBCD19407F74004CAF28 /* explosionBar.png */,
 				BBFFBBCE19407F74004CAF28 /* hp.png */,
 				BBFFBBCF19407F74004CAF28 /* hpBar.png */,
@@ -1262,6 +1278,7 @@
 				85E8A307193865A500B0B650 /* btn_start_2.png in Resources */,
 				85111BAF192F4DBE00C8D3C8 /* windArrow.png in Resources */,
 				BBA41A28193E062700557287 /* boy.png in Resources */,
+				68237B191941D04F00F7C7DC /* youwin_1.png in Resources */,
 				6880298C1938B8B7008AD16F /* aimergreen.png in Resources */,
 				BBA41A30193E16DF00557287 /* powerbar.png in Resources */,
 				BB96B9B619404F9E005BF369 /* your_turn_1.png in Resources */,
@@ -1281,6 +1298,7 @@
 				855659151940BAB500392F20 /* button_normal.png in Resources */,
 				68BBD89E192462D7001F9F73 /* test4.png in Resources */,
 				68323AFC1941C91400AC6E7E /* explosion.mp3 in Resources */,
+				68237B1B1941D04F00F7C7DC /* youwin_2.png in Resources */,
 				5087E77D17EB970100C73F5D /* Default-568h@2x.png in Resources */,
 				68323B1C1941C91400AC6E7E /* tankshoot.mp3 in Resources */,
 				5087E78517EB970100C73F5D /* Icon-72.png in Resources */,
@@ -1292,6 +1310,7 @@
 				5087E78017EB970100C73F5D /* Icon-114.png in Resources */,
 				BB96B97E193F0A35005BF369 /* hpinner.png in Resources */,
 				68BBD8B1192462DE001F9F73 /* expMask.png in Resources */,
+				68237B171941D04F00F7C7DC /* youlose_2.png in Resources */,
 				BBFFBBD719407F74004CAF28 /* hpBar.png in Resources */,
 				50EF62A217ECD613001EB2F8 /* Icon-29.png in Resources */,
 				855659131940BAB500392F20 /* board.png in Resources */,
@@ -1311,6 +1330,7 @@
 				68323B021941C91400AC6E7E /* horseymove.mp3 in Resources */,
 				50EF629617ECD46A001EB2F8 /* Icon-40.png in Resources */,
 				85E8A2F819382D0A00B0B650 /* wagon_item_0.png in Resources */,
+				68237B151941D04F00F7C7DC /* youlose_1.png in Resources */,
 				68BBD894192462D7001F9F73 /* masked.fsh in Resources */,
 				855659191940BAB500392F20 /* Celestial Motive m.mp3 in Resources */,
 				85E8A305193865A500B0B650 /* btn_ready_2.png in Resources */,
@@ -1347,11 +1367,13 @@
 				6880298D1938B8B7008AD16F /* aimergreen.png in Resources */,
 				68323B1B1941C91400AC6E7E /* tankmove.mp3 in Resources */,
 				85111BB0192F4DBE00C8D3C8 /* windArrow.png in Resources */,
+				68237B161941D04F00F7C7DC /* youlose_1.png in Resources */,
 				85E8A2DF19382D0A00B0B650 /* btn_mygames_1.png in Resources */,
 				85E8A306193865A500B0B650 /* btn_ready_2.png in Resources */,
 				855659201940BAB500392F20 /* Marker Felt.ttf in Resources */,
 				855659241940BAB500392F20 /* kaboom_normal.png in Resources */,
 				855659281940BAB500392F20 /* Stepping Stones m.mp3 in Resources */,
+				68237B181941D04F00F7C7DC /* youlose_2.png in Resources */,
 				6880298A1938B71B008AD16F /* pointer.png in Resources */,
 				68BBD8B2192462DE001F9F73 /* expMask.png in Resources */,
 				68323B191941C91400AC6E7E /* selectwagon.mp3 in Resources */,
@@ -1393,6 +1415,7 @@
 				68323B211941C91400AC6E7E /* yourturn.mp3 in Resources */,
 				68323B131941C91400AC6E7E /* power.mp3 in Resources */,
 				68BBD8AC192462DE001F9F73 /* circle.png in Resources */,
+				68237B1C1941D04F00F7C7DC /* youwin_2.png in Resources */,
 				855659261940BAB500392F20 /* kaboom_pressed.png in Resources */,
 				85E8A308193865A500B0B650 /* btn_start_2.png in Resources */,
 				85E8A2D919382D0A00B0B650 /* btn_leaderboard_0.png in Resources */,
@@ -1406,6 +1429,7 @@
 				68BBD895192462D7001F9F73 /* masked.fsh in Resources */,
 				85E8A2D319382D0A00B0B650 /* btn_achievements_1.png in Resources */,
 				68323B011941C91400AC6E7E /* firebuttonup.mp3 in Resources */,
+				68237B1A1941D04F00F7C7DC /* youwin_1.png in Resources */,
 				855659141940BAB500392F20 /* board.png in Resources */,
 				68BBD8BA192495E4001F9F73 /* map.png in Resources */,
 				68BBD891192462D7001F9F73 /* HelloWorld.png in Resources */,
