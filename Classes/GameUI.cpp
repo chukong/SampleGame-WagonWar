@@ -381,3 +381,17 @@ void PlayBackIndictaor::update(float delta){
     _timeLabel->setString(std::string(time));
     //log("percentage....%d",_playBackInnerBar->getPercent());
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
