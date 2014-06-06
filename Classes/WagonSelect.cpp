@@ -346,7 +346,7 @@ void WagonSelect::setup_player2_mactchdata()
     player2.AddMember("name", g_gameConfig.player2Name.c_str(), allocator);
     player2.AddMember("wagon", _wagon, allocator);
     player2.AddMember("male", _isBoy, allocator);
-    player2.AddMember("hp", 1000, allocator);
+    player2.AddMember("hp", g_wagonConfig[_wagon].hp, allocator);
     player2.AddMember("posx", 1000, allocator);
     player2.AddMember("posy", 800, allocator);
     player2.AddMember("shootangle", "", allocator);

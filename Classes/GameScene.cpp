@@ -18,12 +18,13 @@
 #include "NoTouchLayer.h"
 #include "MainScreenScene.h"
 #include "SimpleAudioEngine.h"
+#include "VisibleRect.h"
 
 USING_NS_CC;
 
 Scene* GameScene::createScene()
 {
-
+    
     // 'scene' is an autorelease object
     auto scene = Scene::create();
     auto uiLayer = GameUI::create();
@@ -53,7 +54,7 @@ bool GameScene::init()
     this->addChild(lvl, 2, Point(1, 1), offset);
     this->setLevel(lvl);
     
-
+    
     //layer for players
     auto playerLayer = Layer::create();
     this->addChild(playerLayer, 3, Point(1, 1), offset);
@@ -80,7 +81,8 @@ bool GameScene::init()
     effectLayer->ignoreAnchorPointForPosition(false);
     this->addChild(effectLayer, 5, Point(1, 1), offset);
     
-
+    
+    
     //default gravity
     this->setGravity(Point(0,-0.1));
     this->scheduleUpdate();
@@ -91,7 +93,9 @@ bool GameScene::init()
     //init listeners
     initListeners();
     
-
+    
+    _isWentOut = false;
+    
     return true;
 }
 void GameScene::initListeners()
@@ -216,6 +220,7 @@ void GameScene::endShoot()
     auto offset = getMovableSize();
     auto gunlocation = p->gunPoint->getNodeToWorldAffineTransform();
     float angle;
+    
     getCurrentPlayer()->endshoot();
     getCurrentPlayer()->stop();
     if(_playback)
@@ -248,22 +253,22 @@ void GameScene::endShoot()
         if(p->getTag() == TAG_MYSELF)//player 1
         {
             _myturn["player1"]["shootangle"].SetDouble(angle);
-
+            
             //p->aim->setAngle(angle-p->_wagonPoint->getRotation());
         }
         else{
             _myturn["player2"]["shootangle"].SetDouble(angle);
             //p->aim->setAngle(angle-p->_wagonPoint->getRotation());
         }
-
+        
         _myturn["actions"].PushBack(value, allocator);
         _eventDispatcher->dispatchCustomEvent("touch off");
         _waitToClear = true;
         
     }
     //log("angle %f", angle);
-    auto b = addBullet(defaultB, Point(gunlocation.tx, gunlocation.ty)+Point(offset/2)-getPosition(), Point(tick/60.0f*20*cosf(CC_DEGREES_TO_RADIANS(-angle)), tick/60.0f*20*sinf(CC_DEGREES_TO_RADIANS(-angle))));
-        _following = dynamic_cast<Node*>(b);
+    auto b = addBullet(defaultB, Point(gunlocation.tx, gunlocation.ty)+Point(offset/2)-getPosition(), Point(tick/60.0f*8*cosf(CC_DEGREES_TO_RADIANS(-angle)), tick/60.0f*8*sinf(CC_DEGREES_TO_RADIANS(-angle))));
+    _following = dynamic_cast<Node*>(b);
 }
 void GameScene::randomWind()
 {
@@ -288,7 +293,6 @@ void GameScene::onEnter()
     playback(g_gameConfig.match_string);
     
     buildMyTurn();
-
 }
 void GameScene::movePlayer(float x)
 {
@@ -308,13 +312,14 @@ void GameScene::movePlayer(float x)
         }
         else
         {
-           value.AddMember("action", "stop", allocator);
+            value.AddMember("action", "stop", allocator);
         }
         _myturn["actions"].PushBack(value, allocator);
         printMyTurn();
     }
     //TODO: replace with proper get current player
     Hero* p = getCurrentPlayer();
+    
     p->moveDelta.x = x;
     p->needFix = true;
     if (x>0)
@@ -342,10 +347,10 @@ void GameScene::initPlayers()
     p2 = Hero::create(Other,GIRL,MECH,false);
     p2->setName("player2");
     p2->setTag(TAG_OTHER);
-
+    
     p2->stop();
     getPlayerLayer()->addChild(p2);
-
+    
 }
 void GameScene::initExplosionMasks()
 {
@@ -354,7 +359,7 @@ void GameScene::initExplosionMasks()
     _ex->setShaderProgram(ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));
     _burn = Sprite::create("expMask2.png");
     _burn->setShaderProgram(ShaderCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));
-
+    
     BlendFunc cut;
     cut ={
         GL_ZERO,
@@ -385,7 +390,7 @@ void GameScene::initExplosionMasks()
 bool GameScene::onTouchBegan(Touch* touch, Event* event)
 {
     _click = true;
-
+    
     return true;
 }
 void GameScene::onTouchMoved(Touch* touch, Event* event)
@@ -511,8 +516,6 @@ void GameScene::explode(Bullet *bullet, Hero* hero)
         _myturn.Accept(writer);
         log("--\n%s\n--\n", strbuf.GetString());
     }
-
-    
     
     _ex->setPosition(pos);
     //TODO: set _ex size according to bullet config
@@ -576,19 +579,16 @@ void GameScene::explode(Bullet *bullet, Hero* hero)
                     {
                         if(p->getTag() == TAG_MYSELF)
                         {
-                            _myturn["player1"]["hp"].SetInt(p->hurt(damage*((float)(exRad-dist)/(float)exRad)));
-                            log("wtf.....123");
+                            _myturn["player1"]["hp"].SetInt(p->hurt(damage*((float)(exRad + p->radius -dist)/(float)(exRad +p->radius))));
                         }
                         else
                         {
-                            _myturn["player2"]["hp"].SetInt(p->hurt(damage*((float)(exRad-dist)/(float)exRad)));
-                            log("wtf.....456");
+                            _myturn["player2"]["hp"].SetInt(p->hurt(damage*((float)(exRad + p->radius -dist)/(float)(exRad +p->radius))));
                         }
                     }
                     else
                     {
-                        p->hurt(damage*((float)(exRad-dist)/(float)exRad));
-                        log("wtf......789");
+                        p->hurt((damage*((float)(exRad + p->radius -dist)/(float)(exRad +p->radius))));
                     }
                     showBloodLossNum(p, damage*((float)(exRad-dist)/(float)exRad));
                 }
@@ -602,7 +602,7 @@ void GameScene::playback(std::string json)
     CocosDenshion::SimpleAudioEngine::getInstance()->playBackgroundMusic("Giant Insectoid Battle.mp3");
     tempjson = json;
     _replay.Parse<rapidjson::kParseDefaultFlags>(json.c_str());
-
+    
     this->setWind(Point(_replay["windx"].GetDouble(),_replay["windy"].GetDouble()));
     _eventDispatcher->dispatchCustomEvent("wind", &_wind);
     log("Wind is : %f, %f", getWind().x, getWind().y);
@@ -643,7 +643,7 @@ void GameScene::playback(std::string json)
         p1->airborn = true;
         p2->airborn = true;
         _waitToClear = true;
-//        over =true;
+        //        over =true;
         return;
     }
     else if(_replay["turn"].GetInt() ==2)
@@ -677,7 +677,7 @@ void GameScene::playback(std::string json)
     }
     
     //get enemy name
-     _eventDispatcher->dispatchCustomEvent("enemy", (void*)"PLAYER2");
+    _eventDispatcher->dispatchCustomEvent("enemy", (void*)"PLAYER2");
     
     // get tick sum
     rapidjson::Value &array = _replay["actions"];
@@ -731,10 +731,10 @@ void GameScene::update(float dt)
     //if we have a following target, then follow it
     if(_following)
     {
-            auto fp = _following->getPosition();
-            auto tp =-fp + Point(_PlayerLayer->getContentSize()/2);
-            auto cp = getPosition();
-            setPosition(cp+(tp-cp)*0.04);
+        auto fp = _following->getPosition();
+        auto tp =-fp + Point(_PlayerLayer->getContentSize()/2);
+        auto cp = getPosition();
+        setPosition(cp+(tp-cp)*0.04);
     }
     
     
@@ -810,6 +810,7 @@ void GameScene::update(float dt)
             {
                 _following = nullptr;
             }
+            
         }
     }
     
@@ -857,6 +858,7 @@ void GameScene::update(float dt)
                             //break;
                         }
                     }
+
                     free(buffer);
                     
                     //check how many collision points
@@ -915,14 +917,30 @@ void GameScene::update(float dt)
             {
                 //player fell out side, please die
                 log("player went out side");
+                if (!_isWentOut) {
+                    _isWentOut = true;
+                    p->hurt(p->_lasthp);
+//                    if(_playback && p == getCurrentPlayer())
+//                        saveMatchData(true, false);
+//                    else if (_playback && p != getCurrentPlayer())
+//                        saveMatchData(false, true);
+//                    else if(!_playback && p == getCurrentPlayer())
+//                        saveMatchData(false, true);
+//                    else if(!_playback && p != getCurrentPlayer())
+//                        saveMatchData(true, false);
+                    p->setVisible(false);
+                }
             }
                         //kmGLPopMatrix();
         }
     }
+    
+    
+    
     _level->getRT()->onEnd();
     _tick++;
     
-//    log("everythingSleep is %d",everythingSleep);
+    //    log("everythingSleep is %d",everythingSleep);
     if(_waitToClear && everythingSleep)
     {
         if(_playback)
@@ -956,7 +974,6 @@ void GameScene::update(float dt)
         }
         else if(!over){
             saveMatchData(false, false);
-            over = true;
         }
     }
     
@@ -969,6 +986,7 @@ void GameScene::playerdead(EventCustom* event)
     {
         //lost;
         saveMatchData(false, true);
+        
         log("win..........");
     }
     else if(hero->_heroConfig.side == Other)
@@ -979,8 +997,9 @@ void GameScene::playerdead(EventCustom* event)
     }
 }
 
-void GameScene::saveMatchData(bool win, bool loss)
+void GameScene::saveMatchData(bool win, bool lose)
 {
+    over = true;
     _myturn["turn"].SetInt(_myturn["turn"].GetInt()+1);
     printMyTurn();
     rapidjson::StringBuffer strbuf;
@@ -990,11 +1009,19 @@ void GameScene::saveMatchData(bool win, bool loss)
     g_gameConfig.match_string = strbuf.GetString();
     log("setup_player2_matchdata...%s",g_gameConfig.match_string.c_str());
     
+    if (win) {
+        showWinOrLose(true);
+    }
+    else if(lose)
+    {
+        showWinOrLose(false);
+    }
+    
     auto notouchlayer = NoTouchLayer::create();
     notouchlayer->setTag(NOTOUCHTAG);
     Director::getInstance()->getRunningScene()->addChild(notouchlayer,100);
-
-    GPGSManager::TakeTurn(win, loss);
+    
+    GPGSManager::TakeTurn(win, lose);
 }
 
 void GameScene::returntoMenu()
@@ -1051,4 +1078,58 @@ void GameScene::showBloodLossNum(Hero* hero, int num)
                                       nullptr));
     label->runAction(MoveBy::create(3.8, Point(0, 50)));
     label->runAction(RotateBy::create(3.8, CCRANDOM_MINUS1_1()*40));
+    
+}
+
+void GameScene::showWinOrLose(bool isWin)
+{
+    if(isWin)
+    {
+        auto node = Node::create();
+        auto you = Sprite::create("youwin_1.png");
+        you->setPosition(Point(-120,0));
+        you->setAnchorPoint(Point::ANCHOR_MIDDLE);
+        
+        auto win = Sprite::create("youwin_2.png");
+        win->setPosition(Point(120,0));
+        win->setAnchorPoint(Point::ANCHOR_MIDDLE);
+        
+        node->addChild(you);
+        node->addChild(win);
+        
+        node->setScale(0.0001f);
+        
+        node->runAction(Sequence::create(Spawn::create(FadeIn::create(0.5f),
+                                                       EaseBackOut::create(ScaleTo::create(1.0f,1.0f)),
+                                                       nullptr),
+                                         DelayTime::create(3.0f),
+                                         FadeOut::create(0.5f),
+                                         nullptr));
+        node->setPosition(g_visibleRect.center);
+        Director::getInstance()->getRunningScene()->addChild(node,99);
+    }
+    else
+    {
+        auto node = Node::create();
+        auto you = Sprite::create("youlose_1.png");
+        you->setPosition(Point(-120,0));
+        you->setAnchorPoint(Point::ANCHOR_MIDDLE);
+        
+        auto lose = Sprite::create("youlose_2.png");
+        lose->setPosition(Point(120,0));
+        lose->setAnchorPoint(Point::ANCHOR_MIDDLE);
+        
+        node->addChild(you);
+        node->addChild(lose);
+        
+        node->runAction(Sequence::create(Spawn::create(FadeIn::create(0.5f),
+                                                       EaseBackOut::create(MoveBy::create(1.0f,Point(0, -20))),
+                                                       nullptr),
+                                         DelayTime::create(3.0f),
+                                         FadeOut::create(0.5f),
+                                         nullptr));
+        node->setPosition(g_visibleRect.center);
+        Director::getInstance()->getRunningScene()->addChild(node,99);
+
+    }
 }

@@ -175,11 +175,12 @@ bool MainScreenScene::init()
     
     CocosDenshion::SimpleAudioEngine::getInstance()->setBackgroundMusicVolume(0.5);
     CocosDenshion::SimpleAudioEngine::getInstance()->stopBackgroundMusic();
-    //CocosDenshion::SimpleAudioEngine::getInstance()->playBackgroundMusic("Stepping Stones m.mp3");
-    auto mainscreen_bk = Sprite::create("mainscreen_bk.jpg");
+    CocosDenshion::SimpleAudioEngine::getInstance()->playBackgroundMusic("Stepping Stones m.mp3");
+
+    auto mainscreen_bk = Sprite::create("mainscreen_bk.png");
     if(g_visibleRect.visibleWidth>960)
     {
-        mainscreen_bk->setScaleX(g_visibleRect.visibleWidth/960);
+        mainscreen_bk->setScale(g_visibleRect.visibleWidth/960);
     }
     mainscreen_bk->setAnchorPoint(Point::ANCHOR_MIDDLE);
     mainscreen_bk->setPosition(g_visibleRect.center);
@@ -241,14 +242,6 @@ bool MainScreenScene::init()
     
     auto listener3 = EventListenerCustom::create("enterGame", CC_CALLBACK_0(MainScreenScene::enterGame, this));
     _eventDispatcher->addEventListenerWithSceneGraphPriority(listener3, this);
-    
-    
-    auto cnm = Sprite::createWithSpriteFrameName("cnm_idle01.png");
-    auto cnmhit = g_gameConfig.getAnimate(g_gameAnimation.cnm_hit);
-    cnm->runAction(RepeatForever::create(cnmhit));
-    this->addChild(cnm,100);
-    cnm->setPosition(300,300);
-
     
     return true;
 }
