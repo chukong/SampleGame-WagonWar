@@ -784,17 +784,7 @@ void GameScene::update(float dt)
             _eventDispatcher->dispatchCustomEvent("my turn");
             _waitToClear = false;
             _tick = 0;
-            if(p1 == getCurrentPlayer()){
-                p1->showAimer();
-                p1->showTurnSymbol();
-                p2->hideAimer();
-                p2->hideTurnSymbol();
-            } else {
-                p2->showAimer();
-                p2->showTurnSymbol();
-                p1->hideAimer();
-                p1->hideTurnSymbol();
-            }
+
             log("play back finished");
             //need to delete actions
             _myturn["actions"].Clear();
@@ -802,6 +792,12 @@ void GameScene::update(float dt)
                                        DelayTime::create(1),
                                        CallFunc::create([this](){
                 _playback=false;
+                p1->hideAimer();
+                p1->hideTurnSymbol();
+                p2->hideAimer();
+                p2->hideTurnSymbol();
+                getCurrentPlayer()->showAimer();
+                getCurrentPlayer()->showTurnSymbol();
                 CocosDenshion::SimpleAudioEngine::getInstance()->stopBackgroundMusic();
                 CocosDenshion::SimpleAudioEngine::getInstance()->playBackgroundMusic("Celestial Motive m.mp3");
             }),
