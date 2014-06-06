@@ -55,14 +55,18 @@ typedef struct wagonConfig
     int expsize;
     int offsetx;
     int offsety;
+    float anchorx;
+    float anchory;
+    float gunx;
+    float guny;
 }WagonConfig;
 
 const WagonConfig g_wagonConfig[4]=
 {
-    {300,0.4,250,-90,0,45,0,22},//horsey
-    {300,0.4,250,-90,0,45,0,22},//tank
-    {300,0.4,250,-90,0,45,0,33},//rock
-    {300,0.4,250,-90,0,45,0,22},//mech
+    {300,0.4,250,-60,0,45,20,69,0.5,0.24731182795699, -45,30},//horsey
+    {300,0.4,250,-40,-5,45,13,62,0.52,0.26744186046512, -48,40},//tank
+    {300,0.4,250,-90,-30,45,18,66,0.54477611940299,0.21951219512195, -59, 48},//rock
+    {300,0.4,250,-75,-15,45,12,69,0.5,0.25, -75, 48},//mech
 };
 
 class GameConfig

@@ -61,7 +61,7 @@ bool Aimer::init(bool isRight, float upper, float lower)
         setAngle(-180-((upperLimit+lowerLimit)/2));
     }
     _green->setPercentage((lowerLimit-upperLimit)/3.6);
-    //_green->setRotation(-upperLimit);
+    _green->setRotation(upperLimit+90);
     
     
     auto listener = EventListenerTouchOneByOne::create();
