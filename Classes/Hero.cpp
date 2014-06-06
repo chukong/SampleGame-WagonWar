@@ -39,7 +39,7 @@ bool Hero::init(Side side, Body body, Wagon wagon, bool isfacetoright, std::stri
     
     _lasthp = _heroConfig.wagonConfig.hp;
     _wagonPoint = Node::create();
-    _wagonPoint->setPosition(_heroConfig.wagonConfig.offsetx, _heroConfig.wagonConfig.offsety);
+    //_wagonPoint->setPosition(_heroConfig.wagonConfig.offsetx, _heroConfig.wagonConfig.offsety);
     this->addChild(_wagonPoint);
     
     switch (_heroConfig.wagon) {
@@ -47,6 +47,8 @@ bool Hero::init(Side side, Body body, Wagon wagon, bool isfacetoright, std::stri
         {
             _wagonASprite = Sprite::createWithSpriteFrameName("mechidle01.png");
             _wagonBSprite = Sprite::createWithSpriteFrameName("mechgunidle01.png");//front
+            _wagonASprite->setAnchorPoint(Point(_heroConfig.wagonConfig.anchorx, _heroConfig.wagonConfig.anchory));
+            _wagonBSprite->setAnchorPoint(Point(_heroConfig.wagonConfig.anchorx, _heroConfig.wagonConfig.anchory));
             _wagonPoint->addChild(_wagonASprite,1);
             _wagonPoint->addChild(_wagonBSprite,3);
         }
@@ -54,18 +56,21 @@ bool Hero::init(Side side, Body body, Wagon wagon, bool isfacetoright, std::stri
         case HORSEY:
         {
             _wagonASprite = Sprite::createWithSpriteFrameName("cnm_idle01.png");
+            _wagonASprite->setAnchorPoint(Point(_heroConfig.wagonConfig.anchorx, _heroConfig.wagonConfig.anchory));
             _wagonPoint->addChild(_wagonASprite,1);
         }
             break;
         case ROCK:
         {
             _wagonASprite = Sprite::createWithSpriteFrameName("rockidle01.png");
+            _wagonASprite->setAnchorPoint(Point(_heroConfig.wagonConfig.anchorx, _heroConfig.wagonConfig.anchory));
             _wagonPoint->addChild(_wagonASprite,3);
         }
             break;
         case TANK:
         {
             _wagonASprite = Sprite::createWithSpriteFrameName("tankidle01.png");
+            _wagonASprite->setAnchorPoint(Point(_heroConfig.wagonConfig.anchorx, _heroConfig.wagonConfig.anchory));
             _wagonPoint->addChild(_wagonASprite,3);
         }
             break;
@@ -81,7 +86,7 @@ bool Hero::init(Side side, Body body, Wagon wagon, bool isfacetoright, std::stri
     
     gunPoint = Node::create();
     _wagonPoint->addChild(gunPoint);
-    gunPoint->setPosition(-43, 45);
+    gunPoint->setPosition(_heroConfig.wagonConfig.gunx, _heroConfig.wagonConfig.guny);
     
     aim = Aimer::create(isfacetoright, _heroConfig.wagonConfig.upperlimit,_heroConfig.wagonConfig.lowerlimit);
     aim->lowerLimit = _heroConfig.wagonConfig.lowerlimit;
@@ -99,7 +104,7 @@ bool Hero::init(Side side, Body body, Wagon wagon, bool isfacetoright, std::stri
         }
         
         _bodySprite = Sprite::create("boy.png");
-        _bodySprite->setPosition(_wagonASprite->getPosition()+ Point(30,30));
+        _bodySprite->setPosition(_wagonASprite->getPosition()+ Point(_heroConfig.wagonConfig.offsetx, _heroConfig.wagonConfig.offsety));
         _wagonPoint->addChild(_bodySprite,2);
     }
     else// girl
@@ -109,7 +114,7 @@ bool Hero::init(Side side, Body body, Wagon wagon, bool isfacetoright, std::stri
         }
         
         _bodySprite = Sprite::create("girl.png");
-        _bodySprite->setPosition(_wagonASprite->getPosition()+ Point(30,30));
+        _bodySprite->setPosition(_wagonASprite->getPosition()+ Point(_heroConfig.wagonConfig.offsetx, _heroConfig.wagonConfig.offsety));
         _wagonPoint->addChild(_bodySprite,2);
     }
     
@@ -538,7 +543,7 @@ void Hero::updateAngle(int angle){
 }
 
 void Hero::update(float delta){
-    log("angle dddd:%f",aim->getWorldAngle());
+    //log("angle dddd:%f",aim->getWorldAngle());
     int angle = abs(aim->getWorldAngle());
     if(angle >= 270){
         angle -= 360;
