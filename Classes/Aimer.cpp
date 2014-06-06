@@ -88,8 +88,9 @@ bool Aimer::init(bool isRight, float upper, float lower)
 }
 bool Aimer::onTouchBegan(Touch* touch, Event* event)
 {
-    if(convertToWorldSpace(_crosshair->getPosition()).getDistance(touch->getLocation()) < 50)
+    if(_crosshair->isVisible() && convertToWorldSpace(_crosshair->getPosition()).getDistance(touch->getLocation()) < 50)
     {
+        log("visible0, %i", _crosshair->isVisible());
         _pointer->runAction(ScaleTo::create(0.1, 2, _pointer->getScaleY()));
         _pointer->runAction(FadeTo::create(0.1, 255));
         _eventDispatcher->dispatchCustomEvent("start angle",(void*)(int)(getWorldAngle()));
