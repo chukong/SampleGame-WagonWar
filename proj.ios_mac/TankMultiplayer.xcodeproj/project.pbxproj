@@ -64,6 +64,14 @@
 		68237B1A1941D04F00F7C7DC /* youwin_1.png in Resources */ = {isa = PBXBuildFile; fileRef = 68237B131941D04F00F7C7DC /* youwin_1.png */; };
 		68237B1B1941D04F00F7C7DC /* youwin_2.png in Resources */ = {isa = PBXBuildFile; fileRef = 68237B141941D04F00F7C7DC /* youwin_2.png */; };
 		68237B1C1941D04F00F7C7DC /* youwin_2.png in Resources */ = {isa = PBXBuildFile; fileRef = 68237B141941D04F00F7C7DC /* youwin_2.png */; };
+		68237B3419426FC600F7C7DC /* tankbullet.png in Resources */ = {isa = PBXBuildFile; fileRef = 68237B3319426FC600F7C7DC /* tankbullet.png */; };
+		68237B3519426FC600F7C7DC /* tankbullet.png in Resources */ = {isa = PBXBuildFile; fileRef = 68237B3319426FC600F7C7DC /* tankbullet.png */; };
+		68237B3B194275FD00F7C7DC /* mechbullet.png in Resources */ = {isa = PBXBuildFile; fileRef = 68237B38194275FD00F7C7DC /* mechbullet.png */; };
+		68237B3C194275FD00F7C7DC /* mechbullet.png in Resources */ = {isa = PBXBuildFile; fileRef = 68237B38194275FD00F7C7DC /* mechbullet.png */; };
+		68237B3D194275FD00F7C7DC /* rockbullet1.png in Resources */ = {isa = PBXBuildFile; fileRef = 68237B39194275FD00F7C7DC /* rockbullet1.png */; };
+		68237B3E194275FD00F7C7DC /* rockbullet1.png in Resources */ = {isa = PBXBuildFile; fileRef = 68237B39194275FD00F7C7DC /* rockbullet1.png */; };
+		68237B3F194275FD00F7C7DC /* cnmbullet.png in Resources */ = {isa = PBXBuildFile; fileRef = 68237B3A194275FD00F7C7DC /* cnmbullet.png */; };
+		68237B40194275FD00F7C7DC /* cnmbullet.png in Resources */ = {isa = PBXBuildFile; fileRef = 68237B3A194275FD00F7C7DC /* cnmbullet.png */; };
 		6880297D1938AFEB008AD16F /* cnm.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6880297B1938AFEB008AD16F /* cnm.plist */; };
 		6880297E1938AFEB008AD16F /* cnm.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6880297B1938AFEB008AD16F /* cnm.plist */; };
 		6880297F1938AFEB008AD16F /* cnm.png in Resources */ = {isa = PBXBuildFile; fileRef = 6880297C1938AFEB008AD16F /* cnm.png */; };
@@ -517,6 +525,10 @@
 		68237B121941D04F00F7C7DC /* youlose_2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = youlose_2.png; sourceTree = "<group>"; };
 		68237B131941D04F00F7C7DC /* youwin_1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = youwin_1.png; sourceTree = "<group>"; };
 		68237B141941D04F00F7C7DC /* youwin_2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = youwin_2.png; sourceTree = "<group>"; };
+		68237B3319426FC600F7C7DC /* tankbullet.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tankbullet.png; sourceTree = "<group>"; };
+		68237B38194275FD00F7C7DC /* mechbullet.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mechbullet.png; sourceTree = "<group>"; };
+		68237B39194275FD00F7C7DC /* rockbullet1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = rockbullet1.png; sourceTree = "<group>"; };
+		68237B3A194275FD00F7C7DC /* cnmbullet.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cnmbullet.png; sourceTree = "<group>"; };
 		6880297B1938AFEB008AD16F /* cnm.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = cnm.plist; sourceTree = "<group>"; };
 		6880297C1938AFEB008AD16F /* cnm.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cnm.png; sourceTree = "<group>"; };
 		688029811938B5C1008AD16F /* aimerback.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = aimerback.png; sourceTree = "<group>"; };
@@ -951,6 +963,9 @@
 				68237B141941D04F00F7C7DC /* youwin_2.png */,
 				BBFFBBCD19407F74004CAF28 /* explosionBar.png */,
 				BBFFBBCE19407F74004CAF28 /* hp.png */,
+				68237B38194275FD00F7C7DC /* mechbullet.png */,
+				68237B39194275FD00F7C7DC /* rockbullet1.png */,
+				68237B3A194275FD00F7C7DC /* cnmbullet.png */,
 				BBFFBBCF19407F74004CAF28 /* hpBar.png */,
 				BBFFBBD019407F74004CAF28 /* speed.png */,
 				BBFFBBD119407F74004CAF28 /* speedBar.png */,
@@ -980,6 +995,7 @@
 				BBA41A15193DB92D00557287 /* tank.plist */,
 				BBA41A16193DB92D00557287 /* tank.png */,
 				85E8A303193865A500B0B650 /* btn_ready_2.png */,
+				68237B3319426FC600F7C7DC /* tankbullet.png */,
 				85E8A304193865A500B0B650 /* btn_start_2.png */,
 				85E8A2B219382D0A00B0B650 /* boy_0.png */,
 				85E8A2B319382D0A00B0B650 /* boy_1.png */,
@@ -1248,6 +1264,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				68237B3B194275FD00F7C7DC /* mechbullet.png in Resources */,
 				85E8A2EA19382D0A00B0B650 /* btn_start_1.png in Resources */,
 				851CE69F1941F6EE0095463A /* power.mp3 in Resources */,
 				688029821938B5C1008AD16F /* aimerback.png in Resources */,
@@ -1271,6 +1288,7 @@
 				851CE6991941F6EE0095463A /* menuclick.mp3 in Resources */,
 				851CE6E719423A690095463A /* DirtExplosion3.png in Resources */,
 				851CE6951941F6EE0095463A /* mechmove.mp3 in Resources */,
+				68237B3419426FC600F7C7DC /* tankbullet.png in Resources */,
 				855659171940BAB500392F20 /* button_pressed.png in Resources */,
 				85E8A2CC19382D0A00B0B650 /* boy_0.png in Resources */,
 				BB6FC4E5193E2853003BF502 /* innerpower.png in Resources */,
@@ -1346,6 +1364,7 @@
 				BB96B9B719404F9E005BF369 /* your_turn_2.png in Resources */,
 				BB96B9AF19404F9E005BF369 /* enemy.png in Resources */,
 				5087E78017EB970100C73F5D /* Icon-114.png in Resources */,
+				68237B3D194275FD00F7C7DC /* rockbullet1.png in Resources */,
 				BB96B97E193F0A35005BF369 /* hpinner.png in Resources */,
 				68BBD8B1192462DE001F9F73 /* expMask.png in Resources */,
 				68237B171941D04F00F7C7DC /* youlose_2.png in Resources */,
@@ -1377,6 +1396,7 @@
 				855659211940BAB500392F20 /* Giant Insectoid Battle.mp3 in Resources */,
 				BB96B97F193F0A35005BF369 /* hpouter.png in Resources */,
 				851CE6911941F6EE0095463A /* horseyshoot.mp3 in Resources */,
+				68237B3F194275FD00F7C7DC /* cnmbullet.png in Resources */,
 				50EF629817ECD46A001EB2F8 /* Icon-80.png in Resources */,
 				BBA41A18193DB92D00557287 /* tank.png in Resources */,
 				BBFFBBD419407F74004CAF28 /* explosion.png in Resources */,
@@ -1410,6 +1430,7 @@
 				851CE6981941F6EE0095463A /* mechshoot.mp3 in Resources */,
 				851CE6881941F6EE0095463A /* achievement.mp3 in Resources */,
 				68237B181941D04F00F7C7DC /* youlose_2.png in Resources */,
+				68237B3519426FC600F7C7DC /* tankbullet.png in Resources */,
 				6880298A1938B71B008AD16F /* pointer.png in Resources */,
 				851CE6901941F6EE0095463A /* horseymove.mp3 in Resources */,
 				68BBD8B2192462DE001F9F73 /* expMask.png in Resources */,
@@ -1431,10 +1452,12 @@
 				85E8A2EF19382D0A00B0B650 /* girl_0.png in Resources */,
 				85E8A2E519382D0A00B0B650 /* btn_ready_0.png in Resources */,
 				851CE6A21941F6EE0095463A /* readystart.mp3 in Resources */,
+				68237B40194275FD00F7C7DC /* cnmbullet.png in Resources */,
 				851CE69A1941F6EE0095463A /* menuclick.mp3 in Resources */,
 				85E8A2E719382D0A00B0B650 /* btn_ready_1.png in Resources */,
 				851CE6A01941F6EE0095463A /* power.mp3 in Resources */,
 				85E8A2D719382D0A00B0B650 /* btn_invitefriend_1.png in Resources */,
+				68237B3C194275FD00F7C7DC /* mechbullet.png in Resources */,
 				68BBD897192462D7001F9F73 /* test.png in Resources */,
 				85E8A2F519382D0A00B0B650 /* wagon_bk.png in Resources */,
 				851CE6A81941F6EE0095463A /* tankmove.mp3 in Resources */,
@@ -1465,6 +1488,7 @@
 				850C86D51935D1EE0040A5EE /* mainscreen_logo.png in Resources */,
 				851CE6AA1941F6EE0095463A /* tankshoot.mp3 in Resources */,
 				851CE6E219423A690095463A /* DirtExplosion2.plist in Resources */,
+				68237B3E194275FD00F7C7DC /* rockbullet1.png in Resources */,
 				68BBD895192462D7001F9F73 /* masked.fsh in Resources */,
 				851CE6A41941F6EE0095463A /* rockmove.mp3 in Resources */,
 				85E8A2D319382D0A00B0B650 /* btn_achievements_1.png in Resources */,

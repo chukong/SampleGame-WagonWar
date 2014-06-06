@@ -47,7 +47,7 @@ bool GameScene::init()
     
     //load background
     auto background = Sprite::create("bluryBack.png");
-    this->addChild(background, 1, Point(0.5, 0.5), offset);
+    this->addChild(background, 1, Point(0.5, 0.3), offset+Point(0, 50));
     
     //load map
     auto lvl = Level::create("map.png");
@@ -267,8 +267,40 @@ void GameScene::endShoot()
         
     }
     //log("angle %f", angle);
-    auto b = addBullet(defaultB, Point(gunlocation.tx, gunlocation.ty)+Point(offset/2)-getPosition(), Point(tick/60.0f*8*cosf(CC_DEGREES_TO_RADIANS(-angle)), tick/60.0f*8*sinf(CC_DEGREES_TO_RADIANS(-angle))));
-    _following = dynamic_cast<Node*>(b);
+    switch(getCurrentPlayer()->_heroConfig.wagon)
+    {
+        case Wagon::TANK:
+        {
+            auto b = addBullet(tankB, Point(gunlocation.tx, gunlocation.ty)+Point(offset/2)-getPosition(), Point(tick/60.0f*8*cosf(CC_DEGREES_TO_RADIANS(-angle)), tick/60.0f*8*sinf(CC_DEGREES_TO_RADIANS(-angle))));
+            _following = dynamic_cast<Node*>(b);
+            break;
+        }
+        case Wagon::ROCK:
+        {
+            auto b = addBullet(rockB, Point(gunlocation.tx, gunlocation.ty)+Point(offset/2)-getPosition(), Point(tick/60.0f*8*cosf(CC_DEGREES_TO_RADIANS(-angle)), tick/60.0f*8*sinf(CC_DEGREES_TO_RADIANS(-angle))));
+            _following = dynamic_cast<Node*>(b);
+            break;
+        }
+        case Wagon::HORSEY:
+        {
+            auto b = addBullet(horseyB, Point(gunlocation.tx, gunlocation.ty)+Point(offset/2)-getPosition(), Point(tick/60.0f*8*cosf(CC_DEGREES_TO_RADIANS(-angle)), tick/60.0f*8*sinf(CC_DEGREES_TO_RADIANS(-angle))));
+            _following = dynamic_cast<Node*>(b);
+            break;
+        }
+        case Wagon::MECH:
+        {
+            auto b = addBullet(mechB, Point(gunlocation.tx, gunlocation.ty)+Point(offset/2)-getPosition(), Point(tick/60.0f*8*cosf(CC_DEGREES_TO_RADIANS(-angle)), tick/60.0f*8*sinf(CC_DEGREES_TO_RADIANS(-angle))));
+            _following = dynamic_cast<Node*>(b);
+            break;
+        }
+        default:
+        {
+            auto b = addBullet(defaultB, Point(gunlocation.tx, gunlocation.ty)+Point(offset/2)-getPosition(), Point(tick/60.0f*8*cosf(CC_DEGREES_TO_RADIANS(-angle)), tick/60.0f*8*sinf(CC_DEGREES_TO_RADIANS(-angle))));
+            _following = dynamic_cast<Node*>(b);
+            break;
+        }
+    }
+
 }
 void GameScene::randomWind()
 {
@@ -343,7 +375,7 @@ void GameScene::initPlayers()
     p1->stop();
     getPlayerLayer()->addChild(p1);
     
-    p2 = Hero::create(Other,GIRL,MECH,false);
+    p2 = Hero::create(Other,GIRL,HORSEY,false);
     p2->setName("player2");
     p2->setTag(TAG_OTHER);
     
@@ -517,10 +549,15 @@ void GameScene::explode(Bullet *bullet, Hero* hero)
     }
     
     _ex->setPosition(pos);
-    //TODO: set _ex size according to bullet config
+
     _ex->ManualDraw();
     _burn->setPosition(pos);
     _burn->ManualDraw();
+
+    _ex->setScaleX(bullet->getConfig().expRadius/64);
+    _ex->setScaleY(_ex->getScaleX()*0.7);
+    _burn->setScaleX(_ex->getScaleX()*1.05);
+    _burn->setScaleY(_ex->getScaleY()*1.05);
     float exRad =bullet->getConfig().expRadius;
     float damage = bullet->getConfig().damage;
     bullet->runAction(RemoveSelf::create());
@@ -744,7 +781,7 @@ void GameScene::update(float dt)
     //now the target is the render texture, we can begin reading the bullet and player pixels
     
     auto aabb2 = _bulletLayer->getBoundingBox();
-    auto bulletBoundary = Rect(aabb2.origin.x, aabb2.origin.y, aabb2.size.width, aabb2.size.height+1000);
+    auto bulletBoundary = Rect(aabb2.origin.x, aabb2.origin.y, aabb2.size.width, aabb2.size.height+2000);
     //Point offset(aabb2.origin+getPosition());
     aabb2.origin = Point::ZERO;
     for(Node* bullet : _bulletLayer->getChildren())
@@ -762,6 +799,7 @@ void GameScene::update(float dt)
             //move this
             b->setPosition(pos+(pos-b->getLastPos())+getGravity()+getWind());
             b->setLastPos(pos);
+            b->setRotation(-CC_RADIANS_TO_DEGREES((b->getLastPos()-b->getPosition()).getAngle()));
             
             //check if we are colliding with a player
             for(Node *player : _PlayerLayer->getChildren())
@@ -786,7 +824,7 @@ void GameScene::update(float dt)
                 for(int i = 0; i < bufferSize; i++)
                 {
                     //for accuracy, we only want the pixels in the circle
-                    if(buffer[i].a>0 && Helper::isInCircle(i, bulletRadius))
+                    if(buffer[i].a>0 && Helper::isInCircle(i, bulletRadius) && !(pos.y > aabb2.size.height-100))
                     {
                         explode(b,nullptr);
                         coll = true;
@@ -795,11 +833,6 @@ void GameScene::update(float dt)
                 }
                 free(buffer);
             }
-            //debug set color
-            if(coll)
-                b->setColor(Color3B::BLUE);
-            else
-                b->setColor(Color3B::YELLOW);
         }
         //if its not contained in the map
         else
@@ -873,7 +906,7 @@ void GameScene::update(float dt)
                             p->_wagonPoint->setRotation(deg);
                             
                         }
-                        if(angleCount > 1)
+                        if(angleCount > 2)
                         {
                             //we are colliding with too many pixels
                             float pushForce = 0.05 * angleCount;
