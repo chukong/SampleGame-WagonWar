@@ -96,6 +96,8 @@ protected:
     bool win;
     bool lost;
     bool over;
+    
+    bool _isWentOut;
 };
 
 #endif /* defined(__TankMultiplayer__GameScene__) */

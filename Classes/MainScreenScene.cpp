@@ -176,10 +176,10 @@ bool MainScreenScene::init()
     CocosDenshion::SimpleAudioEngine::getInstance()->stopBackgroundMusic();
     CocosDenshion::SimpleAudioEngine::getInstance()->playBackgroundMusic("Stepping Stones m.mp3");
 
-    auto mainscreen_bk = Sprite::create("mainscreen_bk.jpg");
+    auto mainscreen_bk = Sprite::create("mainscreen_bk.png");
     if(g_visibleRect.visibleWidth>960)
     {
-        mainscreen_bk->setScaleX(g_visibleRect.visibleWidth/960);
+        mainscreen_bk->setScale(g_visibleRect.visibleWidth/960);
     }
     mainscreen_bk->setAnchorPoint(Point::ANCHOR_MIDDLE);
     mainscreen_bk->setPosition(g_visibleRect.center);

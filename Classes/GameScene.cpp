@@ -18,6 +18,7 @@
 #include "NoTouchLayer.h"
 #include "MainScreenScene.h"
 #include "SimpleAudioEngine.h"
+#include "VisibleRect.h"
 
 USING_NS_CC;
 
@@ -86,6 +87,8 @@ bool GameScene::init()
     //init listeners
     initListeners();
     
+    
+    _isWentOut = false;
     
     return true;
 }
@@ -205,10 +208,11 @@ void GameScene::onEnter()
     std::string player2turn2 = "{\"turn\":1,\"player1\":{\"shootangle\":\"\",\"wagon\":0,\"male\":true,\"hp\":1000,\"posx\":520,\"posy\":800,\"facing\":\"right\"},\"player2\":{\"shootangle\":\"\",\"wagon\":1,\"male\":false,\"hp\":1000,\"posx\":1000,\"posy\":800,\"facing\":\"left\"},\"actions\":[],\"explosions\":[],\"windx\":0.01,\"windy\":0.01}";
     std::string player1turn3 = "{\"turn\":2,\"player1\":{\"shootangle\":\"\",\"wagon\":0,\"male\":true,\"hp\":1000,\"posx\":520,\"posy\":800,\"facing\":\"right\"},\"player2\":{\"shootangle\":-179.172,\"wagon\":1,\"male\":false,\"hp\":1000,\"posx\":1000,\"posy\":800,\"facing\":\"left\"},\"actions\":[{\"tick\":139,\"action\":\"go left\"},{\"tick\":154,\"action\":\"stop\"},{\"tick\":172,\"action\":\"go right\"},{\"tick\":489,\"action\":\"stop\"},{\"tick\":511,\"action\":\"go left\"},{\"tick\":513,\"action\":\"stop\"},{\"tick\":590,\"action\":\"start shoot\"},{\"tick\":609,\"action\":\"end shoot\"}],\"explosions\":[],\"windx\":0.01,\"windy\":0.01}";
     std::string player2turn4 = "{\"turn\":3,\"player1\":{\"shootangle\":-45,\"wagon\":0,\"male\":true,\"hp\":1000,\"posx\":546.472,\"posy\":573.07,\"facing\":\"right\"},\"player2\":{\"shootangle\":-179.172,\"wagon\":1,\"male\":false,\"hp\":1000,\"posx\":1084.18,\"posy\":592.764,\"facing\":\"left\"},\"actions\":[{\"tick\":270,\"action\":\"go right\"},{\"tick\":637,\"action\":\"stop\"},{\"tick\":670,\"action\":\"start shoot\"},{\"tick\":696,\"action\":\"end shoot\"}],\"explosions\":[{\"x\":676.935,\"y\":485.313}],\"windx\":0.01,\"windy\":0.01}";
-    std::string player1turn5 = "{\"turn\":20,\"player1\":{\"name\":\"Hao Wu\",\"wagon\":3,\"male\":true,\"hp\":580,\"posx\":473.658,\"posy\":284.735,\"shootangle\":-31.1497,\"facing\":\"right\"},\"windx\":-0.00829815,\"windy\":-0.00761271,\"explosions\":[{\"x\":560.848,\"y\":545.339},{\"x\":1605.65,\"y\":647.186},{\"x\":469.664,\"y\":565.777},{\"x\":883.879,\"y\":482.913},{\"x\":504.41,\"y\":533.904},{\"x\":442.529,\"y\":525.837},{\"x\":1079.57,\"y\":572.658},{\"x\":1151.67,\"y\":580.816},{\"x\":620.525,\"y\":515.031},{\"x\":938.869,\"y\":478.232},{\"x\":348.725,\"y\":547.389},{\"x\":479.785,\"y\":308.971},{\"x\":554.495,\"y\":542.633},{\"x\":540.459,\"y\":522.691},{\"x\":182.593,\"y\":225.413},{\"x\":526.409,\"y\":351.889}],\"actions\":[{\"tick\":200,\"action\":\"go right\"},{\"tick\":304,\"action\":\"stop\"},{\"tick\":330,\"action\":\"go left\"},{\"tick\":335,\"action\":\"stop\"},{\"tick\":467,\"action\":\"start shoot\"},{\"tick\":468,\"action\":\"end shoot\"}],\"player2\":{\"name\":\"Chenhui Lin\",\"wagon\":3,\"male\":false,\"hp\":250,\"posx\":532.925,\"posy\":354.995,\"shootangle\":-176.795,\"facing\":\"left\"}}";
+    std::string player1turn5 = "{\"turn\":20,\"player1\":{\"name\":\"Hao Wu\",\"wagon\":3,\"male\":true,\"hp\":580,\"posx\":473.658,\"posy\":284.735,\"shootangle\":-31.1497,\"facing\":\"right\"},\"windx\":-0.00829815,\"windy\":-0.00761271,\"explosions\":[{\"x\":560.848,\"y\":545.339},{\"x\":1605.65,\"y\":647.186},{\"x\":469.664,\"y\":565.777},{\"x\":883.879,\"y\":482.913},{\"x\":504.41,\"y\":533.904},{\"x\":442.529,\"y\":525.837},{\"x\":1079.57,\"y\":572.658},{\"x\":1151.67,\"y\":580.816},{\"x\":620.525,\"y\":515.031},{\"x\":938.869,\"y\":478.232},{\"x\":348.725,\"y\":547.389},{\"x\":479.785,\"y\":308.971},{\"x\":554.495,\"y\":542.633},{\"x\":540.459,\"y\":522.691},{\"x\":182.593,\"y\":225.413},{\"x\":526.409,\"y\":351.889}],\"actions\":[{\"tick\":200,\"action\":\"go right\"},{\"tick\":304,\"action\":\"stop\"},{\"tick\":330,\"action\":\"go left\"},{\"tick\":335,\"action\":\"stop\"},{\"tick\":467,\"action\":\"start shoot\"},{\"tick\":468,\"action\":\"end shoot\"}],\"player2\":{\"name\":\"Chenhui Lin\",\"wagon\":3,\"male\":false,\"hp\":250,\"posx\":600,\"posy\":354.995,\"shootangle\":-176.795,\"facing\":\"left\"}}";
     this->initPlayers();
-//       playback(player1turn5);
-    playback(g_gameConfig.match_string);
+
+    playback(player1turn5);
+  //  playback(g_gameConfig.match_string);
     buildMyTurn();
     
 }
@@ -237,6 +241,7 @@ void GameScene::movePlayer(float x)
     }
     //TODO: replace with proper get current player
     Hero* p = getCurrentPlayer();
+    
     p->moveDelta.x = x;
     p->needFix = true;
     if (x>0)
@@ -412,8 +417,6 @@ void GameScene::explode(Bullet *bullet, Hero* hero)
         log("--\n%s\n--\n", strbuf.GetString());
     }
     
-    
-    
     _ex->setPosition(pos);
     //TODO: set _ex size according to bullet config
     _ex->ManualDraw();
@@ -476,16 +479,16 @@ void GameScene::explode(Bullet *bullet, Hero* hero)
                     {
                         if(p->getTag() == TAG_MYSELF)
                         {
-                            _myturn["player1"]["hp"].SetInt(p->hurt(damage*((float)(exRad-dist)/(float)exRad)));
+                            _myturn["player1"]["hp"].SetInt(p->hurt(damage*((float)(exRad + p->radius -dist)/(float)(exRad +p->radius))));
                         }
                         else
                         {
-                            _myturn["player2"]["hp"].SetInt(p->hurt(damage*((float)(exRad-dist)/(float)exRad)));
+                            _myturn["player2"]["hp"].SetInt(p->hurt(damage*((float)(exRad + p->radius -dist)/(float)(exRad +p->radius))));
                         }
                     }
                     else
                     {
-                        p->hurt(damage*((float)(exRad-dist)/(float)exRad));
+                        p->hurt((damage*((float)(exRad + p->radius -dist)/(float)(exRad +p->radius))));
                     }
                     showBloodLossNum(p, damage*((float)(exRad-dist)/(float)exRad));
                 }
@@ -626,6 +629,7 @@ void GameScene::update(float dt)
     //now the target is the render texture, we can begin reading the bullet and player pixels
     
     auto aabb2 = _bulletLayer->getBoundingBox();
+    auto bulletBoundary = Rect(aabb2.origin.x, aabb2.origin.y, aabb2.size.width, aabb2.size.height+1000);
     //Point offset(aabb2.origin+getPosition());
     aabb2.origin = Point::ZERO;
     for(Node* bullet : _bulletLayer->getChildren())
@@ -638,7 +642,7 @@ void GameScene::update(float dt)
         
         //check bounding box to see if the bullet is in the world
         auto aabb1 = b->getBoundingBox();
-        if(aabb2.intersectsRect(aabb1))
+        if(bulletBoundary.intersectsRect(aabb1))
         {
             //move this
             b->setPosition(pos+(pos-b->getLastPos())+getGravity()+getWind());
@@ -658,7 +662,7 @@ void GameScene::update(float dt)
                 }
             }
             //if we didnt collide with player, then we have to check for the terrain
-            if(!coll)
+            if(aabb2.intersectsRect(aabb1) && !coll)
             {
                 Point pos(b->getPosition());
                 //init a buffer size big enough to hold a square that can contain a circle with specified radius
@@ -703,91 +707,116 @@ void GameScene::update(float dt)
         for(Node* player : _PlayerLayer->getChildren())
         {
             Hero* p = dynamic_cast<Hero*>(player);
-            if(p->airborn || p->needFix || p->moveDelta.x)
+            
+            auto paabb = p->getBoundingBox();
+            if(aabb2.intersectsRect(paabb))
             {
-                everythingSleep = false;
-                //move this
-                auto pos2 = p->getPosition();
-                auto pos = pos2+(pos2-p->getLastPos())+getGravity()+getWind();
-                p->setPosition(pos);
-                p->setLastPos(pos2);
-                
-                int radius = p->radius;
-                int bufferSize = pow(radius*2, 2);
-                Color4B *buffer = (Color4B*)malloc(sizeof(Color4B)*bufferSize);
-                glReadPixels(pos.x-radius, pos.y-radius, radius*2, radius*2, GL_RGBA, GL_UNSIGNED_BYTE, buffer);
-                float angleTotal =0;
-                int angleCount = 0;
-                for(int i = 0; i < bufferSize; i++)
+                if(p->airborn || p->needFix || p->moveDelta.x)
                 {
-                    if(buffer[i].a> 0 && Helper::isInCircle(i, radius))
+                    everythingSleep = false;
+                    //move this
+                    auto pos2 = p->getPosition();
+                    auto pos = pos2+(pos2-p->getLastPos())+getGravity()+getWind();
+                    p->setPosition(pos);
+                    p->setLastPos(pos2);
+                    
+                    int radius = p->radius;
+                    int bufferSize = pow(radius*2, 2);
+                    Color4B *buffer = (Color4B*)malloc(sizeof(Color4B)*bufferSize);
+                    glReadPixels(pos.x-radius, pos.y-radius, radius*2, radius*2, GL_RGBA, GL_UNSIGNED_BYTE, buffer);
+                    float angleTotal =0;
+                    int angleCount = 0;
+                    for(int i = 0; i < bufferSize; i++)
                     {
-                        //TODO: need to fix position, so does not clip with terrain, and get angle
-                        float an = Helper::getAngleFromIndex(i, radius);
-                        if(an != -999)
+                        if(buffer[i].a> 0 && Helper::isInCircle(i, radius))
                         {
-                            angleTotal+=an;
-                            angleCount++;
-                            //log("rad: %f, %i", an, i);
+                            //TODO: need to fix position, so does not clip with terrain, and get angle
+                            float an = Helper::getAngleFromIndex(i, radius);
+                            if(an != -999)
+                            {
+                                angleTotal+=an;
+                                angleCount++;
+                                //log("rad: %f, %i", an, i);
+                            }
+                            
+                            p->setLastPos(p->getPosition());
+                            //break;
                         }
-                        
-                        p->setLastPos(p->getPosition());
-                        //break;
                     }
+
+                    free(buffer);
+                    
+                    //check how many collision points
+                    if(angleCount>1)
+                    {
+                        p->airborn = false;
+                        //set angle to average
+                        float deg =CC_RADIANS_TO_DEGREES(angleTotal/angleCount);
+                        if(abs(deg) > 80)//TODO: each vehicle has a climbing angle limit
+                        {
+                            deg = (deg>0)? 80: -80;
+                            p->_wagonPoint->setRotation(deg);
+                            
+                            p->airborn = true;
+                        }
+                        else
+                        {
+                            p->_wagonPoint->setRotation(deg);
+                            
+                        }
+                        if(angleCount > 8)
+                        {
+                            //we are colliding with too many pixels
+                            
+                            float pushForce = 0.05 * angleCount;
+                            Point mid(pos.x-pushForce*sinf(angleTotal/angleCount), pos.y-pushForce*cosf(angleTotal/angleCount));
+                            p->setLastPos(mid);
+                            p->needFix = true;
+                        }
+                        else
+                        {
+                            p->needFix = false;
+                        }
+                    }
+                    
                 }
-                free(buffer);
-                
-                //check how many collision points
-                if(angleCount>1)
+                if(p->moveDelta.x)
                 {
-                    p->airborn = false;
-                    //set angle to average
-                    float deg =CC_RADIANS_TO_DEGREES(angleTotal/angleCount);
-                    if(abs(deg) > 80)//TODO: each vehicle has a climbing angle limit
+                    p->setPosition(p->getPosition()+p->moveDelta);
+                    p->setLastPos(p->getLastPos()+p->moveDelta);
+                    if(p->moveDelta.x>0)
                     {
-                        deg = (deg>0)? 80: -80;
-                        p->_wagonPoint->setRotation(deg);
-                        
-                        p->airborn = true;
+                        //TODO: replace with proper flip code
+                        //p->setScaleX(1);
+                        p->flipRight();
                     }
-                    else
-                    {
-                        p->_wagonPoint->setRotation(deg);
-                        
-                    }
-                    if(angleCount > 8)
-                    {
-                        //we are colliding with too many pixels
-                        
-                        float pushForce = 0.05 * angleCount;
-                        Point mid(pos.x-pushForce*sinf(angleTotal/angleCount), pos.y-pushForce*cosf(angleTotal/angleCount));
-                        p->setLastPos(mid);
-                        p->needFix = true;
-                    }
-                    else
-                    {
-                        p->needFix = false;
+                    else{
+                        //p->_heroConfig.isfacetoright = false;
+                        //p->setScaleX(-1);
+                        p->flipLeft();
                     }
                 }
-                
+
             }
-            if(p->moveDelta.x)
+            else
             {
-                p->setPosition(p->getPosition()+p->moveDelta);
-                p->setLastPos(p->getLastPos()+p->moveDelta);
-                if(p->moveDelta.x>0)
-                {
-                    //TODO: replace with proper flip code
-                    //p->setScaleX(1);
-                    p->flipRight();
-                }
-                else{
-                    //p->_heroConfig.isfacetoright = false;
-                    //p->setScaleX(-1);
-                    p->flipLeft();
+                //player fell out side, please die
+                log("player went out side");
+                if (!_isWentOut) {
+                    _isWentOut = true;
+                    p->hurt(p->_lasthp);
+//                    if(_playback && p == getCurrentPlayer())
+//                        saveMatchData(true, false);
+//                    else if (_playback && p != getCurrentPlayer())
+//                        saveMatchData(false, true);
+//                    else if(!_playback && p == getCurrentPlayer())
+//                        saveMatchData(false, true);
+//                    else if(!_playback && p != getCurrentPlayer())
+//                        saveMatchData(true, false);
+                    p->setVisible(false);
                 }
             }
-            //kmGLPopMatrix();
+                        //kmGLPopMatrix();
         }
     }
     
@@ -827,7 +856,6 @@ void GameScene::update(float dt)
         }
         else if(!over){
             saveMatchData(false, false);
-            over = true;
         }
     }
 }
@@ -852,6 +880,7 @@ void GameScene::playerdead(EventCustom* event)
 
 void GameScene::saveMatchData(bool win, bool lose)
 {
+    over = true;
     _myturn["turn"].SetInt(_myturn["turn"].GetInt()+1);
     printMyTurn();
     rapidjson::StringBuffer strbuf;
@@ -932,11 +961,11 @@ void GameScene::showWinOrLose(bool isWin)
     {
         auto node = Node::create();
         auto you = Sprite::create("youwin_1.png");
-        you->setPosition(Point(-20,0));
+        you->setPosition(Point(-120,0));
         you->setAnchorPoint(Point::ANCHOR_MIDDLE);
         
         auto win = Sprite::create("youwin_2.png");
-        win->setPosition(Point(20,0));
+        win->setPosition(Point(120,0));
         win->setAnchorPoint(Point::ANCHOR_MIDDLE);
         
         node->addChild(you);
@@ -950,27 +979,31 @@ void GameScene::showWinOrLose(bool isWin)
                                          DelayTime::create(3.0f),
                                          FadeOut::create(0.5f),
                                          nullptr));
+        node->setPosition(g_visibleRect.center);
+        Director::getInstance()->getRunningScene()->addChild(node,99);
     }
     else
     {
         auto node = Node::create();
-        auto you = Sprite::create("youwlose_1.png");
-        you->setPosition(Point(-20,0));
+        auto you = Sprite::create("youlose_1.png");
+        you->setPosition(Point(-120,0));
         you->setAnchorPoint(Point::ANCHOR_MIDDLE);
         
         auto lose = Sprite::create("youlose_2.png");
-        lose->setPosition(Point(20,0));
+        lose->setPosition(Point(120,0));
         lose->setAnchorPoint(Point::ANCHOR_MIDDLE);
         
         node->addChild(you);
         node->addChild(lose);
         
         node->runAction(Sequence::create(Spawn::create(FadeIn::create(0.5f),
-                                                       EaseBackOut::create(MoveBy::create(1.0f,Point(0, -10))),
+                                                       EaseBackOut::create(MoveBy::create(1.0f,Point(0, -20))),
                                                        nullptr),
                                          DelayTime::create(3.0f),
                                          FadeOut::create(0.5f),
                                          nullptr));
-        
+        node->setPosition(g_visibleRect.center);
+        Director::getInstance()->getRunningScene()->addChild(node,99);
+
     }
 }
