@@ -302,22 +302,30 @@ void Hero::startshoot()
         {
             _wagonASprite->stopAllActions();
             _wagonBSprite->stopAllActions();
-            _wagonASprite->runAction(RepeatForever::create(g_gameConfig.getAnimate(g_gameAnimation.mech_shoot)));
-            _wagonBSprite->runAction(RepeatForever::create(g_gameConfig.getAnimate(g_gameAnimation.mechgun_shoot)));
+            Animate* mech_idle = g_gameConfig.getAnimate(g_gameAnimation.mech_idle);
+            mech_idle->setDuration(mech_idle->getDuration()/2);
+            Animate* mechgun_idle = g_gameConfig.getAnimate(g_gameAnimation.mechgun_idle);
+            mechgun_idle->setDuration(mechgun_idle->getDuration()/2);
+            _wagonASprite->runAction(RepeatForever::create(mech_idle));
+            _wagonBSprite->runAction(RepeatForever::create(mechgun_idle));
             //_mechShootEffect = CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("mechshoot.mp3");
         }
             break;
         case HORSEY:
         {
             _wagonASprite->stopAllActions();
-            _wagonASprite->runAction(RepeatForever::create(g_gameConfig.getAnimate(g_gameAnimation.cnm_shoot)));
+            Animate* horsey_idle = g_gameConfig.getAnimate(g_gameAnimation.cnm_idle);
+            horsey_idle->setDuration(horsey_idle->getDuration()/2);
+            _wagonASprite->runAction(RepeatForever::create(horsey_idle));
             //_horseyShootEffect = CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("horseyshoot.mp3");
         }
             break;
         case ROCK:
         {
             _wagonASprite->stopAllActions();
-            _wagonASprite->runAction(RepeatForever::create(g_gameConfig.getAnimate(g_gameAnimation.rock_shoot)));
+            Animate* rock_idle = g_gameConfig.getAnimate(g_gameAnimation.rock_idle);
+            rock_idle->setDuration(rock_idle->getDuration()/2);
+            _wagonASprite->runAction(RepeatForever::create(rock_idle));
             //_rockShootEffect = CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("rockshoot.mp3");
 
         }
@@ -325,7 +333,9 @@ void Hero::startshoot()
         case TANK:
         {
             _wagonASprite->stopAllActions();
-            _wagonASprite->runAction(RepeatForever::create(g_gameConfig.getAnimate(g_gameAnimation.tank_shoot)));
+            Animate* tank_idle = g_gameConfig.getAnimate(g_gameAnimation.tank_idle);
+            tank_idle->setDuration(tank_idle->getDuration()/2);
+            _wagonASprite->runAction(RepeatForever::create(tank_idle));
             //_tankShootEffect = CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("tankshoot.mp3");
         }
             break;
@@ -373,21 +383,63 @@ void Hero::endshoot(){
     switch (_heroConfig.wagon) {
         case MECH:
         {
+            _wagonASprite->stopAllActions();
+            _wagonBSprite->stopAllActions();
+            Animate* mech_idle = g_gameConfig.getAnimate(g_gameAnimation.mech_idle);
+            mech_idle->setDuration(mech_idle->getDuration()*2);
+            Animate* mechgun_idle = g_gameConfig.getAnimate(g_gameAnimation.mechgun_idle);
+            mechgun_idle->setDuration(mechgun_idle->getDuration()*2);
+            _wagonASprite->runAction(Sequence::create(g_gameConfig.getAnimate(g_gameAnimation.mech_shoot),
+                                                      CallFunc::create([=](){
+                                                            _wagonASprite->runAction(RepeatForever::create(g_gameConfig.getAnimate(g_gameAnimation.mech_idle)));
+                                                        })
+                                                      ,
+                                                      NULL));
+            _wagonBSprite->runAction(Sequence::create(g_gameConfig.getAnimate(g_gameAnimation.mechgun_shoot),
+                                                      CallFunc::create([=](){
+                                                          _wagonBSprite->runAction(RepeatForever::create(g_gameConfig.getAnimate(g_gameAnimation.mechgun_idle)));
+                                                      }),
+                                                      NULL));
             _mechShootEffect = CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("mechshoot.mp3");
         }
             break;
         case HORSEY:
         {
+            _wagonASprite->stopAllActions();
+            Animate* horsey_idle = g_gameConfig.getAnimate(g_gameAnimation.cnm_idle);
+            horsey_idle->setDuration(horsey_idle->getDuration()*2);
+            _wagonASprite->runAction(Sequence::create(g_gameConfig.getAnimate(g_gameAnimation.cnm_shoot),
+                                                      CallFunc::create(
+                                                      [&](){
+                                                          _wagonASprite->runAction(RepeatForever::create(g_gameConfig.getAnimate(g_gameAnimation.cnm_idle)));
+                                                      }),
+                                                      NULL));
             _horseyShootEffect = CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("horseyshoot.mp3");
         }
             break;
         case ROCK:
         {
+            _wagonASprite->stopAllActions();
+            Animate* rock_idle = g_gameConfig.getAnimate(g_gameAnimation.rock_idle);
+            rock_idle->setDuration(rock_idle->getDuration()*2);
+            _wagonASprite->runAction(Sequence::create(g_gameConfig.getAnimate(g_gameAnimation.rock_shoot),
+                                                      CallFunc::create([&](){
+                                                          _wagonASprite->runAction(RepeatForever::create(g_gameConfig.getAnimate(g_gameAnimation.rock_idle)));
+                                                      }),
+                                                      NULL));
             _rockShootEffect = CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("rockshoot.mp3");
         }
             break;
         case TANK:
         {
+            _wagonASprite->stopAllActions();
+            Animate* tank_idle = g_gameConfig.getAnimate(g_gameAnimation.tank_idle);
+            tank_idle->setDuration(tank_idle->getDuration()*2);
+            _wagonASprite->runAction(Sequence::create(g_gameConfig.getAnimate(g_gameAnimation.tank_shoot),
+                                                      CallFunc::create([&](){
+                                                          _wagonASprite->runAction(RepeatForever::create(g_gameConfig.getAnimate(g_gameAnimation.tank_idle)));
+                                                      }),
+                                                      NULL));
             _tankShootEffect = CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("tankshoot.mp3");
         }
             break;

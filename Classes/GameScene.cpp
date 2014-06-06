@@ -41,7 +41,6 @@ Scene* GameScene::createScene()
 
 bool GameScene::init()
 {
-    
     auto visibleSize = Director::getInstance()->getVisibleSize();
     auto offset = Point(visibleSize/2);
     
@@ -222,7 +221,7 @@ void GameScene::endShoot()
     float angle;
     
     getCurrentPlayer()->endshoot();
-    getCurrentPlayer()->stop();
+    //getCurrentPlayer()->stop();
     if(_playback)
     {
         log("playback shoot end");
@@ -713,7 +712,7 @@ void GameScene::playback(std::string json)
     }
     
     //get enemy name
-    _eventDispatcher->dispatchCustomEvent("enemy", (void*)"PLAYER2");
+    _eventDispatcher->dispatchCustomEvent("enemy", (void*)(getCurrentPlayer()->_nameLabel->getString().c_str()));
     
     // get tick sum
     rapidjson::Value &array = _replay["actions"];

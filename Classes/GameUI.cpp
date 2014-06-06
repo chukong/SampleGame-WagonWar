@@ -348,6 +348,7 @@ bool ControlBoard::onTouchBegan(Touch *touch, Event *event)
 {
     log("powertouchbegan");
     log("touch %f, %f",touch->getLocation().x,touch->getLocation().y);
+    _eventDispatcher->dispatchCustomEvent("angle check",touch);
     if(_left->getBoundingBox().containsPoint(this->convertTouchToNodeSpace(touch)))
     {
         CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("movebuttondown.mp3");
