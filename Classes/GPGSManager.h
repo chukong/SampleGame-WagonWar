@@ -38,6 +38,7 @@ public:
     static void CancelMatch();
     static void DismissMatch();
     static void Rematch();
+    static void ConfirmPendingCompletion();
     
     static void TakeTurn(const bool winning, const bool losing);
     static int32_t GetNextParticipant();

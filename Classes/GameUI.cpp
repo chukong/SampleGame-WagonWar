@@ -134,11 +134,11 @@ void GameUI::switchTurn(bool isMyTurn){
 bool GameUI::onTouchBegan(Touch *touch, Event *event)
 {
 
-    if(touch->getLocation().y > 600)
-    {
-        _eventDispatcher->dispatchCustomEvent("randomWind");
-        return true;
-    }
+//    if(touch->getLocation().y > 600)
+//    {
+//        _eventDispatcher->dispatchCustomEvent("randomWind");
+//        return true;
+//    }
 
     return false;
 }
