@@ -582,3 +582,12 @@ void Hero::showTurnSymbol(){
     _sideSymbol->setVisible(true);
     _triangleSymbol->setVisible(true);
 }
+
+void Hero::setSideSymbol(bool isYou)
+{
+    if(isYou){
+        _sideSymbol->setTexture("you.png");
+    } else {
+        _sideSymbol->setTexture("enemy.png");
+    }
+}

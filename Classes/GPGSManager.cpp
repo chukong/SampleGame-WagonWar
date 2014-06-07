@@ -295,6 +295,16 @@ void GPGSManager::ShowMatchInbox()
                 default:
                     //Manage match with dismiss option
                     LOGI("Expired & default...By Jacky");
+                    
+                    //add notouch layer.
+                    auto notouchlayer = NoTouchLayer::create();
+                    notouchlayer->setTag(NOTOUCHTAG);
+                    cocos2d::Director::getInstance()->getRunningScene()->addChild(notouchlayer,100);
+                    //enter game
+                    current_match_ = response.match;
+                    ParseMatchData();
+                    cocos2d::Director::getInstance()->getEventDispatcher()->dispatchCustomEvent("enterGame");
+                    
                     break;
             }
         } else {
@@ -352,6 +362,20 @@ void GPGSManager::Rematch()
                             //PlayGame(matchResponse.match);
                         }
                     });
+}
+
+void GPGSManager::ConfirmPendingCompletion()
+{
+    gameServices->TurnBasedMultiplayer().ConfirmPendingCompletion(current_match_, [](gpg::TurnBasedMultiplayerManager::TurnBasedMatchResponse matchResponse)
+                                                 {
+                                                     LOGI("Remathing the game...By Jacky");
+                                                     if (matchResponse.status == gpg::MultiplayerStatus::VALID) {
+                                                         LOGI("ReMatch the game...By Jacky");
+                                                         //ConfirmPendingCompletion...
+                                                         //PlayGame(matchResponse.match);
+                                                         LOGI("ConfirmPendingCompletion success................xxxxxxxx");
+                                                     }
+                                                 });
 }
 
 int32_t GPGSManager::GetNextParticipant() {

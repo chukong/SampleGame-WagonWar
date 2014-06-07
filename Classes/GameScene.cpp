@@ -113,8 +113,8 @@ void GameScene::initListeners()
     _eventDispatcher->addEventListenerWithSceneGraphPriority(moveListener2, this);
     auto stopListener = EventListenerCustom::create("stop", CC_CALLBACK_0(GameScene::movePlayer, this, 0));
     _eventDispatcher->addEventListenerWithSceneGraphPriority(stopListener, this);
-    auto windListener = EventListenerCustom::create("randomWind", CC_CALLBACK_0(GameScene::randomWind, this));
-    _eventDispatcher->addEventListenerWithSceneGraphPriority(windListener, this);
+//    auto windListener = EventListenerCustom::create("randomWind", CC_CALLBACK_0(GameScene::randomWind, this));
+//    _eventDispatcher->addEventListenerWithSceneGraphPriority(windListener, this);
     auto startShootListener = EventListenerCustom::create("start shoot", CC_CALLBACK_0(GameScene::startShoot, this));
     _eventDispatcher->addEventListenerWithSceneGraphPriority(startShootListener, this);
     auto endShootListener = EventListenerCustom::create("end shoot", CC_CALLBACK_0(GameScene::endShoot, this));
@@ -323,10 +323,11 @@ void GameScene::onEnter()
     
     std::string playerTurn6 = "{\"turn\":3,\"player1\":{\"name\":\"Hao Wu\",\"wagon\":0,\"male\":true,\"hp\":300,\"posx\":575.099,\"posy\":559.174,\"shootangle\":-2.08812,\"facing\":\"right\"},\"windx\":0.0212713,\"windy\":0.00225526,\"explosions\":[{\"x\":1003.26,\"y\":536.647}],\"actions\":[{\"tick\":174,\"action\":\"start angle\",\"value\":4},{\"tick\":220,\"action\":\"end angle\",\"value\":-2},{\"tick\":409,\"action\":\"start shoot\"},{\"tick\":481,\"action\":\"end shoot\"}],\"player2\":{\"name\":\"Chenhui Lin\",\"wagon\":0,\"male\":false,\"hp\":259,\"posx\":1047.09,\"posy\":583.947,\"shootangle\":-81.2836,\"facing\":\"left\"}}";
 
-    this->initPlayers();
-    playback(player1turn5);
-    //playback(g_gameConfig.match_string);
-    
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+    playback(g_gameConfig.match_string);
+#else
+    playback(playerTurn6);
+#endif
     buildMyTurn();
 }
 void GameScene::movePlayer(float x)
@@ -373,13 +374,23 @@ void GameScene::movePlayer(float x)
 
 void GameScene::initPlayers()
 {
-    p1 = Hero::create(Myself,BOY,HORSEY,false);
+    Body boyorgirl;
+    if (_replay["player1"]["male"].GetBool())
+        boyorgirl = BOY;
+    else
+        boyorgirl = GIRL;
+    p1 = Hero::create(Myself,boyorgirl,(Wagon)_replay["player1"]["wagon"].GetInt(),false);
     p1->setName("player1");
     p1->setTag(TAG_MYSELF);
     p1->stop();
     getPlayerLayer()->addChild(p1);
     
-    p2 = Hero::create(Other,GIRL,HORSEY,false);
+    if (_replay["player2"]["male"].GetBool())
+        boyorgirl = BOY;
+    else
+        boyorgirl = GIRL;
+    p2 = Hero::create(Other,boyorgirl,(Wagon)_replay["player2"]["wagon"].GetInt(),false);
+
     p2->setName("player2");
     p2->setTag(TAG_OTHER);
     
@@ -558,7 +569,7 @@ void GameScene::explode(Bullet *bullet, Hero* hero)
     _burn->setPosition(pos);
     _burn->ManualDraw();
 
-    _ex->setScaleX(bullet->getConfig().expRadius/64);
+    _ex->setScaleX((float)bullet->getConfig().expRadius/64);
     _ex->setScaleY(_ex->getScaleX()*0.7);
     _burn->setScaleX(_ex->getScaleX()*1.05);
     _burn->setScaleY(_ex->getScaleY()*1.05);
@@ -646,6 +657,9 @@ void GameScene::playback(std::string json)
     this->setWind(Point(_replay["windx"].GetDouble(),_replay["windy"].GetDouble()));
     _eventDispatcher->dispatchCustomEvent("wind", &_wind);
     log("Wind is : %f, %f", getWind().x, getWind().y);
+    
+    this->initPlayers();
+
     p2->setPosition(_replay["player2"]["posx"].GetDouble(),_replay["player2"]["posy"].GetDouble());
     p2->_wagonPoint->setRotation(_replay["player2"]["rot"].GetDouble());
     p2->setLastPos(p2->getPosition());
@@ -697,6 +711,7 @@ void GameScene::playback(std::string json)
     _playback = true;
     getCurrentPlayer()->showAimer();
     getCurrentPlayer()->showTurnSymbol();
+    getCurrentPlayer()->setSideSymbol(false);
     _eventDispatcher->dispatchCustomEvent("touch off");
     _eventDispatcher->dispatchCustomEvent("enemy's turn");
     //copy all explosions to my turn
@@ -720,7 +735,7 @@ void GameScene::playback(std::string json)
     
     //get enemy name
     _eventDispatcher->dispatchCustomEvent("enemy", (void*)(getCurrentPlayer()->_nameLabel->getString().c_str()));
-    
+
     // get tick sum
     rapidjson::Value &array = _replay["actions"];
     if(array.IsArray())
@@ -965,7 +980,7 @@ void GameScene::update(float dt)
     //    log("everythingSleep is %d",everythingSleep);
     if(_waitToClear && everythingSleep)
     {
-        if(_playback)
+        if(_playback && !over)
         {
             _eventDispatcher->dispatchCustomEvent("touch on");
             _eventDispatcher->dispatchCustomEvent("my turn");
@@ -988,6 +1003,7 @@ void GameScene::update(float dt)
                 getCurrentPlayer()->showAimer();
                 getCurrentPlayer()->showTurnSymbol();
                 getCurrentPlayer()->aim->showCrossHair();
+                getCurrentPlayer()->setSideSymbol(true);
                 CocosDenshion::SimpleAudioEngine::getInstance()->stopBackgroundMusic();
                 CocosDenshion::SimpleAudioEngine::getInstance()->playBackgroundMusic("Celestial Motive m.mp3");
             }),
@@ -1004,18 +1020,37 @@ void GameScene::update(float dt)
 void GameScene::playerdead(EventCustom* event)
 {
     auto hero = (Hero*)event->getUserData();
-    if (hero->_heroConfig.side == Myself)
-    {
-        //lost;
-        saveMatchData(false, true);
-        
-        log("win..........");
+    if (!_playback) {
+        if (hero == getCurrentPlayer()) {
+            saveMatchData(false, true);
+        }
+        else
+        {
+            saveMatchData(true, false);
+        }
     }
-    else if(hero->_heroConfig.side == Other)
+    else
     {
-        //win;
-        saveMatchData(true, false);
-        log("loss.........");
+        if (hero == getCurrentPlayer()) {
+            showWinOrLose(true);
+            over = true;
+            GPGSManager::ConfirmPendingCompletion();
+            runAction(Sequence::create(DelayTime::create(5.0f),
+                                       CallFunc::create([]()
+                                                        {
+                                                            Director::getInstance()->replaceScene(MainScreenScene::createScene());
+                                                        }), nullptr));
+        }
+        else
+        {
+            showWinOrLose(false);
+            over = true;
+            GPGSManager::ConfirmPendingCompletion();
+            runAction(Sequence::create(DelayTime::create(5.0f),
+                                       CallFunc::create([]()
+                                                        {
+                                                            Director::getInstance()->replaceScene(MainScreenScene::createScene());
+                                                        }), nullptr));        }
     }
 }
 
@@ -1043,7 +1078,9 @@ void GameScene::saveMatchData(bool win, bool lose)
     notouchlayer->setTag(NOTOUCHTAG);
     Director::getInstance()->getRunningScene()->addChild(notouchlayer,100);
     
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
     GPGSManager::TakeTurn(win, lose);
+#endif
 }
 
 void GameScene::returntoMenu()

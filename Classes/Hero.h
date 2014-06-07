@@ -75,6 +75,8 @@ public:
     
     void setLife(int life);
     
+    void setSideSymbol(bool isYou);
+    
     bool airborn;
     bool needFix;
     int radius;
