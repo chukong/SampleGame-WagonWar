@@ -13,7 +13,11 @@
 #include "HelloWorldScene.h"
 
 enum BulletTypes{
-    defaultB
+    defaultB,
+    tankB,
+    mechB,
+    horseyB,
+    rockB
 };
 
 struct BulletConfig{

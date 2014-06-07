@@ -32,6 +32,7 @@ protected:
     cocos2d::Sprite* _pointer;
     cocos2d::ProgressTimer* _green;
     cocos2d::Sprite* _crosshair;
+    bool _isRight;
     float _angle;
     float _backAnglePre;
     

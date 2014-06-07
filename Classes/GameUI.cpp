@@ -134,11 +134,11 @@ void GameUI::switchTurn(bool isMyTurn){
 bool GameUI::onTouchBegan(Touch *touch, Event *event)
 {
 
-    if(touch->getLocation().y > 600)
-    {
-        _eventDispatcher->dispatchCustomEvent("randomWind");
-        return true;
-    }
+//    if(touch->getLocation().y > 600)
+//    {
+//        _eventDispatcher->dispatchCustomEvent("randomWind");
+//        return true;
+//    }
 
     return false;
 }
@@ -208,6 +208,7 @@ void PowerIndicator::increasePower(){
     _powerFlag = true;
     _powerbar->setVisible(true);
     _innerpower->setVisible(true);
+    _innerpower->setScale(0);
     _innerpower->runAction(FadeIn::create(0.1));
     _powerbar->runAction(FadeIn::create(0.1));
     //CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("firebuttondown.mp3");
@@ -348,6 +349,7 @@ bool ControlBoard::onTouchBegan(Touch *touch, Event *event)
 {
     log("powertouchbegan");
     log("touch %f, %f",touch->getLocation().x,touch->getLocation().y);
+    _eventDispatcher->dispatchCustomEvent("angle check",touch);
     if(_left->getBoundingBox().containsPoint(this->convertTouchToNodeSpace(touch)))
     {
         CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("movebuttondown.mp3");

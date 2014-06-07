@@ -41,16 +41,15 @@ Scene* GameScene::createScene()
 
 bool GameScene::init()
 {
-    
     auto visibleSize = Director::getInstance()->getVisibleSize();
     auto offset = Point(visibleSize/2);
     
     //load background
     auto background = Sprite::create("bluryBack.png");
-    this->addChild(background, 1, Point(0.5, 0.5), offset);
+    this->addChild(background, 1, Point(0.5, 0.3), offset+Point(0, 50));
     
     //load map
-    auto lvl = Level::create("map.png");
+    auto lvl = Level::create("map2.png");
     this->addChild(lvl, 2, Point(1, 1), offset);
     this->setLevel(lvl);
     
@@ -114,8 +113,8 @@ void GameScene::initListeners()
     _eventDispatcher->addEventListenerWithSceneGraphPriority(moveListener2, this);
     auto stopListener = EventListenerCustom::create("stop", CC_CALLBACK_0(GameScene::movePlayer, this, 0));
     _eventDispatcher->addEventListenerWithSceneGraphPriority(stopListener, this);
-    auto windListener = EventListenerCustom::create("randomWind", CC_CALLBACK_0(GameScene::randomWind, this));
-    _eventDispatcher->addEventListenerWithSceneGraphPriority(windListener, this);
+//    auto windListener = EventListenerCustom::create("randomWind", CC_CALLBACK_0(GameScene::randomWind, this));
+//    _eventDispatcher->addEventListenerWithSceneGraphPriority(windListener, this);
     auto startShootListener = EventListenerCustom::create("start shoot", CC_CALLBACK_0(GameScene::startShoot, this));
     _eventDispatcher->addEventListenerWithSceneGraphPriority(startShootListener, this);
     auto endShootListener = EventListenerCustom::create("end shoot", CC_CALLBACK_0(GameScene::endShoot, this));
@@ -222,7 +221,7 @@ void GameScene::endShoot()
     float angle;
     
     getCurrentPlayer()->endshoot();
-    getCurrentPlayer()->stop();
+    //getCurrentPlayer()->stop();
     if(_playback)
     {
         log("playback shoot end");
@@ -237,10 +236,14 @@ void GameScene::endShoot()
         }
         _eventDispatcher->dispatchCustomEvent("dismissPower");
         
-        _myturn["player1"]["posx"].SetDouble(_PlayerLayer->getChildByTag(TAG_MYSELF)->getPositionX());
-        _myturn["player1"]["posy"].SetDouble(_PlayerLayer->getChildByTag(TAG_MYSELF)->getPositionY());
-        _myturn["player2"]["posx"].SetDouble(_PlayerLayer->getChildByTag(TAG_OTHER)->getPositionX());
-        _myturn["player2"]["posy"].SetDouble(_PlayerLayer->getChildByTag(TAG_OTHER)->getPositionY());
+        Hero* myself = dynamic_cast<Hero*>(_PlayerLayer->getChildByTag(TAG_MYSELF));
+        Hero* other = dynamic_cast<Hero*>(_PlayerLayer->getChildByTag(TAG_OTHER));
+        _myturn["player1"]["posx"].SetDouble(myself->getPositionX());
+        _myturn["player1"]["posy"].SetDouble(myself->getPositionY());
+        _myturn["player2"]["posx"].SetDouble(other->getPositionX());
+        _myturn["player2"]["posy"].SetDouble(other->getPositionY());
+        _myturn["player1"]["rot"].SetDouble(myself->_wagonPoint->getRotation());
+        _myturn["player2"]["rot"].SetDouble(other->_wagonPoint->getRotation());
         _waitToClear = true;
     }
     else
@@ -267,8 +270,40 @@ void GameScene::endShoot()
         
     }
     //log("angle %f", angle);
-    auto b = addBullet(defaultB, Point(gunlocation.tx, gunlocation.ty)+Point(offset/2)-getPosition(), Point(tick/60.0f*8*cosf(CC_DEGREES_TO_RADIANS(-angle)), tick/60.0f*8*sinf(CC_DEGREES_TO_RADIANS(-angle))));
-    _following = dynamic_cast<Node*>(b);
+    switch(getCurrentPlayer()->_heroConfig.wagon)
+    {
+        case Wagon::TANK:
+        {
+            auto b = addBullet(tankB, Point(gunlocation.tx, gunlocation.ty)+Point(offset/2)-getPosition(), Point(tick/60.0f*8*cosf(CC_DEGREES_TO_RADIANS(-angle)), tick/60.0f*8*sinf(CC_DEGREES_TO_RADIANS(-angle))));
+            _following = dynamic_cast<Node*>(b);
+            break;
+        }
+        case Wagon::ROCK:
+        {
+            auto b = addBullet(rockB, Point(gunlocation.tx, gunlocation.ty)+Point(offset/2)-getPosition(), Point(tick/60.0f*8*cosf(CC_DEGREES_TO_RADIANS(-angle)), tick/60.0f*8*sinf(CC_DEGREES_TO_RADIANS(-angle))));
+            _following = dynamic_cast<Node*>(b);
+            break;
+        }
+        case Wagon::HORSEY:
+        {
+            auto b = addBullet(horseyB, Point(gunlocation.tx, gunlocation.ty)+Point(offset/2)-getPosition(), Point(tick/60.0f*8*cosf(CC_DEGREES_TO_RADIANS(-angle)), tick/60.0f*8*sinf(CC_DEGREES_TO_RADIANS(-angle))));
+            _following = dynamic_cast<Node*>(b);
+            break;
+        }
+        case Wagon::MECH:
+        {
+            auto b = addBullet(mechB, Point(gunlocation.tx, gunlocation.ty)+Point(offset/2)-getPosition(), Point(tick/60.0f*8*cosf(CC_DEGREES_TO_RADIANS(-angle)), tick/60.0f*8*sinf(CC_DEGREES_TO_RADIANS(-angle))));
+            _following = dynamic_cast<Node*>(b);
+            break;
+        }
+        default:
+        {
+            auto b = addBullet(defaultB, Point(gunlocation.tx, gunlocation.ty)+Point(offset/2)-getPosition(), Point(tick/60.0f*8*cosf(CC_DEGREES_TO_RADIANS(-angle)), tick/60.0f*8*sinf(CC_DEGREES_TO_RADIANS(-angle))));
+            _following = dynamic_cast<Node*>(b);
+            break;
+        }
+    }
+
 }
 void GameScene::randomWind()
 {
@@ -284,7 +319,7 @@ void GameScene::onEnter()
     std::string player2turn2 = "{\"turn\":1,\"player1\":{\"shootangle\":\"\",\"wagon\":0,\"male\":true,\"hp\":1000,\"posx\":520,\"posy\":800,\"facing\":\"right\"},\"player2\":{\"shootangle\":\"\",\"wagon\":1,\"male\":false,\"hp\":1000,\"posx\":1000,\"posy\":800,\"facing\":\"left\"},\"actions\":[],\"explosions\":[],\"windx\":0.01,\"windy\":0.01}";
     std::string player1turn3 = "{\"turn\":2,\"player1\":{\"shootangle\":\"\",\"wagon\":0,\"male\":true,\"hp\":1000,\"posx\":520,\"posy\":800,\"facing\":\"right\"},\"player2\":{\"shootangle\":-179.172,\"wagon\":1,\"male\":false,\"hp\":1000,\"posx\":1000,\"posy\":800,\"facing\":\"left\"},\"actions\":[{\"tick\":139,\"action\":\"go left\"},{\"tick\":154,\"action\":\"stop\"},{\"tick\":172,\"action\":\"go right\"},{\"tick\":489,\"action\":\"stop\"},{\"tick\":511,\"action\":\"go left\"},{\"tick\":513,\"action\":\"stop\"},{\"tick\":590,\"action\":\"start shoot\"},{\"tick\":609,\"action\":\"end shoot\"}],\"explosions\":[],\"windx\":0.01,\"windy\":0.01}";
     std::string player2turn4 = "{\"turn\":3,\"player1\":{\"shootangle\":-45,\"wagon\":0,\"male\":true,\"hp\":1000,\"posx\":546.472,\"posy\":573.07,\"facing\":\"right\"},\"player2\":{\"shootangle\":-179.172,\"wagon\":1,\"male\":false,\"hp\":1000,\"posx\":1084.18,\"posy\":592.764,\"facing\":\"left\"},\"actions\":[{\"tick\":270,\"action\":\"go right\"},{\"tick\":637,\"action\":\"stop\"},{\"tick\":670,\"action\":\"start shoot\"},{\"tick\":696,\"action\":\"end shoot\"}],\"explosions\":[{\"x\":676.935,\"y\":485.313}],\"windx\":0.01,\"windy\":0.01}";
-    std::string player1turn5 = "{\"turn\":20,\"player1\":{\"name\":\"Hao Wu\",\"wagon\":3,\"male\":true,\"hp\":580,\"posx\":473.658,\"posy\":284.735,\"shootangle\":-31.1497,\"facing\":\"right\"},\"windx\":-0.00829815,\"windy\":-0.00761271,\"explosions\":[{\"x\":560.848,\"y\":545.339},{\"x\":1605.65,\"y\":647.186},{\"x\":469.664,\"y\":565.777},{\"x\":883.879,\"y\":482.913},{\"x\":504.41,\"y\":533.904},{\"x\":442.529,\"y\":525.837},{\"x\":1079.57,\"y\":572.658},{\"x\":1151.67,\"y\":580.816},{\"x\":620.525,\"y\":515.031},{\"x\":938.869,\"y\":478.232},{\"x\":348.725,\"y\":547.389},{\"x\":479.785,\"y\":308.971},{\"x\":554.495,\"y\":542.633},{\"x\":540.459,\"y\":522.691},{\"x\":182.593,\"y\":225.413},{\"x\":526.409,\"y\":351.889}],\"actions\":[{\"tick\":200,\"action\":\"go right\"},{\"tick\":304,\"action\":\"stop\"},{\"tick\":330,\"action\":\"go left\"},{\"tick\":335,\"action\":\"stop\"},{\"tick\":467,\"action\":\"start shoot\"},{\"tick\":468,\"action\":\"end shoot\"}],\"player2\":{\"name\":\"Chenhui Lin\",\"wagon\":3,\"male\":false,\"hp\":250,\"posx\":1050,\"posy\":354.995,\"shootangle\":-176.795,\"facing\":\"left\"}}";
+    std::string player1turn5 = "{\"turn\":20,\"player1\":{\"name\":\"Hao Wu\",\"rot\":15,\"wagon\":3,\"male\":true,\"hp\":580,\"posx\":229,\"posy\":513,\"shootangle\":-31.1497,\"facing\":\"right\"},\"windx\":-0.00829815,\"windy\":-0.00761271,\"explosions\":[{\"x\":560.848,\"y\":545.339},{\"x\":1605.65,\"y\":647.186},{\"x\":469.664,\"y\":565.777},{\"x\":883.879,\"y\":482.913},{\"x\":504.41,\"y\":533.904},{\"x\":442.529,\"y\":525.837},{\"x\":1079.57,\"y\":572.658},{\"x\":1151.67,\"y\":580.816},{\"x\":620.525,\"y\":515.031},{\"x\":938.869,\"y\":478.232},{\"x\":348.725,\"y\":547.389},{\"x\":479.785,\"y\":308.971},{\"x\":554.495,\"y\":542.633},{\"x\":540.459,\"y\":522.691},{\"x\":182.593,\"y\":225.413},{\"x\":526.409,\"y\":351.889}],\"actions\":[{\"tick\":200,\"action\":\"go right\"},{\"tick\":304,\"action\":\"stop\"},{\"tick\":330,\"action\":\"go left\"},{\"tick\":335,\"action\":\"stop\"},{\"tick\":467,\"action\":\"start shoot\"},{\"tick\":468,\"action\":\"end shoot\"}],\"player2\":{\"name\":\"Chenhui Lin\",\"rot\":-15,\"wagon\":3,\"male\":false,\"hp\":250,\"posx\":1050,\"posy\":354.995,\"shootangle\":-176.795,\"facing\":\"left\"}}";
     
     std::string playerTurn6 = "{\"turn\":3,\"player1\":{\"name\":\"Hao Wu\",\"wagon\":0,\"male\":true,\"hp\":300,\"posx\":575.099,\"posy\":559.174,\"shootangle\":-2.08812,\"facing\":\"right\"},\"windx\":0.0212713,\"windy\":0.00225526,\"explosions\":[{\"x\":1003.26,\"y\":536.647}],\"actions\":[{\"tick\":174,\"action\":\"start angle\",\"value\":4},{\"tick\":220,\"action\":\"end angle\",\"value\":-2},{\"tick\":409,\"action\":\"start shoot\"},{\"tick\":481,\"action\":\"end shoot\"}],\"player2\":{\"name\":\"Chenhui Lin\",\"wagon\":0,\"male\":false,\"hp\":259,\"posx\":1047.09,\"posy\":583.947,\"shootangle\":-81.2836,\"facing\":\"left\"}}";
 
@@ -293,7 +328,6 @@ void GameScene::onEnter()
 #else
     playback(playerTurn6);
 #endif
-    
     buildMyTurn();
 }
 void GameScene::movePlayer(float x)
@@ -323,6 +357,7 @@ void GameScene::movePlayer(float x)
     Hero* p = getCurrentPlayer();
     
     p->moveDelta.x = x;
+    p->needFix = true;
     if (x>0)
     {
         p->moveright();
@@ -355,6 +390,7 @@ void GameScene::initPlayers()
     else
         boyorgirl = GIRL;
     p2 = Hero::create(Other,boyorgirl,(Wagon)_replay["player2"]["wagon"].GetInt(),false);
+
     p2->setName("player2");
     p2->setTag(TAG_OTHER);
     
@@ -528,10 +564,15 @@ void GameScene::explode(Bullet *bullet, Hero* hero)
     }
     
     _ex->setPosition(pos);
-    //TODO: set _ex size according to bullet config
+
     _ex->ManualDraw();
     _burn->setPosition(pos);
     _burn->ManualDraw();
+
+    _ex->setScaleX((float)bullet->getConfig().expRadius/64);
+    _ex->setScaleY(_ex->getScaleX()*0.7);
+    _burn->setScaleX(_ex->getScaleX()*1.05);
+    _burn->setScaleY(_ex->getScaleY()*1.05);
     float exRad =bullet->getConfig().expRadius;
     float damage = bullet->getConfig().damage;
     bullet->runAction(RemoveSelf::create());
@@ -620,8 +661,10 @@ void GameScene::playback(std::string json)
     this->initPlayers();
 
     p2->setPosition(_replay["player2"]["posx"].GetDouble(),_replay["player2"]["posy"].GetDouble());
+    p2->_wagonPoint->setRotation(_replay["player2"]["rot"].GetDouble());
     p2->setLastPos(p2->getPosition());
     p1->setPosition(_replay["player1"]["posx"].GetDouble(),_replay["player1"]["posy"].GetDouble());
+    p1->_wagonPoint->setRotation(_replay["player1"]["rot"].GetDouble());
     p1->setLastPos(p1->getPosition());
     
     p1->setLife(_replay["player1"]["hp"].GetInt());
@@ -692,6 +735,7 @@ void GameScene::playback(std::string json)
     
     //get enemy name
     _eventDispatcher->dispatchCustomEvent("enemy", (void*)(getCurrentPlayer()->_nameLabel->getString().c_str()));
+
     // get tick sum
     rapidjson::Value &array = _replay["actions"];
     if(array.IsArray())
@@ -758,7 +802,7 @@ void GameScene::update(float dt)
     //now the target is the render texture, we can begin reading the bullet and player pixels
     
     auto aabb2 = _bulletLayer->getBoundingBox();
-    auto bulletBoundary = Rect(aabb2.origin.x, aabb2.origin.y, aabb2.size.width, aabb2.size.height+1000);
+    auto bulletBoundary = Rect(aabb2.origin.x, aabb2.origin.y, aabb2.size.width, aabb2.size.height+2000);
     //Point offset(aabb2.origin+getPosition());
     aabb2.origin = Point::ZERO;
     for(Node* bullet : _bulletLayer->getChildren())
@@ -776,6 +820,7 @@ void GameScene::update(float dt)
             //move this
             b->setPosition(pos+(pos-b->getLastPos())+getGravity()+getWind());
             b->setLastPos(pos);
+            b->setRotation(-CC_RADIANS_TO_DEGREES((b->getLastPos()-b->getPosition()).getAngle()));
             
             //check if we are colliding with a player
             for(Node *player : _PlayerLayer->getChildren())
@@ -800,7 +845,7 @@ void GameScene::update(float dt)
                 for(int i = 0; i < bufferSize; i++)
                 {
                     //for accuracy, we only want the pixels in the circle
-                    if(buffer[i].a>0 && Helper::isInCircle(i, bulletRadius))
+                    if(buffer[i].a>0 && Helper::isInCircle(i, bulletRadius) && !(pos.y > aabb2.size.height-100))
                     {
                         explode(b,nullptr);
                         coll = true;
@@ -809,11 +854,6 @@ void GameScene::update(float dt)
                 }
                 free(buffer);
             }
-            //debug set color
-            if(coll)
-                b->setColor(Color3B::BLUE);
-            else
-                b->setColor(Color3B::YELLOW);
         }
         //if its not contained in the map
         else
@@ -839,7 +879,7 @@ void GameScene::update(float dt)
             auto paabb = p->getBoundingBox();
             if(aabb2.intersectsRect(paabb))
             {
-                if(p->airborn || p->moveDelta.x)
+                if(p->airborn || p->needFix || p->moveDelta.x)
                 {
                     everythingSleep = false;
                     //move this
@@ -887,12 +927,17 @@ void GameScene::update(float dt)
                             p->_wagonPoint->setRotation(deg);
                             
                         }
-                        if(angleCount > 1)
+                        if(angleCount > 8)
                         {
                             //we are colliding with too many pixels
-                            float pushForce = 0.05 * angleCount;
+                            float pushForce = 0.03 * angleCount;
                             Point mid(pos.x-pushForce*sinf(angleTotal/angleCount), pos.y-pushForce*cosf(angleTotal/angleCount));
                             p->setLastPos(mid);
+                            p->needFix = true;
+                        }
+                        else
+                        {
+                            p->needFix = false;
                         }
                     }
                     

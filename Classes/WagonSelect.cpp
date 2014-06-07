@@ -312,8 +312,9 @@ void WagonSelect::setup_player1_mactchdata()
     player1.AddMember("wagon", _wagon, allocator);
     player1.AddMember("male", _isBoy, allocator);
     player1.AddMember("hp", g_wagonConfig[_wagon].hp, allocator);
-    player1.AddMember("posx", 520, allocator);
-    player1.AddMember("posy", 800, allocator);
+    player1.AddMember("posx", 229, allocator);
+    player1.AddMember("posy", 513, allocator);
+    player1.AddMember("rot", 0, allocator);
     player1.AddMember("shootangle", "", allocator);
     player1.AddMember("facing", "right", allocator);
     doc.AddMember("player1", player1, allocator);
@@ -347,8 +348,9 @@ void WagonSelect::setup_player2_mactchdata()
     player2.AddMember("wagon", _wagon, allocator);
     player2.AddMember("male", _isBoy, allocator);
     player2.AddMember("hp", g_wagonConfig[_wagon].hp, allocator);
-    player2.AddMember("posx", 1000, allocator);
-    player2.AddMember("posy", 800, allocator);
+    player2.AddMember("posx", 1443, allocator);
+    player2.AddMember("posy", 509, allocator);
+    player2.AddMember("rot", 0, allocator);
     player2.AddMember("shootangle", "", allocator);
     player2.AddMember("facing", "left", allocator);
     doc.AddMember("player2", player2, allocator);

@@ -27,6 +27,7 @@ Aimer* Aimer::create(bool isRight, float upper, float lower)
 
 bool Aimer::init(bool isRight, float upper, float lower)
 {
+    _isRight = isRight;
     _back = Sprite::create("aimerback.png");
     addChild(_back);
     
@@ -44,7 +45,7 @@ bool Aimer::init(bool isRight, float upper, float lower)
     _green->setOpacity(150);
     
     _crosshair=Sprite::create("crosshair.png");
-    
+    _crosshair->setVisible(false);
     addChild(_crosshair);
     
     addChild(_green);
@@ -61,7 +62,7 @@ bool Aimer::init(bool isRight, float upper, float lower)
         setAngle(-180-((upperLimit+lowerLimit)/2));
     }
     _green->setPercentage((lowerLimit-upperLimit)/3.6);
-    //_green->setRotation(-upperLimit);
+    _green->setRotation(upperLimit+90);
     
     
     auto listener = EventListenerTouchOneByOne::create();
@@ -71,15 +72,25 @@ bool Aimer::init(bool isRight, float upper, float lower)
     _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
     listener->setSwallowTouches(true);
     
-        _back->setRotation((upperLimit+lowerLimit)/2);
+//    auto angleCheckListener = EventListenerCustom::create("angle check", [this](EventCustom* event){
+//        if(reversed)
+//            setAngle((upperLimit+lowerLimit)/2);
+//        else{
+//            setAngle(180-((upperLimit+lowerLimit)/2));
+//        }
+//    });
+//    _eventDispatcher->addEventListenerWithSceneGraphPriority(angleCheckListener, this);
+    
+    _back->setRotation((upperLimit+lowerLimit)/2);
     
     return true;
 
 }
 bool Aimer::onTouchBegan(Touch* touch, Event* event)
 {
-    if(convertToWorldSpace(_crosshair->getPosition()).getDistance(touch->getLocation()) < 50)
+    if(_crosshair->isVisible() && convertToWorldSpace(_crosshair->getPosition()).getDistance(touch->getLocation()) < 50)
     {
+        log("visible0, %i", _crosshair->isVisible());
         _pointer->runAction(ScaleTo::create(0.1, 2, _pointer->getScaleY()));
         _pointer->runAction(FadeTo::create(0.1, 255));
         _eventDispatcher->dispatchCustomEvent("start angle",(void*)(int)(getWorldAngle()));
@@ -108,7 +119,14 @@ void Aimer::onTouchMoved(cocos2d::Touch *touch, cocos2d::Event *event)
 }
 float Aimer::getWorldAngle()
 {
-    return _angle + getParent()->getParent()->getRotation();
+    if(!reversed)
+    {
+        return 180- (_angle - getParent()->getParent()->getRotation());
+    }
+    else
+    {
+        return _angle + getParent()->getParent()->getRotation();
+    }
 }
 void Aimer::setAngle(float a)
 {
@@ -120,6 +138,7 @@ void Aimer::setAngle(float a)
         _crosshair->setPosition(Point(-200,0).rotateByAngle(Point(0,0), CC_DEGREES_TO_RADIANS(_angle)));
         _pointer->setRotation(-180-_angle);
         _crosshair->setRotation(-_angle);
+        _angle = 180-_angle;
     }
     else
     {
