@@ -138,6 +138,7 @@ void Aimer::setAngle(float a)
         _crosshair->setPosition(Point(-200,0).rotateByAngle(Point(0,0), CC_DEGREES_TO_RADIANS(_angle)));
         _pointer->setRotation(-180-_angle);
         _crosshair->setRotation(-_angle);
+        _angle = 180-_angle;
     }
     else
     {
