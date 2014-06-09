@@ -27,9 +27,6 @@ struct BulletConfig{
     int expRadius;
 };
 
-extern BulletConfig defaultBullet;
-
-
 //const BulletConfig horseyBullet =
 //{
 //    "circle.png",

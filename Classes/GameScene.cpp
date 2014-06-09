@@ -321,12 +321,12 @@ void GameScene::onEnter()
     std::string player2turn4 = "{\"turn\":3,\"player1\":{\"shootangle\":-45,\"wagon\":0,\"male\":true,\"hp\":1000,\"posx\":546.472,\"posy\":573.07,\"facing\":\"right\"},\"player2\":{\"shootangle\":-179.172,\"wagon\":1,\"male\":false,\"hp\":1000,\"posx\":1084.18,\"posy\":592.764,\"facing\":\"left\"},\"actions\":[{\"tick\":270,\"action\":\"go right\"},{\"tick\":637,\"action\":\"stop\"},{\"tick\":670,\"action\":\"start shoot\"},{\"tick\":696,\"action\":\"end shoot\"}],\"explosions\":[{\"x\":676.935,\"y\":485.313}],\"windx\":0.01,\"windy\":0.01}";
     std::string player1turn5 = "{\"turn\":20,\"player1\":{\"name\":\"Hao Wu\",\"rot\":15,\"wagon\":3,\"male\":true,\"hp\":580,\"posx\":229,\"posy\":513,\"shootangle\":-31.1497,\"facing\":\"right\"},\"windx\":-0.00829815,\"windy\":-0.00761271,\"explosions\":[{\"x\":560.848,\"y\":545.339},{\"x\":1605.65,\"y\":647.186},{\"x\":469.664,\"y\":565.777},{\"x\":883.879,\"y\":482.913},{\"x\":504.41,\"y\":533.904},{\"x\":442.529,\"y\":525.837},{\"x\":1079.57,\"y\":572.658},{\"x\":1151.67,\"y\":580.816},{\"x\":620.525,\"y\":515.031},{\"x\":938.869,\"y\":478.232},{\"x\":348.725,\"y\":547.389},{\"x\":479.785,\"y\":308.971},{\"x\":554.495,\"y\":542.633},{\"x\":540.459,\"y\":522.691},{\"x\":182.593,\"y\":225.413},{\"x\":526.409,\"y\":351.889}],\"actions\":[{\"tick\":200,\"action\":\"go right\"},{\"tick\":304,\"action\":\"stop\"},{\"tick\":330,\"action\":\"go left\"},{\"tick\":335,\"action\":\"stop\"},{\"tick\":467,\"action\":\"start shoot\"},{\"tick\":468,\"action\":\"end shoot\"}],\"player2\":{\"name\":\"Chenhui Lin\",\"rot\":-15,\"wagon\":2,\"male\":false,\"hp\":250,\"posx\":1050,\"posy\":354.995,\"shootangle\":-176.795,\"facing\":\"left\"}}";
     
-    std::string playerTurn6 = "{\"turn\":3,\"player1\":{\"name\":\"Hao Wu\",\"wagon\":0,\"male\":true,\"hp\":300,\"posx\":575.099,\"posy\":559.174,\"shootangle\":-2.08812,\"facing\":\"right\"},\"windx\":0.0212713,\"windy\":0.00225526,\"explosions\":[{\"x\":1003.26,\"y\":536.647}],\"actions\":[{\"tick\":174,\"action\":\"start angle\",\"value\":4},{\"tick\":220,\"action\":\"end angle\",\"value\":-2},{\"tick\":409,\"action\":\"start shoot\"},{\"tick\":481,\"action\":\"end shoot\"}],\"player2\":{\"name\":\"Chenhui Lin\",\"wagon\":0,\"male\":false,\"hp\":259,\"posx\":1047.09,\"posy\":583.947,\"shootangle\":-81.2836,\"facing\":\"left\"}}";
+    std::string playerTurn6 = "{\"turn\":3,\"player1\":{\"name\":\"Hao Wu\",\"wagon\":2,\"male\":true,\"hp\":300,\"posx\":575.099,\"posy\":559.174,\"shootangle\":-2.08812,\"facing\":\"right\",\"rot\":0},\"windx\":0.0212713,\"windy\":0.00225526,\"explosions\":[{\"x\":1003.26,\"y\":536.647,\"size\":64}],\"actions\":[{\"tick\":174,\"action\":\"start angle\",\"value\":4},{\"tick\":220,\"action\":\"end angle\",\"value\":-2},{\"tick\":409,\"action\":\"start shoot\"},{\"tick\":481,\"action\":\"end shoot\"}],\"player2\":{\"name\":\"Chenhui Lin\",\"wagon\":0,\"male\":false,\"hp\":259,\"posx\":1047.09,\"posy\":583.947,\"shootangle\":-81.2836,\"facing\":\"left\",\"rot\":0}}";
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
     playback(g_gameConfig.match_string);
 #else
-    playback(player1turn5);
+    playback(playerTurn6);
 #endif
     buildMyTurn();
 }
@@ -566,15 +566,16 @@ void GameScene::explode(Bullet *bullet, Hero* hero)
     }
     
     _ex->setPosition(pos);
-
-    _ex->ManualDraw();
     _burn->setPosition(pos);
-    _burn->ManualDraw();
 
     _ex->setScaleX((float)bullet->getConfig().expRadius/64);
     _ex->setScaleY(_ex->getScaleX()*0.7);
     _burn->setScaleX(_ex->getScaleX()*1.05);
     _burn->setScaleY(_ex->getScaleY()*1.05);
+    
+    _ex->ManualDraw();
+    _burn->ManualDraw();
+    
     float exRad =bullet->getConfig().expRadius;
     float damage = bullet->getConfig().damage;
     bullet->runAction(RemoveSelf::create());
