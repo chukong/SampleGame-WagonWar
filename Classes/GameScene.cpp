@@ -814,9 +814,10 @@ void GameScene::update(float dt)
     //now the target is the render texture, we can begin reading the bullet and player pixels
     
     auto aabb2 = _bulletLayer->getBoundingBox();
-    auto bulletBoundary = Rect(aabb2.origin.x, aabb2.origin.y, aabb2.size.width, aabb2.size.height+2000);
+    
     //Point offset(aabb2.origin+getPosition());
     aabb2.origin = Point::ZERO;
+    auto bulletBoundary = Rect(aabb2.origin.x, aabb2.origin.y, aabb2.size.width, aabb2.size.height+2000);
     for(Node* bullet : _bulletLayer->getChildren())
     {
         everythingSleep = false;
