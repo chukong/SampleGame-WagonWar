@@ -9,6 +9,15 @@
 
 #include "GPGSChecker.h"
 
+#define ACH_FIRST_BLOOD "CgkIt8qQwKsFEAIQAg"
+#define ACH_TASTE_OF_VICTORY "CgkIt8qQwKsFEAIQAw"
+#define ACH_SUICIDAL "CgkIt8qQwKsFEAIQBA"
+#define ACH_MASOCHIST "CgkIt8qQwKsFEAIQBQ"
+#define ACH_BANGER "CgkIt8qQwKsFEAIQBg"
+#define ACH_COLLATERAL_DAMAGE "CgkIt8qQwKsFEAIQBw"
+#define ACH_INVINCIBLE "CgkIt8qQwKsFEAIQCA"
+#define LEAD_VICTORIES "CgkIt8qQwKsFEAIQCQ"
+
 GPGSChecker* GPGSChecker::m_pInstance = nullptr;
 GPGSChecker::CGarbo GPGSChecker::m_garbo;
 
@@ -58,7 +67,7 @@ bool GPGSChecker::isHaveSaveFile()
 void GPGSChecker::chcekFirstBlood()
 {
     if (!_playerLocalConfig.firstblood) {
-        GPGSManager::UnlockAchievement("123");
+        GPGSManager::UnlockAchievement(ACH_FIRST_BLOOD);
         _playerLocalConfig.firstblood = true;
         CCUserDefault::getInstance()->setBoolForKey("firstblood", true);
         CCUserDefault::getInstance()->flush();
@@ -68,7 +77,7 @@ void GPGSChecker::chcekFirstBlood()
 void GPGSChecker::checkFirstVictory()
 {
     if (!_playerLocalConfig.firstvictory) {
-        GPGSManager::UnlockAchievement("123");
+        GPGSManager::UnlockAchievement(ACH_TASTE_OF_VICTORY);
         _playerLocalConfig.firstvictory = true;
         CCUserDefault::getInstance()->setBoolForKey("firstvictory", true);
         CCUserDefault::getInstance()->flush();
@@ -78,7 +87,7 @@ void GPGSChecker::checkFirstVictory()
 void GPGSChecker::checkSuicidal()
 {
     if (!_playerLocalConfig.sucidal) {
-        GPGSManager::UnlockAchievement("123");
+        GPGSManager::UnlockAchievement(ACH_SUICIDAL);
         _playerLocalConfig.sucidal = true;
         CCUserDefault::getInstance()->setBoolForKey("sucidal", true);
         CCUserDefault::getInstance()->flush();
@@ -88,7 +97,7 @@ void GPGSChecker::checkSuicidal()
 void GPGSChecker::checkMasochist()
 {
     if (!_playerLocalConfig.masochist) {
-        GPGSManager::UnlockAchievement("123");
+        GPGSManager::UnlockAchievement(ACH_MASOCHIST);
         _playerLocalConfig.masochist = true;
         CCUserDefault::getInstance()->setBoolForKey("masochist", true);
         CCUserDefault::getInstance()->flush();
@@ -98,7 +107,7 @@ void GPGSChecker::checkMasochist()
 void GPGSChecker::checkBanger()
 {
     if (!_playerLocalConfig.banger) {
-        GPGSManager::UnlockAchievement("123");
+        GPGSManager::UnlockAchievement(ACH_BANGER);
         _playerLocalConfig.banger = true;
         CCUserDefault::getInstance()->setBoolForKey("banger", true);
         CCUserDefault::getInstance()->flush();
@@ -108,7 +117,7 @@ void GPGSChecker::checkBanger()
 void GPGSChecker::checkCollateralDamage()
 {
     if (!_playerLocalConfig.collarteraldamage) {
-        GPGSManager::UnlockAchievement("123");
+        GPGSManager::UnlockAchievement(ACH_COLLATERAL_DAMAGE);
         _playerLocalConfig.collarteraldamage = true;
         CCUserDefault::getInstance()->setBoolForKey("collarteraldamage", true);
         CCUserDefault::getInstance()->flush();
@@ -118,7 +127,7 @@ void GPGSChecker::checkCollateralDamage()
 void GPGSChecker::checkInvincible()
 {
     if (!_playerLocalConfig.invincible) {
-        GPGSManager::UnlockAchievement("123");
+        GPGSManager::UnlockAchievement(ACH_INVINCIBLE);
         _playerLocalConfig.invincible = true;
         CCUserDefault::getInstance()->setBoolForKey("invincible", true);
         CCUserDefault::getInstance()->flush();
@@ -128,7 +137,7 @@ void GPGSChecker::checkInvincible()
 void GPGSChecker::sumbitNewVictory()
 {
     _playerLocalConfig.victorys++;
-    GPGSManager::SubmitHighScore("345", _playerLocalConfig.victorys);
+    GPGSManager::SubmitHighScore(LEAD_VICTORIES, _playerLocalConfig.victorys);
     CCUserDefault::getInstance()->setIntegerForKey("victorys", _playerLocalConfig.victorys);
     CCUserDefault::getInstance()->flush();
 }

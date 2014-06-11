@@ -9,7 +9,6 @@
 #include "MainScreenScene.h"
 #include "GameScene.h"
 #include "GPGSManager.h"
-//#include <random>
 #include "VisibleRect.h"
 #include "Configuration.h"
 #include "GameScene.h"
@@ -19,11 +18,10 @@
 #include "SimpleAudioEngine.h"
 #include "PopWindow.h"
 
-USING_NS_CC;
+#define LEAD_VICTORIES "CgkIt8qQwKsFEAIQCQ"
 
-#define ACH_ACHIEVEMENT_01 "CgkIs7qm9rYbEAIQAQ"
-#define ACH_ACHIEVEMENT_02 "CgkIs7qm9rYbEAIQAg"
-#define LEAD_LEADERBOARD "CgkIs7qm9rYbEAIQAw"
+
+USING_NS_CC;
 
 Scene* MainScreenScene::createScene(bool _isShowMatchInBoxUI)
 {
@@ -85,41 +83,44 @@ bool MainScreenScene::init(bool _isShowMatchInBoxUI)
                                                      "btn_quickmatch_1.png",
                                                      CC_CALLBACK_1(MainScreenScene::quickmatch_callback, this));
     quickmatch_menuitem->setAnchorPoint(Point::ANCHOR_MIDDLE);
-    quickmatch_menuitem->setPosition(Point(g_visibleRect.visibleWidth-350,g_visibleRect.visibleHeight-100));
+    quickmatch_menuitem->setPosition(Point(g_visibleRect.visibleWidth-350,g_visibleRect.visibleHeight-95));
     
     invitefriend_menuitem = MenuItemImage::create("btn_invitefriend_0.png",
                                                      "btn_invitefriend_1.png",
                                                      CC_CALLBACK_1(MainScreenScene::invitefriend_callback, this));
     invitefriend_menuitem->setAnchorPoint(Point::ANCHOR_MIDDLE);
-    invitefriend_menuitem->setPosition(Point(g_visibleRect.visibleWidth-350,g_visibleRect.visibleHeight-250));
+    invitefriend_menuitem->setPosition(Point(g_visibleRect.visibleWidth-350,g_visibleRect.visibleHeight-245));
     
     mygames_menuitem = MenuItemImage::create("btn_mygames_0.png",
                                                      "btn_mygames_1.png",
                                                      CC_CALLBACK_1(MainScreenScene::mygames_callback, this));
     mygames_menuitem->setAnchorPoint(Point::ANCHOR_MIDDLE);
-    mygames_menuitem->setPosition(Point(g_visibleRect.visibleWidth-350,g_visibleRect.visibleHeight-400));
+    mygames_menuitem->setPosition(Point(g_visibleRect.visibleWidth-350,g_visibleRect.visibleHeight-395));
     
     achievements_menuitem = MenuItemImage::create("btn_achievements_0.png",
                                                      "btn_achievements_1.png",
                                                      CC_CALLBACK_1(MainScreenScene::achievements_callback, this));
+    achievements_menuitem->setScale(0.8f);
     achievements_menuitem->setAnchorPoint(Point::ANCHOR_MIDDLE);
     achievements_menuitem->setPosition(Point(g_visibleRect.visibleWidth-420,g_visibleRect.visibleHeight-520));
     
     leaderboard_menuitem = MenuItemImage::create("btn_leaderboard_0.png",
                                                      "btn_leaderboard_1.png",
                                                      CC_CALLBACK_1(MainScreenScene::leaderboard_callback, this));
+    
+    leaderboard_menuitem->setScale(0.8f);
     leaderboard_menuitem->setAnchorPoint(Point::ANCHOR_MIDDLE);
     leaderboard_menuitem->setPosition(Point(g_visibleRect.visibleWidth-280,g_visibleRect.visibleHeight-520));
     
     auto menu = Menu::create(quickmatch_menuitem, invitefriend_menuitem, mygames_menuitem, achievements_menuitem, leaderboard_menuitem, nullptr);
-    menu->setPosition(Point(150,-50));
+    menu->setPosition(Point(150,-30));
     this->addChild(menu,1);
     
-    sign_status = Label::create("status:unknown.", GameConfig::defaultFontName, 20);
-    sign_status->setAnchorPoint(Point::ANCHOR_MIDDLE);
-    sign_status->setPosition(Point(750,50));
+    sign_status = Label::create("Status:Unknown.", GameConfig::defaultFontName, 20);
+    sign_status->setAnchorPoint(Point::ANCHOR_MIDDLE_LEFT);
+    sign_status->setPosition(Point(20,20));
     this->addChild(sign_status,1);
-    this->schedule(schedule_selector(MainScreenScene::updateStatus), 0.1f, kRepeatForever, 2.0f);
+//    this->schedule(schedule_selector(MainScreenScene::updateStatus), 0.1f, kRepeatForever, 2.0f);
     
     auto listener1 = EventListenerCustom::create("enterWagonSelect_1", CC_CALLBACK_0(MainScreenScene::enterWagonSelect_1, this));
     _eventDispatcher->addEventListenerWithSceneGraphPriority(listener1, this);
@@ -209,7 +210,7 @@ void MainScreenScene::leaderboard_callback(cocos2d::Ref* pSender)
     CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("menuclick.mp3");
     log("LeaderBoard");
     if (GPGSManager::IsSignedIn()) {
-        GPGSManager::ShowLeaderboard(LEAD_LEADERBOARD);
+        GPGSManager::ShowLeaderboard(LEAD_VICTORIES);
     }
     else{
         GPGSManager::BeginUserInitiatedSignIn();
@@ -227,13 +228,13 @@ void MainScreenScene::enableUI(bool isEnable)
 
 void MainScreenScene::updateStatus(float dt)
 {
-//    if (GPGSManager::IsSignedIn()) {
-//        sign_status->setString("status:sign in.");
-//    }
-//    else
-//    {
-//        sign_status->setString("status:sign out.");
-//    }
+    if (GPGSManager::IsSignedIn()) {
+        sign_status->setString("Status:Sign in.");
+    }
+    else
+    {
+        sign_status->setString("Status:Sign out.");
+    }
 }
 
 void MainScreenScene::enterWagonSelect_1()
