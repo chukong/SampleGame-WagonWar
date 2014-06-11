@@ -14,7 +14,7 @@ void GameConfig::lazyInit()
 {
     g_visibleRect.lazyInit();
     match_data.clear();
-    
+    isInGame = false;
     initAnimation();
 }
 

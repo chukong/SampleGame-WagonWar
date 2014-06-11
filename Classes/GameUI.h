@@ -25,10 +25,11 @@ public:
     bool onTouchBegan(cocos2d::Touch *touch, cocos2d::Event *event);
     void onTouchEnded(cocos2d::Touch *touch, cocos2d::Event *event);
     
+    ControlBoard* _controlBoard;
+
 protected:
     PowerIndicator* _power;
     PlayBackIndictaor* _playback;
-    ControlBoard* _controlBoard;
     GameUI(){};
     cocos2d::EventListenerTouchOneByOne *_mytouchListener;
     void _toggleTouchEnable(bool onoff);

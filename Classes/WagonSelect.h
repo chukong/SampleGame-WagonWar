@@ -45,6 +45,10 @@ public:
     
     void returntoMenu();
     void entertoMenu(float dt);
+    
+    void showConnectingPopWindow();
+
+    void showConnectingPopWindowWithDelay(float dt);
 
 private:
     

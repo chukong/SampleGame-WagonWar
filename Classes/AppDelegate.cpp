@@ -2,7 +2,6 @@
 #include "GameScene.h"
 #include "Configuration.h"
 #include "MainScreenScene.h"
-#include "TestTBMP.h"
 #include "WagonSelect.h"
 
 
@@ -50,11 +49,12 @@ bool AppDelegate::applicationDidFinishLaunching() {
     // create a scene. it's an autorelease object
     
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-   auto scene = MainScreenScene::createScene();
+   auto scene = MainScreenScene::createScene(false);
 #else
    auto scene = GameScene::createScene();
 #endif
-      //auto scene = TestTBMP::createScene("345678");
+    
+    //auto scene = MainScreenScene::createScene(false);
     //auto scene = WagonSelect::createScene(FIRST_TURN);
 
     // run

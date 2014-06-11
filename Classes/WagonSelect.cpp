@@ -15,6 +15,7 @@
 #include "json/stringbuffer.h"
 #include "MainScreenScene.h"
 #include "SimpleAudioEngine.h"
+#include "PopWindow.h"
 
 USING_NS_CC;
 
@@ -280,14 +281,20 @@ void WagonSelect::createUI()
     
     auto returnMenuListener = EventListenerCustom::create("returntoMenu", CC_CALLBACK_0(WagonSelect::returntoMenu, this));
     _eventDispatcher->addEventListenerWithSceneGraphPriority(returnMenuListener, this);
+    
+    auto wagonselectshowpopwindowlistener = EventListenerCustom::create("wagonselectshowpopwindowlistener", CC_CALLBACK_0(WagonSelect::showConnectingPopWindow, this));
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(wagonselectshowpopwindowlistener, this);
 }
 
 void WagonSelect::ready_callback(Ref* ref)
 {
     CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("readystart.mp3");
-    auto notouchlayer = NoTouchLayer::create();
-    notouchlayer->setTag(NOTOUCHTAG);
-    Director::getInstance()->getRunningScene()->addChild(notouchlayer,100);
+//    auto notouchlayer = NoTouchLayer::create();
+//    notouchlayer->setTag(NOTOUCHTAG);
+//    Director::getInstance()->getRunningScene()->addChild(notouchlayer,100);
+    
+//    auto popwindow = PopWindow::create();
+//    this->addChild(popwindow,100);
     
     if (_turntype == FIRST_TURN) {
         setup_player1_mactchdata();
@@ -439,14 +446,12 @@ void WagonSelect::wagon4_selected_callback(cocos2d::Ref* ref)
 
 void WagonSelect::returntoMenu()
 {
-    log("call...return to menu");
-    scheduleOnce(schedule_selector(GameScene::entertoMenu), 1.0f);
+    scheduleOnce(schedule_selector(WagonSelect::entertoMenu), 1.0f);
 }
 
 void WagonSelect::entertoMenu(float dt)
 {
-    log("call...entertomenu");
-    auto scene = MainScreenScene::createScene();
+    auto scene = MainScreenScene::createScene(true);
     cocos2d::Director::getInstance()->replaceScene(scene);
 }
 
@@ -580,4 +585,14 @@ void WagonSelect::initWagonParams(){
     speedBar4->setPosition(Point(705, g_visibleRect.visibleHeight/2-220));
     speedBar4->setPercent(100);
     _wagon_bk->addChild(speedBar4,4);
+}
+
+void WagonSelect::showConnectingPopWindow()
+{
+    scheduleOnce(schedule_selector(WagonSelect::showConnectingPopWindowWithDelay), transSceneDelayTime/2);
+}
+void WagonSelect::showConnectingPopWindowWithDelay(float dt)
+{
+    auto popwindow = PopWindow::create();
+    Director::getInstance()->getRunningScene()->addChild(popwindow,100);
 }

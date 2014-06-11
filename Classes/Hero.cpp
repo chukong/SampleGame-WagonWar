@@ -516,7 +516,6 @@ int Hero::hurt(int t_hurt)
     }
     else
     {
-        log("dddddd");
         _lasthp = 0;
         _hpInnerBar->setPercentage(0);
         _hpBarBack->runAction(ProgressTo::create(1,_lasthp));
@@ -543,7 +542,6 @@ void Hero::updateAngle(int angle){
 }
 
 void Hero::update(float delta){
-    log("angle dddd:%f",aim->getWorldAngle());
     int angle = abs(aim->getWorldAngle());
     if(angle >= 270){
         angle -= 360;

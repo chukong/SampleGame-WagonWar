@@ -69,11 +69,14 @@ public:
     Hero* p1;
     Hero* p2;
     
-    void returntoMenu();
-    void entertoMenu(float dt);
+//    void returntoMenu();
+//    void entertoMenu(float dt);
     
     void showBloodLossNum(Hero* hero, int num);
     void showWinOrLose(bool isWin);
+    
+    void showConnectingPopWindow();
+    void showConnectingPopWindowWithDelay(float dt);
     
     std::string tempjson;
 protected:
@@ -90,7 +93,8 @@ protected:
     //timeval _now;
     cocos2d::Size _movableSize;
     void _movePlayer(float x);
-    GameScene():_waitToClear(false),_playback(false),_click(false),_steps(2),_following(nullptr),_tick(0),_replay(nullptr),_myturn(nullptr),win(false), lost(false), over(false){};
+    GameScene():_waitToClear(false),_playback(false),_click(false),_steps(2),_following(nullptr),_tick(0),_replay(nullptr),_myturn(nullptr),win(false), lost(false), over(false){g_gameConfig.isInGame = true;};
+    ~GameScene(){g_gameConfig.isInGame = false;};
     bool _click;
     int _steps;
     cocos2d::Sprite* _ex;

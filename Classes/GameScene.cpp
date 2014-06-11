@@ -19,6 +19,7 @@
 #include "MainScreenScene.h"
 #include "SimpleAudioEngine.h"
 #include "VisibleRect.h"
+#include "PopWindow.h"
 
 USING_NS_CC;
 
@@ -28,6 +29,7 @@ Scene* GameScene::createScene()
     // 'scene' is an autorelease object
     auto scene = Scene::create();
     auto uiLayer = GameUI::create();
+    uiLayer->setTag(76);
     scene->addChild(uiLayer, 2);
     // 'layer' is an autorelease object
     auto layer = GameScene::create();
@@ -129,9 +131,11 @@ void GameScene::initListeners()
     auto playerDeadListener = EventListenerCustom::create("playerdead", CC_CALLBACK_1(GameScene::playerdead, this));
     _eventDispatcher->addEventListenerWithSceneGraphPriority(playerDeadListener, this);
     
-    auto returnMenuListener = EventListenerCustom::create("returntoMenu", CC_CALLBACK_0(GameScene::returntoMenu, this));
-    _eventDispatcher->addEventListenerWithSceneGraphPriority(returnMenuListener, this);
+//    auto returnMenuListener = EventListenerCustom::create("returntoMenu", CC_CALLBACK_0(GameScene::returntoMenu, this));
+//    _eventDispatcher->addEventListenerWithSceneGraphPriority(returnMenuListener, this);
     
+    auto gameshowpopwindowlistener = EventListenerCustom::create("gameshowpopwindowlistener", CC_CALLBACK_0(GameScene::showConnectingPopWindow, this));
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(gameshowpopwindowlistener, this);
 }
 
 void GameScene::startAngle(EventCustom* event){
@@ -322,11 +326,13 @@ void GameScene::onEnter()
     std::string player1turn5 = "{\"turn\":20,\"player1\":{\"name\":\"Hao Wu\",\"rot\":15,\"wagon\":3,\"male\":true,\"hp\":580,\"posx\":229,\"posy\":513,\"shootangle\":-31.1497,\"facing\":\"right\"},\"windx\":-0.00829815,\"windy\":-0.00761271,\"explosions\":[{\"x\":560.848,\"y\":545.339},{\"x\":1605.65,\"y\":647.186},{\"x\":469.664,\"y\":565.777},{\"x\":883.879,\"y\":482.913},{\"x\":504.41,\"y\":533.904},{\"x\":442.529,\"y\":525.837},{\"x\":1079.57,\"y\":572.658},{\"x\":1151.67,\"y\":580.816},{\"x\":620.525,\"y\":515.031},{\"x\":938.869,\"y\":478.232},{\"x\":348.725,\"y\":547.389},{\"x\":479.785,\"y\":308.971},{\"x\":554.495,\"y\":542.633},{\"x\":540.459,\"y\":522.691},{\"x\":182.593,\"y\":225.413},{\"x\":526.409,\"y\":351.889}],\"actions\":[{\"tick\":200,\"action\":\"go right\"},{\"tick\":304,\"action\":\"stop\"},{\"tick\":330,\"action\":\"go left\"},{\"tick\":335,\"action\":\"stop\"},{\"tick\":467,\"action\":\"start shoot\"},{\"tick\":468,\"action\":\"end shoot\"}],\"player2\":{\"name\":\"Chenhui Lin\",\"rot\":-15,\"wagon\":2,\"male\":false,\"hp\":250,\"posx\":1050,\"posy\":354.995,\"shootangle\":-176.795,\"facing\":\"left\"}}";
     
     std::string playerTurn6 = "{\"turn\":3,\"player1\":{\"name\":\"Hao Wu\",\"wagon\":2,\"male\":true,\"hp\":300,\"posx\":575.099,\"posy\":559.174,\"shootangle\":-2.08812,\"facing\":\"right\",\"rot\":0},\"windx\":0.0212713,\"windy\":0.00225526,\"explosions\":[{\"x\":1003.26,\"y\":536.647,\"size\":64}],\"actions\":[{\"tick\":174,\"action\":\"start angle\",\"value\":4},{\"tick\":220,\"action\":\"end angle\",\"value\":-2},{\"tick\":409,\"action\":\"start shoot\"},{\"tick\":481,\"action\":\"end shoot\"}],\"player2\":{\"name\":\"Chenhui Lin\",\"wagon\":0,\"male\":false,\"hp\":259,\"posx\":1047.09,\"posy\":583.947,\"shootangle\":-81.2836,\"facing\":\"left\",\"rot\":0}}";
+    
+    std::string playerTurn7 = "{\"turn\":2,\"player1\":{\"name\":\"Chenhui Lin\",\"wagon\":2,\"male\":true,\"hp\":300,\"posx\":229,\"posy\":513,\"rot\":0,\"shootangle\":\"\",\"facing\":\"right\"},\"windx\":-0.008853,\"windy\":0.00858232,\"explosions\":[],\"actions\":[{\"tick\":147,\"action\":\"start shoot\"},{\"tick\":202,\"action\":\"end shoot\"}],\"player2\":{\"name\":\"Hao Wu\",\"wagon\":2,\"male\":true,\"hp\":300,\"posx\":1443,\"posy\":509,\"rot\":0,\"shootangle\":231.237,\"facing\":\"left\"}}";
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
     playback(g_gameConfig.match_string);
 #else
-    playback(playerTurn6);
+    playback(playerTurn7);
 #endif
     buildMyTurn();
 }
@@ -1044,7 +1050,7 @@ void GameScene::playerdead(EventCustom* event)
             runAction(Sequence::create(DelayTime::create(5.0f),
                                        CallFunc::create([]()
                                                         {
-                                                            Director::getInstance()->replaceScene(MainScreenScene::createScene());
+                                                            Director::getInstance()->replaceScene(MainScreenScene::createScene(true));
                                                         }), nullptr));
         }
         else
@@ -1055,7 +1061,7 @@ void GameScene::playerdead(EventCustom* event)
             runAction(Sequence::create(DelayTime::create(5.0f),
                                        CallFunc::create([]()
                                                         {
-                                                            Director::getInstance()->replaceScene(MainScreenScene::createScene());
+                                                            Director::getInstance()->replaceScene(MainScreenScene::createScene(true));
                                                         }), nullptr));        }
     }
 }
@@ -1072,35 +1078,49 @@ void GameScene::saveMatchData(bool win, bool lose)
     g_gameConfig.match_string = strbuf.GetString();
     log("setup_player2_matchdata...%s",g_gameConfig.match_string.c_str());
     
+    float delaytotaketurntime = 2.0f;
     if (win) {
         showWinOrLose(true);
+        delaytotaketurntime = 5.0f;
     }
     else if(lose)
     {
         showWinOrLose(false);
+        delaytotaketurntime = 5.0f;
     }
     
-    auto notouchlayer = NoTouchLayer::create();
-    notouchlayer->setTag(NOTOUCHTAG);
-    Director::getInstance()->getRunningScene()->addChild(notouchlayer,100);
+//    auto notouchlayer = NoTouchLayer::create();
+//    notouchlayer->setTag(NOTOUCHTAG);
+//    Director::getInstance()->getRunningScene()->addChild(notouchlayer,100);
+    
+//    auto popwindow = PopWindow::create();
+//    Director::getInstance()->getRunningScene()->addChild(popwindow,999);
     
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-    GPGSManager::TakeTurn(win, lose);
+    runAction(Sequence::create(CallFunc::create([=]()
+                                                {
+                                                    ((GameUI*)(getParent()->getChildByTag(76)))->_controlBoard->runAction(EaseBackIn::create(MoveTo::create(0.5, Point(g_visibleRect.visibleWidth/2 + g_visibleRect.visibleOriginX, -120))));
+                                                    getCurrentPlayer()->hideAimer();
+                                                }),
+                               DelayTime::create(delaytotaketurntime),
+                               CallFunc::create([=](){GPGSManager::TakeTurn(win, lose);}),
+                               nullptr));
 #endif
 }
 
-void GameScene::returntoMenu()
-{
-    log("call...return to menu");
-    scheduleOnce(schedule_selector(GameScene::entertoMenu), 1.0f);
-}
-
-void GameScene::entertoMenu(float dt)
-{
-    log("call...entertomenu");
-    auto scene = MainScreenScene::createScene();
-    cocos2d::Director::getInstance()->replaceScene(scene);
-}
+//void GameScene::returntoMenu()
+//{
+//    log("call...return to menu");
+//    scheduleOnce(schedule_selector(GameScene::entertoMenu), 1.0f);
+//}
+//
+//void GameScene::entertoMenu(float dt)
+//{
+//    log("call...entertomenu");
+//    log("call...entertomenu....22222222222");
+//    auto scene = MainScreenScene::createScene(true);
+//    cocos2d::Director::getInstance()->replaceScene(scene);
+//}
 
 void GameScene::showBloodLossNum(Hero* hero, int num)
 {
@@ -1197,4 +1217,14 @@ void GameScene::showWinOrLose(bool isWin)
         Director::getInstance()->getRunningScene()->addChild(node,99);
 
     }
+}
+
+void GameScene::showConnectingPopWindow()
+{
+    scheduleOnce(schedule_selector(GameScene::showConnectingPopWindowWithDelay), transSceneDelayTime/2);
+}
+void GameScene::showConnectingPopWindowWithDelay(float dt)
+{
+    auto popwindow = PopWindow::create();
+    Director::getInstance()->getRunningScene()->addChild(popwindow,100);
 }
