@@ -212,6 +212,20 @@ void GameScene::startShoot()
         value.AddMember("tick",_tick,allocator);
         value.AddMember("action", "start shoot", allocator);
         _myturn["actions"].PushBack(value, allocator);
+        
+        if(!_isFirstAction)
+        {
+            _isFirstAction = true;
+            
+            Hero* myself = dynamic_cast<Hero*>(_PlayerLayer->getChildByTag(TAG_MYSELF));
+            Hero* other = dynamic_cast<Hero*>(_PlayerLayer->getChildByTag(TAG_OTHER));
+            _myturn["player1"]["posx"].SetDouble(myself->getPositionX());
+            _myturn["player1"]["posy"].SetDouble(myself->getPositionY());
+            _myturn["player2"]["posx"].SetDouble(other->getPositionX());
+            _myturn["player2"]["posy"].SetDouble(other->getPositionY());
+            _myturn["player1"]["rot"].SetDouble(myself->_wagonPoint->getRotation());
+            _myturn["player2"]["rot"].SetDouble(other->_wagonPoint->getRotation());
+        }
     }
     else
     {
@@ -245,14 +259,7 @@ void GameScene::endShoot()
         }
         _eventDispatcher->dispatchCustomEvent("dismissPower");
         
-        Hero* myself = dynamic_cast<Hero*>(_PlayerLayer->getChildByTag(TAG_MYSELF));
-        Hero* other = dynamic_cast<Hero*>(_PlayerLayer->getChildByTag(TAG_OTHER));
-        _myturn["player1"]["posx"].SetDouble(myself->getPositionX());
-        _myturn["player1"]["posy"].SetDouble(myself->getPositionY());
-        _myturn["player2"]["posx"].SetDouble(other->getPositionX());
-        _myturn["player2"]["posy"].SetDouble(other->getPositionY());
-        _myturn["player1"]["rot"].SetDouble(myself->_wagonPoint->getRotation());
-        _myturn["player2"]["rot"].SetDouble(other->_wagonPoint->getRotation());
+        
         _waitToClear = true;
     }
     else
@@ -380,6 +387,21 @@ void GameScene::movePlayer(float x)
     else
     {
         p->stop();
+    }
+    
+    log("I am in %d",_isFirstAction);
+    if(!_isFirstAction && !_playback)
+    {
+        log("I am in ....");
+        _isFirstAction = true;
+        Hero* myself = dynamic_cast<Hero*>(_PlayerLayer->getChildByTag(TAG_MYSELF));
+        Hero* other = dynamic_cast<Hero*>(_PlayerLayer->getChildByTag(TAG_OTHER));
+        _myturn["player1"]["posx"].SetDouble(myself->getPositionX());
+        _myturn["player1"]["posy"].SetDouble(myself->getPositionY());
+        _myturn["player2"]["posx"].SetDouble(other->getPositionX());
+        _myturn["player2"]["posy"].SetDouble(other->getPositionY());
+        _myturn["player1"]["rot"].SetDouble(myself->_wagonPoint->getRotation());
+        _myturn["player2"]["rot"].SetDouble(other->_wagonPoint->getRotation());
     }
 }
 
@@ -542,18 +564,21 @@ void GameScene::explode(Bullet *bullet, Hero* hero)
     
     //spawn dirts
     auto dirt1 = ParticleSystemQuad::create("DirtExplosion1.plist");
+    dirt1->setPositionType(ParticleSystem::PositionType::GROUPED);
     _effectLayer->addChild(dirt1);
     dirt1->setPosition(pos);
     dirt1->setTotalParticles(10);
     dirt1->setEmissionRate(99999999);
     dirt1->setAutoRemoveOnFinish(true);
     auto dirt2 = ParticleSystemQuad::create("DirtExplosion2.plist");
+    dirt2->setPositionType(ParticleSystem::PositionType::GROUPED);
     _effectLayer->addChild(dirt2);
     dirt2->setPosition(pos);
     dirt2->setTotalParticles(7);
     dirt2->setEmissionRate(99999999);
     dirt2->setAutoRemoveOnFinish(true);
     auto dirt3 = ParticleSystemQuad::create("DirtExplosion3.plist");
+    dirt3->setPositionType(ParticleSystem::PositionType::GROUPED);
     _effectLayer->addChild(dirt3);
     dirt3->setPosition(pos);
     dirt3->setTotalParticles(5);
@@ -960,9 +985,9 @@ void GameScene::update(float dt)
                         p->airborn = false; //we are no longer airborn
                         //set angle to average
                         float deg =CC_RADIANS_TO_DEGREES(angleTotal/angleCount);
-                        if(abs(deg) > 80)//TODO: each vehicle has a climbing angle limit
+                        if(abs(deg) > 60)//TODO: each vehicle has a climbing angle limit
                         {
-                            deg = (deg>0)? 80: -80;
+                            deg = (deg>0)? 60: -60;
                             p->_wagonPoint->setRotation(deg);
                             
                             p->airborn = true;

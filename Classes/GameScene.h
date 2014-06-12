@@ -81,6 +81,8 @@ public:
     bool _playback;
     
     std::string tempjson;
+    
+    bool _isFirstAction;
 protected:
     void printMyTurn();
     rapidjson::Document _replay;
@@ -94,7 +96,7 @@ protected:
     //timeval _now;
     cocos2d::Size _movableSize;
     void _movePlayer(float x);
-    GameScene():_waitToClear(false),_playback(false),_click(false),_steps(2),_following(nullptr),_tick(0),_replay(nullptr),_myturn(nullptr),win(false), lost(false), over(false){g_gameConfig.isInGame = true;};
+    GameScene():_waitToClear(false),_playback(false),_click(false),_steps(2),_following(nullptr),_tick(0),_replay(nullptr),_myturn(nullptr),win(false), lost(false), over(false),_isFirstAction(false){g_gameConfig.isInGame = true;};
     ~GameScene(){g_gameConfig.isInGame = false;};
     bool _click;
     int _steps;
