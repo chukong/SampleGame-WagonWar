@@ -94,6 +94,8 @@ public:
     
     std::string player1Name;
     std::string player2Name;
+    
+    bool isInGame;
 };
 
 extern GameConfig g_gameConfig;

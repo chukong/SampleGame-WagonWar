@@ -218,8 +218,6 @@
 		857A84D01932F3DE00A2041E /* Configuration.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 857A84CD1932F3DE00A2041E /* Configuration.cpp */; };
 		857A84D319330A3C00A2041E /* LoadResourceLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 857A84D119330A3C00A2041E /* LoadResourceLayer.cpp */; };
 		857A84D419330A3C00A2041E /* LoadResourceLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 857A84D119330A3C00A2041E /* LoadResourceLayer.cpp */; };
-		857A84D7193316AF00A2041E /* TestTBMP.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 857A84D5193316AF00A2041E /* TestTBMP.cpp */; };
-		857A84D8193316AF00A2041E /* TestTBMP.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 857A84D5193316AF00A2041E /* TestTBMP.cpp */; };
 		8589F76D19237690009BDBCD /* bullet.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8589F76319237690009BDBCD /* bullet.cpp */; };
 		8589F76E19237690009BDBCD /* bullet.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8589F76319237690009BDBCD /* bullet.cpp */; };
 		8589F76F19237690009BDBCD /* GameScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8589F76519237690009BDBCD /* GameScene.cpp */; };
@@ -231,6 +229,14 @@
 		8589F77519237690009BDBCD /* MaskSprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8589F76B19237690009BDBCD /* MaskSprite.cpp */; };
 		8589F77619237690009BDBCD /* MaskSprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8589F76B19237690009BDBCD /* MaskSprite.cpp */; };
 		8589F77D19237DA1009BDBCD /* Hero.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8589F77B19237DA1009BDBCD /* Hero.cpp */; };
+		85A116AD1945A06800128549 /* PopWindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 85A116AB1945A06800128549 /* PopWindow.cpp */; };
+		85A116AE1945A06800128549 /* PopWindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 85A116AB1945A06800128549 /* PopWindow.cpp */; };
+		85A116B21945ACB100128549 /* android.png in Resources */ = {isa = PBXBuildFile; fileRef = 85A116AF1945ACB000128549 /* android.png */; };
+		85A116B31945ACB100128549 /* android.png in Resources */ = {isa = PBXBuildFile; fileRef = 85A116AF1945ACB000128549 /* android.png */; };
+		85A116B41945ACB100128549 /* pop_bk.png in Resources */ = {isa = PBXBuildFile; fileRef = 85A116B01945ACB000128549 /* pop_bk.png */; };
+		85A116B51945ACB100128549 /* pop_bk.png in Resources */ = {isa = PBXBuildFile; fileRef = 85A116B01945ACB000128549 /* pop_bk.png */; };
+		85A116B91945C05600128549 /* pop_btn.png in Resources */ = {isa = PBXBuildFile; fileRef = 85A116B81945C05600128549 /* pop_btn.png */; };
+		85A116BA1945C05600128549 /* pop_btn.png in Resources */ = {isa = PBXBuildFile; fileRef = 85A116B81945C05600128549 /* pop_btn.png */; };
 		85AD5EDA19373BFC00E57DB2 /* WagonSelect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 85AD5ED819373BFC00E57DB2 /* WagonSelect.cpp */; };
 		85AD5EDB19373BFC00E57DB2 /* WagonSelect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 85AD5ED819373BFC00E57DB2 /* WagonSelect.cpp */; };
 		85B0EB60193E4EF100021830 /* crosshair.png in Resources */ = {isa = PBXBuildFile; fileRef = 85B0EB5D193E4EF100021830 /* crosshair.png */; };
@@ -613,8 +619,6 @@
 		857A84CE1932F3DE00A2041E /* Configuration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Configuration.h; sourceTree = "<group>"; };
 		857A84D119330A3C00A2041E /* LoadResourceLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LoadResourceLayer.cpp; sourceTree = "<group>"; };
 		857A84D219330A3C00A2041E /* LoadResourceLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoadResourceLayer.h; sourceTree = "<group>"; };
-		857A84D5193316AF00A2041E /* TestTBMP.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TestTBMP.cpp; sourceTree = "<group>"; };
-		857A84D6193316AF00A2041E /* TestTBMP.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestTBMP.h; sourceTree = "<group>"; };
 		8589F76319237690009BDBCD /* bullet.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = bullet.cpp; path = ../Classes/bullet.cpp; sourceTree = "<group>"; };
 		8589F76419237690009BDBCD /* bullet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = bullet.h; path = ../Classes/bullet.h; sourceTree = "<group>"; };
 		8589F76519237690009BDBCD /* GameScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = GameScene.cpp; path = ../Classes/GameScene.cpp; sourceTree = "<group>"; };
@@ -627,6 +631,11 @@
 		8589F76C19237690009BDBCD /* MaskSprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MaskSprite.h; path = ../Classes/MaskSprite.h; sourceTree = "<group>"; };
 		8589F77B19237DA1009BDBCD /* Hero.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Hero.cpp; sourceTree = "<group>"; };
 		8589F77C19237DA1009BDBCD /* Hero.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Hero.h; sourceTree = "<group>"; };
+		85A116AB1945A06800128549 /* PopWindow.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = PopWindow.cpp; path = ../Classes/PopWindow.cpp; sourceTree = "<group>"; };
+		85A116AC1945A06800128549 /* PopWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PopWindow.h; path = ../Classes/PopWindow.h; sourceTree = "<group>"; };
+		85A116AF1945ACB000128549 /* android.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = android.png; sourceTree = "<group>"; };
+		85A116B01945ACB000128549 /* pop_bk.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pop_bk.png; sourceTree = "<group>"; };
+		85A116B81945C05600128549 /* pop_btn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pop_btn.png; sourceTree = "<group>"; };
 		85AD5ED819373BFC00E57DB2 /* WagonSelect.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = WagonSelect.cpp; path = ../Classes/WagonSelect.cpp; sourceTree = "<group>"; };
 		85AD5ED919373BFC00E57DB2 /* WagonSelect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WagonSelect.h; path = ../Classes/WagonSelect.h; sourceTree = "<group>"; };
 		85B0EB5D193E4EF100021830 /* crosshair.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = crosshair.png; sourceTree = "<group>"; };
@@ -811,8 +820,6 @@
 				85529F6F1925E55F0024FFEF /* LoadingScene.h */,
 				85529F731925EAEA0024FFEF /* MainScreenScene.cpp */,
 				85529F741925EAEA0024FFEF /* MainScreenScene.h */,
-				857A84D5193316AF00A2041E /* TestTBMP.cpp */,
-				857A84D6193316AF00A2041E /* TestTBMP.h */,
 				85AD5ED819373BFC00E57DB2 /* WagonSelect.cpp */,
 				85AD5ED919373BFC00E57DB2 /* WagonSelect.h */,
 				85E8A309193892EC00B0B650 /* NoTouchLayer.cpp */,
@@ -821,6 +828,8 @@
 				688029851938B5D0008AD16F /* Aimer.h */,
 				851CE6B119421FB40095463A /* GPGSChecker.cpp */,
 				851CE6B219421FB40095463A /* GPGSChecker.h */,
+				85A116AB1945A06800128549 /* PopWindow.cpp */,
+				85A116AC1945A06800128549 /* PopWindow.h */,
 			);
 			name = Classes;
 			path = ../classes;
@@ -945,6 +954,9 @@
 		78C7DDAA14EBA5050085D0C2 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				85A116B81945C05600128549 /* pop_btn.png */,
+				85A116AF1945ACB000128549 /* android.png */,
+				85A116B01945ACB000128549 /* pop_bk.png */,
 				851CE6BB19423A690095463A /* particles */,
 				851CE6651941F6EE0095463A /* fonts */,
 				851CE6691941F6EE0095463A /* mainscreen_bk.png */,
@@ -1301,6 +1313,7 @@
 				BBFFBBD619407F74004CAF28 /* hp.png in Resources */,
 				85E8A2E619382D0A00B0B650 /* btn_ready_1.png in Resources */,
 				85E8A2D619382D0A00B0B650 /* btn_invitefriend_1.png in Resources */,
+				85A116B21945ACB100128549 /* android.png in Resources */,
 				BB96B9B519404F9E005BF369 /* you.png in Resources */,
 				851CE6971941F6EE0095463A /* mechshoot.mp3 in Resources */,
 				68BBD898192462D7001F9F73 /* test2.png in Resources */,
@@ -1313,6 +1326,7 @@
 				851CE67F1941F6EE0095463A /* arial.ttf in Resources */,
 				5087E77F17EB970100C73F5D /* Default@2x.png in Resources */,
 				851CE6A11941F6EE0095463A /* readystart.mp3 in Resources */,
+				85A116B41945ACB100128549 /* pop_bk.png in Resources */,
 				85E8A2FA19382D0A00B0B650 /* wagon_item_1.png in Resources */,
 				851CE6DF19423A690095463A /* DirtExplosion1.png in Resources */,
 				68BBD8B3192462DE001F9F73 /* expMask2.png in Resources */,
@@ -1410,6 +1424,7 @@
 				BBFFBBD519407F74004CAF28 /* explosionBar.png in Resources */,
 				6880297F1938AFEB008AD16F /* cnm.png in Resources */,
 				851CE6811941F6EE0095463A /* britanic bold.ttf in Resources */,
+				85A116B91945C05600128549 /* pop_btn.png in Resources */,
 				68BBD890192462D7001F9F73 /* HelloWorld.png in Resources */,
 				855659271940BAB500392F20 /* Stepping Stones m.mp3 in Resources */,
 				50EF629717ECD46A001EB2F8 /* Icon-58.png in Resources */,
@@ -1475,6 +1490,7 @@
 				85E8A2FB19382D0A00B0B650 /* wagon_item_1.png in Resources */,
 				851CE68A1941F6EE0095463A /* explosion.mp3 in Resources */,
 				688029801938AFEB008AD16F /* cnm.png in Resources */,
+				85A116B51945ACB100128549 /* pop_bk.png in Resources */,
 				851CE6821941F6EE0095463A /* britanic bold.ttf in Resources */,
 				8504EF6C1929E73E003B810B /* testnode.png in Resources */,
 				85E8A2E919382D0A00B0B650 /* btn_start_0.png in Resources */,
@@ -1486,6 +1502,7 @@
 				85E8A2D919382D0A00B0B650 /* btn_leaderboard_0.png in Resources */,
 				68BBD899192462D7001F9F73 /* test2.png in Resources */,
 				851CE69C1941F6EE0095463A /* movebuttondown.mp3 in Resources */,
+				85A116B31945ACB100128549 /* android.png in Resources */,
 				68BBD8AE192462DE001F9F73 /* CloseNormal.png in Resources */,
 				851CE6E619423A690095463A /* DirtExplosion3.plist in Resources */,
 				503AE0F817EB97AB00D1A890 /* Icon.icns in Resources */,
@@ -1503,6 +1520,7 @@
 				68BBD8BA192495E4001F9F73 /* map.png in Resources */,
 				68BBD891192462D7001F9F73 /* HelloWorld.png in Resources */,
 				85E8A2CF19382D0A00B0B650 /* boy_1.png in Resources */,
+				85A116BA1945C05600128549 /* pop_btn.png in Resources */,
 				68BBD8B4192462DE001F9F73 /* expMask2.png in Resources */,
 				851CE6AC1941F6EE0095463A /* win.mp3 in Resources */,
 				85E8A2E119382D0A00B0B650 /* btn_quickmatch_0.png in Resources */,
@@ -1548,8 +1566,8 @@
 				1AFAF8B716D35DE700DB1158 /* AppDelegate.cpp in Sources */,
 				851CE6B319421FB40095463A /* GPGSChecker.cpp in Sources */,
 				8589F76F19237690009BDBCD /* GameScene.cpp in Sources */,
+				85A116AD1945A06800128549 /* PopWindow.cpp in Sources */,
 				85529F701925E55F0024FFEF /* LoadingScene.cpp in Sources */,
-				857A84D7193316AF00A2041E /* TestTBMP.cpp in Sources */,
 				85111B9C192F4D9F00C8D3C8 /* GameUI.cpp in Sources */,
 				857A84C91932F2AD00A2041E /* VisibleRect.cpp in Sources */,
 				503AE10117EB989F00D1A890 /* main.m in Sources */,
@@ -1562,8 +1580,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				857A84D8193316AF00A2041E /* TestTBMP.cpp in Sources */,
 				85AD5EDB19373BFC00E57DB2 /* WagonSelect.cpp in Sources */,
+				85A116AE1945A06800128549 /* PopWindow.cpp in Sources */,
 				8589F77019237690009BDBCD /* GameScene.cpp in Sources */,
 				688029871938B5D0008AD16F /* Aimer.cpp in Sources */,
 				5087E75717EB910900C73F5D /* AppDelegate.cpp in Sources */,

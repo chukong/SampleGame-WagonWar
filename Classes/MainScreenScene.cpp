@@ -9,8 +9,6 @@
 #include "MainScreenScene.h"
 #include "GameScene.h"
 #include "GPGSManager.h"
-//#include <random>
-#include "TestTBMP.h"
 #include "VisibleRect.h"
 #include "Configuration.h"
 #include "GameScene.h"
@@ -18,160 +16,47 @@
 #include "WagonSelect.h"
 #include "NoTouchLayer.h"
 #include "SimpleAudioEngine.h"
+#include "PopWindow.h"
+
+#define LEAD_VICTORIES "CgkIt8qQwKsFEAIQCQ"
+
 
 USING_NS_CC;
 
-#define ACH_ACHIEVEMENT_01 "CgkIs7qm9rYbEAIQAQ"
-#define ACH_ACHIEVEMENT_02 "CgkIs7qm9rYbEAIQAg"
-#define LEAD_LEADERBOARD "CgkIs7qm9rYbEAIQAw"
-
-Scene* MainScreenScene::createScene()
+Scene* MainScreenScene::createScene(bool _isShowMatchInBoxUI)
 {
     auto scene = Scene::create();
     
-    auto layer = MainScreenScene::create();
+    auto layer = MainScreenScene::create(_isShowMatchInBoxUI);
     
     scene->addChild(layer);
     
     return scene;
 }
 
-bool MainScreenScene::init()
+MainScreenScene* MainScreenScene::create(bool _isShowMatchInBoxUI)
+{
+    MainScreenScene *pRet = new MainScreenScene();
+    if (pRet && pRet->init(_isShowMatchInBoxUI))
+    {
+        pRet->autorelease();
+        return pRet;
+    }
+    else
+    {
+        delete pRet;
+        pRet = NULL;
+        return NULL;
+    }
+}
+
+bool MainScreenScene::init(bool _isShowMatchInBoxUI)
 {
     if ( !Layer::init() )
     {
         return false;
     }
-    
-//    Size visibleSize = Director::getInstance()->getVisibleSize();
-//    
-//    //SignIn and Sign Out.
-//    std::string strSign = "Sign In";
-//    if (GPGSManager::IsSignedIn()) {
-//        strSign = "Sign Out";
-//    }
-//    auto signin_label = Label::createWithSystemFont(strSign, "Arial", 20);
-//    auto signin_menuitem = MenuItemLabel::create(signin_label,
-//                                                 [signin_label](Ref* ref){
-//                                                     if (GPGSManager::IsSignedIn()) {
-//                                                         log("The Status of now is SignedIn");
-//                                                         signin_label->setString("Sign Out");
-//                                                         GPGSManager::SignOut();
-//                                                     } else {
-//                                                         log("The Status of now is not SignedIn");
-//                                                         GPGSManager::BeginUserInitiatedSignIn();
-//                                                     }
-//                                                     
-//                                                 });
-//    signin_menuitem->setPosition(Point(visibleSize.width/2-100, visibleSize.height/2+50));
-//    
-//    //Show LeaderBoards
-//    auto leaderboard_label = Label::createWithSystemFont("LeaderBoard", "Arial", 20);
-//    auto leaderboard_menuitem = MenuItemLabel::create(leaderboard_label,
-//                                                      [](Ref* ref){
-//                                                          if (GPGSManager::IsSignedIn()) {
-//                                                              log("Show LeaderBoard");
-//                                                              GPGSManager::ShowLeaderboard(LEAD_LEADERBOARD);
-//                                                          }
-//                                                          else{
-//                                                              log("Failed to show LeaderBoard, Not Signed in");
-//                                                          }
-//                                                      });
-//    leaderboard_menuitem->setPosition(Point(visibleSize.width/2+100, visibleSize.height/2+50));
-//    
-//    //Show Achievements
-//    auto achievement_label = Label::createWithSystemFont("Achievement", "Arial", 20);
-//    auto achievement_menuitem = MenuItemLabel::create(achievement_label,
-//                                                      [](Ref* ref){
-//                                                          if (GPGSManager::IsSignedIn()) {
-//                                                              log("Show Achievements");
-//                                                              GPGSManager::ShowAchievements();
-//                                                          }
-//                                                          else{
-//                                                              log("Failed to show Achievements, Not Signed in");
-//                                                          }
-//                                                      });
-//    achievement_menuitem->setPosition(Point(visibleSize.width/2-100, visibleSize.height/2));
-//    
-//    //Submit Score
-//    std::uniform_int_distribution<unsigned> u(0,10000);
-//    std::default_random_engine e;
-//    e.seed((unsigned)time(NULL));
-//    auto rand_score =  u(e);
-//    auto submitscore_label = Label::createWithSystemFont("SubmitScore", "Arial", 20);
-//    auto submitscore_menuitem = MenuItemLabel::create(submitscore_label,
-//                                                      [rand_score](Ref* ref){
-//                                                          if (GPGSManager::IsSignedIn()) {
-//                                                              log("Submit Score %d", rand_score);
-//                                                              GPGSManager::SubmitHighScore(LEAD_LEADERBOARD, rand_score);
-//                                                          }
-//                                                          else{
-//                                                              log("Failed to submit score, Not Signed in");
-//                                                          }
-//                                                      });
-//    submitscore_menuitem->setPosition(Point(visibleSize.width/2+100, visibleSize.height/2));
-//    
-//    //Unlock Achievement
-//    auto unlockachievement_label = Label::createWithSystemFont("UnlockAchievement", "Arial", 20);
-//    auto unlockachievement_menuitem = MenuItemLabel::create(unlockachievement_label,
-//                                                            [](Ref* ref){
-//                                                                if (GPGSManager::IsSignedIn()) {
-//                                                                    log("Unlock Achievement %s", ACH_ACHIEVEMENT_01);
-//                                                                    GPGSManager::UnlockAchievement(ACH_ACHIEVEMENT_01);
-//                                                                }
-//                                                                else{
-//                                                                    log("Failed to unlock Achievements, Not Signed in");
-//                                                                }
-//                                                            });
-//    unlockachievement_menuitem->setPosition(Point(visibleSize.width/2-100, visibleSize.height/2-50));
-//    
-//    //Increase Achievement
-//    auto increaseachievement_label = Label::createWithSystemFont("IncreaseAchievement", "Arial", 20);
-//    auto increaseachievement_menuitem = MenuItemLabel::create(increaseachievement_label,
-//                                                              [](Ref* ref){
-//                                                                  if (GPGSManager::IsSignedIn()) {
-//                                                                      log("Increase Achievement %s", ACH_ACHIEVEMENT_02);
-//                                                                   GPGSManager::IncrementAchievement(ACH_ACHIEVEMENT_02);
-//                                                                  }
-//                                                              });
-//    increaseachievement_menuitem->setPosition(Point(visibleSize.width/2+100, visibleSize.height/2-50));
-//    
-//    auto quickmatch_label = Label::createWithSystemFont("QuickMatch", "Arial", 20);
-//    auto quickmatch_menuitem = MenuItemLabel::create(quickmatch_label,
-//                                                              [](Ref* ref){
-//                                                                  if (GPGSManager::IsSignedIn()) {
-//                                                                      log("Quick Match");
-//                                                                      GPGSManager::QuickMatch();
-//                                                                  }
-//                                                              });
-//    quickmatch_menuitem->setPosition(Point(visibleSize.width/2-100, visibleSize.height/2-100));
-//
-//    
-//    auto invitefriend_label = Label::createWithSystemFont("InviteFriend", "Arial", 20);
-//    auto invitefriend_menuitem = MenuItemLabel::create(invitefriend_label,
-//                                                     [](Ref* ref){
-//                                                         if (GPGSManager::IsSignedIn()) {
-//                                                             log("InviteFriend");
-//                                                             GPGSManager::InviteFriend();
-//                                                         }
-//                                                     });
-//    invitefriend_menuitem->setPosition(Point(visibleSize.width/2+100, visibleSize.height/2-100));
-//    
-//    auto showmatchinbox_label = Label::createWithSystemFont("ShowMatchInBox", "Arial", 20);
-//    auto showmatchinbox_menuitem = MenuItemLabel::create(showmatchinbox_label,
-//                                                       [](Ref* ref){
-//                                                           if (GPGSManager::IsSignedIn()) {
-//                                                               log("ShowMatchInBox");
-//                                                               GPGSManager::ShowMatchInbox();
-//                                                           }
-//                                                       });
-//    showmatchinbox_menuitem->setPosition(Point(visibleSize.width/2-100, visibleSize.height/2-150));
-//    
-//    auto menu = Menu::create(signin_menuitem, leaderboard_menuitem, achievement_menuitem,
-//                             submitscore_menuitem, unlockachievement_menuitem, increaseachievement_menuitem,
-//                             quickmatch_menuitem, invitefriend_menuitem, showmatchinbox_menuitem, nullptr);
-//    menu->setPosition(Point::ZERO);
-//    this->addChild(menu);
+    loadingRes();
     
     CocosDenshion::SimpleAudioEngine::getInstance()->setBackgroundMusicVolume(0.3);
     CocosDenshion::SimpleAudioEngine::getInstance()->stopBackgroundMusic();
@@ -198,41 +83,44 @@ bool MainScreenScene::init()
                                                      "btn_quickmatch_1.png",
                                                      CC_CALLBACK_1(MainScreenScene::quickmatch_callback, this));
     quickmatch_menuitem->setAnchorPoint(Point::ANCHOR_MIDDLE);
-    quickmatch_menuitem->setPosition(Point(g_visibleRect.visibleWidth-350,g_visibleRect.visibleHeight-100));
+    quickmatch_menuitem->setPosition(Point(g_visibleRect.visibleWidth-350,g_visibleRect.visibleHeight-95));
     
     invitefriend_menuitem = MenuItemImage::create("btn_invitefriend_0.png",
                                                      "btn_invitefriend_1.png",
                                                      CC_CALLBACK_1(MainScreenScene::invitefriend_callback, this));
     invitefriend_menuitem->setAnchorPoint(Point::ANCHOR_MIDDLE);
-    invitefriend_menuitem->setPosition(Point(g_visibleRect.visibleWidth-350,g_visibleRect.visibleHeight-250));
+    invitefriend_menuitem->setPosition(Point(g_visibleRect.visibleWidth-350,g_visibleRect.visibleHeight-245));
     
     mygames_menuitem = MenuItemImage::create("btn_mygames_0.png",
                                                      "btn_mygames_1.png",
                                                      CC_CALLBACK_1(MainScreenScene::mygames_callback, this));
     mygames_menuitem->setAnchorPoint(Point::ANCHOR_MIDDLE);
-    mygames_menuitem->setPosition(Point(g_visibleRect.visibleWidth-350,g_visibleRect.visibleHeight-400));
+    mygames_menuitem->setPosition(Point(g_visibleRect.visibleWidth-350,g_visibleRect.visibleHeight-395));
     
     achievements_menuitem = MenuItemImage::create("btn_achievements_0.png",
                                                      "btn_achievements_1.png",
                                                      CC_CALLBACK_1(MainScreenScene::achievements_callback, this));
+    achievements_menuitem->setScale(0.8f);
     achievements_menuitem->setAnchorPoint(Point::ANCHOR_MIDDLE);
     achievements_menuitem->setPosition(Point(g_visibleRect.visibleWidth-420,g_visibleRect.visibleHeight-520));
     
     leaderboard_menuitem = MenuItemImage::create("btn_leaderboard_0.png",
                                                      "btn_leaderboard_1.png",
                                                      CC_CALLBACK_1(MainScreenScene::leaderboard_callback, this));
+    
+    leaderboard_menuitem->setScale(0.8f);
     leaderboard_menuitem->setAnchorPoint(Point::ANCHOR_MIDDLE);
     leaderboard_menuitem->setPosition(Point(g_visibleRect.visibleWidth-280,g_visibleRect.visibleHeight-520));
     
     auto menu = Menu::create(quickmatch_menuitem, invitefriend_menuitem, mygames_menuitem, achievements_menuitem, leaderboard_menuitem, nullptr);
-    menu->setPosition(Point(150,-50));
+    menu->setPosition(Point(150,-30));
     this->addChild(menu,1);
     
-    sign_status = Label::create("status:unknown.", GameConfig::defaultFontName, 20);
-    sign_status->setAnchorPoint(Point::ANCHOR_MIDDLE);
-    sign_status->setPosition(Point(750,50));
+    sign_status = Label::create("Status:Unknown.", GameConfig::defaultFontName, 20);
+    sign_status->setAnchorPoint(Point::ANCHOR_MIDDLE_LEFT);
+    sign_status->setPosition(Point(20,20));
     this->addChild(sign_status,1);
-    this->schedule(schedule_selector(MainScreenScene::updateStatus), 0.1f, kRepeatForever, 2.0f);
+//    this->schedule(schedule_selector(MainScreenScene::updateStatus), 0.1f, kRepeatForever, 2.0f);
     
     auto listener1 = EventListenerCustom::create("enterWagonSelect_1", CC_CALLBACK_0(MainScreenScene::enterWagonSelect_1, this));
     _eventDispatcher->addEventListenerWithSceneGraphPriority(listener1, this);
@@ -243,7 +131,34 @@ bool MainScreenScene::init()
     auto listener3 = EventListenerCustom::create("enterGame", CC_CALLBACK_0(MainScreenScene::enterGame, this));
     _eventDispatcher->addEventListenerWithSceneGraphPriority(listener3, this);
     
+    auto listener4 = EventListenerCustom::create("showInviteFailedPopWindow", CC_CALLBACK_0(MainScreenScene::showInviteFailedPopWindow, this));
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener4, this);
+    
+    auto listener5 = EventListenerCustom::create("showNotYourTurnPopWindow", CC_CALLBACK_0(MainScreenScene::showNotYourTurnPopWindow, this));
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener5, this);
+    
+    auto listener6 = EventListenerCustom::create("showConnectingPopWindow", CC_CALLBACK_0(MainScreenScene::showConnectingPopWindow, this));
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener6, this);
+    
+    auto listener7 = EventListenerCustom::create("showInviteSuccessPopWindow", CC_CALLBACK_0(MainScreenScene::showInviteSuccessPopWindow, this));
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener7, this);
+    
+    auto listener8 = EventListenerCustom::create("showItsCompletedPopWindow", CC_CALLBACK_0(MainScreenScene::showItsCompletedPopWindow, this));
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener8, this);
+    
+    log("_isShowMatchInBoxUI == %d",_isShowMatchInBoxUI);
+    if(_isShowMatchInBoxUI)
+        this->scheduleOnce(schedule_selector(MainScreenScene::show_mygames), 0.5f);
+    
     return true;
+}
+
+void MainScreenScene::loadingRes()
+{
+    Director::getInstance()->getTextureCache()->addImage("pop_btn.png");
+    Director::getInstance()->getTextureCache()->addImage("pop_bk.png");
+    Director::getInstance()->getTextureCache()->addImage("android.png");
+
 }
 
 void MainScreenScene::quickmatch_callback(cocos2d::Ref* pSender)
@@ -251,11 +166,6 @@ void MainScreenScene::quickmatch_callback(cocos2d::Ref* pSender)
     CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("menuclick.mp3");
     log("QuickMatch");
     if (GPGSManager::IsSignedIn()) {
-        
-        auto notouchlayer = NoTouchLayer::create();
-        notouchlayer->setTag(NOTOUCHTAG);
-        Director::getInstance()->getRunningScene()->addChild(notouchlayer,100);
-        
         GPGSManager::QuickMatch();
     }
     else{
@@ -300,7 +210,7 @@ void MainScreenScene::leaderboard_callback(cocos2d::Ref* pSender)
     CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("menuclick.mp3");
     log("LeaderBoard");
     if (GPGSManager::IsSignedIn()) {
-        GPGSManager::ShowLeaderboard(LEAD_LEADERBOARD);
+        GPGSManager::ShowLeaderboard(LEAD_VICTORIES);
     }
     else{
         GPGSManager::BeginUserInitiatedSignIn();
@@ -318,13 +228,13 @@ void MainScreenScene::enableUI(bool isEnable)
 
 void MainScreenScene::updateStatus(float dt)
 {
-//    if (GPGSManager::IsSignedIn()) {
-//        sign_status->setString("status:sign in.");
-//    }
-//    else
-//    {
-//        sign_status->setString("status:sign out.");
-//    }
+    if (GPGSManager::IsSignedIn()) {
+        sign_status->setString("Status:Sign in.");
+    }
+    else
+    {
+        sign_status->setString("Status:Sign out.");
+    }
 }
 
 void MainScreenScene::enterWagonSelect_1()
@@ -356,12 +266,74 @@ void MainScreenScene::enterWagonSelectWithDelay_2(float dt)
 
 void MainScreenScene::enterGame()
 {
+    log("I had enterd the game....");
     scheduleOnce(schedule_selector(MainScreenScene::enterGameWithDelay), transSceneDelayTime);
 }
 void MainScreenScene::enterGameWithDelay(float dt)
 {
     log("recv data is ===>%s", g_gameConfig.match_string.c_str());
-    this->removeChildByTag(NOTOUCHTAG);
+    //this->removeChildByTag(NOTOUCHTAG);
     auto scene = GameScene::createScene();
     cocos2d::Director::getInstance()->replaceScene(scene);
+}
+
+void MainScreenScene::show_mygames(float dt)
+{
+    log("111111111111");
+    if (GPGSManager::IsSignedIn()) {
+        log("222222222222222");
+        GPGSManager::ShowMatchInbox();
+    }
+    else{
+        GPGSManager::BeginUserInitiatedSignIn();
+    }
+}
+
+void MainScreenScene::showConnectingPopWindow()
+{
+    scheduleOnce(schedule_selector(MainScreenScene::showConnectingPopWindowWithDelay), transSceneDelayTime/2);
+}
+void MainScreenScene::showConnectingPopWindowWithDelay(float dt)
+{
+    auto popwindow = PopWindow::create();
+    addChild(popwindow,100);
+}
+
+//change popwindow status
+void MainScreenScene::showInviteFailedPopWindow()
+{
+    scheduleOnce(schedule_selector(MainScreenScene::showInviteFailedPopWindowWithDelay), transSceneDelayTime/2);
+}
+
+void MainScreenScene::showInviteFailedPopWindowWithDelay(float dt)
+{
+    cocos2d::Director::getInstance()->getEventDispatcher()->dispatchCustomEvent("InviteFailed");
+}
+
+void MainScreenScene::showInviteSuccessPopWindow()
+{
+    scheduleOnce(schedule_selector(MainScreenScene::showInviteSuccessPopWindowWithDelay), transSceneDelayTime/2);
+}
+void MainScreenScene::showInviteSuccessPopWindowWithDelay(float dt)
+{
+    cocos2d::Director::getInstance()->getEventDispatcher()->dispatchCustomEvent("InviteSuccess");
+}
+
+void MainScreenScene::showNotYourTurnPopWindow()
+{
+    scheduleOnce(schedule_selector(MainScreenScene::showNotYourTurnPopWindowWithDelay), transSceneDelayTime/2);
+}
+
+void MainScreenScene::showNotYourTurnPopWindowWithDelay(float dt)
+{
+    cocos2d::Director::getInstance()->getEventDispatcher()->dispatchCustomEvent("ItsNotYourTurn");
+}
+
+void MainScreenScene::showItsCompletedPopWindow()
+{
+    scheduleOnce(schedule_selector(MainScreenScene::showItsCompletedPopWindowWithDelay), transSceneDelayTime/2);
+}
+void MainScreenScene::showItsCompletedPopWindowWithDelay(float dt)
+{
+    cocos2d::Director::getInstance()->getEventDispatcher()->dispatchCustomEvent("ItsCompleted");
 }

@@ -30,7 +30,7 @@
 #import "GPGSManager.h"
 
 // ClientID
-const char* GPG_CLIENTID = "942456544563";
+const char* GPG_CLIENTID = "183475905847";
 
 @interface RootViewController () {
     GPGSManager* _gpgsManager;

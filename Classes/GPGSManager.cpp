@@ -21,13 +21,13 @@ const int32_t BUFFER_SIZE = 256;
 #endif
 
 #include "cocos2d.h"
-#include "TestTBMP.h"
 #include "Configuration.h"
 #include "WagonSelect.h"
 #include "MainScreenScene.h"
 #include "json/rapidjson.h"
 #include "json/document.h"
 #include "NoTouchLayer.h"
+#include "PopWindow.h"
 
 bool GPGSManager::isSignedIn = false;
 std::unique_ptr<gpg::GameServices> GPGSManager::gameServices;
@@ -138,16 +138,18 @@ void GPGSManager::InitServices(gpg::PlatformConfiguration &pc)
           OnAuthActionFinished( op, status);
       })
       .SetOnTurnBasedMatchEvent([](gpg::TurnBasedMultiplayerEvent event, std::string match_id,
-                                       gpg::TurnBasedMatch match) {
-                                    LOGI("TurnBasedMultiplayerEvent callback");
-                                    //Show default inbox
-                                    ShowMatchInbox();
+                                   gpg::TurnBasedMatch match) {
+          LOGI("TurnBasedMultiplayerEvent callback");
+          //Show default inbox
+          if(!g_gameConfig.isInGame)
+              ShowMatchInbox();
       })
       .SetOnMultiplayerInvitationEvent([](gpg::TurnBasedMultiplayerEvent event, std::string match_id,
-                                              gpg::MultiplayerInvitation invitation) {
-                                           LOGI("MultiplayerInvitationEvent callback");
-                                           //Show default inbox
-                                           ShowMatchInbox();
+                                          gpg::MultiplayerInvitation invitation) {
+          LOGI("MultiplayerInvitationEvent callback");
+          //Show default inbox
+          if(!g_gameConfig.isInGame)
+              ShowMatchInbox();
       }).Create(pc);
   }
   LOGI("Created");
@@ -160,6 +162,8 @@ void GPGSManager::QuickMatch()
     .SetMinimumAutomatchingPlayers(MIN_PLAYERS)
     .SetMaximumAutomatchingPlayers(MAX_PLAYERS).Create();
     
+    cocos2d::Director::getInstance()->getEventDispatcher()->dispatchCustomEvent("showConnectingPopWindow");
+    
     manager.CreateTurnBasedMatch(config,[](gpg::TurnBasedMultiplayerManager::TurnBasedMatchResponse const &matchResponse)
                                  {
                                      if (matchResponse.status == gpg::MultiplayerStatus::VALID) {
@@ -170,22 +174,24 @@ void GPGSManager::QuickMatch()
                                          if (current_match_.HasData() == false && current_match_.Data().size() == 0)
                                          {
                                              setPlayer1Name();
-                                             cocos2d::Director::getInstance()->getEventDispatcher()->dispatchCustomEvent("enterWagonSelect_1");
+                                             cocos2d::Director::getInstance()->getEventDispatcher()->dispatchCustomEvent("Q1Success");
                                          }
                                          else
                                          {
                                              setPlayer2Name();
-                                             cocos2d::Director::getInstance()->getEventDispatcher()->dispatchCustomEvent("enterWagonSelect_2");
+                                             cocos2d::Director::getInstance()->getEventDispatcher()->dispatchCustomEvent("Q2Success");
                                          }
                                      }
                                      else
                                      {
                                          LOGI("QuickMatchs Game Failed...===>%d...By Jacky", matchResponse.status);
-                                         std::string err = "QuickMatch Failed... Google Service Error Code is " + cocos2d::Value((int)matchResponse.status).asString();
-                                         NoTouchLayer* notouchlayer = ((NoTouchLayer*)(cocos2d::Director::getInstance()->getRunningScene()->getChildByTag(NOTOUCHTAG)));
-                                         if (notouchlayer) {
-                                             notouchlayer->setError(err);
-                                         }
+                                         
+                                         cocos2d::Director::getInstance()->getEventDispatcher()->dispatchCustomEvent("QFailed");
+//                                         std::string err = "QuickMatch Failed... Google Service Error Code is " + cocos2d::Value((int)matchResponse.status).asString();
+//                                         NoTouchLayer* notouchlayer = ((NoTouchLayer*)(cocos2d::Director::getInstance()->getRunningScene()->getChildByTag(NOTOUCHTAG)));
+//                                         if (notouchlayer) {
+//                                             notouchlayer->setError(err);
+//                                         }
                                      }
                                  });
 }
@@ -196,14 +202,15 @@ void GPGSManager::InviteFriend()
                                                         [](gpg::TurnBasedMultiplayerManager::PlayerSelectUIResponse const & response)
                                                         {
                                                             LOGI("selected match %d", response.status);
-                                                            
+
                                                             if (response.status == gpg::UIStatus::VALID) {
                                                                 
-                                                                //add notouch layer.
-                                                                auto notouchlayer = NoTouchLayer::create();
-                                                                notouchlayer->setTag(NOTOUCHTAG);
-                                                                cocos2d::Director::getInstance()->getRunningScene()->addChild(notouchlayer,100);
-                                                                
+//                                                                //add notouch layer.
+//                                                                auto notouchlayer = NoTouchLayer::create();
+//                                                                notouchlayer->setTag(NOTOUCHTAG);
+//                                                                cocos2d::Director::getInstance()->getRunningScene()->addChild(notouchlayer,100);
+                                                                cocos2d::Director::getInstance()->getEventDispatcher()->dispatchCustomEvent("showConnectingPopWindow");
+
                                                                 // Create new match with the config
                                                                 gpg::TurnBasedMatchConfig config = gpg::TurnBasedMatchConfig::Builder()
                                                                 .SetMinimumAutomatchingPlayers(response.minimum_automatching_players)
@@ -218,15 +225,17 @@ void GPGSManager::InviteFriend()
                                                                       //PlayGame(matchResponse.match);
                                                                         current_match_ = matchResponse.match;
                                                                         setPlayer1Name();
-                                                                        cocos2d::Director::getInstance()->getEventDispatcher()->dispatchCustomEvent("enterWagonSelect_1");
+                                                                        cocos2d::Director::getInstance()->getEventDispatcher()->dispatchCustomEvent("showInviteSuccessPopWindow");
                                                                     }
                                                                     else
                                                                     {
                                                                         LOGI("InviteFriend Game Failed...===>%d...By Jacky",matchResponse.status);
-                                                                        std::string err = "InviteFriend Failed... Google Service Error Code is " + cocos2d::Value((int)matchResponse.status).asString();
-                                                                        NoTouchLayer* notouchlayer = ((NoTouchLayer*)(cocos2d::Director::getInstance()->getRunningScene()->getChildByTag(NOTOUCHTAG)));
-                                                                        if(notouchlayer)
-                                                                            notouchlayer->setError(err);
+                                                                        
+//                                                                        std::string err = "InviteFriend Failed... Google Service Error Code is " + cocos2d::Value((int)matchResponse.status).asString();
+//                                                                        NoTouchLayer* notouchlayer = ((NoTouchLayer*)(cocos2d::Director::getInstance()->getRunningScene()->getChildByTag(NOTOUCHTAG)));
+//                                                                        if(notouchlayer)
+//                                                                            notouchlayer->setError(err);
+                                                                        cocos2d::Director::getInstance()->getEventDispatcher()->dispatchCustomEvent("showInviteFailedPopWindow");
                                                                     }
                                                                 });
                                                             }
@@ -239,15 +248,19 @@ void GPGSManager::ShowMatchInbox()
     {
         if (response.status == gpg::UIStatus::VALID) {
             //Show game based on the user's selection
+            
+            cocos2d::Director::getInstance()->getEventDispatcher()->dispatchCustomEvent("showConnectingPopWindow");
+            
             current_match_ = response.match;
             switch (response.match.Status()) {
                 case gpg::MatchStatus::THEIR_TURN:
                 {//Manage match with dismiss, leave and cancel options
                     LOGI("Their turn...By Jacky");
-                    auto notouchlayer = NoTouchLayer::create();
-                    notouchlayer->setTag(NOTOUCHTAG);
-                    cocos2d::Director::getInstance()->getRunningScene()->addChild(notouchlayer,100);
-                    notouchlayer->setError("It's not your turn.");
+//                    auto notouchlayer = NoTouchLayer::create();
+//                    notouchlayer->setTag(NOTOUCHTAG);
+//                    cocos2d::Director::getInstance()->getRunningScene()->addChild(notouchlayer,100);
+//                    notouchlayer->setError("It's not your turn.");
+                    cocos2d::Director::getInstance()->getEventDispatcher()->dispatchCustomEvent("showNotYourTurnPopWindow");
                 }
                     break;
                 case gpg::MatchStatus::MY_TURN:
@@ -255,16 +268,15 @@ void GPGSManager::ShowMatchInbox()
                     LOGI("My turn...By Jacky...");
                     
                     //add notouch layer.
-                    auto notouchlayer = NoTouchLayer::create();
-                    notouchlayer->setTag(NOTOUCHTAG);
-                    cocos2d::Director::getInstance()->getRunningScene()->addChild(notouchlayer,100);
+//                    auto notouchlayer = NoTouchLayer::create();
+//                    notouchlayer->setTag(NOTOUCHTAG);
+//                    cocos2d::Director::getInstance()->getRunningScene()->addChild(notouchlayer,100);
                     
                     //PlayGame(response.match);
                     current_match_ = response.match;
                     ParseMatchData();
                     //todo:is second turn?
                     int cur_match_turn = GetMatchTurn();//no found, must return 0;
-                    LOGI("Oh My God.....cur_match_turn is %d",cur_match_turn);
                     cur_match_turn++;
                     if(cur_match_turn == 1){
                         setPlayer1Name();
@@ -275,21 +287,24 @@ void GPGSManager::ShowMatchInbox()
                         cocos2d::Director::getInstance()->getEventDispatcher()->dispatchCustomEvent("enterWagonSelect_2");
                     }
                     else if(cur_match_turn >=3){
+                        LOGI("curmatchturn is %d",cur_match_turn);
                         cocos2d::Director::getInstance()->getEventDispatcher()->dispatchCustomEvent("enterGame");
                     }
                     else
                     {
                         LOGI("Current_match_turn is a invalid number ====>>>%d", cur_match_turn);
-                        std::string err = "Current_match_turn is a invalid number : %d" + cocos2d::Value((int)cur_match_turn).asString();
-                        NoTouchLayer* notouchlayer = ((NoTouchLayer*)(cocos2d::Director::getInstance()->getRunningScene()->getChildByTag(NOTOUCHTAG)));
-                        if(notouchlayer)
-                            notouchlayer->setError(err);
+//                        std::string err = "Current_match_turn is a invalid number : %d" + cocos2d::Value((int)cur_match_turn).asString();
+//                        NoTouchLayer* notouchlayer = ((NoTouchLayer*)(cocos2d::Director::getInstance()->getRunningScene()->getChildByTag(NOTOUCHTAG)));
+//                        if(notouchlayer)
+//                            notouchlayer->setError(err);
                     }
                 }
                     break;
                 case gpg::MatchStatus::COMPLETED:
                     //Manage match with dismiss, rematch options
                     LOGI("Completed...By Jacky");
+                   cocos2d::Director::getInstance()->getEventDispatcher()->dispatchCustomEvent("showItsCompletedPopWindow");
+                     //cocos2d::Director::getInstance()->getEventDispatcher()->dispatchCustomEvent("TakeTurnSuccess");
                     break;
                 case gpg::MatchStatus::EXPIRED:
                 default:
@@ -297,9 +312,9 @@ void GPGSManager::ShowMatchInbox()
                     LOGI("Expired & default...By Jacky");
                     
                     //add notouch layer.
-                    auto notouchlayer = NoTouchLayer::create();
-                    notouchlayer->setTag(NOTOUCHTAG);
-                    cocos2d::Director::getInstance()->getRunningScene()->addChild(notouchlayer,100);
+//                    auto notouchlayer = NoTouchLayer::create();
+//                    notouchlayer->setTag(NOTOUCHTAG);
+//                    cocos2d::Director::getInstance()->getRunningScene()->addChild(notouchlayer,100);
                     //enter game
                     current_match_ = response.match;
                     ParseMatchData();
@@ -371,9 +386,6 @@ void GPGSManager::ConfirmPendingCompletion()
                                                      LOGI("Remathing the game...By Jacky");
                                                      if (matchResponse.status == gpg::MultiplayerStatus::VALID) {
                                                          LOGI("ReMatch the game...By Jacky");
-                                                         //ConfirmPendingCompletion...
-                                                         //PlayGame(matchResponse.match);
-                                                         LOGI("ConfirmPendingCompletion success................xxxxxxxx");
                                                      }
                                                  });
 }
@@ -438,6 +450,9 @@ void GPGSManager::ParseMatchData()
 
 void GPGSManager::TakeTurn(const bool winning, const bool losing)
 {
+    cocos2d::Director::getInstance()->getEventDispatcher()->dispatchCustomEvent("gameshowpopwindowlistener");
+    cocos2d::Director::getInstance()->getEventDispatcher()->dispatchCustomEvent("wagonselectshowpopwindowlistener");
+    
     LOGI("StarTakeTurn...0");
     gpg::TurnBasedMultiplayerManager& manager = gameServices->TurnBasedMultiplayer();
     gpg::PlayerManager::FetchSelfResponse localPlayer = gameServices->Players().FetchSelfBlocking();
@@ -496,10 +511,11 @@ void GPGSManager::TakeTurn(const bool winning, const bool losing)
                               gpg::TurnBasedMultiplayerManager::TurnBasedMatchResponse const &
                               response) {
                                LOGI("Took turn");
-                               NoTouchLayer* notouchLayer =((NoTouchLayer*)(cocos2d::Director::getInstance()->getRunningScene()->getChildByTag(NOTOUCHTAG)));
-                               if(notouchLayer)
-                                   notouchLayer->setError("Success!");
-                               cocos2d::Director::getInstance()->getEventDispatcher()->dispatchCustomEvent("returntoMenu");
+//                               NoTouchLayer* notouchLayer =((NoTouchLayer*)(cocos2d::Director::getInstance()->getRunningScene()->getChildByTag(NOTOUCHTAG)));
+//                               if(notouchLayer)
+//                                   notouchLayer->setError("Success!");
+                               cocos2d::Director::getInstance()->getEventDispatcher()->dispatchCustomEvent("TakeTurnSuccess");
+                               //cocos2d::Director::getInstance()->getEventDispatcher()->dispatchCustomEvent("returntoMenu");
                            });
         return ;
     }
@@ -519,10 +535,11 @@ void GPGSManager::TakeTurn(const bool winning, const bool losing)
                                       gpg::TurnBasedMultiplayerManager::TurnBasedMatchResponse const &
                                       response) {
                                    LOGI("Took turn");
-                                   NoTouchLayer* notouchLayer =((NoTouchLayer*)(cocos2d::Director::getInstance()->getRunningScene()->getChildByTag(NOTOUCHTAG)));
-                                   if(notouchLayer)
-                                       notouchLayer->setError("Success!");
-                                   cocos2d::Director::getInstance()->getEventDispatcher()->dispatchCustomEvent("returntoMenu");
+//                                   NoTouchLayer* notouchLayer =((NoTouchLayer*)(cocos2d::Director::getInstance()->getRunningScene()->getChildByTag(NOTOUCHTAG)));
+//                                   if(notouchLayer)
+//                                       notouchLayer->setError("Success!");
+                                   cocos2d::Director::getInstance()->getEventDispatcher()->dispatchCustomEvent("TakeTurnSuccess");
+//                                   cocos2d::Director::getInstance()->getEventDispatcher()->dispatchCustomEvent("returntoMenu");
                                });
             break;
         case NEXT_PARTICIPANT_AUTOMATCH:
@@ -532,16 +549,17 @@ void GPGSManager::TakeTurn(const bool winning, const bool losing)
                                                   gpg::TurnBasedMultiplayerManager::TurnBasedMatchResponse const &
                                                   response) {
                                                LOGI("Took turn");
-                                               NoTouchLayer* notouchLayer =((NoTouchLayer*)(cocos2d::Director::getInstance()->getRunningScene()->getChildByTag(NOTOUCHTAG)));
-                                               if(notouchLayer)
-                                                   notouchLayer->setError("Success!");
-                                               cocos2d::Director::getInstance()->getEventDispatcher()->dispatchCustomEvent("returntoMenu");
+//                                               NoTouchLayer* notouchLayer =((NoTouchLayer*)(cocos2d::Director::getInstance()->getRunningScene()->getChildByTag(NOTOUCHTAG)));
+//                                               if(notouchLayer)
+//                                                   notouchLayer->setError("Success!");
+                                               cocos2d::Director::getInstance()->getEventDispatcher()->dispatchCustomEvent("TakeTurnSuccess");
+//                                               cocos2d::Director::getInstance()->getEventDispatcher()->dispatchCustomEvent("returntoMenu");
                                            });
             break;
         case NEXT_PARTICIPANT_NONE:
             //Error case
             manager.DismissMatch(current_match_);
-            cocos2d::Director::getInstance()->replaceScene(MainScreenScene::createScene());
+            cocos2d::Director::getInstance()->replaceScene(MainScreenScene::createScene(false));
             break;
     }
     

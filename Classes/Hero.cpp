@@ -9,8 +9,12 @@
 #include "Hero.h"
 #include <algorithm>
 #include "SimpleAudioEngine.h"
+#include "GameScene.h"
+#include "GPGSChecker.h"
 
 USING_NS_CC;
+
+extern GameScene* g_GameScene;
 
 Hero* Hero::create(Side side /*= Myself*/,Body body/* = BOY*/, Wagon wagon/* = HORSEY*/, bool isfacetoright/* = true*/ ,std::string name)
 {
@@ -512,11 +516,27 @@ int Hero::hurt(int t_hurt)
                                                 MoveBy::create(0.1, Point(0, -10)),
                                                 MoveBy::create(0.1, Point(0, 5)),
                                                 NULL));
+        if (_lasthp<=5) {
+            if (g_GameScene != nullptr) {
+                if (g_GameScene->_playback) {
+                    if(g_GameScene->getCurrentPlayer() != this)
+                    {
+                        GPGSChecker::getInstance()->checkInvincible();
+                    }
+                }
+                else
+                {
+                    if(g_GameScene->getCurrentPlayer() == this)
+                    {
+                        GPGSChecker::getInstance()->checkInvincible();
+                    }
+                }
+            }
+        }
 
     }
     else
     {
-        log("dddddd");
         _lasthp = 0;
         _hpInnerBar->setPercentage(0);
         _hpBarBack->runAction(ProgressTo::create(1,_lasthp));
@@ -543,7 +563,6 @@ void Hero::updateAngle(int angle){
 }
 
 void Hero::update(float delta){
-    log("angle dddd:%f",aim->getWorldAngle());
     int angle = abs(aim->getWorldAngle());
     if(angle >= 270){
         angle -= 360;

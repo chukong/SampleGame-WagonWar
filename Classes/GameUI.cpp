@@ -260,7 +260,7 @@ bool PlayBackIndictaor::init(){
     turnTTFConfig.outlineSize = 3;
     turnTTFConfig.fontSize = 25;
     turnTTFConfig.fontFilePath = "fonts/britanic bold.ttf";
-    _turnInfoLabel = Label::createWithTTF(turnTTFConfig, "PLAYBACK ENEMY‘S TURN", TextHAlignment::CENTER, 400);
+    _turnInfoLabel = Label::createWithTTF(turnTTFConfig, "PLAYBACK ENEMY‘S TURN", TextHAlignment::CENTER, 500);
     _turnInfoLabel->setAnchorPoint(Point::ANCHOR_MIDDLE_LEFT);
     _turnInfoLabel->setPosition(-310, 105);
     _turnInfoLabel->setSpacing(-5);

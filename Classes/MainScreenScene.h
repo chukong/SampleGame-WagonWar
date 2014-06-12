@@ -17,11 +17,11 @@ class MainScreenScene: public cocos2d::Layer
 {
 public:
     
-    static cocos2d::Scene* createScene();
+    static cocos2d::Scene* createScene(bool _isShowMatchInBoxUI);
     
-    virtual bool init();
+    virtual bool init(bool _isShowMatchInBoxUI);
     
-    CREATE_FUNC(MainScreenScene);
+    static MainScreenScene* create(bool _isShowMatchInBoxUI);
     
     void quickmatch_callback(cocos2d::Ref* pSender);
     void invitefriend_callback(cocos2d::Ref* pSender);
@@ -41,6 +41,25 @@ public:
     
     void enterGame();
     void enterGameWithDelay(float dt);
+    
+    void showConnectingPopWindow();
+    void showConnectingPopWindowWithDelay(float dt);
+    
+    void showInviteFailedPopWindow();
+    void showInviteFailedPopWindowWithDelay(float dt);
+    
+    void showInviteSuccessPopWindow();
+    void showInviteSuccessPopWindowWithDelay(float dt);
+    
+    void showNotYourTurnPopWindow();
+    void showNotYourTurnPopWindowWithDelay(float dt);
+
+    void showItsCompletedPopWindow();
+    void showItsCompletedPopWindowWithDelay(float dt);
+    
+    void show_mygames(float dt);
+    
+    void loadingRes();
     
 private:
     
