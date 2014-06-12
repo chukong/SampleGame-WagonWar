@@ -20,8 +20,11 @@
 #include "SimpleAudioEngine.h"
 #include "VisibleRect.h"
 #include "PopWindow.h"
+#include "GPGSChecker.h"
 
 USING_NS_CC;
+
+GameScene* g_GameScene;
 
 Scene* GameScene::createScene()
 {
@@ -43,6 +46,8 @@ Scene* GameScene::createScene()
 
 bool GameScene::init()
 {
+    g_GameScene = this;
+    
     auto visibleSize = Director::getInstance()->getVisibleSize();
     auto offset = Point(visibleSize/2);
     
@@ -586,6 +591,9 @@ void GameScene::explode(Bullet *bullet, Hero* hero)
     float damage = bullet->getConfig().damage;
     bullet->runAction(RemoveSelf::create());
     
+    bool is_player1_hurt = false;
+    bool is_player2_hurt = false;
+    
     //check to see if player got caught in the blast
     for(Node* player : _PlayerLayer->getChildren())
     {
@@ -612,6 +620,16 @@ void GameScene::explode(Bullet *bullet, Hero* hero)
                     else
                     {
                         p->hurt(damage);
+                        if(getCurrentPlayer() == p)
+                        {
+                            GPGSChecker::getInstance()->checkMasochist();
+                            is_player1_hurt = true;
+                        }
+                        else
+                        {
+                            GPGSChecker::getInstance()->chcekFirstBlood();
+                            is_player2_hurt = true;
+                        }
                     }
                     showBloodLossNum(p, damage);
                 }
@@ -649,9 +667,23 @@ void GameScene::explode(Bullet *bullet, Hero* hero)
                     else
                     {
                         p->hurt((damage*((float)(exRad + p->radius -dist)/(float)(exRad +p->radius))));
+                        if(getCurrentPlayer() == p)
+                        {
+                            GPGSChecker::getInstance()->checkMasochist();
+                            is_player1_hurt = true;
+                        }
+                        else
+                        {
+                            GPGSChecker::getInstance()->chcekFirstBlood();
+                            is_player2_hurt = true;
+                        }
                     }
                     showBloodLossNum(p, damage*((float)(exRad-dist)/(float)exRad));
                 }
+            }
+            
+            if (is_player1_hurt && is_player2_hurt) {
+                GPGSChecker::getInstance()->checkCollateralDamage();
             }
         }
     }
@@ -980,6 +1012,10 @@ void GameScene::update(float dt)
                     _isWentOut = true;
                     p->hurt(p->_lasthp);
                     p->setVisible(false);
+                    if(getCurrentPlayer() != p && !_playback)
+                    {
+                        GPGSChecker::getInstance()->checkBanger();
+                    }
                 }
             }
         }
@@ -1036,10 +1072,13 @@ void GameScene::playerdead(EventCustom* event)
     if (!_playback) {
         if (hero == getCurrentPlayer()) {
             saveMatchData(false, true);
+            GPGSChecker::getInstance()->checkSuicidal();
         }
         else
         {
             saveMatchData(true, false);
+            GPGSChecker::getInstance()->checkFirstVictory();
+            GPGSChecker::getInstance()->sumbitNewVictory();
         }
     }
     else

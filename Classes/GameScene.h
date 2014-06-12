@@ -78,6 +78,8 @@ public:
     void showConnectingPopWindow();
     void showConnectingPopWindowWithDelay(float dt);
     
+    bool _playback;
+    
     std::string tempjson;
 protected:
     void printMyTurn();
@@ -86,7 +88,6 @@ protected:
     void buildMyTurn();
     int _tick;
     int _tickPre;
-    bool _playback;
     bool _waitToClear;
     cocos2d::Node* _following;
     cocos2d::Point _offset;
