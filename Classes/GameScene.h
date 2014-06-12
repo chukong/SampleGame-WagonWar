@@ -106,6 +106,7 @@ protected:
     bool over;
     
     bool _isWentOut;
+    float incre;
 };
 
 #endif /* defined(__TankMultiplayer__GameScene__) */
