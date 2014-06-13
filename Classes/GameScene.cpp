@@ -367,7 +367,7 @@ void GameScene::onEnter()
     
     std::string playerTurn6 = "{\"turn\":3,\"player1\":{\"name\":\"Hao Wu\",\"wagon\":2,\"male\":true,\"hp\":300,\"posx\":575.099,\"posy\":559.174,\"shootangle\":-2.08812,\"facing\":\"right\",\"rot\":0},\"windx\":0.0212713,\"windy\":0.00225526,\"explosions\":[{\"x\":1003.26,\"y\":536.647,\"size\":64}],\"actions\":[{\"tick\":174,\"action\":\"start angle\",\"value\":4},{\"tick\":220,\"action\":\"end angle\",\"value\":-2},{\"tick\":409,\"action\":\"start shoot\"},{\"tick\":481,\"action\":\"end shoot\"}],\"player2\":{\"name\":\"Chenhui Lin\",\"wagon\":0,\"male\":false,\"hp\":259,\"posx\":1047.09,\"posy\":583.947,\"shootangle\":-81.2836,\"facing\":\"left\",\"rot\":0}}";
     
-    std::string playerTurn7 = "{\"turn\":2,\"player1\":{\"name\":\"Chenhui Lin\",\"wagon\":1,\"male\":true,\"hp\":300,\"posx\":229,\"posy\":513,\"rot\":0,\"shootangle\":\"\",\"facing\":\"right\"},\"windx\":-0.008853,\"windy\":0.00858232,\"explosions\":[],\"actions\":[{\"tick\":147,\"action\":\"start shoot\"},{\"tick\":202,\"action\":\"end shoot\"}],\"player2\":{\"name\":\"Hao Wu\",\"wagon\":3,\"male\":true,\"hp\":300,\"posx\":1443,\"posy\":509,\"rot\":0,\"shootangle\":231.237,\"facing\":\"left\"}}";
+    std::string playerTurn7 = "{\"turn\":2,\"player1\":{\"name\":\"Chenhui Lin\",\"wagon\":3,\"male\":true,\"hp\":300,\"posx\":229,\"posy\":513,\"rot\":0,\"shootangle\":\"\",\"facing\":\"right\"},\"windx\":-0.008853,\"windy\":0.00858232,\"explosions\":[],\"actions\":[{\"tick\":147,\"action\":\"start shoot\"},{\"tick\":202,\"action\":\"end shoot\"}],\"player2\":{\"name\":\"Hao Wu\",\"wagon\":3,\"male\":true,\"hp\":300,\"posx\":1443,\"posy\":509,\"rot\":0,\"shootangle\":231.237,\"facing\":\"left\"}}";
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
     playback(g_gameConfig.match_string);
@@ -632,9 +632,8 @@ void GameScene::explode(Bullet *bullet, Hero* hero)
     }
     if(bullet->bounces)
     {
-        bullet->setLastPos(Point(bullet->getLastPos().x, bullet->getPosition().y- bullet->getLastPos().y +bullet->getPosition().y));
+        bullet->setLastPos(Point((bullet->getPosition().x- bullet->getLastPos().x)*0.3 + bullet->getPosition().x, (bullet->getPosition().y- bullet->getLastPos().y) +bullet->getPosition().y));
     }
-    
     bool is_player1_hurt = false;
     bool is_player2_hurt = false;
     
@@ -881,7 +880,7 @@ void GameScene::update(float dt)
         auto fp = _following->getPosition();
         auto tp =-fp + Point(_PlayerLayer->getContentSize()/2);
         auto cp = getPosition();
-        setPosition(cp+(tp-cp)*0.04);
+        setPosition(cp+(tp-cp)*0.12);
     }
     
     
@@ -895,7 +894,7 @@ void GameScene::update(float dt)
     
     //Point offset(aabb2.origin+getPosition());
     aabb2.origin = Point::ZERO;
-    auto bulletBoundary = Rect(aabb2.origin.x, aabb2.origin.y, aabb2.size.width, aabb2.size.height+2000);
+    auto bulletBoundary = Rect(0, 0, aabb2.size.width, aabb2.size.height+2000);
     for(Node* bullet : _bulletLayer->getChildren())
     {
         everythingSleep = false;
@@ -906,7 +905,8 @@ void GameScene::update(float dt)
         
         //check bounding box to see if the bullet is in the world
         auto aabb1 = b->getBoundingBox();
-        if(bulletBoundary.intersectsRect(aabb1))
+        if(bulletBoundary.containsPoint(Point(aabb1.origin.x,aabb1.origin.y)) &&
+           bulletBoundary.containsPoint(Point(aabb1.origin.x+aabb1.size.height, aabb1.origin.y+aabb1.size.width)))
         {
             //move this
             b->setPosition(pos+(pos-b->getLastPos())+getGravity()+getWind());
@@ -929,7 +929,8 @@ void GameScene::update(float dt)
                 }
             }
             //if we didnt collide with player, then we have to check for the terrain
-            if(aabb2.intersectsRect(aabb1) && !coll)
+            if(aabb2.containsPoint(Point(aabb1.origin.x,aabb1.origin.y)) &&
+               aabb2.containsPoint(Point(aabb1.origin.x+aabb1.size.height, aabb1.origin.y+aabb1.size.width)) && !coll)
             {
                 Point pos(b->getPosition());
                 //init a buffer size big enough to hold a square that can contain a circle with specified radius
@@ -1034,9 +1035,12 @@ void GameScene::update(float dt)
                             p->needFix = false;
                         }
                     }
+                    else{
+                        p->airborn = true;
+                    }
                     
                 }
-                if(p->moveDelta.x)
+                if(p->moveDelta.x && !p->airborn)
                 {
                     p->setPosition(p->getPosition()+p->moveDelta);
                     p->setLastPos(p->getLastPos()+p->moveDelta);
