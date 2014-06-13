@@ -259,7 +259,7 @@ bool PlayBackIndictaor::init(){
     TTFConfig turnTTFConfig;
     turnTTFConfig.outlineSize = 3;
     turnTTFConfig.fontSize = 25;
-    turnTTFConfig.fontFilePath = "fonts/britanic bold.ttf";
+    turnTTFConfig.fontFilePath = "britanic bold.ttf";
     _turnInfoLabel = Label::createWithTTF(turnTTFConfig, "PLAYBACK ENEMY‘S TURN", TextHAlignment::CENTER, 500);
     _turnInfoLabel->setAnchorPoint(Point::ANCHOR_MIDDLE_LEFT);
     _turnInfoLabel->setPosition(-310, 105);
@@ -270,7 +270,7 @@ bool PlayBackIndictaor::init(){
     TTFConfig timeTTFConfig;
     timeTTFConfig.outlineSize = 3;
     timeTTFConfig.fontSize = 25;
-    timeTTFConfig.fontFilePath = "fonts/britanic bold.ttf";
+    timeTTFConfig.fontFilePath = "britanic bold.ttf";
     _timeLabel = Label::createWithTTF(timeTTFConfig, "0'13:200", TextHAlignment::CENTER, 150);
     _timeLabel->setAnchorPoint(Point::ANCHOR_MIDDLE_RIGHT);
     _timeLabel->setPosition(350, 105);

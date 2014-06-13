@@ -45,8 +45,11 @@ public:
     void explode();
     //static BulletConfig defaultBullet;
     bool willExplode();
+    int charges;
+    bool attract;
+    int bounces;
 protected:
-    Bullet():_willExplode(false){};
+    Bullet():_willExplode(false), charges(1), attract(false), bounces(0){};
     //virtual void draw(cocos2d::Renderer *renderer, const kmMat4 &transform, bool transformUpdated);
     virtual void drawFinished();
     cocos2d::CustomCommand _customCommand;

@@ -107,11 +107,11 @@ bool GameScene::init()
 void GameScene::initListeners()
 {
     //register touches
-    auto listener = EventListenerTouchOneByOne::create();
-    listener->onTouchBegan = CC_CALLBACK_2(GameScene::onTouchBegan, this);
-    listener->onTouchEnded = CC_CALLBACK_2(GameScene::onTouchEnded, this);
-    listener->onTouchMoved = CC_CALLBACK_2(GameScene::onTouchMoved, this);
-    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
+    listenertouch = EventListenerTouchOneByOne::create();
+    listenertouch->onTouchBegan = CC_CALLBACK_2(GameScene::onTouchBegan, this);
+    listenertouch->onTouchEnded = CC_CALLBACK_2(GameScene::onTouchEnded, this);
+    listenertouch->onTouchMoved = CC_CALLBACK_2(GameScene::onTouchMoved, this);
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(listenertouch, this);
     
     //event to move left right
     auto moveListener = EventListenerCustom::create("go left", CC_CALLBACK_0(GameScene::movePlayer, this, -1));
@@ -235,6 +235,7 @@ void GameScene::startShoot()
 }
 void GameScene::endShoot()
 {
+    listenertouch->setEnabled(false);
     int tick = _tick - _tickPre;
     tick = tick>180?180:tick;
     //log("tick %d", tick);
@@ -258,9 +259,7 @@ void GameScene::endShoot()
             p->aim->setAngle(angle-p->_wagonPoint->getRotation());
         }
         _eventDispatcher->dispatchCustomEvent("dismissPower");
-        
-        
-        _waitToClear = true;
+//        _waitToClear = true;
     }
     else
     {
@@ -282,7 +281,11 @@ void GameScene::endShoot()
         
         _myturn["actions"].PushBack(value, allocator);
         _eventDispatcher->dispatchCustomEvent("touch off");
-        _waitToClear = true;
+        
+        ((GameUI*)(getParent()->getChildByTag(76)))->_controlBoard->runAction(EaseBackIn::create(MoveTo::create(0.5, Point(g_visibleRect.visibleWidth/2 + g_visibleRect.visibleOriginX, -120))));
+        getCurrentPlayer()->hideAimer();
+        
+//        _waitToClear = true;
         
     }
     //log("angle %f", angle);
@@ -290,26 +293,62 @@ void GameScene::endShoot()
     {
         case Wagon::TANK:
         {
-            auto b = addBullet(tankB, Point(gunlocation.tx, gunlocation.ty)+Point(offset/2)-getPosition(), Point(tick/60.0f*8*cosf(CC_DEGREES_TO_RADIANS(-angle)), tick/60.0f*8*sinf(CC_DEGREES_TO_RADIANS(-angle))));
-            _following = dynamic_cast<Node*>(b);
+            auto fire = [=](){
+                auto b = addBullet(tankB, Point(gunlocation.tx, gunlocation.ty)+Point(offset/2)-getPosition(), Point(tick/60.0f*8*cosf(CC_DEGREES_TO_RADIANS(-angle)), tick/60.0f*8*sinf(CC_DEGREES_TO_RADIANS(-angle))));
+                _following = dynamic_cast<Node*>(b);
+                CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("tankshoot.mp3");
+            };
+            runAction(Sequence::create(DelayTime::create(0.5), CallFunc::create(fire), nullptr));
             break;
         }
         case Wagon::ROCK:
         {
-            auto b = addBullet(rockB, Point(gunlocation.tx, gunlocation.ty)+Point(offset/2)-getPosition(), Point(tick/60.0f*8*cosf(CC_DEGREES_TO_RADIANS(-angle)), tick/60.0f*8*sinf(CC_DEGREES_TO_RADIANS(-angle))));
-            _following = dynamic_cast<Node*>(b);
+            incre = -1.5;
+            auto fire = [=](){
+                float powpercent = 20.0;
+                float angMultiplier = 3.5;
+                float powx = tick/60.0f*8*cosf(CC_DEGREES_TO_RADIANS(-angle+incre*angMultiplier)) * (powpercent- abs(incre))/powpercent;
+                float powy = tick/60.0f*8*sinf(CC_DEGREES_TO_RADIANS(-angle+incre*angMultiplier)) * (powpercent- abs(incre))/powpercent;
+                addBullet(rockB, Point(gunlocation.tx, gunlocation.ty)+Point(offset/2)-getPosition(), Point(powx, powy));
+                incre++;
+                powx = tick/60.0f*8*cosf(CC_DEGREES_TO_RADIANS(-angle+incre*angMultiplier)) * (powpercent- abs(incre))/powpercent;
+                powy = tick/60.0f*8*sinf(CC_DEGREES_TO_RADIANS(-angle+incre*angMultiplier)) * (powpercent- abs(incre))/powpercent;
+                addBullet(rockB, Point(gunlocation.tx, gunlocation.ty)+Point(offset/2)-getPosition(), Point(powx, powy));
+                incre++;
+                powx = tick/60.0f*8*cosf(CC_DEGREES_TO_RADIANS(-angle+incre*angMultiplier)) * (powpercent- abs(incre))/powpercent;
+                powy = tick/60.0f*8*sinf(CC_DEGREES_TO_RADIANS(-angle+incre*angMultiplier)) * (powpercent- abs(incre))/powpercent;
+                addBullet(rockB, Point(gunlocation.tx, gunlocation.ty)+Point(offset/2)-getPosition(), Point(powx, powy));
+                incre++;
+                powx = tick/60.0f*8*cosf(CC_DEGREES_TO_RADIANS(-angle+incre*angMultiplier)) * (powpercent- abs(incre))/powpercent;
+                powy = tick/60.0f*8*sinf(CC_DEGREES_TO_RADIANS(-angle+incre*angMultiplier)) * (powpercent- abs(incre))/powpercent;
+                auto b = addBullet(rockB, Point(gunlocation.tx, gunlocation.ty)+Point(offset/2)-getPosition(), Point(powx, powy));
+                _following = dynamic_cast<Node*>(b);
+                incre++;
+                CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("rockshoot.mp3");
+            };
+            
+            runAction(Sequence::create(DelayTime::create(1.2), CallFunc::create(fire), nullptr));
+
             break;
         }
         case Wagon::HORSEY:
         {
-            auto b = addBullet(horseyB, Point(gunlocation.tx, gunlocation.ty)+Point(offset/2)-getPosition(), Point(tick/60.0f*8*cosf(CC_DEGREES_TO_RADIANS(-angle)), tick/60.0f*8*sinf(CC_DEGREES_TO_RADIANS(-angle))));
-            _following = dynamic_cast<Node*>(b);
+            auto fire = [=](){
+                auto b = addBullet(horseyB, Point(gunlocation.tx, gunlocation.ty)+Point(offset/2)-getPosition(), Point(tick/60.0f*8*cosf(CC_DEGREES_TO_RADIANS(-angle)), tick/60.0f*8*sinf(CC_DEGREES_TO_RADIANS(-angle))));
+                _following = dynamic_cast<Node*>(b);
+                CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("horseyshoot.mp3");
+            };
+            runAction(Sequence::create(DelayTime::create(1.2), CallFunc::create(fire), nullptr));
             break;
         }
         case Wagon::MECH:
         {
-            auto b = addBullet(mechB, Point(gunlocation.tx, gunlocation.ty)+Point(offset/2)-getPosition(), Point(tick/60.0f*8*cosf(CC_DEGREES_TO_RADIANS(-angle)), tick/60.0f*8*sinf(CC_DEGREES_TO_RADIANS(-angle))));
-            _following = dynamic_cast<Node*>(b);
+            auto fire = [=](){
+                CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("mechshoot.mp3");
+                auto b = addBullet(mechB, Point(gunlocation.tx, gunlocation.ty)+Point(offset/2)-getPosition(), Point(tick/60.0f*8*cosf(CC_DEGREES_TO_RADIANS(-angle)), tick/60.0f*8*sinf(CC_DEGREES_TO_RADIANS(-angle))));
+                _following = dynamic_cast<Node*>(b);
+            };
+            runAction(Sequence::create(DelayTime::create(1.2), CallFunc::create(fire), nullptr));
             break;
         }
         default:
@@ -339,7 +378,7 @@ void GameScene::onEnter()
     
     std::string playerTurn6 = "{\"turn\":3,\"player1\":{\"name\":\"Hao Wu\",\"wagon\":2,\"male\":true,\"hp\":300,\"posx\":575.099,\"posy\":559.174,\"shootangle\":-2.08812,\"facing\":\"right\",\"rot\":0},\"windx\":0.0212713,\"windy\":0.00225526,\"explosions\":[{\"x\":1003.26,\"y\":536.647,\"size\":64}],\"actions\":[{\"tick\":174,\"action\":\"start angle\",\"value\":4},{\"tick\":220,\"action\":\"end angle\",\"value\":-2},{\"tick\":409,\"action\":\"start shoot\"},{\"tick\":481,\"action\":\"end shoot\"}],\"player2\":{\"name\":\"Chenhui Lin\",\"wagon\":0,\"male\":false,\"hp\":259,\"posx\":1047.09,\"posy\":583.947,\"shootangle\":-81.2836,\"facing\":\"left\",\"rot\":0}}";
     
-    std::string playerTurn7 = "{\"turn\":2,\"player1\":{\"name\":\"Chenhui Lin\",\"wagon\":2,\"male\":true,\"hp\":300,\"posx\":229,\"posy\":513,\"rot\":0,\"shootangle\":\"\",\"facing\":\"right\"},\"windx\":-0.008853,\"windy\":0.00858232,\"explosions\":[],\"actions\":[{\"tick\":147,\"action\":\"start shoot\"},{\"tick\":202,\"action\":\"end shoot\"}],\"player2\":{\"name\":\"Hao Wu\",\"wagon\":2,\"male\":true,\"hp\":300,\"posx\":1443,\"posy\":509,\"rot\":0,\"shootangle\":231.237,\"facing\":\"left\"}}";
+    std::string playerTurn7 = "{\"turn\":2,\"player1\":{\"name\":\"Chenhui Lin\",\"wagon\":1,\"male\":true,\"hp\":300,\"posx\":229,\"posy\":513,\"rot\":0,\"shootangle\":\"\",\"facing\":\"right\"},\"windx\":-0.008853,\"windy\":0.00858232,\"explosions\":[],\"actions\":[{\"tick\":147,\"action\":\"start shoot\"},{\"tick\":202,\"action\":\"end shoot\"}],\"player2\":{\"name\":\"Hao Wu\",\"wagon\":3,\"male\":true,\"hp\":300,\"posx\":1443,\"posy\":509,\"rot\":0,\"shootangle\":231.237,\"facing\":\"left\"}}";
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
     playback(g_gameConfig.match_string);
@@ -526,6 +565,8 @@ void GameScene::onTouchEnded(Touch* touch, Event* event)
 }
 Bullet* GameScene::addBullet(BulletTypes type, cocos2d::Point pos, cocos2d::Point vector)
 {
+    listenertouch->setEnabled(true);
+            _waitToClear = true;
     auto b = Bullet::create(type, pos, vector);
     _bulletLayer->addChild(b);
     return b;
@@ -559,7 +600,6 @@ void GameScene::printMyTurn()
 void GameScene::explode(Bullet *bullet, Hero* hero)
 {
     CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("explosion.mp3");
-    _following = nullptr;
     auto pos = bullet->getPosition();
     
     //spawn dirts
@@ -614,7 +654,16 @@ void GameScene::explode(Bullet *bullet, Hero* hero)
     
     float exRad =bullet->getConfig().expRadius;
     float damage = bullet->getConfig().damage;
-    bullet->runAction(RemoveSelf::create());
+    bullet->charges--;
+    if(bullet->charges <=0)
+    {
+            _following = nullptr;
+        bullet->runAction(RemoveSelf::create());
+    }
+    if(bullet->bounces)
+    {
+        bullet->setLastPos(Point(bullet->getLastPos().x, bullet->getPosition().y- bullet->getLastPos().y +bullet->getPosition().y));
+    }
     
     bool is_player1_hurt = false;
     bool is_player2_hurt = false;
@@ -663,6 +712,7 @@ void GameScene::explode(Bullet *bullet, Hero* hero)
                 
                 float rad = (ppos-pos).getAngle();
                 float pushForce = (exRad - dist)*0.05;
+                pushForce = bullet->attract? -pushForce: pushForce;
                 Point mid(ppos.x-pushForce*cosf(rad), ppos.y-pushForce*sinf(rad));
                 log("b pos %f, %f | m pos %f, %f", (pos-ppos).x, (pos-ppos).y, (mid-ppos).x, (mid-ppos).y);
                 p->setLastPos(mid);
@@ -672,7 +722,8 @@ void GameScene::explode(Bullet *bullet, Hero* hero)
                 p->airborn = true;
                 
                 float rad = (ppos-pos).getAngle();
-                float pushForce = (exRad - dist)*0.05;
+                float pushForce = (exRad - dist) *0.05;
+                pushForce = bullet->attract? -pushForce: pushForce;
                 Point mid(ppos.x-pushForce*cosf(rad), ppos.y-pushForce*sinf(rad));
                 log("b pos %f, %f | m pos %f, %f", (pos-ppos).x, (pos-ppos).y, (mid-ppos).x, (mid-ppos).y);
                 p->setLastPos(mid);
@@ -682,11 +733,11 @@ void GameScene::explode(Bullet *bullet, Hero* hero)
                     {
                         if(p->getTag() == TAG_MYSELF)
                         {
-                            _myturn["player1"]["hp"].SetInt(p->hurt(damage*((float)(exRad + p->radius -dist)/(float)(exRad +p->radius))));
+                            _myturn["player1"]["hp"].SetInt(p->hurt(abs(damage*((float)(exRad + p->radius -dist)/(float)(exRad +p->radius)))));
                         }
                         else
                         {
-                            _myturn["player2"]["hp"].SetInt(p->hurt(damage*((float)(exRad + p->radius -dist)/(float)(exRad +p->radius))));
+                            _myturn["player2"]["hp"].SetInt(p->hurt(abs(damage*((float)(exRad + p->radius -dist)/(float)(exRad +p->radius)))));
                         }
                     }
                     else
@@ -893,15 +944,18 @@ void GameScene::update(float dt)
             b->setRotation(-CC_RADIANS_TO_DEGREES((b->getLastPos()-b->getPosition()).getAngle()));
             
             //check if we are colliding with a player
-            for(Node *player : _PlayerLayer->getChildren())
+            if(!b->attract)//if bullet is attract mode, then don't collide with player
             {
-                Hero* p = dynamic_cast<Hero*>(player);
-                if(b->getPosition().getDistance(p->getPosition()) < bulletRadius + p->radius)
+                for(Node *player : _PlayerLayer->getChildren())
                 {
-                    explode(b, p);
-                    coll = true;
-                    log("collide with player");
-                    break;
+                    Hero* p = dynamic_cast<Hero*>(player);
+                    if(b->getPosition().getDistance(p->getPosition()) < bulletRadius + p->radius)
+                    {
+                        explode(b, p);
+                        coll = true;
+                        log("collide with player");
+                        break;
+                    }
                 }
             }
             //if we didnt collide with player, then we have to check for the terrain
@@ -1164,8 +1218,8 @@ void GameScene::saveMatchData(bool win, bool lose)
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
     runAction(Sequence::create(CallFunc::create([=]()
                                                 {
-                                                    ((GameUI*)(getParent()->getChildByTag(76)))->_controlBoard->runAction(EaseBackIn::create(MoveTo::create(0.5, Point(g_visibleRect.visibleWidth/2 + g_visibleRect.visibleOriginX, -120))));
-                                                    getCurrentPlayer()->hideAimer();
+//                                                    ((GameUI*)(getParent()->getChildByTag(76)))->_controlBoard->runAction(EaseBackIn::create(MoveTo::create(0.5, Point(g_visibleRect.visibleWidth/2 + g_visibleRect.visibleOriginX, -120))));
+//                                                    getCurrentPlayer()->hideAimer();
                                                 }),
                                DelayTime::create(delaytotaketurntime),
                                CallFunc::create([=](){GPGSManager::TakeTurn(win, lose);}),
@@ -1189,46 +1243,68 @@ void GameScene::saveMatchData(bool win, bool lose)
 
 void GameScene::showBloodLossNum(Hero* hero, int num)
 {
-    TTFConfig turnTTFConfig;
-    turnTTFConfig.outlineSize = 7;
-    turnTTFConfig.fontSize = 50;
-    turnTTFConfig.fontFilePath = "fonts/britanic bold.ttf";
-    auto  label = Label::createWithTTF(turnTTFConfig, Value(num).asString(), TextHAlignment::CENTER, 400);
-    label->setAnchorPoint(Point::ANCHOR_MIDDLE);
-    label->setSpacing(-5);
-    label->enableOutline(Color4B::BLACK);
-    label->setOpacity(50);
-    label->setScale(-10.01f);
-    hero->addChild(label);
-    label->setPosition(0, 70);
-    label->setRotation(CCRANDOM_MINUS1_1()*20);
-    
-    auto targetScale = 1.0f;
-    if(num > 200)
+    if(!_isBloodLabelShowing)
     {
-        label->setColor(Color3B::RED);
-    }
-    else if(num > 100)
-    {
-        label->setColor(Color3B(250,121,65));
-        targetScale = 0.75f;
+        _isBloodLabelShowing = true;
+        TTFConfig turnTTFConfig;
+        turnTTFConfig.outlineSize = 7;
+        turnTTFConfig.fontSize = 50;
+        turnTTFConfig.fontFilePath = "britanic bold.ttf";
+        bloodLossLabel = Label::createWithTTF(turnTTFConfig, Value(num).asString(), TextHAlignment::CENTER, 400);
+        bloodLossLabel->setAnchorPoint(Point::ANCHOR_MIDDLE);
+        bloodLossLabel->setSpacing(-5);
+        bloodLossLabel->enableOutline(Color4B::BLACK);
+        bloodLossLabel->setOpacity(50);
+        bloodLossLabel->setScale(-10.01f);
+        hero->addChild(bloodLossLabel);
+        bloodLossLabel->setPosition(0, 70);
+        bloodLossLabel->setRotation(CCRANDOM_MINUS1_1()*20);
+        
+        auto targetScale = 1.0f;
+        if(num > 200)
+        {
+            bloodLossLabel->setColor(Color3B::RED);
+        }
+        else if(num > 100)
+        {
+            bloodLossLabel->setColor(Color3B(250,121,65));
+            targetScale = 0.75f;
+        }
+        else
+        {
+            bloodLossLabel->setColor(Color3B(250,191,65));
+            targetScale = 0.5f;
+        }
+        
+        bloodLossLabel->runAction(FadeIn::create(0.3));
+        bloodLossLabel->runAction(Sequence::create(
+                                          EaseElasticOut::create(ScaleTo::create(1.3f,targetScale)),
+                                          DelayTime::create(2.0f),
+                                          FadeOut::create(0.5f),
+                                          RemoveSelf::create(),
+                                          CallFunc::create([=](){_isBloodLabelShowing = false;}),
+                                          nullptr));
+        bloodLossLabel->runAction(MoveBy::create(3.8, Point(0, 50)));
+        bloodLossLabel->runAction(RotateBy::create(3.8, CCRANDOM_MINUS1_1()*40));
     }
     else
     {
-        label->setColor(Color3B(250,191,65));
-        targetScale = 0.5f;
+        int old_num = Value(bloodLossLabel->getString()).asInt();
+        int new_num = old_num + num;
+        if(new_num > 200)
+        {
+            bloodLossLabel->setColor(Color3B::RED);
+        }
+        else if(new_num > 100)
+        {
+            bloodLossLabel->setColor(Color3B(250,121,65));
+        }
+        else
+        {
+            bloodLossLabel->setColor(Color3B(250,191,65));
+        }
+        bloodLossLabel->setString(Value(new_num).asString());
     }
-    
-    label->runAction(FadeIn::create(0.3));
-    label->runAction(Sequence::create(
-                                    EaseElasticOut::create(ScaleTo::create(1.3f,targetScale)),
-                                      DelayTime::create(2.0f),
-                                      FadeOut::create(0.5f),
-                                      RemoveSelf::create(),
-                                      nullptr));
-    label->runAction(MoveBy::create(3.8, Point(0, 50)));
-    label->runAction(RotateBy::create(3.8, CCRANDOM_MINUS1_1()*40));
-    
 }
 
 void GameScene::showWinOrLose(bool isWin)

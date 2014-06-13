@@ -96,7 +96,8 @@ protected:
     //timeval _now;
     cocos2d::Size _movableSize;
     void _movePlayer(float x);
-    GameScene():_waitToClear(false),_playback(false),_click(false),_steps(2),_following(nullptr),_tick(0),_replay(nullptr),_myturn(nullptr),win(false), lost(false), over(false),_isFirstAction(false){g_gameConfig.isInGame = true;};
+    GameScene():_waitToClear(false),_playback(false),_click(false),_steps(2),_following(nullptr),
+    _tick(0),_replay(nullptr),_myturn(nullptr),win(false), lost(false), over(false),_isFirstAction(false),_isBloodLabelShowing(false){g_gameConfig.isInGame = true;};
     ~GameScene(){g_gameConfig.isInGame = false;};
     bool _click;
     int _steps;
@@ -108,6 +109,10 @@ protected:
     bool over;
     
     bool _isWentOut;
+    float incre;
+    bool _isBloodLabelShowing;
+    cocos2d::Label* bloodLossLabel;
+    cocos2d::EventListenerTouchOneByOne* listenertouch;
 };
 
 #endif /* defined(__TankMultiplayer__GameScene__) */

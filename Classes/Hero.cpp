@@ -151,7 +151,7 @@ bool Hero::init(Side side, Body body, Wagon wagon, bool isfacetoright, std::stri
     TTFConfig ttfConfig;
     ttfConfig.outlineSize = 5;
     ttfConfig.fontSize = 20;
-    ttfConfig.fontFilePath = "fonts/arial.ttf";
+    ttfConfig.fontFilePath = "arial.ttf";
     _nameLabel = Label::createWithTTF(ttfConfig, name.c_str(), TextHAlignment::CENTER, 200);
     _nameLabel->setPositionY(-50);
     _nameLabel->setSpacing(-5);
@@ -168,7 +168,7 @@ bool Hero::init(Side side, Body body, Wagon wagon, bool isfacetoright, std::stri
     TTFConfig angleTTFConfig;
     angleTTFConfig.outlineSize = 4;
     angleTTFConfig.fontSize = 18;
-    angleTTFConfig.fontFilePath = "fonts/arial.ttf";
+    angleTTFConfig.fontFilePath = "arial.ttf";
     _angleLabel = Label::createWithTTF(angleTTFConfig, "0", TextHAlignment::CENTER, 30);
     _angleLabel->setPosition(75, -30);
     _angleLabel->setSpacing(-5);
@@ -404,7 +404,7 @@ void Hero::endshoot(){
                                                           _wagonBSprite->runAction(RepeatForever::create(g_gameConfig.getAnimate(g_gameAnimation.mechgun_idle)));
                                                       }),
                                                       NULL));
-            _mechShootEffect = CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("mechshoot.mp3");
+            //_mechShootEffect = CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("mechshoot.mp3");
         }
             break;
         case HORSEY:
@@ -418,7 +418,7 @@ void Hero::endshoot(){
                                                           _wagonASprite->runAction(RepeatForever::create(g_gameConfig.getAnimate(g_gameAnimation.cnm_idle)));
                                                       }),
                                                       NULL));
-            _horseyShootEffect = CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("horseyshoot.mp3");
+            //_horseyShootEffect = CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("horseyshoot.mp3");
         }
             break;
         case ROCK:
@@ -431,7 +431,7 @@ void Hero::endshoot(){
                                                           _wagonASprite->runAction(RepeatForever::create(g_gameConfig.getAnimate(g_gameAnimation.rock_idle)));
                                                       }),
                                                       NULL));
-            _rockShootEffect = CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("rockshoot.mp3");
+            //_rockShootEffect = CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("rockshoot.mp3");
         }
             break;
         case TANK:
@@ -444,7 +444,7 @@ void Hero::endshoot(){
                                                           _wagonASprite->runAction(RepeatForever::create(g_gameConfig.getAnimate(g_gameAnimation.tank_idle)));
                                                       }),
                                                       NULL));
-            _tankShootEffect = CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("tankshoot.mp3");
+            //_tankShootEffect = CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("tankshoot.mp3");
         }
             break;
         default:

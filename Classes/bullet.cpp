@@ -27,27 +27,27 @@ BulletConfig defaultBullet={
 };
 BulletConfig tankBullet={
     "tankbullet.png",
-    150,
+    120,
     3,
-    50
+    120
 };
 BulletConfig mechBullet={
     "mechbullet.png",
-    175,
+    105,
     3,
-    45
+    120
 };
 BulletConfig horseyBullet={
     "cnmbullet.png",
-    135,
+    155,
     3,
-    60
+    175
 };
 BulletConfig rockBullet={
     "rockbullet1.png",
-    125,
+    100,
     3,
-    110
+    130
 };
 
 void Bullet::drawFinished()
@@ -63,15 +63,19 @@ Bullet* Bullet::create(BulletTypes type, cocos2d::Point pos, cocos2d::Point vect
     {
         case mechB:
             b->setConfig(mechBullet);
+            b->bounces = 3;
+            b->charges = 4;
             break;
         case horseyB:
             b->setConfig(horseyBullet);
+            b->attract = true;
             break;
         case rockB:
             b->setConfig(rockBullet);
             break;
         default:
             b->setConfig(tankBullet);
+            b->charges = 4;
             break;
     }
     if(b->initWithFile(b->getConfig().filename))
@@ -89,5 +93,9 @@ bool Bullet::willExplode(){
 }
 void Bullet::explode()
 {
-    _willExplode = true;
+    charges--;
+    if(charges <=0)
+    {
+        _willExplode = true;
+    }
 }
