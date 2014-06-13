@@ -538,7 +538,10 @@ void GPGSManager::TakeTurn(const bool winning, const bool losing)
 //                                   NoTouchLayer* notouchLayer =((NoTouchLayer*)(cocos2d::Director::getInstance()->getRunningScene()->getChildByTag(NOTOUCHTAG)));
 //                                   if(notouchLayer)
 //                                       notouchLayer->setError("Success!");
-                                   cocos2d::Director::getInstance()->getEventDispatcher()->dispatchCustomEvent("TakeTurnSuccess");
+                                   if(GetMatchTurn() == 1)
+                                       cocos2d::Director::getInstance()->getEventDispatcher()->dispatchCustomEvent("ReadySuccess");
+                                    else
+                                        cocos2d::Director::getInstance()->getEventDispatcher()->dispatchCustomEvent("TakeTurnSuccess");
 //                                   cocos2d::Director::getInstance()->getEventDispatcher()->dispatchCustomEvent("returntoMenu");
                                });
             break;
@@ -552,7 +555,10 @@ void GPGSManager::TakeTurn(const bool winning, const bool losing)
 //                                               NoTouchLayer* notouchLayer =((NoTouchLayer*)(cocos2d::Director::getInstance()->getRunningScene()->getChildByTag(NOTOUCHTAG)));
 //                                               if(notouchLayer)
 //                                                   notouchLayer->setError("Success!");
-                                               cocos2d::Director::getInstance()->getEventDispatcher()->dispatchCustomEvent("TakeTurnSuccess");
+                                               if(GetMatchTurn() == 1)
+                                                   cocos2d::Director::getInstance()->getEventDispatcher()->dispatchCustomEvent("ReadySuccess");
+                                               else
+                                                   cocos2d::Director::getInstance()->getEventDispatcher()->dispatchCustomEvent("TakeTurnSuccess");
 //                                               cocos2d::Director::getInstance()->getEventDispatcher()->dispatchCustomEvent("returntoMenu");
                                            });
             break;

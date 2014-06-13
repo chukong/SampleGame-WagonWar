@@ -112,6 +112,9 @@ void PopWindow::onEnter()
     auto InviteFailedListener = EventListenerCustom::create("InviteFailed", CC_CALLBACK_0(PopWindow::InviteFailed, this));
     _eventDispatcher->addEventListenerWithSceneGraphPriority(InviteFailedListener, this);
     
+    auto ReadySuccessListener = EventListenerCustom::create("ReadySuccess", CC_CALLBACK_0(PopWindow::ReadySuccess, this));
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(ReadySuccessListener, this);
+    
     auto TakeTurnSuccessListener = EventListenerCustom::create("TakeTurnSuccess", CC_CALLBACK_0(PopWindow::TakeTurnSuccess, this));
     _eventDispatcher->addEventListenerWithSceneGraphPriority(TakeTurnSuccessListener, this);
     
@@ -179,7 +182,7 @@ void PopWindow::InviteFailed()
     _btn_menu->setVisible(true);
 }
 
-void PopWindow::TakeTurnSuccess()
+void PopWindow::ReadySuccess()
 {
     _contentLabel->setString("Success...");
     _contentLabel->setAnchorPoint(Point::ANCHOR_MIDDLE);
@@ -189,6 +192,21 @@ void PopWindow::TakeTurnSuccess()
     _goto = GOTO::MAINMENU;
     _btn_label->setString("Return");
     _btn_menu->setVisible(true);
+}
+
+void PopWindow::TakeTurnSuccess()
+{
+    _eventDispatcher->dispatchCustomEvent("showReturnBtn");
+    _contentLabel->setString("Success...");
+    _contentLabel->setAnchorPoint(Point::ANCHOR_MIDDLE);
+    _contentLabel->setPosition(_bk->getContentSize().width/2,_bk->getContentSize().height/2+30);
+    _loadingSprite->removeFromParent();
+    
+//    _goto = GOTO::CLOSE;
+//    _btn_label->setString("OK");
+//    _btn_menu->setVisible(true);
+    
+    runAction(Sequence::create(DelayTime::create(2.0f), RemoveSelf::create(), nullptr));
 }
 
 void PopWindow::ItsNotYourTurn()

@@ -99,8 +99,23 @@ bool GameScene::init()
     //init listeners
     initListeners();
     
-    
     _isWentOut = false;
+    
+    
+    auto menuitem = MenuItemImage::create("return_0.png", "return_1.png", [](Ref* sender)
+                                          {
+                                              auto scene = MainScreenScene::createScene(true);
+                                              Director::getInstance()->replaceScene(scene);
+                                          } );
+    
+    menuitem->setAnchorPoint(Point::ANCHOR_TOP_LEFT);
+    menuitem->setPosition(Point(20, g_visibleRect.visibleHeight-20));
+    
+    returnMenu = Menu::create(menuitem, nullptr);
+    returnMenu->setAnchorPoint(Point::ANCHOR_MIDDLE);
+    returnMenu->setPosition(Point::ZERO);
+    this->addChild(returnMenu, 100, Point(0, 0),Point(0, 0));
+    returnMenu->setVisible(false);
     
     return true;
 }
@@ -141,6 +156,9 @@ void GameScene::initListeners()
     
     auto gameshowpopwindowlistener = EventListenerCustom::create("gameshowpopwindowlistener", CC_CALLBACK_0(GameScene::showConnectingPopWindow, this));
     _eventDispatcher->addEventListenerWithSceneGraphPriority(gameshowpopwindowlistener, this);
+    
+    auto showReturnBtnlistener = EventListenerCustom::create("showReturnBtn", CC_CALLBACK_0(GameScene::showReturnBtn, this));
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(showReturnBtnlistener, this);
 }
 
 void GameScene::startAngle(EventCustom* event){
@@ -1372,4 +1390,10 @@ void GameScene::showConnectingPopWindowWithDelay(float dt)
 {
     auto popwindow = PopWindow::create();
     Director::getInstance()->getRunningScene()->addChild(popwindow,100);
+}
+
+void GameScene::showReturnBtn()
+{
+
+    returnMenu->setVisible(true);
 }

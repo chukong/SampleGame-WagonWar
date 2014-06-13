@@ -540,7 +540,8 @@ int Hero::hurt(int t_hurt)
         _lasthp = 0;
         _hpInnerBar->setPercentage(0);
         _hpBarBack->runAction(ProgressTo::create(1,_lasthp));
-        _eventDispatcher->dispatchCustomEvent("playerdead", this);
+        if(!g_GameScene->over)
+            _eventDispatcher->dispatchCustomEvent("playerdead", this);
     }
     return _lasthp;
 }

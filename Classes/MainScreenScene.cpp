@@ -120,7 +120,7 @@ bool MainScreenScene::init(bool _isShowMatchInBoxUI)
     sign_status->setAnchorPoint(Point::ANCHOR_MIDDLE_LEFT);
     sign_status->setPosition(Point(20,20));
     this->addChild(sign_status,1);
-//    this->schedule(schedule_selector(MainScreenScene::updateStatus), 0.1f, kRepeatForever, 2.0f);
+    this->schedule(schedule_selector(MainScreenScene::updateStatus), 0.1f, kRepeatForever, 2.0f);
     
     auto listener1 = EventListenerCustom::create("enterWagonSelect_1", CC_CALLBACK_0(MainScreenScene::enterWagonSelect_1, this));
     _eventDispatcher->addEventListenerWithSceneGraphPriority(listener1, this);

@@ -83,6 +83,9 @@ public:
     std::string tempjson;
     
     bool _isFirstAction;
+    
+    bool over;
+
 protected:
     void printMyTurn();
     rapidjson::Document _replay;
@@ -106,13 +109,15 @@ protected:
     
     bool win;
     bool lost;
-    bool over;
     
     bool _isWentOut;
     float incre;
     bool _isBloodLabelShowing;
     cocos2d::Label* bloodLossLabel;
     cocos2d::EventListenerTouchOneByOne* listenertouch;
+    
+    void showReturnBtn();
+    cocos2d::Menu* returnMenu;
 };
 
 #endif /* defined(__TankMultiplayer__GameScene__) */

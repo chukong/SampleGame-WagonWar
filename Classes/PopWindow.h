@@ -55,6 +55,7 @@ private:
     void QFailed();
     void InviteSuccess();
     void InviteFailed();
+    void ReadySuccess();
     void TakeTurnSuccess();
     void ItsNotYourTurn();
     void ItsCompleted();
