@@ -31,7 +31,7 @@ Wagon War is only supported to build and run on Android deveices only.
 
 * Before you build the game , you must regist an account of Google Play Developer Console, and [add the game to the Google Play Developer Console](https://developers.google.com/games/services/console/enabling#step_2_add_your_game_to_the_dev_console).
 
-* Clone the [repository](https://github.com/chukong/TankMultiplayer.git) to your Mac.
+* Clone the [repository](https://github.com/chukong/WagonWar.git) to your Mac.
 
 * Enter the folder of *proj.android* ,open the terminal and run the following command to build .so library.
 
