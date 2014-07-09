@@ -17,7 +17,7 @@ Cocos2d-x is a popular game engine for mobile devices. It has over 400,000 devel
 
 The Google Play Games C++ SDK provides a C++ API for use with Google Play game services, Wagon War was developed with this C++ SDK. The following features are inclued by the game.
 
-* Authorizaton
+* Authorization
 
 * Achievements
 
