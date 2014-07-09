@@ -99,19 +99,34 @@ bool GameScene::init()
     //init listeners
     initListeners();
     
-    
     _isWentOut = false;
+    
+    
+    auto menuitem = MenuItemImage::create("return_0.png", "return_1.png", [](Ref* sender)
+                                          {
+                                              auto scene = MainScreenScene::createScene(true);
+                                              Director::getInstance()->replaceScene(scene);
+                                          } );
+    
+    menuitem->setAnchorPoint(Point::ANCHOR_TOP_LEFT);
+    menuitem->setPosition(Point(20, g_visibleRect.visibleHeight-20));
+    
+    returnMenu = Menu::create(menuitem, nullptr);
+    returnMenu->setAnchorPoint(Point::ANCHOR_MIDDLE);
+    returnMenu->setPosition(Point::ZERO);
+    this->addChild(returnMenu, 100, Point(0, 0),Point(0, 0));
+    returnMenu->setVisible(false);
     
     return true;
 }
 void GameScene::initListeners()
 {
     //register touches
-    auto listener = EventListenerTouchOneByOne::create();
-    listener->onTouchBegan = CC_CALLBACK_2(GameScene::onTouchBegan, this);
-    listener->onTouchEnded = CC_CALLBACK_2(GameScene::onTouchEnded, this);
-    listener->onTouchMoved = CC_CALLBACK_2(GameScene::onTouchMoved, this);
-    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
+    listenertouch = EventListenerTouchOneByOne::create();
+    listenertouch->onTouchBegan = CC_CALLBACK_2(GameScene::onTouchBegan, this);
+    listenertouch->onTouchEnded = CC_CALLBACK_2(GameScene::onTouchEnded, this);
+    listenertouch->onTouchMoved = CC_CALLBACK_2(GameScene::onTouchMoved, this);
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(listenertouch, this);
     
     //event to move left right
     auto moveListener = EventListenerCustom::create("go left", CC_CALLBACK_0(GameScene::movePlayer, this, -1));
@@ -141,6 +156,9 @@ void GameScene::initListeners()
     
     auto gameshowpopwindowlistener = EventListenerCustom::create("gameshowpopwindowlistener", CC_CALLBACK_0(GameScene::showConnectingPopWindow, this));
     _eventDispatcher->addEventListenerWithSceneGraphPriority(gameshowpopwindowlistener, this);
+    
+    auto showReturnBtnlistener = EventListenerCustom::create("showReturnBtn", CC_CALLBACK_0(GameScene::showReturnBtn, this));
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(showReturnBtnlistener, this);
 }
 
 void GameScene::startAngle(EventCustom* event){
@@ -212,6 +230,20 @@ void GameScene::startShoot()
         value.AddMember("tick",_tick,allocator);
         value.AddMember("action", "start shoot", allocator);
         _myturn["actions"].PushBack(value, allocator);
+        
+        if(!_isFirstAction)
+        {
+            _isFirstAction = true;
+            
+            Hero* myself = dynamic_cast<Hero*>(_PlayerLayer->getChildByTag(TAG_MYSELF));
+            Hero* other = dynamic_cast<Hero*>(_PlayerLayer->getChildByTag(TAG_OTHER));
+            _myturn["player1"]["posx"].SetDouble(myself->getPositionX());
+            _myturn["player1"]["posy"].SetDouble(myself->getPositionY());
+            _myturn["player2"]["posx"].SetDouble(other->getPositionX());
+            _myturn["player2"]["posy"].SetDouble(other->getPositionY());
+            _myturn["player1"]["rot"].SetDouble(myself->_wagonPoint->getRotation());
+            _myturn["player2"]["rot"].SetDouble(other->_wagonPoint->getRotation());
+        }
     }
     else
     {
@@ -221,6 +253,7 @@ void GameScene::startShoot()
 }
 void GameScene::endShoot()
 {
+    listenertouch->setEnabled(false);
     int tick = _tick - _tickPre;
     tick = tick>180?180:tick;
     //log("tick %d", tick);
@@ -244,15 +277,7 @@ void GameScene::endShoot()
             p->aim->setAngle(angle-p->_wagonPoint->getRotation());
         }
         _eventDispatcher->dispatchCustomEvent("dismissPower");
-        
-        Hero* myself = dynamic_cast<Hero*>(_PlayerLayer->getChildByTag(TAG_MYSELF));
-        Hero* other = dynamic_cast<Hero*>(_PlayerLayer->getChildByTag(TAG_OTHER));
-        _myturn["player1"]["posx"].SetDouble(myself->getPositionX());
-        _myturn["player1"]["posy"].SetDouble(myself->getPositionY());
-        _myturn["player2"]["posx"].SetDouble(other->getPositionX());
-        _myturn["player2"]["posy"].SetDouble(other->getPositionY());
-        _myturn["player1"]["rot"].SetDouble(myself->_wagonPoint->getRotation());
-        _myturn["player2"]["rot"].SetDouble(other->_wagonPoint->getRotation());
+//        _waitToClear = true;
     }
     else
     {
@@ -274,7 +299,11 @@ void GameScene::endShoot()
         
         _myturn["actions"].PushBack(value, allocator);
         _eventDispatcher->dispatchCustomEvent("touch off");
-        _waitToClear = true;
+        
+        ((GameUI*)(getParent()->getChildByTag(76)))->_controlBoard->runAction(EaseBackIn::create(MoveTo::create(0.5, Point(g_visibleRect.visibleWidth/2 + g_visibleRect.visibleOriginX, -120))));
+        getCurrentPlayer()->hideAimer();
+        
+//        _waitToClear = true;
         
     }
     //log("angle %f", angle);
@@ -416,6 +445,21 @@ void GameScene::movePlayer(float x)
     {
         p->stop();
     }
+    
+    log("I am in %d",_isFirstAction);
+    if(!_isFirstAction && !_playback)
+    {
+        log("I am in ....");
+        _isFirstAction = true;
+        Hero* myself = dynamic_cast<Hero*>(_PlayerLayer->getChildByTag(TAG_MYSELF));
+        Hero* other = dynamic_cast<Hero*>(_PlayerLayer->getChildByTag(TAG_OTHER));
+        _myturn["player1"]["posx"].SetDouble(myself->getPositionX());
+        _myturn["player1"]["posy"].SetDouble(myself->getPositionY());
+        _myturn["player2"]["posx"].SetDouble(other->getPositionX());
+        _myturn["player2"]["posy"].SetDouble(other->getPositionY());
+        _myturn["player1"]["rot"].SetDouble(myself->_wagonPoint->getRotation());
+        _myturn["player2"]["rot"].SetDouble(other->_wagonPoint->getRotation());
+    }
 }
 
 void GameScene::initPlayers()
@@ -539,6 +583,7 @@ void GameScene::onTouchEnded(Touch* touch, Event* event)
 }
 Bullet* GameScene::addBullet(BulletTypes type, cocos2d::Point pos, cocos2d::Point vector)
 {
+    listenertouch->setEnabled(true);
             _waitToClear = true;
     auto b = Bullet::create(type, pos, vector);
     _bulletLayer->addChild(b);
@@ -577,18 +622,21 @@ void GameScene::explode(Bullet *bullet, Hero* hero)
     
     //spawn dirts
     auto dirt1 = ParticleSystemQuad::create("DirtExplosion1.plist");
+    dirt1->setPositionType(ParticleSystem::PositionType::GROUPED);
     _effectLayer->addChild(dirt1);
     dirt1->setPosition(pos);
     dirt1->setTotalParticles(10);
     dirt1->setEmissionRate(99999999);
     dirt1->setAutoRemoveOnFinish(true);
     auto dirt2 = ParticleSystemQuad::create("DirtExplosion2.plist");
+    dirt2->setPositionType(ParticleSystem::PositionType::GROUPED);
     _effectLayer->addChild(dirt2);
     dirt2->setPosition(pos);
     dirt2->setTotalParticles(7);
     dirt2->setEmissionRate(99999999);
     dirt2->setAutoRemoveOnFinish(true);
     auto dirt3 = ParticleSystemQuad::create("DirtExplosion3.plist");
+    dirt3->setPositionType(ParticleSystem::PositionType::GROUPED);
     _effectLayer->addChild(dirt3);
     dirt3->setPosition(pos);
     dirt3->setTotalParticles(5);
@@ -702,11 +750,11 @@ void GameScene::explode(Bullet *bullet, Hero* hero)
                     {
                         if(p->getTag() == TAG_MYSELF)
                         {
-                            _myturn["player1"]["hp"].SetInt(p->hurt(damage*((float)(exRad + p->radius -dist)/(float)(exRad +p->radius))));
+                            _myturn["player1"]["hp"].SetInt(p->hurt(abs(damage*((float)(exRad + p->radius -dist)/(float)(exRad +p->radius)))));
                         }
                         else
                         {
-                            _myturn["player2"]["hp"].SetInt(p->hurt(damage*((float)(exRad + p->radius -dist)/(float)(exRad +p->radius))));
+                            _myturn["player2"]["hp"].SetInt(p->hurt(abs(damage*((float)(exRad + p->radius -dist)/(float)(exRad +p->radius)))));
                         }
                     }
                     else
@@ -1010,9 +1058,9 @@ void GameScene::update(float dt)
                         p->airborn = false; //we are no longer airborn
                         //set angle to average
                         float deg =CC_RADIANS_TO_DEGREES(angleTotal/angleCount);
-                        if(abs(deg) > 80)//TODO: each vehicle has a climbing angle limit
+                        if(abs(deg) > 60)//TODO: each vehicle has a climbing angle limit
                         {
-                            deg = (deg>0)? 80: -80;
+                            deg = (deg>0)? 60: -60;
                             p->_wagonPoint->setRotation(deg);
                             
                             p->airborn = true;
@@ -1192,8 +1240,8 @@ void GameScene::saveMatchData(bool win, bool lose)
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
     runAction(Sequence::create(CallFunc::create([=]()
                                                 {
-                                                    ((GameUI*)(getParent()->getChildByTag(76)))->_controlBoard->runAction(EaseBackIn::create(MoveTo::create(0.5, Point(g_visibleRect.visibleWidth/2 + g_visibleRect.visibleOriginX, -120))));
-                                                    getCurrentPlayer()->hideAimer();
+//                                                    ((GameUI*)(getParent()->getChildByTag(76)))->_controlBoard->runAction(EaseBackIn::create(MoveTo::create(0.5, Point(g_visibleRect.visibleWidth/2 + g_visibleRect.visibleOriginX, -120))));
+//                                                    getCurrentPlayer()->hideAimer();
                                                 }),
                                DelayTime::create(delaytotaketurntime),
                                CallFunc::create([=](){GPGSManager::TakeTurn(win, lose);}),
@@ -1217,46 +1265,68 @@ void GameScene::saveMatchData(bool win, bool lose)
 
 void GameScene::showBloodLossNum(Hero* hero, int num)
 {
-    TTFConfig turnTTFConfig;
-    turnTTFConfig.outlineSize = 7;
-    turnTTFConfig.fontSize = 50;
-    turnTTFConfig.fontFilePath = "britanic bold.ttf";
-    auto  label = Label::createWithTTF(turnTTFConfig, Value(num).asString(), TextHAlignment::CENTER, 400);
-    label->setAnchorPoint(Point::ANCHOR_MIDDLE);
-    label->setSpacing(-5);
-    label->enableOutline(Color4B::BLACK);
-    label->setOpacity(50);
-    label->setScale(-10.01f);
-    hero->addChild(label);
-    label->setPosition(0, 70);
-    label->setRotation(CCRANDOM_MINUS1_1()*20);
-    
-    auto targetScale = 1.0f;
-    if(num > 200)
+    if(!_isBloodLabelShowing)
     {
-        label->setColor(Color3B::RED);
-    }
-    else if(num > 100)
-    {
-        label->setColor(Color3B(250,121,65));
-        targetScale = 0.75f;
+        _isBloodLabelShowing = true;
+        TTFConfig turnTTFConfig;
+        turnTTFConfig.outlineSize = 7;
+        turnTTFConfig.fontSize = 50;
+        turnTTFConfig.fontFilePath = "britanic bold.ttf";
+        bloodLossLabel = Label::createWithTTF(turnTTFConfig, Value(num).asString(), TextHAlignment::CENTER, 400);
+        bloodLossLabel->setAnchorPoint(Point::ANCHOR_MIDDLE);
+        bloodLossLabel->setSpacing(-5);
+        bloodLossLabel->enableOutline(Color4B::BLACK);
+        bloodLossLabel->setOpacity(50);
+        bloodLossLabel->setScale(-10.01f);
+        hero->addChild(bloodLossLabel);
+        bloodLossLabel->setPosition(0, 70);
+        bloodLossLabel->setRotation(CCRANDOM_MINUS1_1()*20);
+        
+        auto targetScale = 1.0f;
+        if(num > 200)
+        {
+            bloodLossLabel->setColor(Color3B::RED);
+        }
+        else if(num > 100)
+        {
+            bloodLossLabel->setColor(Color3B(250,121,65));
+            targetScale = 0.75f;
+        }
+        else
+        {
+            bloodLossLabel->setColor(Color3B(250,191,65));
+            targetScale = 0.5f;
+        }
+        
+        bloodLossLabel->runAction(FadeIn::create(0.3));
+        bloodLossLabel->runAction(Sequence::create(
+                                          EaseElasticOut::create(ScaleTo::create(1.3f,targetScale)),
+                                          DelayTime::create(2.0f),
+                                          FadeOut::create(0.5f),
+                                          RemoveSelf::create(),
+                                          CallFunc::create([=](){_isBloodLabelShowing = false;}),
+                                          nullptr));
+        bloodLossLabel->runAction(MoveBy::create(3.8, Point(0, 50)));
+        bloodLossLabel->runAction(RotateBy::create(3.8, CCRANDOM_MINUS1_1()*40));
     }
     else
     {
-        label->setColor(Color3B(250,191,65));
-        targetScale = 0.5f;
+        int old_num = Value(bloodLossLabel->getString()).asInt();
+        int new_num = old_num + num;
+        if(new_num > 200)
+        {
+            bloodLossLabel->setColor(Color3B::RED);
+        }
+        else if(new_num > 100)
+        {
+            bloodLossLabel->setColor(Color3B(250,121,65));
+        }
+        else
+        {
+            bloodLossLabel->setColor(Color3B(250,191,65));
+        }
+        bloodLossLabel->setString(Value(new_num).asString());
     }
-    
-    label->runAction(FadeIn::create(0.3));
-    label->runAction(Sequence::create(
-                                    EaseElasticOut::create(ScaleTo::create(1.3f,targetScale)),
-                                      DelayTime::create(2.0f),
-                                      FadeOut::create(0.5f),
-                                      RemoveSelf::create(),
-                                      nullptr));
-    label->runAction(MoveBy::create(3.8, Point(0, 50)));
-    label->runAction(RotateBy::create(3.8, CCRANDOM_MINUS1_1()*40));
-    
 }
 
 void GameScene::showWinOrLose(bool isWin)
@@ -1320,4 +1390,10 @@ void GameScene::showConnectingPopWindowWithDelay(float dt)
 {
     auto popwindow = PopWindow::create();
     Director::getInstance()->getRunningScene()->addChild(popwindow,100);
+}
+
+void GameScene::showReturnBtn()
+{
+
+    returnMenu->setVisible(true);
 }
