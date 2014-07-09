@@ -538,7 +538,7 @@ void GPGSManager::TakeTurn(const bool winning, const bool losing)
 //                                   NoTouchLayer* notouchLayer =((NoTouchLayer*)(cocos2d::Director::getInstance()->getRunningScene()->getChildByTag(NOTOUCHTAG)));
 //                                   if(notouchLayer)
 //                                       notouchLayer->setError("Success!");
-                                   if(GetMatchTurn() == 1)
+                                   if(GetMatchTurn() == 0)
                                        cocos2d::Director::getInstance()->getEventDispatcher()->dispatchCustomEvent("ReadySuccess");
                                     else
                                         cocos2d::Director::getInstance()->getEventDispatcher()->dispatchCustomEvent("TakeTurnSuccess");
@@ -555,7 +555,8 @@ void GPGSManager::TakeTurn(const bool winning, const bool losing)
 //                                               NoTouchLayer* notouchLayer =((NoTouchLayer*)(cocos2d::Director::getInstance()->getRunningScene()->getChildByTag(NOTOUCHTAG)));
 //                                               if(notouchLayer)
 //                                                   notouchLayer->setError("Success!");
-                                               if(GetMatchTurn() == 1)
+                                               LOGI("what the match turn now ....%d",GetMatchTurn());
+                                               if(GetMatchTurn() == 0)
                                                    cocos2d::Director::getInstance()->getEventDispatcher()->dispatchCustomEvent("ReadySuccess");
                                                else
                                                    cocos2d::Director::getInstance()->getEventDispatcher()->dispatchCustomEvent("TakeTurnSuccess");
