@@ -330,27 +330,43 @@ void GPGSManager::ShowMatchInbox()
 
 void GPGSManager::LeaveMatch()
 {
-    gpg::TurnBasedMultiplayerManager& manager = gameServices->TurnBasedMultiplayer();
-    if (current_match_.Status() == gpg::MatchStatus::MY_TURN) {
-        //Leave a game
-        std::vector<gpg::MultiplayerParticipant> participants = current_match_.Participants();
-        int32_t nextPlayerIndex = GetNextParticipant();
-        if (nextPlayerIndex == NEXT_PARTICIPANT_AUTOMATCH) {
-            manager.LeaveMatchDuringMyTurnAndAutomatch(current_match_, [](gpg::MultiplayerStatus status) {
-                                                           LOGI("Left the game...NEXT_PARTICIPANT_AUTOMATCH...By Jacky");
-                                                       });
-            return;
-        } else {
-            manager.LeaveMatchDuringMyTurn(current_match_, participants[nextPlayerIndex],
-                                           [](gpg::MultiplayerStatus status) {
-                                               LOGI("Left the game...NOT_NEXT_PARTICIPANT_AUTOMATCH...By Jacky");
-                                           });
-        }
-    } else {
-        manager.LeaveMatchDuringTheirTurn(current_match_, [](gpg::MultiplayerStatus status) {
-                                              LOGI("Left the game...NOT_MY_TURN...By Jacky");
-                                          });
-    }
+    // gpg::TurnBasedMultiplayerManager& manager = gameServices->TurnBasedMultiplayer();
+    // if (current_match_.Status() == gpg::MatchStatus::MY_TURN) {
+    //     //Leave a game
+    //     std::vector<gpg::MultiplayerParticipant> participants = current_match_.Participants();
+    //     int32_t nextPlayerIndex = GetNextParticipant();
+    //     if (nextPlayerIndex == NEXT_PARTICIPANT_AUTOMATCH) {
+    //         manager.LeaveMatchDuringMyTurnAndAutomatch(current_match_, [](gpg::MultiplayerStatus status) {
+    //                                                        LOGI("Left the game...NEXT_PARTICIPANT_AUTOMATCH...By Jacky");
+    //                                                    });
+    //         return;
+    //     } else {
+    //         manager.LeaveMatchDuringMyTurn(current_match_, participants[nextPlayerIndex],
+    //                                        [](gpg::MultiplayerStatus status) {
+    //                                            LOGI("Left the game...NOT_NEXT_PARTICIPANT_AUTOMATCH...By Jacky");
+    //                                        });
+    //     }
+    // } else {
+    //     manager.LeaveMatchDuringTheirTurn(current_match_, [](gpg::MultiplayerStatus status) {
+    //                                           LOGI("Left the game...NOT_MY_TURN...By Jacky");
+    //                                       });
+    // }
+
+    gpg::TurnBasedMultiplayerManager &manager = gameServices->TurnBasedMultiplayer();
+  if (current_match_.Status() == gpg::MatchStatus::MY_TURN) {
+      //Leave a game
+    manager.LeaveMatchDuringMyTurn(current_match_,
+                                   current_match_.SuggestedNextParticipant(),
+                                   [](gpg::MultiplayerStatus status) {
+      LOGI("Left the game");
+    });
+  } else {
+    manager.LeaveMatchDuringTheirTurn(current_match_,
+                                      [](gpg::MultiplayerStatus status) {
+      LOGI("Left the game");
+    });
+  }
+  return;
 }
 
 void GPGSManager::CancelMatch()
@@ -527,8 +543,8 @@ void GPGSManager::TakeTurn(const bool winning, const bool losing)
     LOGI("global string is --\n%s\n--\n", g_gameConfig.match_string.c_str());
 
     //Take normal turn
-    switch (nextPlayerIndex) {
-        default:
+    // switch (nextPlayerIndex) {
+    //     default:
             manager.TakeMyTurn(
                                current_match_, g_gameConfig.match_data, results, participants[nextPlayerIndex],
                                [](
@@ -544,31 +560,31 @@ void GPGSManager::TakeTurn(const bool winning, const bool losing)
                                         cocos2d::Director::getInstance()->getEventDispatcher()->dispatchCustomEvent("TakeTurnSuccess");
 //                                   cocos2d::Director::getInstance()->getEventDispatcher()->dispatchCustomEvent("returntoMenu");
                                });
-            break;
-        case NEXT_PARTICIPANT_AUTOMATCH:
-            manager.TakeMyTurnAndAutomatch(
-                                           current_match_, g_gameConfig.match_data, results,
-                                           [](
-                                                  gpg::TurnBasedMultiplayerManager::TurnBasedMatchResponse const &
-                                                  response) {
-                                               LOGI("Took turn");
-//                                               NoTouchLayer* notouchLayer =((NoTouchLayer*)(cocos2d::Director::getInstance()->getRunningScene()->getChildByTag(NOTOUCHTAG)));
-//                                               if(notouchLayer)
-//                                                   notouchLayer->setError("Success!");
-                                               LOGI("what the match turn now ....%d",GetMatchTurn());
-                                               if(GetMatchTurn() == 0)
-                                                   cocos2d::Director::getInstance()->getEventDispatcher()->dispatchCustomEvent("ReadySuccess");
-                                               else
-                                                   cocos2d::Director::getInstance()->getEventDispatcher()->dispatchCustomEvent("TakeTurnSuccess");
-//                                               cocos2d::Director::getInstance()->getEventDispatcher()->dispatchCustomEvent("returntoMenu");
-                                           });
-            break;
-        case NEXT_PARTICIPANT_NONE:
-            //Error case
-            manager.DismissMatch(current_match_);
-            cocos2d::Director::getInstance()->replaceScene(MainScreenScene::createScene(false));
-            break;
-    }
+//             break;
+//         case NEXT_PARTICIPANT_AUTOMATCH:
+//             manager.TakeMyTurnAndAutomatch(
+//                                            current_match_, g_gameConfig.match_data, results,
+//                                            [](
+//                                                   gpg::TurnBasedMultiplayerManager::TurnBasedMatchResponse const &
+//                                                   response) {
+//                                                LOGI("Took turn");
+// //                                               NoTouchLayer* notouchLayer =((NoTouchLayer*)(cocos2d::Director::getInstance()->getRunningScene()->getChildByTag(NOTOUCHTAG)));
+// //                                               if(notouchLayer)
+// //                                                   notouchLayer->setError("Success!");
+//                                                LOGI("what the match turn now ....%d",GetMatchTurn());
+//                                                if(GetMatchTurn() == 0)
+//                                                    cocos2d::Director::getInstance()->getEventDispatcher()->dispatchCustomEvent("ReadySuccess");
+//                                                else
+//                                                    cocos2d::Director::getInstance()->getEventDispatcher()->dispatchCustomEvent("TakeTurnSuccess");
+// //                                               cocos2d::Director::getInstance()->getEventDispatcher()->dispatchCustomEvent("returntoMenu");
+//                                            });
+//             break;
+//         case NEXT_PARTICIPANT_NONE:
+//             //Error case
+//             manager.DismissMatch(current_match_);
+//             cocos2d::Director::getInstance()->replaceScene(MainScreenScene::createScene(false));
+//             break;
+//     }
     
     LOGI("StarTakeTurn...4");
 }
