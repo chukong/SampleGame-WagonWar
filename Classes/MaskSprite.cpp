@@ -58,14 +58,14 @@ bool MaskSprite::initShader()
     return true;
 }
 
-void MaskSprite::draw(cocos2d::Renderer *renderer, const kmMat4 &transform, bool transformUpdated)
+void MaskSprite::draw(cocos2d::Renderer *renderer, const cocos2d::Mat4 &transform, uint32_t flags)
 {
     _customCommand.init(_globalZOrder);
-    _customCommand.func = CC_CALLBACK_0(MaskSprite::onDraw, this, transform, transformUpdated);
+    _customCommand.func = CC_CALLBACK_0(MaskSprite::onDraw, this, transform, flags);
     cocos2d::Director::getInstance()->getRenderer()->addCommand(&_customCommand);
 }
 
-void MaskSprite::onDraw(const kmMat4 &transform, bool transformUpdated)
+void MaskSprite::onDraw(const cocos2d::Mat4 &transform, uint32_t flags)
 {
     auto shader = getShaderProgram();
     shader->use();

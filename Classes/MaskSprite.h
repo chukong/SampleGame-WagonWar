@@ -23,8 +23,8 @@ public:
 protected:
     cocos2d::Texture2D * _content;
     
-    virtual void draw(cocos2d::Renderer* renderer, const kmMat4 &transform, bool transformUpdated);
-    void onDraw(const kmMat4 &transform, bool transformUpdated);
+    virtual void draw(cocos2d::Renderer* renderer, const cocos2d::Mat4 &transform, uint32_t flags);
+    void onDraw(const cocos2d::Mat4 &transform, uint32_t flags);
     virtual void buildCustomUniforms();
     virtual void setCustomUniforms();
     

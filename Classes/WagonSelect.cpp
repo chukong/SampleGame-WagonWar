@@ -234,7 +234,7 @@ void WagonSelect::createUI()
     horseyTTFConfig.fontFilePath = "fonts/britanic bold.ttf";
     auto horseyLabel = Label::createWithTTF(horseyTTFConfig, "HORSEY", TextHAlignment::CENTER, 20);
     horseyLabel->setPosition(120,g_visibleRect.visibleHeight/2-110);
-    horseyLabel->setSpacing(-5);
+    //horseyLabel->setSpacing(-5);
     horseyLabel->setAnchorPoint(Point::ANCHOR_MIDDLE);
     horseyLabel->enableOutline(Color4B::BLACK);
     _wagon_bk->addChild(horseyLabel,2);
@@ -245,7 +245,7 @@ void WagonSelect::createUI()
     tankTTFConfig.fontFilePath = "fonts/britanic bold.ttf";
     auto tankLabel = Label::createWithTTF(horseyTTFConfig, "TANK", TextHAlignment::CENTER, 20);
     tankLabel->setPosition(310,g_visibleRect.visibleHeight/2-110);
-    tankLabel->setSpacing(-5);
+    //tankLabel->setSpacing(-5);
     tankLabel->setAnchorPoint(Point::ANCHOR_MIDDLE);
     tankLabel->enableOutline(Color4B::BLACK);
     _wagon_bk->addChild(tankLabel,2);
@@ -256,7 +256,7 @@ void WagonSelect::createUI()
     rockTTFConfig.fontFilePath = "fonts/britanic bold.ttf";
     auto rockLabel = Label::createWithTTF(horseyTTFConfig, "ROCK", TextHAlignment::CENTER, 20);
     rockLabel->setPosition(500,g_visibleRect.visibleHeight/2-110);
-    rockLabel->setSpacing(-5);
+    //rockLabel->setSpacing(-5);
     rockLabel->setAnchorPoint(Point::ANCHOR_MIDDLE);
     rockLabel->enableOutline(Color4B::BLACK);
     _wagon_bk->addChild(rockLabel,2);
@@ -267,7 +267,7 @@ void WagonSelect::createUI()
     mechTTFConfig.fontFilePath = "fonts/britanic bold.ttf";
     auto mechLabel = Label::createWithTTF(horseyTTFConfig, "MECH", TextHAlignment::CENTER, 20);
     mechLabel->setPosition(690,g_visibleRect.visibleHeight/2-110);
-    mechLabel->setSpacing(-5);
+    //mechLabel->setSpacing(-5);
     mechLabel->setAnchorPoint(Point::ANCHOR_MIDDLE);
     mechLabel->enableOutline(Color4B::BLACK);
     _wagon_bk->addChild(mechLabel,2);

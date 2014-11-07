@@ -22,14 +22,14 @@ FILE_INCLUDES := $(shell find $(LOCAL_PATH)/../../Classes -type d)
 
 LOCAL_SRC_FILES := $(FILE_LIST:$(LOCAL_PATH)/%=%)
                    
-LOCAL_C_INCLUDES := $(FILE_INCLUDES)
+#LOCAL_C_INCLUDES := $(FILE_INCLUDES)
 
 ###====>old<====###
 #LOCAL_SRC_FILES := hellocpp/main.cpp \
 #                   ../../Classes/AppDelegate.cpp \
 #                   ../../Classes/HelloWorldScene.cpp
 
-#LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../Classes
+LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../Classes
 
 LOCAL_C_INCLUDES += $(LOCAL_PATH)/../../cocos2d/external/gpg/include/android
 
@@ -40,7 +40,7 @@ LOCAL_WHOLE_STATIC_LIBRARIES += cocostudio_static
 LOCAL_WHOLE_STATIC_LIBRARIES += cocos_gpg_static
 include $(BUILD_SHARED_LIBRARY)
 
-$(call import-module,2d)
+$(call import-module,cocos)
 $(call import-module,audio/android)
 $(call import-module,Box2D)
 $(call import-module,editor-support/cocostudio)

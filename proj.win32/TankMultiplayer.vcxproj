@@ -133,26 +133,50 @@ xcopy /Y /Q "$(EngineRoot)external\websockets\prebuilt\win32\*.*" "$(OutDir)"</C
     </PreLinkEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\Classes\Aimer.cpp" />
     <ClCompile Include="..\Classes\AppDelegate.cpp" />
+    <ClCompile Include="..\Classes\bullet.cpp" />
+    <ClCompile Include="..\Classes\Configuration.cpp" />
+    <ClCompile Include="..\Classes\GameScene.cpp" />
+    <ClCompile Include="..\Classes\GameUI.cpp" />
+    <ClCompile Include="..\Classes\GPGSChecker.cpp" />
+    <ClCompile Include="..\Classes\GPGSManager.cpp" />
     <ClCompile Include="..\Classes\HelloWorldScene.cpp" />
+    <ClCompile Include="..\Classes\Helper.cpp" />
+    <ClCompile Include="..\Classes\Hero.cpp" />
+    <ClCompile Include="..\Classes\Level.cpp" />
+    <ClCompile Include="..\Classes\LoadingScene.cpp" />
+    <ClCompile Include="..\Classes\LoadResourceLayer.cpp" />
+    <ClCompile Include="..\Classes\MainScreenScene.cpp" />
+    <ClCompile Include="..\Classes\MaskSprite.cpp" />
+    <ClCompile Include="..\Classes\NoTouchLayer.cpp" />
+    <ClCompile Include="..\Classes\PopWindow.cpp" />
+    <ClCompile Include="..\Classes\VisibleRect.cpp" />
+    <ClCompile Include="..\Classes\WagonSelect.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\Classes\Aimer.h" />
     <ClInclude Include="..\Classes\AppDelegate.h" />
+    <ClInclude Include="..\Classes\bullet.h" />
+    <ClInclude Include="..\Classes\Configuration.h" />
+    <ClInclude Include="..\Classes\GameScene.h" />
+    <ClInclude Include="..\Classes\GameUI.h" />
+    <ClInclude Include="..\Classes\GPGSChecker.h" />
+    <ClInclude Include="..\Classes\GPGSManager.h" />
     <ClInclude Include="..\Classes\HelloWorldScene.h" />
+    <ClInclude Include="..\Classes\Helper.h" />
+    <ClInclude Include="..\Classes\Hero.h" />
+    <ClInclude Include="..\Classes\Level.h" />
+    <ClInclude Include="..\Classes\LoadingScene.h" />
+    <ClInclude Include="..\Classes\LoadResourceLayer.h" />
+    <ClInclude Include="..\Classes\MainScreenScene.h" />
+    <ClInclude Include="..\Classes\MaskSprite.h" />
+    <ClInclude Include="..\Classes\NoTouchLayer.h" />
+    <ClInclude Include="..\Classes\PopWindow.h" />
+    <ClInclude Include="..\Classes\VisibleRect.h" />
+    <ClInclude Include="..\Classes\WagonSelect.h" />
     <ClInclude Include="main.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\cocos2d\cocos\2d\cocos2d.vcxproj">
-      <Project>{98a51ba8-fc3a-415b-ac8f-8c7bd464e93e}</Project>
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-    </ProjectReference>
-    <ProjectReference Include="..\cocos2d\cocos\audio\proj.win32\CocosDenshion.vcxproj">
-      <Project>{f8edd7fa-9a51-4e80-baeb-860825d2eac6}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\cocos2d\external\chipmunk\proj.win32\chipmunk.vcxproj">
-      <Project>{207bc7a9-ccf1-4f2f-a04d-45f72242ae25}</Project>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="game.rc" />

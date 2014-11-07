@@ -1274,7 +1274,7 @@ void GameScene::showBloodLossNum(Hero* hero, int num)
         turnTTFConfig.fontFilePath = "britanic bold.ttf";
         bloodLossLabel = Label::createWithTTF(turnTTFConfig, Value(num).asString(), TextHAlignment::CENTER, 400);
         bloodLossLabel->setAnchorPoint(Point::ANCHOR_MIDDLE);
-        bloodLossLabel->setSpacing(-5);
+        //bloodLossLabel->setSpacing(-5);
         bloodLossLabel->enableOutline(Color4B::BLACK);
         bloodLossLabel->setOpacity(50);
         bloodLossLabel->setScale(-10.01f);

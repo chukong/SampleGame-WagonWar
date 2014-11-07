@@ -26,9 +26,8 @@ THE SOFTWARE.
 #ifndef __CCRENDER_TEXTURE_H__
 #define __CCRENDER_TEXTURE_H__
 
-#include "CCNode.h"
-#include "CCSprite.h"
-#include "kazmath/mat4.h"
+#include "2d/CCNode.h"
+#include "2d/CCSprite.h"
 #include "platform/CCImage.h"
 #include "renderer/CCGroupCommand.h"
 #include "renderer/CCCustomCommand.h"
@@ -104,12 +103,12 @@ public:
     /** saves the texture into a file using JPEG format. The file will be saved in the Documents folder.
         Returns true if the operation is successful.
      */
-    bool saveToFile(const std::string& filename);
+    bool saveToFile(const std::string& filename, bool isRGBA = true, std::function<void (RenderTexture*, const std::string&)> callback = nullptr);
 
     /** saves the texture into a file. The format could be JPG or PNG. The file will be saved in the Documents folder.
         Returns true if the operation is successful.
      */
-    bool saveToFile(const std::string& filename, Image::Format format);
+    bool saveToFile(const std::string& filename, Image::Format format, bool isRGBA = true, std::function<void (RenderTexture*, const std::string&)> callback = nullptr);
     
     /** Listen "come to background" message, and save render texture.
      It only has effect on Android.
@@ -154,8 +153,8 @@ public:
     };
     
     // Overrides
-    virtual void visit(Renderer *renderer, const kmMat4 &parentTransform, bool parentTransformUpdated) override;
-    virtual void draw(Renderer *renderer, const kmMat4 &transform, bool transformUpdated) override;
+    virtual void visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t parentFlags) override;
+    virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override;
 
     //flag: use stack matrix computed from scene hierarchy or generate new modelView and projection matrix
     void setKeepMatrix(bool keepMatrix);
@@ -164,10 +163,10 @@ public:
     //fullRect: the total size of screen
     //fullViewport: the total viewportSize
     */
-    void setVirtualViewport(const Point& rtBegin, const Rect& fullRect, const Rect& fullViewport);
+    void setVirtualViewport(const Vec2& rtBegin, const Rect& fullRect, const Rect& fullViewport);
 
 public:
-    // XXX should be procted.
+    // FIXME: should be procted.
     // but due to a bug in PowerVR + Android,
     // the constructor is public again
     RenderTexture();
@@ -176,11 +175,10 @@ public:
     bool initWithWidthAndHeight(int w, int h, Texture2D::PixelFormat format);
     /** initializes a RenderTexture object with width and height in Points and a pixel format( only RGB and RGBA formats are valid ) and depthStencil format*/
     bool initWithWidthAndHeight(int w, int h, Texture2D::PixelFormat format, GLuint depthStencilFormat);
-    virtual const Size& getContentSize() const;
-    virtual Rect getBoundingBox() const;
-    
+
     void onBegin();
     void onEnd();
+
 protected:
     virtual void beginWithClear(float r, float g, float b, float a, float depthValue, int stencilValue, GLbitfield flags);
     
@@ -208,7 +206,7 @@ protected:
     /** The Sprite being used.
      The sprite, by default, will use the following blending function: GL_ONE, GL_ONE_MINUS_SRC_ALPHA.
      The blending function can be changed in runtime by calling:
-     - [[renderTexture sprite] setBlendFunc:(BlendFunc){GL_ONE, GL_ONE_MINUS_SRC_ALPHA}];
+     - renderTexture->getSprite()->setBlendFunc((BlendFunc){GL_ONE, GL_ONE_MINUS_SRC_ALPHA});
      */
     Sprite* _sprite;
     
@@ -218,18 +216,22 @@ protected:
     CustomCommand _clearCommand;
     CustomCommand _beginCommand;
     CustomCommand _endCommand;
+    /*this command is used to encapsulate saveToFile,
+     call saveToFile twice will overwrite this command and callback
+     and the command and callback will be executed twice.
+    */
     CustomCommand _saveToFileCommand;
+    std::function<void (RenderTexture*, const std::string&)> _saveFileCallback;
 protected:
     //renderer caches and callbacks
-
 
     void onClear();
     void onClearDepth();
 
-    void onSaveToFile(const std::string& fileName);
+    void onSaveToFile(const std::string& fileName, bool isRGBA = true);
     
-    kmMat4 _oldTransMatrix, _oldProjMatrix;
-    kmMat4 _transformMatrix, _projectionMatrix;
+    Mat4 _oldTransMatrix, _oldProjMatrix;
+    Mat4 _transformMatrix, _projectionMatrix;
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(RenderTexture);
 
