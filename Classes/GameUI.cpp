@@ -263,7 +263,7 @@ bool PlayBackIndictaor::init(){
     _turnInfoLabel = Label::createWithTTF(turnTTFConfig, "PLAYBACK ENEMY‘S TURN", TextHAlignment::CENTER, 500);
     _turnInfoLabel->setAnchorPoint(Point::ANCHOR_MIDDLE_LEFT);
     _turnInfoLabel->setPosition(-310, 105);
-    _turnInfoLabel->setSpacing(-5);
+    //_turnInfoLabel->setSpacing(-5);
     _turnInfoLabel->enableOutline(Color4B::BLACK);
     addChild(_turnInfoLabel);
     
@@ -274,7 +274,7 @@ bool PlayBackIndictaor::init(){
     _timeLabel = Label::createWithTTF(timeTTFConfig, "0'13:200", TextHAlignment::CENTER, 150);
     _timeLabel->setAnchorPoint(Point::ANCHOR_MIDDLE_RIGHT);
     _timeLabel->setPosition(350, 105);
-    _timeLabel->setSpacing(-5);
+    //_timeLabel->setSpacing(-5);
     _timeLabel->enableOutline(Color4B::BLACK);
     addChild(_timeLabel);
     

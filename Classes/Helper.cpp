@@ -46,7 +46,7 @@ void DepthOn::onDraw()
     glEnable(GL_DEPTH_TEST);
 }
 
-void DepthOn::visit(Renderer *renderer, const kmMat4& parentTransform, bool parentTransformUpdated)
+void DepthOn::visit(Renderer *renderer, const cocos2d::Mat4& parentTransform, uint32_t parentFlags)
 {
     _customCommand.init(_globalZOrder);
     _customCommand.func = CC_CALLBACK_0(DepthOn::onDraw, this);
@@ -58,14 +58,14 @@ void DepthOff::onDraw()
     glDisable(GL_DEPTH_TEST);
 }
 
-void DepthOff::visit(Renderer *renderer, const kmMat4& parentTransform, bool parentTransformUpdated)
+void DepthOff::visit(Renderer *renderer, const cocos2d::Mat4& parentTransform, uint32_t parentFlags)
 {
     _customCommand.init(_globalZOrder);
     _customCommand.func = CC_CALLBACK_0(DepthOff::onDraw, this);
     cocos2d::Director::getInstance()->getRenderer()->addCommand(&_customCommand);
 }
 
-void CollisionCheckNode::visit(Renderer *renderer, const kmMat4& parentTransform, bool parentTransformUpdated)
+void CollisionCheckNode::visit(Renderer *renderer, const cocos2d::Mat4& parentTransform, uint32_t parentFlags)
 {
     _customCommand.init(_globalZOrder);
     _customCommand.func = CC_CALLBACK_0(CollisionCheckNode::checkCollision, this);

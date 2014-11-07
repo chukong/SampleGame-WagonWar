@@ -57,7 +57,7 @@ bool PopWindow::init()
         _contentLabel = Label::createWithTTF(turnTTFConfig, "Connecting...", TextHAlignment::CENTER, 400);
         _contentLabel->setAnchorPoint(Point::ANCHOR_MIDDLE_RIGHT);
         _contentLabel->setPosition(_bk->getContentSize().width/2+20,_bk->getContentSize().height/2);
-        _contentLabel->setSpacing(-5);
+        //_contentLabel->setSpacing(-5);
         _contentLabel->enableOutline(Color4B::BLACK);
         _bk->addChild(_contentLabel);
 
@@ -85,7 +85,7 @@ bool PopWindow::init()
         _btn_label = Label::createWithTTF(t_turnTTFConfig, "OK", TextHAlignment::CENTER, 400);
         _btn_label->setAnchorPoint(Point::ANCHOR_MIDDLE);
         _btn_label->setPosition(btn_menuitem->getContentSize().width/2, btn_menuitem->getContentSize().height/2);
-        _btn_label->setSpacing(-5);
+        //_btn_label->setSpacing(-5);
         _btn_label->enableOutline(Color4B::BLACK);
         btn_menuitem->addChild(_btn_label);
         

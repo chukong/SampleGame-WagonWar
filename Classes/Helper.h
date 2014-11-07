@@ -26,7 +26,7 @@ class DepthOn : public cocos2d::Node
 {
 public:
     void onDraw();
-    virtual void visit(cocos2d::Renderer *renderer, const kmMat4& parentTransform, bool parentTransformUpdated);
+    virtual void visit(cocos2d::Renderer *renderer, const cocos2d::Mat4& parentTransform, uint32_t parentFlags);
     CREATE_FUNC(DepthOn);
 protected:
     cocos2d::CustomCommand _customCommand;
@@ -36,7 +36,7 @@ class DepthOff : public cocos2d::Node
 {
 public:
     void onDraw();
-    virtual void visit(cocos2d::Renderer *renderer, const kmMat4& parentTransform, bool parentTransformUpdated);
+    virtual void visit(cocos2d::Renderer *renderer, const cocos2d::Mat4& parentTransform, uint32_t parentFlags);
     CREATE_FUNC(DepthOff);
 protected:
     cocos2d::CustomCommand _customCommand;
@@ -46,7 +46,7 @@ class CollisionCheckNode : public cocos2d::Node
 {
 public:
     void checkCollision();
-    virtual void visit(cocos2d::Renderer *renderer, const kmMat4& parentTransform, bool parentTransformUpdated);
+    virtual void visit(cocos2d::Renderer *renderer, const cocos2d::Mat4& parentTransform, uint32_t parentFlags);
     CollisionCheckNode* create(cocos2d::ParallaxNode* game, cocos2d::Layer* player, cocos2d::Layer* bullet, cocos2d::RenderTexture* terrain);
     CC_SYNTHESIZE(cocos2d::RenderTexture*, _level, Level);
     CC_SYNTHESIZE(cocos2d::Layer*, _bullets, BulletLayer);
